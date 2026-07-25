@@ -1198,47 +1198,6 @@ end
    words. If no context words are passed only a regular expression is checked.\n\
   \ "]
 
-module CreateDataQualityRuleset : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AlreadyExistsException of already_exists_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidInputException of invalid_input_exception
-    | `OperationTimeoutException of operation_timeout_exception
-    | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_data_quality_ruleset_request ->
-    ( create_data_quality_ruleset_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AlreadyExistsException of already_exists_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception
-      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_data_quality_ruleset_request ->
-    ( create_data_quality_ruleset_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AlreadyExistsException of already_exists_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception
-      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a data quality ruleset with DQDL rules applied to a specified Glue table.\n\n\
-  \ You create the ruleset using the Data Quality Definition Language (DQDL). For more \
-   information, see the Glue developer guide.\n\
-  \ "]
-
 module CreateDatabase : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1290,6 +1249,47 @@ module CreateDatabase : sig
     result
 end
 [@@ocaml.doc "Creates a new database in a Data Catalog.\n"]
+
+module CreateDataQualityRuleset : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AlreadyExistsException of already_exists_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidInputException of invalid_input_exception
+    | `OperationTimeoutException of operation_timeout_exception
+    | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_data_quality_ruleset_request ->
+    ( create_data_quality_ruleset_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AlreadyExistsException of already_exists_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception
+      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_data_quality_ruleset_request ->
+    ( create_data_quality_ruleset_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AlreadyExistsException of already_exists_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception
+      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a data quality ruleset with DQDL rules applied to a specified Glue table.\n\n\
+  \ You create the ruleset using the Data Quality Definition Language (DQDL). For more \
+   information, see the Glue developer guide.\n\
+  \ "]
 
 module CreateDevEndpoint : sig
   val error_to_string :
@@ -2783,40 +2783,6 @@ module DeleteCustomEntityType : sig
 end
 [@@ocaml.doc "Deletes a custom pattern by specifying its name.\n"]
 
-module DeleteDataQualityRuleset : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidInputException of invalid_input_exception
-    | `OperationTimeoutException of operation_timeout_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_data_quality_ruleset_request ->
-    ( delete_data_quality_ruleset_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_data_quality_ruleset_request ->
-    ( delete_data_quality_ruleset_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes a data quality ruleset.\n"]
-
 module DeleteDatabase : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2871,6 +2837,40 @@ end
    to delete any resources that belong to the database.\n\
   \   \n\
   \    "]
+
+module DeleteDataQualityRuleset : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidInputException of invalid_input_exception
+    | `OperationTimeoutException of operation_timeout_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_data_quality_ruleset_request ->
+    ( delete_data_quality_ruleset_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_data_quality_ruleset_request ->
+    ( delete_data_quality_ruleset_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes a data quality ruleset.\n"]
 
 module DeleteDevEndpoint : sig
   val error_to_string :
@@ -4815,6 +4815,92 @@ module GetDashboardUrl : sig
 end
 [@@ocaml.doc "Retrieves the URL for the Spark monitoring dashboard for a Glue resource.\n"]
 
+module GetDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `FederationSourceException of federation_source_exception
+    | `FederationSourceRetryableException of federation_source_retryable_exception
+    | `GlueEncryptionException of glue_encryption_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidInputException of invalid_input_exception
+    | `OperationTimeoutException of operation_timeout_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_database_request ->
+    ( get_database_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `FederationSourceException of federation_source_exception
+      | `FederationSourceRetryableException of federation_source_retryable_exception
+      | `GlueEncryptionException of glue_encryption_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_database_request ->
+    ( get_database_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `FederationSourceException of federation_source_exception
+      | `FederationSourceRetryableException of federation_source_retryable_exception
+      | `GlueEncryptionException of glue_encryption_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Retrieves the definition of a specified database.\n"]
+
+module GetDatabases : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `FederationSourceException of federation_source_exception
+    | `FederationSourceRetryableException of federation_source_retryable_exception
+    | `GlueEncryptionException of glue_encryption_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidInputException of invalid_input_exception
+    | `OperationTimeoutException of operation_timeout_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_databases_request ->
+    ( get_databases_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `FederationSourceException of federation_source_exception
+      | `FederationSourceRetryableException of federation_source_retryable_exception
+      | `GlueEncryptionException of glue_encryption_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_databases_request ->
+    ( get_databases_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `FederationSourceException of federation_source_exception
+      | `FederationSourceRetryableException of federation_source_retryable_exception
+      | `GlueEncryptionException of glue_encryption_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Retrieves all databases defined in a given Data Catalog.\n"]
+
 module GetDataCatalogEncryptionSettings : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -4845,6 +4931,37 @@ module GetDataCatalogEncryptionSettings : sig
     result
 end
 [@@ocaml.doc "Retrieves the security configuration for a specified catalog.\n"]
+
+module GetDataflowGraph : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidInputException of invalid_input_exception
+    | `OperationTimeoutException of operation_timeout_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_dataflow_graph_request ->
+    ( get_dataflow_graph_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_dataflow_graph_request ->
+    ( get_dataflow_graph_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Transforms a Python script into a directed acyclic graph (DAG). \n"]
 
 module GetDataQualityModel : sig
   val error_to_string :
@@ -5051,123 +5168,6 @@ module GetDataQualityRulesetEvaluationRun : sig
     result
 end
 [@@ocaml.doc "Retrieves a specific run where a ruleset is evaluated against a data source.\n"]
-
-module GetDatabase : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `FederationSourceException of federation_source_exception
-    | `FederationSourceRetryableException of federation_source_retryable_exception
-    | `GlueEncryptionException of glue_encryption_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidInputException of invalid_input_exception
-    | `OperationTimeoutException of operation_timeout_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_database_request ->
-    ( get_database_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `FederationSourceException of federation_source_exception
-      | `FederationSourceRetryableException of federation_source_retryable_exception
-      | `GlueEncryptionException of glue_encryption_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_database_request ->
-    ( get_database_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `FederationSourceException of federation_source_exception
-      | `FederationSourceRetryableException of federation_source_retryable_exception
-      | `GlueEncryptionException of glue_encryption_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Retrieves the definition of a specified database.\n"]
-
-module GetDatabases : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `FederationSourceException of federation_source_exception
-    | `FederationSourceRetryableException of federation_source_retryable_exception
-    | `GlueEncryptionException of glue_encryption_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidInputException of invalid_input_exception
-    | `OperationTimeoutException of operation_timeout_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_databases_request ->
-    ( get_databases_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `FederationSourceException of federation_source_exception
-      | `FederationSourceRetryableException of federation_source_retryable_exception
-      | `GlueEncryptionException of glue_encryption_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_databases_request ->
-    ( get_databases_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `FederationSourceException of federation_source_exception
-      | `FederationSourceRetryableException of federation_source_retryable_exception
-      | `GlueEncryptionException of glue_encryption_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Retrieves all databases defined in a given Data Catalog.\n"]
-
-module GetDataflowGraph : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidInputException of invalid_input_exception
-    | `OperationTimeoutException of operation_timeout_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_dataflow_graph_request ->
-    ( get_dataflow_graph_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_dataflow_graph_request ->
-    ( get_dataflow_graph_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Transforms a Python script into a directed acyclic graph (DAG). \n"]
 
 module GetDevEndpoint : sig
   val error_to_string :
@@ -5737,6 +5737,74 @@ module GetJobs : sig
 end
 [@@ocaml.doc "Retrieves all current job definitions.\n"]
 
+module GetMapping : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidInputException of invalid_input_exception
+    | `OperationTimeoutException of operation_timeout_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_mapping_request ->
+    ( get_mapping_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_mapping_request ->
+    ( get_mapping_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Creates mappings.\n"]
+
+module GetMaterializedViewRefreshTaskRun : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidInputException of invalid_input_exception
+    | `OperationTimeoutException of operation_timeout_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_materialized_view_refresh_task_run_request ->
+    ( get_materialized_view_refresh_task_run_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_materialized_view_refresh_task_run_request ->
+    ( get_materialized_view_refresh_task_run_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Get the associated metadata/information for a task run, given a task run ID.\n"]
+
 module GetMLTaskRun : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -5893,74 +5961,6 @@ end
    the transformation to be performed by learning from examples provided by humans. These \
    transformations are then saved by Glue, and you can retrieve their metadata by calling \
    [GetMLTransforms].\n"]
-
-module GetMapping : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidInputException of invalid_input_exception
-    | `OperationTimeoutException of operation_timeout_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_mapping_request ->
-    ( get_mapping_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_mapping_request ->
-    ( get_mapping_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Creates mappings.\n"]
-
-module GetMaterializedViewRefreshTaskRun : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidInputException of invalid_input_exception
-    | `OperationTimeoutException of operation_timeout_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_materialized_view_refresh_task_run_request ->
-    ( get_materialized_view_refresh_task_run_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_materialized_view_refresh_task_run_request ->
-    ( get_materialized_view_refresh_task_run_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Get the associated metadata/information for a task run, given a task run ID.\n"]
 
 module GetPartition : sig
   val error_to_string :
@@ -6649,6 +6649,49 @@ module GetTableOptimizer : sig
 end
 [@@ocaml.doc "Returns the configuration of all optimizers associated with a specified table.\n"]
 
+module GetTables : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `FederationSourceException of federation_source_exception
+    | `FederationSourceRetryableException of federation_source_retryable_exception
+    | `GlueEncryptionException of glue_encryption_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidInputException of invalid_input_exception
+    | `OperationTimeoutException of operation_timeout_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_tables_request ->
+    ( get_tables_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `FederationSourceException of federation_source_exception
+      | `FederationSourceRetryableException of federation_source_retryable_exception
+      | `GlueEncryptionException of glue_encryption_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_tables_request ->
+    ( get_tables_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `FederationSourceException of federation_source_exception
+      | `FederationSourceRetryableException of federation_source_retryable_exception
+      | `GlueEncryptionException of glue_encryption_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Retrieves the definitions of some or all of the tables in a given [Database].\n"]
+
 module GetTableVersion : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -6722,49 +6765,6 @@ module GetTableVersions : sig
     result
 end
 [@@ocaml.doc "Retrieves a list of strings that identify available versions of a specified table.\n"]
-
-module GetTables : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `FederationSourceException of federation_source_exception
-    | `FederationSourceRetryableException of federation_source_retryable_exception
-    | `GlueEncryptionException of glue_encryption_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidInputException of invalid_input_exception
-    | `OperationTimeoutException of operation_timeout_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_tables_request ->
-    ( get_tables_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `FederationSourceException of federation_source_exception
-      | `FederationSourceRetryableException of federation_source_retryable_exception
-      | `GlueEncryptionException of glue_encryption_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_tables_request ->
-    ( get_tables_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `FederationSourceException of federation_source_exception
-      | `FederationSourceRetryableException of federation_source_retryable_exception
-      | `GlueEncryptionException of glue_encryption_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Retrieves the definitions of some or all of the tables in a given [Database].\n"]
 
 module GetTags : sig
   val error_to_string :
@@ -8030,6 +8030,37 @@ end
    resources with the tag are retrieved.\n\
   \ "]
 
+module ListMaterializedViewRefreshTaskRuns : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `OperationTimeoutException of operation_timeout_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_materialized_view_refresh_task_runs_request ->
+    ( list_materialized_view_refresh_task_runs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_materialized_view_refresh_task_runs_request ->
+    ( list_materialized_view_refresh_task_runs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "List all task runs for a particular account.\n"]
+
 module ListMLTransforms : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -8069,37 +8100,6 @@ end
    can be retrieved as a group. If you choose to use tag filtering, only resources with the tags \
    are retrieved. \n"]
 
-module ListMaterializedViewRefreshTaskRuns : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidInputException of invalid_input_exception
-    | `OperationTimeoutException of operation_timeout_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_materialized_view_refresh_task_runs_request ->
-    ( list_materialized_view_refresh_task_runs_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_materialized_view_refresh_task_runs_request ->
-    ( list_materialized_view_refresh_task_runs_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "List all task runs for a particular account.\n"]
-
 module ListRegistries : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -8133,43 +8133,6 @@ end
   "Returns a list of registries that you have created, with minimal registry information. \
    Registries in the [Deleting] status will not be included in the results. Empty results will be \
    returned if there are no registries available.\n"]
-
-module ListSchemaVersions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidInputException of invalid_input_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_schema_versions_input ->
-    ( list_schema_versions_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_schema_versions_input ->
-    ( list_schema_versions_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns a list of schema versions that you have created, with minimal information. Schema \
-   versions in Deleted status will not be included in the results. Empty results will be returned \
-   if there are no schema versions available.\n"]
 
 module ListSchemas : sig
   val error_to_string :
@@ -8209,6 +8172,43 @@ end
   \ When the [RegistryId] is not provided, all the schemas across registries will be part of the \
    API response.\n\
   \ "]
+
+module ListSchemaVersions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidInputException of invalid_input_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_schema_versions_input ->
+    ( list_schema_versions_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_schema_versions_input ->
+    ( list_schema_versions_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns a list of schema versions that you have created, with minimal information. Schema \
+   versions in Deleted status will not be included in the results. Empty results will be returned \
+   if there are no schema versions available.\n"]
 
 module ListSessions : sig
   val error_to_string :
@@ -9632,6 +9632,49 @@ module StartJobRun : sig
 end
 [@@ocaml.doc "Starts a job run using a job definition.\n"]
 
+module StartMaterializedViewRefreshTaskRun : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidInputException of invalid_input_exception
+    | `MaterializedViewRefreshTaskRunningException of
+      materialized_view_refresh_task_running_exception
+    | `OperationTimeoutException of operation_timeout_exception
+    | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    start_materialized_view_refresh_task_run_request ->
+    ( start_materialized_view_refresh_task_run_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidInputException of invalid_input_exception
+      | `MaterializedViewRefreshTaskRunningException of
+        materialized_view_refresh_task_running_exception
+      | `OperationTimeoutException of operation_timeout_exception
+      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_materialized_view_refresh_task_run_request ->
+    ( start_materialized_view_refresh_task_run_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidInputException of invalid_input_exception
+      | `MaterializedViewRefreshTaskRunningException of
+        materialized_view_refresh_task_running_exception
+      | `OperationTimeoutException of operation_timeout_exception
+      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Starts a materialized view refresh task run, for a specified table and columns.\n"]
+
 module StartMLEvaluationTaskRun : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -9732,49 +9775,6 @@ end
   \    Note: The role used to write the generated labeling set to the [OutputS3Path] is the role \
    associated with the Machine Learning Transform, specified in the [CreateMLTransform] API.\n\
   \    "]
-
-module StartMaterializedViewRefreshTaskRun : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidInputException of invalid_input_exception
-    | `MaterializedViewRefreshTaskRunningException of
-      materialized_view_refresh_task_running_exception
-    | `OperationTimeoutException of operation_timeout_exception
-    | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    start_materialized_view_refresh_task_run_request ->
-    ( start_materialized_view_refresh_task_run_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidInputException of invalid_input_exception
-      | `MaterializedViewRefreshTaskRunningException of
-        materialized_view_refresh_task_running_exception
-      | `OperationTimeoutException of operation_timeout_exception
-      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    start_materialized_view_refresh_task_run_request ->
-    ( start_materialized_view_refresh_task_run_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidInputException of invalid_input_exception
-      | `MaterializedViewRefreshTaskRunningException of
-        materialized_view_refresh_task_running_exception
-      | `OperationTimeoutException of operation_timeout_exception
-      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Starts a materialized view refresh task run, for a specified table and columns.\n"]
 
 module StartTrigger : sig
   val error_to_string :
@@ -10671,49 +10671,6 @@ module UpdateCrawlerSchedule : sig
 end
 [@@ocaml.doc "Updates the schedule of a crawler using a [cron] expression. \n"]
 
-module UpdateDataQualityRuleset : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AlreadyExistsException of already_exists_exception
-    | `EntityNotFoundException of entity_not_found_exception
-    | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidInputException of invalid_input_exception
-    | `OperationTimeoutException of operation_timeout_exception
-    | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_data_quality_ruleset_request ->
-    ( update_data_quality_ruleset_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AlreadyExistsException of already_exists_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception
-      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_data_quality_ruleset_request ->
-    ( update_data_quality_ruleset_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AlreadyExistsException of already_exists_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidInputException of invalid_input_exception
-      | `OperationTimeoutException of operation_timeout_exception
-      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Updates the specified data quality ruleset.\n"]
-
 module UpdateDatabase : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -10762,6 +10719,49 @@ module UpdateDatabase : sig
     result
 end
 [@@ocaml.doc "Updates an existing database definition in a Data Catalog.\n"]
+
+module UpdateDataQualityRuleset : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AlreadyExistsException of already_exists_exception
+    | `EntityNotFoundException of entity_not_found_exception
+    | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidInputException of invalid_input_exception
+    | `OperationTimeoutException of operation_timeout_exception
+    | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_data_quality_ruleset_request ->
+    ( update_data_quality_ruleset_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AlreadyExistsException of already_exists_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception
+      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_data_quality_ruleset_request ->
+    ( update_data_quality_ruleset_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AlreadyExistsException of already_exists_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidInputException of invalid_input_exception
+      | `OperationTimeoutException of operation_timeout_exception
+      | `ResourceNumberLimitExceededException of resource_number_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Updates the specified data quality ruleset.\n"]
 
 module UpdateDevEndpoint : sig
   val error_to_string :

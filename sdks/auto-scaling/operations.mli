@@ -1,232 +1,5 @@
 open Types
 
-module AttachInstances : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `ResourceContentionFault of resource_contention_fault
-    | `ServiceLinkedRoleFailure of service_linked_role_failure ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    attach_instances_query ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ResourceContentionFault of resource_contention_fault
-      | `ServiceLinkedRoleFailure of service_linked_role_failure ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    attach_instances_query ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ResourceContentionFault of resource_contention_fault
-      | `ServiceLinkedRoleFailure of service_linked_role_failure ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Attaches one or more EC2 instances to the specified Auto Scaling group.\n\n\
-  \ When you attach instances, Amazon EC2 Auto Scaling increases the desired capacity of the group \
-   by the number of instances being attached. If the number of instances being attached plus the \
-   desired capacity of the group exceeds the maximum size of the group, the operation fails.\n\
-  \ \n\
-  \  If there is a Classic Load Balancer attached to your Auto Scaling group, the instances are \
-   also registered with the load balancer. If there are target groups attached to your Auto \
-   Scaling group, the instances are also registered with the target groups.\n\
-  \  \n\
-  \   For more information, see \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-detach-attach-instances.html}Detach \
-   or attach instances} in the {i Amazon EC2 Auto Scaling User Guide}.\n\
-  \   "]
-
-module AttachLoadBalancers : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
-    | `ResourceContentionFault of resource_contention_fault
-    | `ServiceLinkedRoleFailure of service_linked_role_failure ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    attach_load_balancers_type ->
-    ( attach_load_balancers_result_type,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
-      | `ResourceContentionFault of resource_contention_fault
-      | `ServiceLinkedRoleFailure of service_linked_role_failure ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    attach_load_balancers_type ->
-    ( attach_load_balancers_result_type Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
-      | `ResourceContentionFault of resource_contention_fault
-      | `ServiceLinkedRoleFailure of service_linked_role_failure ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " This API operation is superseded by \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachTrafficSources.html}AttachTrafficSources}, \
-   which can attach multiple traffic sources types. We recommend using [AttachTrafficSources] to \
-   simplify how you manage traffic sources. However, we continue to support [AttachLoadBalancers]. \
-   You can use both the original [AttachLoadBalancers] API operation and [AttachTrafficSources] on \
-   the same Auto Scaling group.\n\
-  \ \n\
-  \   Attaches one or more Classic Load Balancers to the specified Auto Scaling group. Amazon EC2 \
-   Auto Scaling registers the running instances with these Classic Load Balancers.\n\
-  \   \n\
-  \    To describe the load balancers for an Auto Scaling group, call the \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeLoadBalancers.html}DescribeLoadBalancers} \
-   API. To detach a load balancer from the Auto Scaling group, call the \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancers.html}DetachLoadBalancers} \
-   API.\n\
-  \    \n\
-  \     This operation is additive and does not detach existing Classic Load Balancers or target \
-   groups from the Auto Scaling group.\n\
-  \     \n\
-  \      For more information, see \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-load-balancer.html}Use \
-   Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group} \
-   in the {i Amazon EC2 Auto Scaling User Guide}.\n\
-  \      "]
-
-module AttachLoadBalancerTargetGroups : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
-    | `ResourceContentionFault of resource_contention_fault
-    | `ServiceLinkedRoleFailure of service_linked_role_failure ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    attach_load_balancer_target_groups_type ->
-    ( attach_load_balancer_target_groups_result_type,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
-      | `ResourceContentionFault of resource_contention_fault
-      | `ServiceLinkedRoleFailure of service_linked_role_failure ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    attach_load_balancer_target_groups_type ->
-    ( attach_load_balancer_target_groups_result_type Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
-      | `ResourceContentionFault of resource_contention_fault
-      | `ServiceLinkedRoleFailure of service_linked_role_failure ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " This API operation is superseded by \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachTrafficSources.html}AttachTrafficSources}, \
-   which can attach multiple traffic sources types. We recommend using [AttachTrafficSources] to \
-   simplify how you manage traffic sources. However, we continue to support \
-   [AttachLoadBalancerTargetGroups]. You can use both the original \
-   [AttachLoadBalancerTargetGroups] API operation and [AttachTrafficSources] on the same Auto \
-   Scaling group.\n\
-  \ \n\
-  \   Attaches one or more target groups to the specified Auto Scaling group.\n\
-  \   \n\
-  \    This operation is used with the following load balancer types: \n\
-  \    \n\
-  \     {ul\n\
-  \           {-  Application Load Balancer - Operates at the application layer (layer 7) and \
-   supports HTTP and HTTPS. \n\
-  \               \n\
-  \                }\n\
-  \           {-  Network Load Balancer - Operates at the transport layer (layer 4) and supports \
-   TCP, TLS, and UDP. \n\
-  \               \n\
-  \                }\n\
-  \           {-  Gateway Load Balancer - Operates at the network layer (layer 3).\n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \   To describe the target groups for an Auto Scaling group, call the \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeLoadBalancerTargetGroups.html}DescribeLoadBalancerTargetGroups} \
-   API. To detach the target group from the Auto Scaling group, call the \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancerTargetGroups.html}DetachLoadBalancerTargetGroups} \
-   API.\n\
-  \   \n\
-  \    This operation is additive and does not detach existing target groups or Classic Load \
-   Balancers from the Auto Scaling group.\n\
-  \    \n\
-  \     For more information, see \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-load-balancer.html}Use \
-   Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group} \
-   in the {i Amazon EC2 Auto Scaling User Guide}. \n\
-  \     "]
-
-module AttachTrafficSources : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
-    | `ResourceContentionFault of resource_contention_fault
-    | `ServiceLinkedRoleFailure of service_linked_role_failure ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    attach_traffic_sources_type ->
-    ( attach_traffic_sources_result_type,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
-      | `ResourceContentionFault of resource_contention_fault
-      | `ServiceLinkedRoleFailure of service_linked_role_failure ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    attach_traffic_sources_type ->
-    ( attach_traffic_sources_result_type Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
-      | `ResourceContentionFault of resource_contention_fault
-      | `ServiceLinkedRoleFailure of service_linked_role_failure ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Attaches one or more traffic sources to the specified Auto Scaling group.\n\n\
-  \ You can use any of the following as traffic sources for an Auto Scaling group:\n\
-  \ \n\
-  \  {ul\n\
-  \        {-  Application Load Balancer\n\
-  \            \n\
-  \             }\n\
-  \        {-  Classic Load Balancer\n\
-  \            \n\
-  \             }\n\
-  \        {-  Gateway Load Balancer\n\
-  \            \n\
-  \             }\n\
-  \        {-  Network Load Balancer\n\
-  \            \n\
-  \             }\n\
-  \        {-  VPC Lattice\n\
-  \            \n\
-  \             }\n\
-  \        }\n\
-  \   This operation is additive and does not detach existing traffic sources from the Auto \
-   Scaling group. \n\
-  \   \n\
-  \    After the operation completes, use the \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeTrafficSources.html}DescribeTrafficSources} \
-   API to return details about the state of the attachments between traffic sources and your Auto \
-   Scaling group. To detach a traffic source from the Auto Scaling group, call the \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachTrafficSources.html}DetachTrafficSources} \
-   API.\n\
-  \    "]
-
 module BatchDeleteScheduledAction : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ] ->
@@ -1019,6 +792,29 @@ module DescribeLaunchConfigurations : sig
 end
 [@@ocaml.doc "Gets information about the launch configurations in the account and Region.\n"]
 
+module DescribeLifecycleHooks : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_lifecycle_hooks_type ->
+    ( describe_lifecycle_hooks_answer,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_lifecycle_hooks_type ->
+    ( describe_lifecycle_hooks_answer Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets information about the lifecycle hooks for the specified Auto Scaling group.\n"]
+
 module DescribeLifecycleHookTypes : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ] ->
@@ -1054,28 +850,72 @@ end
   \        }\n\
   \  "]
 
-module DescribeLifecycleHooks : sig
+module DescribeLoadBalancers : sig
   val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ] ->
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InvalidNextToken of invalid_next_token
+    | `ResourceContentionFault of resource_contention_fault ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    describe_lifecycle_hooks_type ->
-    ( describe_lifecycle_hooks_answer,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ]
-    )
+    describe_load_balancers_request ->
+    ( describe_load_balancers_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidNextToken of invalid_next_token
+      | `ResourceContentionFault of resource_contention_fault ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    describe_lifecycle_hooks_type ->
-    ( describe_lifecycle_hooks_answer Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ]
+    describe_load_balancers_request ->
+    ( describe_load_balancers_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidNextToken of invalid_next_token
+      | `ResourceContentionFault of resource_contention_fault ]
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc "Gets information about the lifecycle hooks for the specified Auto Scaling group.\n"]
+[@@ocaml.doc
+  " This API operation is superseded by \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeTrafficSources.html}DescribeTrafficSources}, \
+   which can describe multiple traffic sources types. We recommend using [DescribeTrafficSources] \
+   to simplify how you manage traffic sources. However, we continue to support \
+   [DescribeLoadBalancers]. You can use both the original [DescribeLoadBalancers] API operation \
+   and [DescribeTrafficSources] on the same Auto Scaling group.\n\
+  \ \n\
+  \   Gets information about the load balancers for the specified Auto Scaling group.\n\
+  \   \n\
+  \    This operation describes only Classic Load Balancers. If you have Application Load \
+   Balancers, Network Load Balancers, or Gateway Load Balancers, use the \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeLoadBalancerTargetGroups.html}DescribeLoadBalancerTargetGroups} \
+   API instead.\n\
+  \    \n\
+  \     To determine the attachment status of the load balancer, use the [State] element in the \
+   response. When you attach a load balancer to an Auto Scaling group, the initial [State] value \
+   is [Adding]. The state transitions to [Added] after all Auto Scaling instances are registered \
+   with the load balancer. If Elastic Load Balancing health checks are enabled for the Auto \
+   Scaling group, the state transitions to [InService] after at least one Auto Scaling instance \
+   passes the health check. When the load balancer is in the [InService] state, Amazon EC2 Auto \
+   Scaling can terminate and replace any instances that are reported as unhealthy. If no \
+   registered instances pass the health checks, the load balancer doesn't enter the [InService] \
+   state. \n\
+  \     \n\
+  \      Load balancers also have an [InService] state if you attach them in the \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CreateAutoScalingGroup.html}CreateAutoScalingGroup} \
+   API call. If your load balancer state is [InService], but it is not working properly, check the \
+   scaling activities by calling \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeScalingActivities.html}DescribeScalingActivities} \
+   and take any corrective actions necessary.\n\
+  \      \n\
+  \       For help with failed health checks, see \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/userguide/ts-as-healthchecks.html}Troubleshooting \
+   Amazon EC2 Auto Scaling: Health checks} in the {i Amazon EC2 Auto Scaling User Guide}. For more \
+   information, see \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-load-balancer.html}Use \
+   Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group} \
+   in the {i Amazon EC2 Auto Scaling User Guide}. \n\
+  \       "]
 
 module DescribeLoadBalancerTargetGroups : sig
   val error_to_string :
@@ -1145,73 +985,6 @@ end
    {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachTrafficSources.html}AttachTrafficSources}.\n\
   \        \n\
   \         "]
-
-module DescribeLoadBalancers : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InvalidNextToken of invalid_next_token
-    | `ResourceContentionFault of resource_contention_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_load_balancers_request ->
-    ( describe_load_balancers_response,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidNextToken of invalid_next_token
-      | `ResourceContentionFault of resource_contention_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_load_balancers_request ->
-    ( describe_load_balancers_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidNextToken of invalid_next_token
-      | `ResourceContentionFault of resource_contention_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " This API operation is superseded by \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeTrafficSources.html}DescribeTrafficSources}, \
-   which can describe multiple traffic sources types. We recommend using [DescribeTrafficSources] \
-   to simplify how you manage traffic sources. However, we continue to support \
-   [DescribeLoadBalancers]. You can use both the original [DescribeLoadBalancers] API operation \
-   and [DescribeTrafficSources] on the same Auto Scaling group.\n\
-  \ \n\
-  \   Gets information about the load balancers for the specified Auto Scaling group.\n\
-  \   \n\
-  \    This operation describes only Classic Load Balancers. If you have Application Load \
-   Balancers, Network Load Balancers, or Gateway Load Balancers, use the \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeLoadBalancerTargetGroups.html}DescribeLoadBalancerTargetGroups} \
-   API instead.\n\
-  \    \n\
-  \     To determine the attachment status of the load balancer, use the [State] element in the \
-   response. When you attach a load balancer to an Auto Scaling group, the initial [State] value \
-   is [Adding]. The state transitions to [Added] after all Auto Scaling instances are registered \
-   with the load balancer. If Elastic Load Balancing health checks are enabled for the Auto \
-   Scaling group, the state transitions to [InService] after at least one Auto Scaling instance \
-   passes the health check. When the load balancer is in the [InService] state, Amazon EC2 Auto \
-   Scaling can terminate and replace any instances that are reported as unhealthy. If no \
-   registered instances pass the health checks, the load balancer doesn't enter the [InService] \
-   state. \n\
-  \     \n\
-  \      Load balancers also have an [InService] state if you attach them in the \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CreateAutoScalingGroup.html}CreateAutoScalingGroup} \
-   API call. If your load balancer state is [InService], but it is not working properly, check the \
-   scaling activities by calling \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeScalingActivities.html}DescribeScalingActivities} \
-   and take any corrective actions necessary.\n\
-  \      \n\
-  \       For help with failed health checks, see \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/userguide/ts-as-healthchecks.html}Troubleshooting \
-   Amazon EC2 Auto Scaling: Health checks} in the {i Amazon EC2 Auto Scaling User Guide}. For more \
-   information, see \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-load-balancer.html}Use \
-   Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group} \
-   in the {i Amazon EC2 Auto Scaling User Guide}. \n\
-  \       "]
 
 module DescribeMetricCollectionTypes : sig
   val error_to_string :
@@ -1576,6 +1349,49 @@ end
    or attach instances} in the {i Amazon EC2 Auto Scaling User Guide}.\n\
   \    "]
 
+module DetachLoadBalancers : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    detach_load_balancers_type ->
+    ( detach_load_balancers_result_type,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    detach_load_balancers_type ->
+    ( detach_load_balancers_result_type Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " This API operation is superseded by \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachTrafficSources.html}DetachTrafficSources}, \
+   which can detach multiple traffic sources types. We recommend using [DetachTrafficSources] to \
+   simplify how you manage traffic sources. However, we continue to support [DetachLoadBalancers]. \
+   You can use both the original [DetachLoadBalancers] API operation and [DetachTrafficSources] on \
+   the same Auto Scaling group.\n\
+  \ \n\
+  \   Detaches one or more Classic Load Balancers from the specified Auto Scaling group.\n\
+  \   \n\
+  \    This operation detaches only Classic Load Balancers. If you have Application Load \
+   Balancers, Network Load Balancers, or Gateway Load Balancers, use the \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancerTargetGroups.html}DetachLoadBalancerTargetGroups} \
+   API instead.\n\
+  \    \n\
+  \     When you detach a load balancer, it enters the [Removing] state while deregistering the \
+   instances in the group. When all instances are deregistered, then you can no longer describe \
+   the load balancer using the \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeLoadBalancers.html}DescribeLoadBalancers} \
+   API call. The instances remain running.\n\
+  \     "]
+
 module DetachLoadBalancerTargetGroups : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ] ->
@@ -1620,49 +1436,6 @@ end
    {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachTrafficSources.html}AttachTrafficSources}.\n\
   \      \n\
   \       "]
-
-module DetachLoadBalancers : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    detach_load_balancers_type ->
-    ( detach_load_balancers_result_type,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    detach_load_balancers_type ->
-    ( detach_load_balancers_result_type Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `ResourceContentionFault of resource_contention_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " This API operation is superseded by \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachTrafficSources.html}DetachTrafficSources}, \
-   which can detach multiple traffic sources types. We recommend using [DetachTrafficSources] to \
-   simplify how you manage traffic sources. However, we continue to support [DetachLoadBalancers]. \
-   You can use both the original [DetachLoadBalancers] API operation and [DetachTrafficSources] on \
-   the same Auto Scaling group.\n\
-  \ \n\
-  \   Detaches one or more Classic Load Balancers from the specified Auto Scaling group.\n\
-  \   \n\
-  \    This operation detaches only Classic Load Balancers. If you have Application Load \
-   Balancers, Network Load Balancers, or Gateway Load Balancers, use the \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancerTargetGroups.html}DetachLoadBalancerTargetGroups} \
-   API instead.\n\
-  \    \n\
-  \     When you detach a load balancer, it enters the [Removing] state while deregistering the \
-   instances in the group. When all instances are deregistered, then you can no longer describe \
-   the load balancer using the \
-   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeLoadBalancers.html}DescribeLoadBalancers} \
-   API call. The instances remain running.\n\
-  \     "]
 
 module DetachTrafficSources : sig
   val error_to_string :
@@ -2653,4 +2426,231 @@ end
    API. If the group has scaling policies, you can update them by calling the \
    {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_PutScalingPolicy.html}PutScalingPolicy} \
    API.\n\
+  \   "]
+
+module AttachTrafficSources : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
+    | `ResourceContentionFault of resource_contention_fault
+    | `ServiceLinkedRoleFailure of service_linked_role_failure ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    attach_traffic_sources_type ->
+    ( attach_traffic_sources_result_type,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
+      | `ResourceContentionFault of resource_contention_fault
+      | `ServiceLinkedRoleFailure of service_linked_role_failure ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    attach_traffic_sources_type ->
+    ( attach_traffic_sources_result_type Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
+      | `ResourceContentionFault of resource_contention_fault
+      | `ServiceLinkedRoleFailure of service_linked_role_failure ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Attaches one or more traffic sources to the specified Auto Scaling group.\n\n\
+  \ You can use any of the following as traffic sources for an Auto Scaling group:\n\
+  \ \n\
+  \  {ul\n\
+  \        {-  Application Load Balancer\n\
+  \            \n\
+  \             }\n\
+  \        {-  Classic Load Balancer\n\
+  \            \n\
+  \             }\n\
+  \        {-  Gateway Load Balancer\n\
+  \            \n\
+  \             }\n\
+  \        {-  Network Load Balancer\n\
+  \            \n\
+  \             }\n\
+  \        {-  VPC Lattice\n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \   This operation is additive and does not detach existing traffic sources from the Auto \
+   Scaling group. \n\
+  \   \n\
+  \    After the operation completes, use the \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeTrafficSources.html}DescribeTrafficSources} \
+   API to return details about the state of the attachments between traffic sources and your Auto \
+   Scaling group. To detach a traffic source from the Auto Scaling group, call the \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachTrafficSources.html}DetachTrafficSources} \
+   API.\n\
+  \    "]
+
+module AttachLoadBalancers : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
+    | `ResourceContentionFault of resource_contention_fault
+    | `ServiceLinkedRoleFailure of service_linked_role_failure ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    attach_load_balancers_type ->
+    ( attach_load_balancers_result_type,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
+      | `ResourceContentionFault of resource_contention_fault
+      | `ServiceLinkedRoleFailure of service_linked_role_failure ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    attach_load_balancers_type ->
+    ( attach_load_balancers_result_type Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
+      | `ResourceContentionFault of resource_contention_fault
+      | `ServiceLinkedRoleFailure of service_linked_role_failure ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " This API operation is superseded by \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachTrafficSources.html}AttachTrafficSources}, \
+   which can attach multiple traffic sources types. We recommend using [AttachTrafficSources] to \
+   simplify how you manage traffic sources. However, we continue to support [AttachLoadBalancers]. \
+   You can use both the original [AttachLoadBalancers] API operation and [AttachTrafficSources] on \
+   the same Auto Scaling group.\n\
+  \ \n\
+  \   Attaches one or more Classic Load Balancers to the specified Auto Scaling group. Amazon EC2 \
+   Auto Scaling registers the running instances with these Classic Load Balancers.\n\
+  \   \n\
+  \    To describe the load balancers for an Auto Scaling group, call the \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeLoadBalancers.html}DescribeLoadBalancers} \
+   API. To detach a load balancer from the Auto Scaling group, call the \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancers.html}DetachLoadBalancers} \
+   API.\n\
+  \    \n\
+  \     This operation is additive and does not detach existing Classic Load Balancers or target \
+   groups from the Auto Scaling group.\n\
+  \     \n\
+  \      For more information, see \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-load-balancer.html}Use \
+   Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group} \
+   in the {i Amazon EC2 Auto Scaling User Guide}.\n\
+  \      "]
+
+module AttachLoadBalancerTargetGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
+    | `ResourceContentionFault of resource_contention_fault
+    | `ServiceLinkedRoleFailure of service_linked_role_failure ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    attach_load_balancer_target_groups_type ->
+    ( attach_load_balancer_target_groups_result_type,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
+      | `ResourceContentionFault of resource_contention_fault
+      | `ServiceLinkedRoleFailure of service_linked_role_failure ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    attach_load_balancer_target_groups_type ->
+    ( attach_load_balancer_target_groups_result_type Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InstanceRefreshInProgressFault of instance_refresh_in_progress_fault
+      | `ResourceContentionFault of resource_contention_fault
+      | `ServiceLinkedRoleFailure of service_linked_role_failure ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " This API operation is superseded by \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachTrafficSources.html}AttachTrafficSources}, \
+   which can attach multiple traffic sources types. We recommend using [AttachTrafficSources] to \
+   simplify how you manage traffic sources. However, we continue to support \
+   [AttachLoadBalancerTargetGroups]. You can use both the original \
+   [AttachLoadBalancerTargetGroups] API operation and [AttachTrafficSources] on the same Auto \
+   Scaling group.\n\
+  \ \n\
+  \   Attaches one or more target groups to the specified Auto Scaling group.\n\
+  \   \n\
+  \    This operation is used with the following load balancer types: \n\
+  \    \n\
+  \     {ul\n\
+  \           {-  Application Load Balancer - Operates at the application layer (layer 7) and \
+   supports HTTP and HTTPS. \n\
+  \               \n\
+  \                }\n\
+  \           {-  Network Load Balancer - Operates at the transport layer (layer 4) and supports \
+   TCP, TLS, and UDP. \n\
+  \               \n\
+  \                }\n\
+  \           {-  Gateway Load Balancer - Operates at the network layer (layer 3).\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \   To describe the target groups for an Auto Scaling group, call the \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeLoadBalancerTargetGroups.html}DescribeLoadBalancerTargetGroups} \
+   API. To detach the target group from the Auto Scaling group, call the \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancerTargetGroups.html}DetachLoadBalancerTargetGroups} \
+   API.\n\
+  \   \n\
+  \    This operation is additive and does not detach existing target groups or Classic Load \
+   Balancers from the Auto Scaling group.\n\
+  \    \n\
+  \     For more information, see \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-load-balancer.html}Use \
+   Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group} \
+   in the {i Amazon EC2 Auto Scaling User Guide}. \n\
+  \     "]
+
+module AttachInstances : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `ResourceContentionFault of resource_contention_fault
+    | `ServiceLinkedRoleFailure of service_linked_role_failure ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    attach_instances_query ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ResourceContentionFault of resource_contention_fault
+      | `ServiceLinkedRoleFailure of service_linked_role_failure ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    attach_instances_query ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ResourceContentionFault of resource_contention_fault
+      | `ServiceLinkedRoleFailure of service_linked_role_failure ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Attaches one or more EC2 instances to the specified Auto Scaling group.\n\n\
+  \ When you attach instances, Amazon EC2 Auto Scaling increases the desired capacity of the group \
+   by the number of instances being attached. If the number of instances being attached plus the \
+   desired capacity of the group exceeds the maximum size of the group, the operation fails.\n\
+  \ \n\
+  \  If there is a Classic Load Balancer attached to your Auto Scaling group, the instances are \
+   also registered with the load balancer. If there are target groups attached to your Auto \
+   Scaling group, the instances are also registered with the target groups.\n\
+  \  \n\
+  \   For more information, see \
+   {{:https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-detach-attach-instances.html}Detach \
+   or attach instances} in the {i Amazon EC2 Auto Scaling User Guide}.\n\
   \   "]

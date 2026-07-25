@@ -2,16 +2,8 @@ open Smaws_Lib.Json.SerializeHelpers
 open Types
 
 let string__to_yojson = string_to_yojson
-let tag_key_to_yojson = string_to_yojson
-let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
-
-let untag_queue_request_to_yojson (x : untag_queue_request) =
-  assoc_to_yojson
-    [
-      ("TagKeys", Some (tag_key_list_to_yojson x.tag_keys));
-      ("QueueUrl", Some (string__to_yojson x.queue_url));
-    ]
-
+let aws_account_id_list_to_yojson tree = list_to_yojson string__to_yojson tree
+let action_name_list_to_yojson tree = list_to_yojson string__to_yojson tree
 let exception_message_to_yojson = string_to_yojson
 
 let unsupported_operation_to_yojson (x : unsupported_operation) =
@@ -23,26 +15,45 @@ let request_throttled_to_yojson (x : request_throttled) =
 let queue_does_not_exist_to_yojson (x : queue_does_not_exist) =
   assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
+let over_limit_to_yojson (x : over_limit) =
+  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
+
 let invalid_security_to_yojson (x : invalid_security) =
   assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
 let invalid_address_to_yojson (x : invalid_address) =
   assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
-let too_many_entries_in_batch_request_to_yojson (x : too_many_entries_in_batch_request) =
-  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
+let add_permission_request_to_yojson (x : add_permission_request) =
+  assoc_to_yojson
+    [
+      ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("Label", Some (string__to_yojson x.label));
+      ("AWSAccountIds", Some (aws_account_id_list_to_yojson x.aws_account_ids));
+      ("Actions", Some (action_name_list_to_yojson x.actions));
+    ]
 
-let token_to_yojson = string_to_yojson
+let tag_key_to_yojson = string_to_yojson
+let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
+
+let untag_queue_request_to_yojson (x : untag_queue_request) =
+  assoc_to_yojson
+    [
+      ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("TagKeys", Some (tag_key_list_to_yojson x.tag_keys));
+    ]
+
 let tag_value_to_yojson = string_to_yojson
 let tag_map_to_yojson tree = map_to_yojson tag_key_to_yojson tag_value_to_yojson tree
 
 let tag_queue_request_to_yojson (x : tag_queue_request) =
   assoc_to_yojson
     [
-      ("Tags", Some (tag_map_to_yojson x.tags)); ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("QueueUrl", Some (string__to_yojson x.queue_url)); ("Tags", Some (tag_map_to_yojson x.tags));
     ]
 
-let string_list_to_yojson tree = list_to_yojson string__to_yojson tree
+let resource_not_found_exception_to_yojson (x : resource_not_found_exception) =
+  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
 let start_message_move_task_result_to_yojson (x : start_message_move_task_result) =
   assoc_to_yojson [ ("TaskHandle", option_to_yojson string__to_yojson x.task_handle) ]
@@ -52,52 +63,11 @@ let nullable_integer_to_yojson = int_to_yojson
 let start_message_move_task_request_to_yojson (x : start_message_move_task_request) =
   assoc_to_yojson
     [
+      ("SourceArn", Some (string__to_yojson x.source_arn));
+      ("DestinationArn", option_to_yojson string__to_yojson x.destination_arn);
       ( "MaxNumberOfMessagesPerSecond",
         option_to_yojson nullable_integer_to_yojson x.max_number_of_messages_per_second );
-      ("DestinationArn", option_to_yojson string__to_yojson x.destination_arn);
-      ("SourceArn", Some (string__to_yojson x.source_arn));
     ]
-
-let resource_not_found_exception_to_yojson (x : resource_not_found_exception) =
-  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
-
-let queue_attribute_name_to_yojson (x : queue_attribute_name) =
-  match x with
-  | SqsManagedSseEnabled -> `String "SqsManagedSseEnabled"
-  | RedriveAllowPolicy -> `String "RedriveAllowPolicy"
-  | FifoThroughputLimit -> `String "FifoThroughputLimit"
-  | DeduplicationScope -> `String "DeduplicationScope"
-  | KmsDataKeyReusePeriodSeconds -> `String "KmsDataKeyReusePeriodSeconds"
-  | KmsMasterKeyId -> `String "KmsMasterKeyId"
-  | ContentBasedDeduplication -> `String "ContentBasedDeduplication"
-  | FifoQueue -> `String "FifoQueue"
-  | RedrivePolicy -> `String "RedrivePolicy"
-  | ReceiveMessageWaitTimeSeconds -> `String "ReceiveMessageWaitTimeSeconds"
-  | DelaySeconds -> `String "DelaySeconds"
-  | ApproximateNumberOfMessagesDelayed -> `String "ApproximateNumberOfMessagesDelayed"
-  | QueueArn -> `String "QueueArn"
-  | LastModifiedTimestamp -> `String "LastModifiedTimestamp"
-  | CreatedTimestamp -> `String "CreatedTimestamp"
-  | ApproximateNumberOfMessagesNotVisible -> `String "ApproximateNumberOfMessagesNotVisible"
-  | ApproximateNumberOfMessages -> `String "ApproximateNumberOfMessages"
-  | MessageRetentionPeriod -> `String "MessageRetentionPeriod"
-  | MaximumMessageSize -> `String "MaximumMessageSize"
-  | VisibilityTimeout -> `String "VisibilityTimeout"
-  | Policy -> `String "Policy"
-  | All -> `String "All"
-
-let queue_attribute_map_to_yojson tree =
-  map_to_yojson queue_attribute_name_to_yojson string__to_yojson tree
-
-let set_queue_attributes_request_to_yojson (x : set_queue_attributes_request) =
-  assoc_to_yojson
-    [
-      ("Attributes", Some (queue_attribute_map_to_yojson x.attributes));
-      ("QueueUrl", Some (string__to_yojson x.queue_url));
-    ]
-
-let over_limit_to_yojson (x : over_limit) =
-  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
 let invalid_attribute_value_to_yojson (x : invalid_attribute_value) =
   assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
@@ -105,124 +75,43 @@ let invalid_attribute_value_to_yojson (x : invalid_attribute_value) =
 let invalid_attribute_name_to_yojson (x : invalid_attribute_name) =
   assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
-let send_message_result_to_yojson (x : send_message_result) =
+let queue_attribute_name_to_yojson (x : queue_attribute_name) =
+  match x with
+  | All -> `String "All"
+  | Policy -> `String "Policy"
+  | VisibilityTimeout -> `String "VisibilityTimeout"
+  | MaximumMessageSize -> `String "MaximumMessageSize"
+  | MessageRetentionPeriod -> `String "MessageRetentionPeriod"
+  | ApproximateNumberOfMessages -> `String "ApproximateNumberOfMessages"
+  | ApproximateNumberOfMessagesNotVisible -> `String "ApproximateNumberOfMessagesNotVisible"
+  | CreatedTimestamp -> `String "CreatedTimestamp"
+  | LastModifiedTimestamp -> `String "LastModifiedTimestamp"
+  | QueueArn -> `String "QueueArn"
+  | ApproximateNumberOfMessagesDelayed -> `String "ApproximateNumberOfMessagesDelayed"
+  | DelaySeconds -> `String "DelaySeconds"
+  | ReceiveMessageWaitTimeSeconds -> `String "ReceiveMessageWaitTimeSeconds"
+  | RedrivePolicy -> `String "RedrivePolicy"
+  | FifoQueue -> `String "FifoQueue"
+  | ContentBasedDeduplication -> `String "ContentBasedDeduplication"
+  | KmsMasterKeyId -> `String "KmsMasterKeyId"
+  | KmsDataKeyReusePeriodSeconds -> `String "KmsDataKeyReusePeriodSeconds"
+  | DeduplicationScope -> `String "DeduplicationScope"
+  | FifoThroughputLimit -> `String "FifoThroughputLimit"
+  | RedriveAllowPolicy -> `String "RedriveAllowPolicy"
+  | SqsManagedSseEnabled -> `String "SqsManagedSseEnabled"
+
+let queue_attribute_map_to_yojson tree =
+  map_to_yojson queue_attribute_name_to_yojson string__to_yojson tree
+
+let set_queue_attributes_request_to_yojson (x : set_queue_attributes_request) =
   assoc_to_yojson
     [
-      ("SequenceNumber", option_to_yojson string__to_yojson x.sequence_number);
-      ("MessageId", option_to_yojson string__to_yojson x.message_id);
-      ( "MD5OfMessageSystemAttributes",
-        option_to_yojson string__to_yojson x.md5_of_message_system_attributes );
-      ("MD5OfMessageAttributes", option_to_yojson string__to_yojson x.md5_of_message_attributes);
-      ("MD5OfMessageBody", option_to_yojson string__to_yojson x.md5_of_message_body);
-    ]
-
-let binary_to_yojson = blob_to_yojson
-let binary_list_to_yojson tree = list_to_yojson binary_to_yojson tree
-
-let message_attribute_value_to_yojson (x : message_attribute_value) =
-  assoc_to_yojson
-    [
-      ("DataType", Some (string__to_yojson x.data_type));
-      ("BinaryListValues", option_to_yojson binary_list_to_yojson x.binary_list_values);
-      ("StringListValues", option_to_yojson string_list_to_yojson x.string_list_values);
-      ("BinaryValue", option_to_yojson binary_to_yojson x.binary_value);
-      ("StringValue", option_to_yojson string__to_yojson x.string_value);
-    ]
-
-let message_body_attribute_map_to_yojson tree =
-  map_to_yojson string__to_yojson message_attribute_value_to_yojson tree
-
-let message_system_attribute_value_to_yojson (x : message_system_attribute_value) =
-  assoc_to_yojson
-    [
-      ("DataType", Some (string__to_yojson x.data_type));
-      ("BinaryListValues", option_to_yojson binary_list_to_yojson x.binary_list_values);
-      ("StringListValues", option_to_yojson string_list_to_yojson x.string_list_values);
-      ("BinaryValue", option_to_yojson binary_to_yojson x.binary_value);
-      ("StringValue", option_to_yojson string__to_yojson x.string_value);
-    ]
-
-let message_system_attribute_name_for_sends_to_yojson (x : message_system_attribute_name_for_sends)
-    =
-  match x with AWSTraceHeader -> `String "AWSTraceHeader"
-
-let message_body_system_attribute_map_to_yojson tree =
-  map_to_yojson message_system_attribute_name_for_sends_to_yojson
-    message_system_attribute_value_to_yojson tree
-
-let send_message_request_to_yojson (x : send_message_request) =
-  assoc_to_yojson
-    [
-      ("MessageGroupId", option_to_yojson string__to_yojson x.message_group_id);
-      ("MessageDeduplicationId", option_to_yojson string__to_yojson x.message_deduplication_id);
-      ( "MessageSystemAttributes",
-        option_to_yojson message_body_system_attribute_map_to_yojson x.message_system_attributes );
-      ( "MessageAttributes",
-        option_to_yojson message_body_attribute_map_to_yojson x.message_attributes );
-      ("DelaySeconds", option_to_yojson nullable_integer_to_yojson x.delay_seconds);
-      ("MessageBody", Some (string__to_yojson x.message_body));
       ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("Attributes", Some (queue_attribute_map_to_yojson x.attributes));
     ]
 
-let send_message_batch_result_entry_to_yojson (x : send_message_batch_result_entry) =
-  assoc_to_yojson
-    [
-      ("SequenceNumber", option_to_yojson string__to_yojson x.sequence_number);
-      ( "MD5OfMessageSystemAttributes",
-        option_to_yojson string__to_yojson x.md5_of_message_system_attributes );
-      ("MD5OfMessageAttributes", option_to_yojson string__to_yojson x.md5_of_message_attributes);
-      ("MD5OfMessageBody", Some (string__to_yojson x.md5_of_message_body));
-      ("MessageId", Some (string__to_yojson x.message_id));
-      ("Id", Some (string__to_yojson x.id));
-    ]
-
-let send_message_batch_result_entry_list_to_yojson tree =
-  list_to_yojson send_message_batch_result_entry_to_yojson tree
-
-let boolean__to_yojson = bool_to_yojson
-
-let batch_result_error_entry_to_yojson (x : batch_result_error_entry) =
-  assoc_to_yojson
-    [
-      ("Message", option_to_yojson string__to_yojson x.message);
-      ("Code", Some (string__to_yojson x.code));
-      ("SenderFault", Some (boolean__to_yojson x.sender_fault));
-      ("Id", Some (string__to_yojson x.id));
-    ]
-
-let batch_result_error_entry_list_to_yojson tree =
-  list_to_yojson batch_result_error_entry_to_yojson tree
-
-let send_message_batch_result_to_yojson (x : send_message_batch_result) =
-  assoc_to_yojson
-    [
-      ("Failed", Some (batch_result_error_entry_list_to_yojson x.failed));
-      ("Successful", Some (send_message_batch_result_entry_list_to_yojson x.successful));
-    ]
-
-let send_message_batch_request_entry_to_yojson (x : send_message_batch_request_entry) =
-  assoc_to_yojson
-    [
-      ("MessageGroupId", option_to_yojson string__to_yojson x.message_group_id);
-      ("MessageDeduplicationId", option_to_yojson string__to_yojson x.message_deduplication_id);
-      ( "MessageSystemAttributes",
-        option_to_yojson message_body_system_attribute_map_to_yojson x.message_system_attributes );
-      ( "MessageAttributes",
-        option_to_yojson message_body_attribute_map_to_yojson x.message_attributes );
-      ("DelaySeconds", option_to_yojson nullable_integer_to_yojson x.delay_seconds);
-      ("MessageBody", Some (string__to_yojson x.message_body));
-      ("Id", Some (string__to_yojson x.id));
-    ]
-
-let send_message_batch_request_entry_list_to_yojson tree =
-  list_to_yojson send_message_batch_request_entry_to_yojson tree
-
-let send_message_batch_request_to_yojson (x : send_message_batch_request) =
-  assoc_to_yojson
-    [
-      ("Entries", Some (send_message_batch_request_entry_list_to_yojson x.entries));
-      ("QueueUrl", Some (string__to_yojson x.queue_url));
-    ]
+let too_many_entries_in_batch_request_to_yojson (x : too_many_entries_in_batch_request) =
+  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
 let kms_throttled_to_yojson (x : kms_throttled) =
   assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
@@ -257,27 +146,147 @@ let batch_request_too_long_to_yojson (x : batch_request_too_long) =
 let batch_entry_ids_not_distinct_to_yojson (x : batch_entry_ids_not_distinct) =
   assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
+let boolean__to_yojson = bool_to_yojson
+
+let batch_result_error_entry_to_yojson (x : batch_result_error_entry) =
+  assoc_to_yojson
+    [
+      ("Id", Some (string__to_yojson x.id));
+      ("SenderFault", Some (boolean__to_yojson x.sender_fault));
+      ("Code", Some (string__to_yojson x.code));
+      ("Message", option_to_yojson string__to_yojson x.message);
+    ]
+
+let batch_result_error_entry_list_to_yojson tree =
+  list_to_yojson batch_result_error_entry_to_yojson tree
+
+let send_message_batch_result_entry_to_yojson (x : send_message_batch_result_entry) =
+  assoc_to_yojson
+    [
+      ("Id", Some (string__to_yojson x.id));
+      ("MessageId", Some (string__to_yojson x.message_id));
+      ("MD5OfMessageBody", Some (string__to_yojson x.md5_of_message_body));
+      ("MD5OfMessageAttributes", option_to_yojson string__to_yojson x.md5_of_message_attributes);
+      ( "MD5OfMessageSystemAttributes",
+        option_to_yojson string__to_yojson x.md5_of_message_system_attributes );
+      ("SequenceNumber", option_to_yojson string__to_yojson x.sequence_number);
+    ]
+
+let send_message_batch_result_entry_list_to_yojson tree =
+  list_to_yojson send_message_batch_result_entry_to_yojson tree
+
+let send_message_batch_result_to_yojson (x : send_message_batch_result) =
+  assoc_to_yojson
+    [
+      ("Successful", Some (send_message_batch_result_entry_list_to_yojson x.successful));
+      ("Failed", Some (batch_result_error_entry_list_to_yojson x.failed));
+    ]
+
+let binary_to_yojson = blob_to_yojson
+let binary_list_to_yojson tree = list_to_yojson binary_to_yojson tree
+let string_list_to_yojson tree = list_to_yojson string__to_yojson tree
+
+let message_system_attribute_value_to_yojson (x : message_system_attribute_value) =
+  assoc_to_yojson
+    [
+      ("StringValue", option_to_yojson string__to_yojson x.string_value);
+      ("BinaryValue", option_to_yojson binary_to_yojson x.binary_value);
+      ("StringListValues", option_to_yojson string_list_to_yojson x.string_list_values);
+      ("BinaryListValues", option_to_yojson binary_list_to_yojson x.binary_list_values);
+      ("DataType", Some (string__to_yojson x.data_type));
+    ]
+
+let message_system_attribute_name_for_sends_to_yojson (x : message_system_attribute_name_for_sends)
+    =
+  match x with AWSTraceHeader -> `String "AWSTraceHeader"
+
+let message_body_system_attribute_map_to_yojson tree =
+  map_to_yojson message_system_attribute_name_for_sends_to_yojson
+    message_system_attribute_value_to_yojson tree
+
+let message_attribute_value_to_yojson (x : message_attribute_value) =
+  assoc_to_yojson
+    [
+      ("StringValue", option_to_yojson string__to_yojson x.string_value);
+      ("BinaryValue", option_to_yojson binary_to_yojson x.binary_value);
+      ("StringListValues", option_to_yojson string_list_to_yojson x.string_list_values);
+      ("BinaryListValues", option_to_yojson binary_list_to_yojson x.binary_list_values);
+      ("DataType", Some (string__to_yojson x.data_type));
+    ]
+
+let message_body_attribute_map_to_yojson tree =
+  map_to_yojson string__to_yojson message_attribute_value_to_yojson tree
+
+let send_message_batch_request_entry_to_yojson (x : send_message_batch_request_entry) =
+  assoc_to_yojson
+    [
+      ("Id", Some (string__to_yojson x.id));
+      ("MessageBody", Some (string__to_yojson x.message_body));
+      ("DelaySeconds", option_to_yojson nullable_integer_to_yojson x.delay_seconds);
+      ( "MessageAttributes",
+        option_to_yojson message_body_attribute_map_to_yojson x.message_attributes );
+      ( "MessageSystemAttributes",
+        option_to_yojson message_body_system_attribute_map_to_yojson x.message_system_attributes );
+      ("MessageDeduplicationId", option_to_yojson string__to_yojson x.message_deduplication_id);
+      ("MessageGroupId", option_to_yojson string__to_yojson x.message_group_id);
+    ]
+
+let send_message_batch_request_entry_list_to_yojson tree =
+  list_to_yojson send_message_batch_request_entry_to_yojson tree
+
+let send_message_batch_request_to_yojson (x : send_message_batch_request) =
+  assoc_to_yojson
+    [
+      ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("Entries", Some (send_message_batch_request_entry_list_to_yojson x.entries));
+    ]
+
 let invalid_message_contents_to_yojson (x : invalid_message_contents) =
   assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
+
+let send_message_result_to_yojson (x : send_message_result) =
+  assoc_to_yojson
+    [
+      ("MD5OfMessageBody", option_to_yojson string__to_yojson x.md5_of_message_body);
+      ("MD5OfMessageAttributes", option_to_yojson string__to_yojson x.md5_of_message_attributes);
+      ( "MD5OfMessageSystemAttributes",
+        option_to_yojson string__to_yojson x.md5_of_message_system_attributes );
+      ("MessageId", option_to_yojson string__to_yojson x.message_id);
+      ("SequenceNumber", option_to_yojson string__to_yojson x.sequence_number);
+    ]
+
+let send_message_request_to_yojson (x : send_message_request) =
+  assoc_to_yojson
+    [
+      ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("MessageBody", Some (string__to_yojson x.message_body));
+      ("DelaySeconds", option_to_yojson nullable_integer_to_yojson x.delay_seconds);
+      ( "MessageAttributes",
+        option_to_yojson message_body_attribute_map_to_yojson x.message_attributes );
+      ( "MessageSystemAttributes",
+        option_to_yojson message_body_system_attribute_map_to_yojson x.message_system_attributes );
+      ("MessageDeduplicationId", option_to_yojson string__to_yojson x.message_deduplication_id);
+      ("MessageGroupId", option_to_yojson string__to_yojson x.message_group_id);
+    ]
 
 let remove_permission_request_to_yojson (x : remove_permission_request) =
   assoc_to_yojson
     [
-      ("Label", Some (string__to_yojson x.label)); ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("QueueUrl", Some (string__to_yojson x.queue_url)); ("Label", Some (string__to_yojson x.label));
     ]
 
 let message_system_attribute_name_to_yojson (x : message_system_attribute_name) =
   match x with
-  | DeadLetterQueueSourceArn -> `String "DeadLetterQueueSourceArn"
-  | AWSTraceHeader -> `String "AWSTraceHeader"
-  | MessageGroupId -> `String "MessageGroupId"
-  | MessageDeduplicationId -> `String "MessageDeduplicationId"
-  | SequenceNumber -> `String "SequenceNumber"
-  | ApproximateFirstReceiveTimestamp -> `String "ApproximateFirstReceiveTimestamp"
-  | ApproximateReceiveCount -> `String "ApproximateReceiveCount"
-  | SentTimestamp -> `String "SentTimestamp"
-  | SenderId -> `String "SenderId"
   | All -> `String "All"
+  | SenderId -> `String "SenderId"
+  | SentTimestamp -> `String "SentTimestamp"
+  | ApproximateReceiveCount -> `String "ApproximateReceiveCount"
+  | ApproximateFirstReceiveTimestamp -> `String "ApproximateFirstReceiveTimestamp"
+  | SequenceNumber -> `String "SequenceNumber"
+  | MessageDeduplicationId -> `String "MessageDeduplicationId"
+  | MessageGroupId -> `String "MessageGroupId"
+  | AWSTraceHeader -> `String "AWSTraceHeader"
+  | DeadLetterQueueSourceArn -> `String "DeadLetterQueueSourceArn"
 
 let message_system_attribute_map_to_yojson tree =
   map_to_yojson message_system_attribute_name_to_yojson string__to_yojson tree
@@ -285,14 +294,14 @@ let message_system_attribute_map_to_yojson tree =
 let message_to_yojson (x : message) =
   assoc_to_yojson
     [
+      ("MessageId", option_to_yojson string__to_yojson x.message_id);
+      ("ReceiptHandle", option_to_yojson string__to_yojson x.receipt_handle);
+      ("MD5OfBody", option_to_yojson string__to_yojson x.md5_of_body);
+      ("Body", option_to_yojson string__to_yojson x.body);
+      ("Attributes", option_to_yojson message_system_attribute_map_to_yojson x.attributes);
+      ("MD5OfMessageAttributes", option_to_yojson string__to_yojson x.md5_of_message_attributes);
       ( "MessageAttributes",
         option_to_yojson message_body_attribute_map_to_yojson x.message_attributes );
-      ("MD5OfMessageAttributes", option_to_yojson string__to_yojson x.md5_of_message_attributes);
-      ("Attributes", option_to_yojson message_system_attribute_map_to_yojson x.attributes);
-      ("Body", option_to_yojson string__to_yojson x.body);
-      ("MD5OfBody", option_to_yojson string__to_yojson x.md5_of_body);
-      ("ReceiptHandle", option_to_yojson string__to_yojson x.receipt_handle);
-      ("MessageId", option_to_yojson string__to_yojson x.message_id);
     ]
 
 let message_list_to_yojson tree = list_to_yojson message_to_yojson tree
@@ -300,68 +309,36 @@ let message_list_to_yojson tree = list_to_yojson message_to_yojson tree
 let receive_message_result_to_yojson (x : receive_message_result) =
   assoc_to_yojson [ ("Messages", option_to_yojson message_list_to_yojson x.messages) ]
 
-let attribute_name_list_to_yojson tree = list_to_yojson queue_attribute_name_to_yojson tree
-
-let message_system_attribute_list_to_yojson tree =
-  list_to_yojson message_system_attribute_name_to_yojson tree
-
 let message_attribute_name_to_yojson = string_to_yojson
 
 let message_attribute_name_list_to_yojson tree =
   list_to_yojson message_attribute_name_to_yojson tree
 
+let message_system_attribute_list_to_yojson tree =
+  list_to_yojson message_system_attribute_name_to_yojson tree
+
+let attribute_name_list_to_yojson tree = list_to_yojson queue_attribute_name_to_yojson tree
+
 let receive_message_request_to_yojson (x : receive_message_request) =
   assoc_to_yojson
     [
-      ("ReceiveRequestAttemptId", option_to_yojson string__to_yojson x.receive_request_attempt_id);
-      ("WaitTimeSeconds", option_to_yojson nullable_integer_to_yojson x.wait_time_seconds);
-      ("VisibilityTimeout", option_to_yojson nullable_integer_to_yojson x.visibility_timeout);
-      ("MaxNumberOfMessages", option_to_yojson nullable_integer_to_yojson x.max_number_of_messages);
-      ( "MessageAttributeNames",
-        option_to_yojson message_attribute_name_list_to_yojson x.message_attribute_names );
+      ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("AttributeNames", option_to_yojson attribute_name_list_to_yojson x.attribute_names);
       ( "MessageSystemAttributeNames",
         option_to_yojson message_system_attribute_list_to_yojson x.message_system_attribute_names );
-      ("AttributeNames", option_to_yojson attribute_name_list_to_yojson x.attribute_names);
-      ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ( "MessageAttributeNames",
+        option_to_yojson message_attribute_name_list_to_yojson x.message_attribute_names );
+      ("MaxNumberOfMessages", option_to_yojson nullable_integer_to_yojson x.max_number_of_messages);
+      ("VisibilityTimeout", option_to_yojson nullable_integer_to_yojson x.visibility_timeout);
+      ("WaitTimeSeconds", option_to_yojson nullable_integer_to_yojson x.wait_time_seconds);
+      ("ReceiveRequestAttemptId", option_to_yojson string__to_yojson x.receive_request_attempt_id);
     ]
-
-let receipt_handle_is_invalid_to_yojson (x : receipt_handle_is_invalid) =
-  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
-
-let queue_url_list_to_yojson tree = list_to_yojson string__to_yojson tree
-
-let queue_name_exists_to_yojson (x : queue_name_exists) =
-  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
-
-let queue_deleted_recently_to_yojson (x : queue_deleted_recently) =
-  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
-
-let purge_queue_request_to_yojson (x : purge_queue_request) =
-  assoc_to_yojson [ ("QueueUrl", Some (string__to_yojson x.queue_url)) ]
 
 let purge_queue_in_progress_to_yojson (x : purge_queue_in_progress) =
   assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
-let nullable_long_to_yojson = long_to_yojson
-let message_not_inflight_to_yojson = unit_to_yojson
-let long_to_yojson = long_to_yojson
-
-let list_queues_result_to_yojson (x : list_queues_result) =
-  assoc_to_yojson
-    [
-      ("NextToken", option_to_yojson token_to_yojson x.next_token);
-      ("QueueUrls", option_to_yojson queue_url_list_to_yojson x.queue_urls);
-    ]
-
-let boxed_integer_to_yojson = int_to_yojson
-
-let list_queues_request_to_yojson (x : list_queues_request) =
-  assoc_to_yojson
-    [
-      ("MaxResults", option_to_yojson boxed_integer_to_yojson x.max_results);
-      ("NextToken", option_to_yojson token_to_yojson x.next_token);
-      ("QueueNamePrefix", option_to_yojson string__to_yojson x.queue_name_prefix);
-    ]
+let purge_queue_request_to_yojson (x : purge_queue_request) =
+  assoc_to_yojson [ ("QueueUrl", Some (string__to_yojson x.queue_url)) ]
 
 let list_queue_tags_result_to_yojson (x : list_queue_tags_result) =
   assoc_to_yojson [ ("Tags", option_to_yojson tag_map_to_yojson x.tags) ]
@@ -369,21 +346,44 @@ let list_queue_tags_result_to_yojson (x : list_queue_tags_result) =
 let list_queue_tags_request_to_yojson (x : list_queue_tags_request) =
   assoc_to_yojson [ ("QueueUrl", Some (string__to_yojson x.queue_url)) ]
 
+let token_to_yojson = string_to_yojson
+let queue_url_list_to_yojson tree = list_to_yojson string__to_yojson tree
+
+let list_queues_result_to_yojson (x : list_queues_result) =
+  assoc_to_yojson
+    [
+      ("QueueUrls", option_to_yojson queue_url_list_to_yojson x.queue_urls);
+      ("NextToken", option_to_yojson token_to_yojson x.next_token);
+    ]
+
+let boxed_integer_to_yojson = int_to_yojson
+
+let list_queues_request_to_yojson (x : list_queues_request) =
+  assoc_to_yojson
+    [
+      ("QueueNamePrefix", option_to_yojson string__to_yojson x.queue_name_prefix);
+      ("NextToken", option_to_yojson token_to_yojson x.next_token);
+      ("MaxResults", option_to_yojson boxed_integer_to_yojson x.max_results);
+    ]
+
+let long_to_yojson = long_to_yojson
+let nullable_long_to_yojson = long_to_yojson
+
 let list_message_move_tasks_result_entry_to_yojson (x : list_message_move_tasks_result_entry) =
   assoc_to_yojson
     [
-      ("StartedTimestamp", option_to_yojson long_to_yojson x.started_timestamp);
-      ("FailureReason", option_to_yojson string__to_yojson x.failure_reason);
-      ( "ApproximateNumberOfMessagesToMove",
-        option_to_yojson nullable_long_to_yojson x.approximate_number_of_messages_to_move );
-      ( "ApproximateNumberOfMessagesMoved",
-        option_to_yojson long_to_yojson x.approximate_number_of_messages_moved );
+      ("TaskHandle", option_to_yojson string__to_yojson x.task_handle);
+      ("Status", option_to_yojson string__to_yojson x.status);
+      ("SourceArn", option_to_yojson string__to_yojson x.source_arn);
+      ("DestinationArn", option_to_yojson string__to_yojson x.destination_arn);
       ( "MaxNumberOfMessagesPerSecond",
         option_to_yojson nullable_integer_to_yojson x.max_number_of_messages_per_second );
-      ("DestinationArn", option_to_yojson string__to_yojson x.destination_arn);
-      ("SourceArn", option_to_yojson string__to_yojson x.source_arn);
-      ("Status", option_to_yojson string__to_yojson x.status);
-      ("TaskHandle", option_to_yojson string__to_yojson x.task_handle);
+      ( "ApproximateNumberOfMessagesMoved",
+        option_to_yojson long_to_yojson x.approximate_number_of_messages_moved );
+      ( "ApproximateNumberOfMessagesToMove",
+        option_to_yojson nullable_long_to_yojson x.approximate_number_of_messages_to_move );
+      ("FailureReason", option_to_yojson string__to_yojson x.failure_reason);
+      ("StartedTimestamp", option_to_yojson long_to_yojson x.started_timestamp);
     ]
 
 let list_message_move_tasks_result_entry_list_to_yojson tree =
@@ -396,26 +396,24 @@ let list_message_move_tasks_result_to_yojson (x : list_message_move_tasks_result
 let list_message_move_tasks_request_to_yojson (x : list_message_move_tasks_request) =
   assoc_to_yojson
     [
-      ("MaxResults", option_to_yojson nullable_integer_to_yojson x.max_results);
       ("SourceArn", Some (string__to_yojson x.source_arn));
+      ("MaxResults", option_to_yojson nullable_integer_to_yojson x.max_results);
     ]
 
 let list_dead_letter_source_queues_result_to_yojson (x : list_dead_letter_source_queues_result) =
   assoc_to_yojson
     [
-      ("NextToken", option_to_yojson token_to_yojson x.next_token);
       ("queueUrls", Some (queue_url_list_to_yojson x.queue_urls));
+      ("NextToken", option_to_yojson token_to_yojson x.next_token);
     ]
 
 let list_dead_letter_source_queues_request_to_yojson (x : list_dead_letter_source_queues_request) =
   assoc_to_yojson
     [
-      ("MaxResults", option_to_yojson boxed_integer_to_yojson x.max_results);
-      ("NextToken", option_to_yojson token_to_yojson x.next_token);
       ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("NextToken", option_to_yojson token_to_yojson x.next_token);
+      ("MaxResults", option_to_yojson boxed_integer_to_yojson x.max_results);
     ]
-
-let invalid_id_format_to_yojson = unit_to_yojson
 
 let get_queue_url_result_to_yojson (x : get_queue_url_result) =
   assoc_to_yojson [ ("QueueUrl", option_to_yojson string__to_yojson x.queue_url) ]
@@ -423,8 +421,8 @@ let get_queue_url_result_to_yojson (x : get_queue_url_result) =
 let get_queue_url_request_to_yojson (x : get_queue_url_request) =
   assoc_to_yojson
     [
-      ("QueueOwnerAWSAccountId", option_to_yojson string__to_yojson x.queue_owner_aws_account_id);
       ("QueueName", Some (string__to_yojson x.queue_name));
+      ("QueueOwnerAWSAccountId", option_to_yojson string__to_yojson x.queue_owner_aws_account_id);
     ]
 
 let get_queue_attributes_result_to_yojson (x : get_queue_attributes_result) =
@@ -433,19 +431,12 @@ let get_queue_attributes_result_to_yojson (x : get_queue_attributes_result) =
 let get_queue_attributes_request_to_yojson (x : get_queue_attributes_request) =
   assoc_to_yojson
     [
-      ("AttributeNames", option_to_yojson attribute_name_list_to_yojson x.attribute_names);
       ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("AttributeNames", option_to_yojson attribute_name_list_to_yojson x.attribute_names);
     ]
 
 let delete_queue_request_to_yojson (x : delete_queue_request) =
   assoc_to_yojson [ ("QueueUrl", Some (string__to_yojson x.queue_url)) ]
-
-let delete_message_request_to_yojson (x : delete_message_request) =
-  assoc_to_yojson
-    [
-      ("ReceiptHandle", Some (string__to_yojson x.receipt_handle));
-      ("QueueUrl", Some (string__to_yojson x.queue_url));
-    ]
 
 let delete_message_batch_result_entry_to_yojson (x : delete_message_batch_result_entry) =
   assoc_to_yojson [ ("Id", Some (string__to_yojson x.id)) ]
@@ -456,15 +447,15 @@ let delete_message_batch_result_entry_list_to_yojson tree =
 let delete_message_batch_result_to_yojson (x : delete_message_batch_result) =
   assoc_to_yojson
     [
-      ("Failed", Some (batch_result_error_entry_list_to_yojson x.failed));
       ("Successful", Some (delete_message_batch_result_entry_list_to_yojson x.successful));
+      ("Failed", Some (batch_result_error_entry_list_to_yojson x.failed));
     ]
 
 let delete_message_batch_request_entry_to_yojson (x : delete_message_batch_request_entry) =
   assoc_to_yojson
     [
-      ("ReceiptHandle", Some (string__to_yojson x.receipt_handle));
       ("Id", Some (string__to_yojson x.id));
+      ("ReceiptHandle", Some (string__to_yojson x.receipt_handle));
     ]
 
 let delete_message_batch_request_entry_list_to_yojson tree =
@@ -473,9 +464,27 @@ let delete_message_batch_request_entry_list_to_yojson tree =
 let delete_message_batch_request_to_yojson (x : delete_message_batch_request) =
   assoc_to_yojson
     [
-      ("Entries", Some (delete_message_batch_request_entry_list_to_yojson x.entries));
       ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("Entries", Some (delete_message_batch_request_entry_list_to_yojson x.entries));
     ]
+
+let receipt_handle_is_invalid_to_yojson (x : receipt_handle_is_invalid) =
+  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
+
+let invalid_id_format_to_yojson = unit_to_yojson
+
+let delete_message_request_to_yojson (x : delete_message_request) =
+  assoc_to_yojson
+    [
+      ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("ReceiptHandle", Some (string__to_yojson x.receipt_handle));
+    ]
+
+let queue_name_exists_to_yojson (x : queue_name_exists) =
+  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
+
+let queue_deleted_recently_to_yojson (x : queue_deleted_recently) =
+  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
 let create_queue_result_to_yojson (x : create_queue_result) =
   assoc_to_yojson [ ("QueueUrl", option_to_yojson string__to_yojson x.queue_url) ]
@@ -483,17 +492,9 @@ let create_queue_result_to_yojson (x : create_queue_result) =
 let create_queue_request_to_yojson (x : create_queue_request) =
   assoc_to_yojson
     [
-      ("tags", option_to_yojson tag_map_to_yojson x.tags);
-      ("Attributes", option_to_yojson queue_attribute_map_to_yojson x.attributes);
       ("QueueName", Some (string__to_yojson x.queue_name));
-    ]
-
-let change_message_visibility_request_to_yojson (x : change_message_visibility_request) =
-  assoc_to_yojson
-    [
-      ("VisibilityTimeout", Some (nullable_integer_to_yojson x.visibility_timeout));
-      ("ReceiptHandle", Some (string__to_yojson x.receipt_handle));
-      ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("Attributes", option_to_yojson queue_attribute_map_to_yojson x.attributes);
+      ("tags", option_to_yojson tag_map_to_yojson x.tags);
     ]
 
 let change_message_visibility_batch_result_entry_to_yojson
@@ -506,17 +507,17 @@ let change_message_visibility_batch_result_entry_list_to_yojson tree =
 let change_message_visibility_batch_result_to_yojson (x : change_message_visibility_batch_result) =
   assoc_to_yojson
     [
-      ("Failed", Some (batch_result_error_entry_list_to_yojson x.failed));
       ("Successful", Some (change_message_visibility_batch_result_entry_list_to_yojson x.successful));
+      ("Failed", Some (batch_result_error_entry_list_to_yojson x.failed));
     ]
 
 let change_message_visibility_batch_request_entry_to_yojson
     (x : change_message_visibility_batch_request_entry) =
   assoc_to_yojson
     [
-      ("VisibilityTimeout", option_to_yojson nullable_integer_to_yojson x.visibility_timeout);
-      ("ReceiptHandle", Some (string__to_yojson x.receipt_handle));
       ("Id", Some (string__to_yojson x.id));
+      ("ReceiptHandle", Some (string__to_yojson x.receipt_handle));
+      ("VisibilityTimeout", option_to_yojson nullable_integer_to_yojson x.visibility_timeout);
     ]
 
 let change_message_visibility_batch_request_entry_list_to_yojson tree =
@@ -526,8 +527,18 @@ let change_message_visibility_batch_request_to_yojson (x : change_message_visibi
     =
   assoc_to_yojson
     [
-      ("Entries", Some (change_message_visibility_batch_request_entry_list_to_yojson x.entries));
       ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("Entries", Some (change_message_visibility_batch_request_entry_list_to_yojson x.entries));
+    ]
+
+let message_not_inflight_to_yojson = unit_to_yojson
+
+let change_message_visibility_request_to_yojson (x : change_message_visibility_request) =
+  assoc_to_yojson
+    [
+      ("QueueUrl", Some (string__to_yojson x.queue_url));
+      ("ReceiptHandle", Some (string__to_yojson x.receipt_handle));
+      ("VisibilityTimeout", Some (nullable_integer_to_yojson x.visibility_timeout));
     ]
 
 let cancel_message_move_task_result_to_yojson (x : cancel_message_move_task_result) =
@@ -539,15 +550,3 @@ let cancel_message_move_task_result_to_yojson (x : cancel_message_move_task_resu
 
 let cancel_message_move_task_request_to_yojson (x : cancel_message_move_task_request) =
   assoc_to_yojson [ ("TaskHandle", Some (string__to_yojson x.task_handle)) ]
-
-let aws_account_id_list_to_yojson tree = list_to_yojson string__to_yojson tree
-let action_name_list_to_yojson tree = list_to_yojson string__to_yojson tree
-
-let add_permission_request_to_yojson (x : add_permission_request) =
-  assoc_to_yojson
-    [
-      ("Actions", Some (action_name_list_to_yojson x.actions));
-      ("AWSAccountIds", Some (aws_account_id_list_to_yojson x.aws_account_ids));
-      ("Label", Some (string__to_yojson x.label));
-      ("QueueUrl", Some (string__to_yojson x.queue_url));
-    ]

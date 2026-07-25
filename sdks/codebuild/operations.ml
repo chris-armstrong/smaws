@@ -1,258 +1,6 @@
 open Types
 open Service_metadata
 
-module BatchDeleteBuilds = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_delete_builds_input) =
-    let input = Json_serializers.batch_delete_builds_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchDeleteBuilds" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.batch_delete_builds_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_delete_builds_input) =
-    let input = Json_serializers.batch_delete_builds_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeBuild_20161006.BatchDeleteBuilds" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_delete_builds_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetBuildBatches = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_build_batches_input) =
-    let input = Json_serializers.batch_get_build_batches_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetBuildBatches"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_build_batches_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_build_batches_input) =
-    let input = Json_serializers.batch_get_build_batches_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeBuild_20161006.BatchGetBuildBatches" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_build_batches_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetBuilds = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_builds_input) =
-    let input = Json_serializers.batch_get_builds_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetBuilds" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.batch_get_builds_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_builds_input) =
-    let input = Json_serializers.batch_get_builds_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeBuild_20161006.BatchGetBuilds" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_builds_output_of_yojson ~error_deserializer
-end
-
-module BatchGetCommandExecutions = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_command_executions_input) =
-    let input = Json_serializers.batch_get_command_executions_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetCommandExecutions"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_command_executions_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_command_executions_input) =
-    let input = Json_serializers.batch_get_command_executions_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeBuild_20161006.BatchGetCommandExecutions" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_command_executions_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetFleets = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_fleets_input) =
-    let input = Json_serializers.batch_get_fleets_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetFleets" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.batch_get_fleets_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_fleets_input) =
-    let input = Json_serializers.batch_get_fleets_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeBuild_20161006.BatchGetFleets" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_fleets_output_of_yojson ~error_deserializer
-end
-
-module BatchGetProjects = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_projects_input) =
-    let input = Json_serializers.batch_get_projects_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetProjects" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.batch_get_projects_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_projects_input) =
-    let input = Json_serializers.batch_get_projects_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeBuild_20161006.BatchGetProjects" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_projects_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetReportGroups = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_report_groups_input) =
-    let input = Json_serializers.batch_get_report_groups_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetReportGroups"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_report_groups_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_report_groups_input) =
-    let input = Json_serializers.batch_get_report_groups_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeBuild_20161006.BatchGetReportGroups" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_report_groups_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetReports = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_reports_input) =
-    let input = Json_serializers.batch_get_reports_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetReports" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.batch_get_reports_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_reports_input) =
-    let input = Json_serializers.batch_get_reports_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeBuild_20161006.BatchGetReports" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_reports_output_of_yojson ~error_deserializer
-end
-
-module BatchGetSandboxes = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_sandboxes_input) =
-    let input = Json_serializers.batch_get_sandboxes_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetSandboxes" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.batch_get_sandboxes_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_sandboxes_input) =
-    let input = Json_serializers.batch_get_sandboxes_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeBuild_20161006.BatchGetSandboxes" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_sandboxes_output_of_yojson
-      ~error_deserializer
-end
-
 module CreateFleet = struct
   let error_to_string = function
     | `AccountLimitExceededException _ -> "com.amazonaws.codebuild#AccountLimitExceededException"
@@ -1811,4 +1559,256 @@ module UpdateWebhook = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CodeBuild_20161006.UpdateWebhook"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_webhook_output_of_yojson ~error_deserializer
+end
+
+module BatchGetSandboxes = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_sandboxes_input) =
+    let input = Json_serializers.batch_get_sandboxes_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetSandboxes" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.batch_get_sandboxes_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_sandboxes_input) =
+    let input = Json_serializers.batch_get_sandboxes_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeBuild_20161006.BatchGetSandboxes" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_sandboxes_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetReports = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_reports_input) =
+    let input = Json_serializers.batch_get_reports_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetReports" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.batch_get_reports_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_reports_input) =
+    let input = Json_serializers.batch_get_reports_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeBuild_20161006.BatchGetReports" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_reports_output_of_yojson ~error_deserializer
+end
+
+module BatchGetReportGroups = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_report_groups_input) =
+    let input = Json_serializers.batch_get_report_groups_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetReportGroups"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_report_groups_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_report_groups_input) =
+    let input = Json_serializers.batch_get_report_groups_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeBuild_20161006.BatchGetReportGroups" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_report_groups_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetProjects = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_projects_input) =
+    let input = Json_serializers.batch_get_projects_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetProjects" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.batch_get_projects_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_projects_input) =
+    let input = Json_serializers.batch_get_projects_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeBuild_20161006.BatchGetProjects" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_projects_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetFleets = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_fleets_input) =
+    let input = Json_serializers.batch_get_fleets_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetFleets" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.batch_get_fleets_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_fleets_input) =
+    let input = Json_serializers.batch_get_fleets_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeBuild_20161006.BatchGetFleets" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_fleets_output_of_yojson ~error_deserializer
+end
+
+module BatchGetCommandExecutions = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_command_executions_input) =
+    let input = Json_serializers.batch_get_command_executions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetCommandExecutions"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_command_executions_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_command_executions_input) =
+    let input = Json_serializers.batch_get_command_executions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeBuild_20161006.BatchGetCommandExecutions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_command_executions_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetBuilds = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_builds_input) =
+    let input = Json_serializers.batch_get_builds_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetBuilds" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.batch_get_builds_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_builds_input) =
+    let input = Json_serializers.batch_get_builds_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeBuild_20161006.BatchGetBuilds" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_builds_output_of_yojson ~error_deserializer
+end
+
+module BatchGetBuildBatches = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_build_batches_input) =
+    let input = Json_serializers.batch_get_build_batches_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchGetBuildBatches"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_build_batches_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_build_batches_input) =
+    let input = Json_serializers.batch_get_build_batches_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeBuild_20161006.BatchGetBuildBatches" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_build_batches_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchDeleteBuilds = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.codebuild#InvalidInputException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_delete_builds_input) =
+    let input = Json_serializers.batch_delete_builds_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeBuild_20161006.BatchDeleteBuilds" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.batch_delete_builds_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_delete_builds_input) =
+    let input = Json_serializers.batch_delete_builds_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeBuild_20161006.BatchDeleteBuilds" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_delete_builds_output_of_yojson
+      ~error_deserializer
 end

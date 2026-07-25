@@ -260,38 +260,6 @@ module DescribeEventDetailsForOrganization = struct
       ~error_deserializer
 end
 
-module DescribeEventTypes = struct
-  let error_to_string = function
-    | `InvalidPaginationToken _ -> "com.amazonaws.health#InvalidPaginationToken"
-    | `UnsupportedLocale _ -> "com.amazonaws.health#UnsupportedLocale"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidPaginationToken" ->
-          `InvalidPaginationToken (Json_deserializers.invalid_pagination_token_of_yojson tree path)
-      | _, "UnsupportedLocale" ->
-          `UnsupportedLocale (Json_deserializers.unsupported_locale_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_event_types_request) =
-    let input = Json_serializers.describe_event_types_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSHealth_20160804.DescribeEventTypes" ~service
-      ~context ~input
-      ~output_deserializer:Json_deserializers.describe_event_types_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_event_types_request) =
-    let input = Json_serializers.describe_event_types_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSHealth_20160804.DescribeEventTypes" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_event_types_response_of_yojson
-      ~error_deserializer
-end
-
 module DescribeEvents = struct
   let error_to_string = function
     | `InvalidPaginationToken _ -> "com.amazonaws.health#InvalidPaginationToken"
@@ -351,6 +319,38 @@ module DescribeEventsForOrganization = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSHealth_20160804.DescribeEventsForOrganization" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_events_for_organization_response_of_yojson
+      ~error_deserializer
+end
+
+module DescribeEventTypes = struct
+  let error_to_string = function
+    | `InvalidPaginationToken _ -> "com.amazonaws.health#InvalidPaginationToken"
+    | `UnsupportedLocale _ -> "com.amazonaws.health#UnsupportedLocale"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidPaginationToken" ->
+          `InvalidPaginationToken (Json_deserializers.invalid_pagination_token_of_yojson tree path)
+      | _, "UnsupportedLocale" ->
+          `UnsupportedLocale (Json_deserializers.unsupported_locale_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_event_types_request) =
+    let input = Json_serializers.describe_event_types_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSHealth_20160804.DescribeEventTypes" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.describe_event_types_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_event_types_request) =
+    let input = Json_serializers.describe_event_types_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSHealth_20160804.DescribeEventTypes" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_event_types_response_of_yojson
       ~error_deserializer
 end
 

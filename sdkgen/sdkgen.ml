@@ -216,10 +216,15 @@ let write_operations ~output_dir t =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
         Gen_operations.generate ~name ~service ~operation_shapes ~structure_shapes ~alias_context
           ~namespace_resolver ~shape_resolver output_fmt)
-  and r2 =
-    write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
-        Gen_operations.generate_mli ~name ~service ~operation_shapes ~structure_shapes
-          ~alias_context ~namespace_resolver output_fmt)
+  in
+  let r2 =
+    let protocol = SmithyHelpers.protocol_of_traits service.traits in
+    match protocol with
+    | RestXml -> Ok ()
+    | _ ->
+        write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
+            Gen_operations.generate_mli ~name ~service ~operation_shapes ~structure_shapes
+              ~alias_context ~namespace_resolver output_fmt)
   in
   Result.all_unit [ r1; r2 ]
 
@@ -253,6 +258,7 @@ let write_serialisers ~output_dir t =
     match SmithyHelpers.protocol_of_traits service.traits with
     | Query -> "query_serializers"
     | Json -> "json_serializers"
+    | RestXml -> "xml_serializers"
   in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       Gen_serialisers.generate ~service ~operation_shapes ~structure_shapes ~shape_resolver
@@ -278,6 +284,26 @@ let write_query_deserialisers ~output_dir t =
       Gen_deserialisers.generate ~protocol_override:SmithyHelpers.Query ~service:empty_service
         ~operation_shapes:[] ~structure_shapes ~shape_resolver ~namespace_resolver output_fmt)
 
+let write_xml_serialisers ~output_dir t =
+  let { namespace; structure_shapes; namespace_module_mapping; shape_resolver; _ } = t in
+  let namespace_resolver =
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
+      ~namespace_module_mapping
+  in
+  write_output ~output_dir ~filename:"xml_serializers.ml" (fun output_fmt ->
+      Gen_serialisers.generate ~protocol_override:SmithyHelpers.RestXml ~service:empty_service
+        ~operation_shapes:[] ~structure_shapes ~shape_resolver ~namespace_resolver output_fmt)
+
+let write_xml_deserialisers ~output_dir t =
+  let { namespace; structure_shapes; namespace_module_mapping; shape_resolver; _ } = t in
+  let namespace_resolver =
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
+      ~namespace_module_mapping
+  in
+  write_output ~output_dir ~filename:"xml_deserializers.ml" (fun output_fmt ->
+      Gen_deserialisers.generate ~protocol_override:SmithyHelpers.RestXml ~service:empty_service
+        ~operation_shapes:[] ~structure_shapes ~shape_resolver ~namespace_resolver output_fmt)
+
 let write_deserialisers ~output_dir t =
   let {
     namespace;
@@ -299,6 +325,7 @@ let write_deserialisers ~output_dir t =
     match SmithyHelpers.protocol_of_traits service.traits with
     | Query -> "query_deserializers"
     | Json -> "json_deserializers"
+    | RestXml -> "xml_deserializers"
   in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       Gen_deserialisers.generate ~service ~operation_shapes ~structure_shapes ~shape_resolver

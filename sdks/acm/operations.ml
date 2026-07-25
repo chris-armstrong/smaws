@@ -1,58 +1,6 @@
 open Types
 open Service_metadata
 
-module AddTagsToCertificate = struct
-  let error_to_string = function
-    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
-    | `InvalidParameterException _ -> "com.amazonaws.acm#InvalidParameterException"
-    | `InvalidTagException _ -> "com.amazonaws.acm#InvalidTagException"
-    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
-    | `TagPolicyException _ -> "com.amazonaws.acm#TagPolicyException"
-    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
-    | `TooManyTagsException _ -> "com.amazonaws.acm#TooManyTagsException"
-    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidArnException" ->
-          `InvalidArnException (Json_deserializers.invalid_arn_exception_of_yojson tree path)
-      | _, "InvalidParameterException" ->
-          `InvalidParameterException
-            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
-      | _, "InvalidTagException" ->
-          `InvalidTagException (Json_deserializers.invalid_tag_exception_of_yojson tree path)
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _, "TagPolicyException" ->
-          `TagPolicyException (Json_deserializers.tag_policy_exception_of_yojson tree path)
-      | _, "ThrottlingException" ->
-          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
-      | _, "TooManyTagsException" ->
-          `TooManyTagsException (Json_deserializers.too_many_tags_exception_of_yojson tree path)
-      | _, "ValidationException" ->
-          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_tags_to_certificate_request) =
-    let input = Json_serializers.add_tags_to_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.AddTagsToCertificate"
-      ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_to_certificate_request) =
-    let input = Json_serializers.add_tags_to_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CertificateManager.AddTagsToCertificate" ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
 module CreateAcmeDomainValidation = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
@@ -1652,6 +1600,58 @@ module UpdateCertificateOptions = struct
     let input = Json_serializers.update_certificate_options_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CertificateManager.UpdateCertificateOptions" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module AddTagsToCertificate = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `InvalidParameterException _ -> "com.amazonaws.acm#InvalidParameterException"
+    | `InvalidTagException _ -> "com.amazonaws.acm#InvalidTagException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `TagPolicyException _ -> "com.amazonaws.acm#TagPolicyException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `TooManyTagsException _ -> "com.amazonaws.acm#TooManyTagsException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidArnException" ->
+          `InvalidArnException (Json_deserializers.invalid_arn_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "InvalidTagException" ->
+          `InvalidTagException (Json_deserializers.invalid_tag_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "TagPolicyException" ->
+          `TagPolicyException (Json_deserializers.tag_policy_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "TooManyTagsException" ->
+          `TooManyTagsException (Json_deserializers.too_many_tags_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_tags_to_certificate_request) =
+    let input = Json_serializers.add_tags_to_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.AddTagsToCertificate"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_certificate_request) =
+    let input = Json_serializers.add_tags_to_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.AddTagsToCertificate" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end

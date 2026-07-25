@@ -8,86 +8,247 @@ module Types = Types
 
 (** {1:builders Builders} *)
 
-val make_custom_attribute : ?value:string_ -> ?object_identifier:string_ -> unit -> custom_attribute
-
-val make_distinguished_name :
-  ?title:string_ ->
-  ?surname:string_ ->
-  ?state:string_ ->
-  ?serial_number:string_ ->
-  ?pseudonym:string_ ->
-  ?organizational_unit:string_ ->
-  ?organization:string_ ->
-  ?locality:string_ ->
-  ?initials:string_ ->
-  ?given_name:string_ ->
-  ?generation_qualifier:string_ ->
-  ?distinguished_name_qualifier:string_ ->
-  ?custom_attributes:custom_attribute_list ->
-  ?country:string_ ->
-  ?domain_components:domain_component_list ->
-  ?common_name:string_ ->
+val make_acm_certificate_metadata :
+  ?created_at:t_stamp ->
+  ?exported:nullable_boolean ->
+  ?imported_at:t_stamp ->
+  ?in_use:nullable_boolean ->
+  ?issued_at:t_stamp ->
+  ?renewal_eligibility:renewal_eligibility ->
+  ?revoked_at:t_stamp ->
+  ?status:certificate_status ->
+  ?renewal_status:renewal_status ->
+  ?type_:certificate_type ->
+  ?export_option:certificate_export ->
+  ?managed_by:certificate_managed_by ->
+  ?validation_method:validation_method ->
+  ?certificate_key_pair_origin:certificate_key_pair_origin ->
+  ?acme_endpoint_arn:arn ->
+  ?acme_account_id:acme_account_id ->
   unit ->
-  distinguished_name
+  acm_certificate_metadata
 
-val make_other_name : ?value:string_ -> ?object_identifier:string_ -> unit -> other_name
-
-val make_x509_attributes :
-  ?not_before:t_stamp ->
-  ?not_after:t_stamp ->
-  ?serial_number:serial_number ->
-  ?key_usages:key_usage_names ->
-  ?key_algorithm:key_algorithm ->
-  ?extended_key_usages:extended_key_usage_names ->
-  ?subject_alternative_names:general_name_list ->
-  ?subject:distinguished_name ->
-  ?issuer:distinguished_name ->
+val make_acme_account :
+  ?account_url:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?public_key_thumbprint:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?status:acme_account_status ->
+  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?acme_external_account_binding_arn:acme_external_account_binding_arn ->
+  ?contacts:contact_list ->
   unit ->
-  x509_attributes
+  acme_account
 
-val make_common_name_filter :
-  comparison_operator:comparison_operator -> value:filter_string -> unit -> common_name_filter
-
-val make_dns_name_filter :
-  comparison_operator:comparison_operator -> value:filter_string -> unit -> dns_name_filter
-
-val make_timestamp_range : ?end_:t_stamp -> ?start:t_stamp -> unit -> timestamp_range
-
-val make_certificate_options :
-  ?export_:certificate_export ->
-  ?certificate_transparency_logging_preference:certificate_transparency_logging_preference ->
+val make_acme_account_summary :
+  ?account_url:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?public_key_thumbprint:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?status:acme_account_status ->
+  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?acme_external_account_binding_arn:acme_external_account_binding_arn ->
+  ?contacts:contact_list ->
   unit ->
-  certificate_options
+  acme_account_summary
 
-val make_update_certificate_options_request :
-  options:certificate_options -> certificate_arn:arn -> unit -> update_certificate_options_request
+val make_failure_details :
+  ?reason:acme_domain_validation_failure_reason ->
+  ?message:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  failure_details
+
+val make_resource_record :
+  name:string_ -> type_:record_type -> value:string_ -> unit -> resource_record
+
+val make_domain_scope :
+  ?exact_domain:domain_scope_option ->
+  ?subdomains:domain_scope_option ->
+  ?wildcards:domain_scope_option ->
+  unit ->
+  domain_scope
+
+val make_dns_prevalidation_details :
+  ?domain_scope:domain_scope ->
+  ?hosted_zone_id:hosted_zone_id ->
+  ?resource_record:resource_record ->
+  unit ->
+  dns_prevalidation_details
+
+val make_acme_domain_validation :
+  ?acme_domain_validation_arn:acme_domain_validation_arn ->
+  ?acme_endpoint_arn:acme_endpoint_arn ->
+  ?domain_name:domain_name ->
+  ?prevalidation_type:prevalidation_type ->
+  ?prevalidation_details:prevalidation_details ->
+  ?status:acme_domain_validation_status ->
+  ?failure_details:failure_details ->
+  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  unit ->
+  acme_domain_validation
+
+val make_acme_domain_validation_summary :
+  ?acme_domain_validation_arn:acme_domain_validation_arn ->
+  ?acme_endpoint_arn:acme_endpoint_arn ->
+  ?domain_name:domain_name ->
+  ?prevalidation_type:prevalidation_type ->
+  ?prevalidation_details:prevalidation_details ->
+  ?status:acme_domain_validation_status ->
+  ?failure_details:failure_details ->
+  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  unit ->
+  acme_domain_validation_summary
+
+val make_tag : ?value:tag_value -> key:tag_key -> unit -> tag
 
 val make_public_certificate_authority :
   ?allowed_key_algorithms:public_key_algorithm_list -> unit -> public_certificate_authority
 
-val make_update_acme_endpoint_request :
-  ?certificate_authority:certificate_authority ->
-  ?contact:acme_contact ->
+val make_acme_endpoint :
+  ?acme_endpoint_arn:acme_endpoint_arn ->
+  ?endpoint_url:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?status:acme_endpoint_status ->
+  ?failure_reason:Smaws_Lib.Smithy_api.Types.string_ ->
   ?authorization_behavior:acme_authorization_behavior ->
+  ?contact:acme_contact ->
+  ?certificate_authority:certificate_authority ->
+  ?certificate_tags:tag_list ->
+  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  unit ->
+  acme_endpoint
+
+val make_acme_endpoint_summary :
+  ?acme_endpoint_arn:acme_endpoint_arn ->
+  ?endpoint_url:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?status:acme_endpoint_status ->
+  ?failure_reason:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?authorization_behavior:acme_authorization_behavior ->
+  ?contact:acme_contact ->
+  ?certificate_authority:certificate_authority ->
+  ?certificate_tags:tag_list ->
+  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  unit ->
+  acme_endpoint_summary
+
+val make_acme_external_account_binding :
+  ?acme_external_account_binding_arn:acme_external_account_binding_arn ->
+  ?acme_endpoint_arn:acme_endpoint_arn ->
+  ?role_arn:role_arn ->
+  ?expires_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?revoked_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?last_used_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  unit ->
+  acme_external_account_binding
+
+val make_acme_external_account_binding_summary :
+  ?acme_external_account_binding_arn:acme_external_account_binding_arn ->
+  ?acme_endpoint_arn:acme_endpoint_arn ->
+  ?role_arn:role_arn ->
+  ?expires_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?revoked_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?last_used_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+  unit ->
+  acme_external_account_binding_summary
+
+val make_throttling_reason :
+  ?reason:coral_availability_throttling_reason ->
+  ?resource:coral_availability_throttled_resource ->
+  unit ->
+  throttling_reason
+
+val make_add_tags_to_certificate_request :
+  certificate_arn:arn -> tags:tag_list -> unit -> add_tags_to_certificate_request
+
+val make_certificate_options :
+  ?certificate_transparency_logging_preference:certificate_transparency_logging_preference ->
+  ?export_:certificate_export ->
+  unit ->
+  certificate_options
+
+val make_extended_key_usage :
+  ?name:extended_key_usage_name -> ?oi_d:string_ -> unit -> extended_key_usage
+
+val make_key_usage : ?name:key_usage_name -> unit -> key_usage
+val make_http_redirect : ?redirect_from:string_ -> ?redirect_to:string_ -> unit -> http_redirect
+
+val make_domain_validation :
+  ?validation_emails:validation_email_list ->
+  ?validation_domain:domain_name_string ->
+  ?validation_status:domain_status ->
+  ?resource_record:resource_record ->
+  ?http_redirect:http_redirect ->
+  ?validation_method:validation_method ->
+  domain_name:domain_name_string ->
+  unit ->
+  domain_validation
+
+val make_renewal_summary :
+  ?renewal_status_reason:failure_reason ->
+  renewal_status:renewal_status ->
+  domain_validation_options:domain_validation_list ->
+  updated_at:t_stamp ->
+  unit ->
+  renewal_summary
+
+val make_certificate_detail :
+  ?certificate_arn:arn ->
+  ?domain_name:domain_name_string ->
+  ?subject_alternative_names:domain_list ->
+  ?managed_by:certificate_managed_by ->
+  ?domain_validation_options:domain_validation_list ->
+  ?serial:string_ ->
+  ?subject:string_ ->
+  ?issuer:string_ ->
+  ?created_at:t_stamp ->
+  ?issued_at:t_stamp ->
+  ?imported_at:t_stamp ->
+  ?status:certificate_status ->
+  ?revoked_at:t_stamp ->
+  ?revocation_reason:revocation_reason ->
+  ?not_before:t_stamp ->
+  ?not_after:t_stamp ->
+  ?key_algorithm:key_algorithm ->
+  ?signature_algorithm:string_ ->
+  ?in_use_by:in_use_list ->
+  ?failure_reason:failure_reason ->
+  ?type_:certificate_type ->
+  ?renewal_summary:renewal_summary ->
+  ?key_usages:key_usage_list ->
+  ?extended_key_usages:extended_key_usage_list ->
+  ?certificate_authority_arn:arn ->
+  ?renewal_eligibility:renewal_eligibility ->
+  ?options:certificate_options ->
+  ?certificate_key_pair_origin:certificate_key_pair_origin ->
+  ?acme_endpoint_arn:arn ->
+  ?acme_account_id:acme_account_id ->
+  unit ->
+  certificate_detail
+
+val make_timestamp_range : ?start:t_stamp -> ?end_:t_stamp -> unit -> timestamp_range
+
+val make_dns_name_filter :
+  value:filter_string -> comparison_operator:comparison_operator -> unit -> dns_name_filter
+
+val make_common_name_filter :
+  value:filter_string -> comparison_operator:comparison_operator -> unit -> common_name_filter
+
+val make_update_certificate_options_request :
+  certificate_arn:arn -> options:certificate_options -> unit -> update_certificate_options_request
+
+val make_update_acme_endpoint_request :
+  ?authorization_behavior:acme_authorization_behavior ->
+  ?contact:acme_contact ->
+  ?certificate_authority:certificate_authority ->
   acme_endpoint_arn:acme_endpoint_arn ->
   unit ->
   update_acme_endpoint_request
 
-val make_throttling_reason :
-  ?resource:coral_availability_throttled_resource ->
-  ?reason:coral_availability_throttling_reason ->
-  unit ->
-  throttling_reason
-
-val make_domain_scope :
-  ?wildcards:domain_scope_option ->
-  ?subdomains:domain_scope_option ->
-  ?exact_domain:domain_scope_option ->
-  unit ->
-  domain_scope
-
 val make_dns_prevalidation_options :
-  ?hosted_zone_id:hosted_zone_id -> ?domain_scope:domain_scope -> unit -> dns_prevalidation_options
+  ?domain_scope:domain_scope -> ?hosted_zone_id:hosted_zone_id -> unit -> dns_prevalidation_options
 
 val make_update_acme_domain_validation_request :
   ?prevalidation_options:prevalidation_options ->
@@ -96,50 +257,64 @@ val make_update_acme_domain_validation_request :
   update_acme_domain_validation_request
 
 val make_untag_resource_request :
-  tag_keys:tag_key_list -> resource_arn:arn -> unit -> untag_resource_request
+  resource_arn:arn -> tag_keys:tag_key_list -> unit -> untag_resource_request
 
-val make_tag : ?value:tag_value -> key:tag_key -> unit -> tag
-val make_tag_resource_request : tags:tag_list -> resource_arn:arn -> unit -> tag_resource_request
+val make_tag_resource_request : resource_arn:arn -> tags:tag_list -> unit -> tag_resource_request
+val make_other_name : ?object_identifier:string_ -> ?value:string_ -> unit -> other_name
+val make_custom_attribute : ?object_identifier:string_ -> ?value:string_ -> unit -> custom_attribute
 
-val make_acm_certificate_metadata :
-  ?acme_account_id:acme_account_id ->
-  ?acme_endpoint_arn:arn ->
-  ?certificate_key_pair_origin:certificate_key_pair_origin ->
-  ?validation_method:validation_method ->
-  ?managed_by:certificate_managed_by ->
-  ?export_option:certificate_export ->
-  ?type_:certificate_type ->
-  ?renewal_status:renewal_status ->
-  ?status:certificate_status ->
-  ?revoked_at:t_stamp ->
-  ?renewal_eligibility:renewal_eligibility ->
-  ?issued_at:t_stamp ->
-  ?in_use:nullable_boolean ->
-  ?imported_at:t_stamp ->
-  ?exported:nullable_boolean ->
-  ?created_at:t_stamp ->
+val make_distinguished_name :
+  ?common_name:string_ ->
+  ?domain_components:domain_component_list ->
+  ?country:string_ ->
+  ?custom_attributes:custom_attribute_list ->
+  ?distinguished_name_qualifier:string_ ->
+  ?generation_qualifier:string_ ->
+  ?given_name:string_ ->
+  ?initials:string_ ->
+  ?locality:string_ ->
+  ?organization:string_ ->
+  ?organizational_unit:string_ ->
+  ?pseudonym:string_ ->
+  ?serial_number:string_ ->
+  ?state:string_ ->
+  ?surname:string_ ->
+  ?title:string_ ->
   unit ->
-  acm_certificate_metadata
+  distinguished_name
+
+val make_x509_attributes :
+  ?issuer:distinguished_name ->
+  ?subject:distinguished_name ->
+  ?subject_alternative_names:general_name_list ->
+  ?extended_key_usages:extended_key_usage_names ->
+  ?key_algorithm:key_algorithm ->
+  ?key_usages:key_usage_names ->
+  ?serial_number:serial_number ->
+  ?not_after:t_stamp ->
+  ?not_before:t_stamp ->
+  unit ->
+  x509_attributes
 
 val make_search_certificates_response :
-  ?next_token:next_token ->
   ?results:certificate_search_result_list ->
+  ?next_token:next_token ->
   unit ->
   search_certificates_response
 
 val make_search_certificates_request :
-  ?sort_order:search_certificates_sort_order ->
-  ?sort_by:search_certificates_sort_by ->
-  ?next_token:next_token ->
-  ?max_results:search_max_results ->
   ?filter_statement:certificate_filter_statement ->
+  ?max_results:search_max_results ->
+  ?next_token:next_token ->
+  ?sort_by:search_certificates_sort_by ->
+  ?sort_order:search_certificates_sort_order ->
   unit ->
   search_certificates_request
 
 val make_revoke_certificate_response : ?certificate_arn:arn -> unit -> revoke_certificate_response
 
 val make_revoke_certificate_request :
-  revocation_reason:revocation_reason -> certificate_arn:arn -> unit -> revoke_certificate_request
+  certificate_arn:arn -> revocation_reason:revocation_reason -> unit -> revoke_certificate_request
 
 val make_revoke_acme_external_account_binding_request :
   acme_external_account_binding_arn:acme_external_account_binding_arn ->
@@ -147,68 +322,44 @@ val make_revoke_acme_external_account_binding_request :
   revoke_acme_external_account_binding_request
 
 val make_revoke_acme_account_request :
-  account_url:Smaws_Lib.Smithy_api.Types.string_ ->
   acme_endpoint_arn:acme_endpoint_arn ->
+  account_url:Smaws_Lib.Smithy_api.Types.string_ ->
   unit ->
   revoke_acme_account_request
 
-val make_resource_record :
-  value:string_ -> type_:record_type -> name:string_ -> unit -> resource_record
-
 val make_resend_validation_email_request :
-  validation_domain:domain_name_string ->
-  domain:domain_name_string ->
   certificate_arn:arn ->
+  domain:domain_name_string ->
+  validation_domain:domain_name_string ->
   unit ->
   resend_validation_email_request
 
 val make_request_certificate_response : ?certificate_arn:arn -> unit -> request_certificate_response
 
 val make_domain_validation_option :
-  validation_domain:domain_name_string ->
   domain_name:domain_name_string ->
+  validation_domain:domain_name_string ->
   unit ->
   domain_validation_option
 
 val make_request_certificate_request :
-  ?managed_by:certificate_managed_by ->
-  ?key_algorithm:key_algorithm ->
-  ?tags:tag_list ->
-  ?certificate_authority_arn:pca_arn ->
-  ?options:certificate_options ->
-  ?domain_validation_options:domain_validation_option_list ->
-  ?idempotency_token:idempotency_token ->
-  ?subject_alternative_names:domain_list ->
   ?validation_method:validation_method ->
+  ?subject_alternative_names:domain_list ->
+  ?idempotency_token:idempotency_token ->
+  ?domain_validation_options:domain_validation_option_list ->
+  ?options:certificate_options ->
+  ?certificate_authority_arn:pca_arn ->
+  ?tags:tag_list ->
+  ?key_algorithm:key_algorithm ->
+  ?managed_by:certificate_managed_by ->
   domain_name:domain_name_string ->
   unit ->
   request_certificate_request
 
-val make_http_redirect : ?redirect_to:string_ -> ?redirect_from:string_ -> unit -> http_redirect
-
-val make_domain_validation :
-  ?validation_method:validation_method ->
-  ?http_redirect:http_redirect ->
-  ?resource_record:resource_record ->
-  ?validation_status:domain_status ->
-  ?validation_domain:domain_name_string ->
-  ?validation_emails:validation_email_list ->
-  domain_name:domain_name_string ->
-  unit ->
-  domain_validation
-
-val make_renewal_summary :
-  ?renewal_status_reason:failure_reason ->
-  updated_at:t_stamp ->
-  domain_validation_options:domain_validation_list ->
-  renewal_status:renewal_status ->
-  unit ->
-  renewal_summary
-
 val make_renew_certificate_request : certificate_arn:arn -> unit -> renew_certificate_request
 
 val make_remove_tags_from_certificate_request :
-  tags:tag_list -> certificate_arn:arn -> unit -> remove_tags_from_certificate_request
+  certificate_arn:arn -> tags:tag_list -> unit -> remove_tags_from_certificate_request
 
 val make_expiry_events_configuration :
   ?days_before_expiry:positive_integer -> unit -> expiry_events_configuration
@@ -218,13 +369,6 @@ val make_put_account_configuration_request :
   idempotency_token:idempotency_token ->
   unit ->
   put_account_configuration_request
-
-val make_dns_prevalidation_details :
-  ?resource_record:resource_record ->
-  ?hosted_zone_id:hosted_zone_id ->
-  ?domain_scope:domain_scope ->
-  unit ->
-  dns_prevalidation_details
 
 val make_list_tags_for_resource_response : ?tags:tag_list -> unit -> list_tags_for_resource_response
 val make_list_tags_for_resource_request : resource_arn:arn -> unit -> list_tags_for_resource_request
@@ -236,185 +380,129 @@ val make_list_tags_for_certificate_request :
   certificate_arn:arn -> unit -> list_tags_for_certificate_request
 
 val make_certificate_summary :
-  ?certificate_key_pair_origin:certificate_key_pair_origin ->
-  ?managed_by:certificate_managed_by ->
-  ?revoked_at:t_stamp ->
-  ?imported_at:t_stamp ->
-  ?issued_at:t_stamp ->
-  ?created_at:t_stamp ->
-  ?not_after:t_stamp ->
-  ?not_before:t_stamp ->
-  ?renewal_eligibility:renewal_eligibility ->
-  ?exported:nullable_boolean ->
-  ?in_use:nullable_boolean ->
-  ?export_option:certificate_export ->
-  ?extended_key_usages:extended_key_usage_names ->
-  ?key_usages:key_usage_names ->
-  ?key_algorithm:key_algorithm ->
-  ?type_:certificate_type ->
-  ?status:certificate_status ->
-  ?has_additional_subject_alternative_names:nullable_boolean ->
-  ?subject_alternative_name_summaries:domain_list ->
-  ?domain_name:domain_name_string ->
   ?certificate_arn:arn ->
+  ?domain_name:domain_name_string ->
+  ?subject_alternative_name_summaries:domain_list ->
+  ?has_additional_subject_alternative_names:nullable_boolean ->
+  ?status:certificate_status ->
+  ?type_:certificate_type ->
+  ?key_algorithm:key_algorithm ->
+  ?key_usages:key_usage_names ->
+  ?extended_key_usages:extended_key_usage_names ->
+  ?export_option:certificate_export ->
+  ?in_use:nullable_boolean ->
+  ?exported:nullable_boolean ->
+  ?renewal_eligibility:renewal_eligibility ->
+  ?not_before:t_stamp ->
+  ?not_after:t_stamp ->
+  ?created_at:t_stamp ->
+  ?issued_at:t_stamp ->
+  ?imported_at:t_stamp ->
+  ?revoked_at:t_stamp ->
+  ?managed_by:certificate_managed_by ->
+  ?certificate_key_pair_origin:certificate_key_pair_origin ->
   unit ->
   certificate_summary
 
 val make_list_certificates_response :
-  ?certificate_summary_list:certificate_summary_list ->
   ?next_token:next_token ->
+  ?certificate_summary_list:certificate_summary_list ->
   unit ->
   list_certificates_response
 
 val make_filters :
-  ?managed_by:certificate_managed_by ->
-  ?export_option:certificate_export ->
-  ?key_types:key_algorithm_list ->
-  ?key_usage:key_usage_filter_list ->
   ?extended_key_usage:extended_key_usage_filter_list ->
+  ?key_usage:key_usage_filter_list ->
+  ?key_types:key_algorithm_list ->
+  ?export_option:certificate_export ->
+  ?managed_by:certificate_managed_by ->
   unit ->
   filters
 
 val make_list_certificates_request :
-  ?sort_order:sort_order ->
-  ?sort_by:sort_by ->
-  ?max_items:max_items ->
-  ?next_token:next_token ->
-  ?includes:filters ->
-  ?certificate_key_pair_origins:certificate_key_pair_origins ->
   ?certificate_statuses:certificate_statuses ->
+  ?certificate_key_pair_origins:certificate_key_pair_origins ->
+  ?includes:filters ->
+  ?next_token:next_token ->
+  ?max_items:max_items ->
+  ?sort_by:sort_by ->
+  ?sort_order:sort_order ->
   unit ->
   list_certificates_request
 
-val make_acme_external_account_binding_summary :
-  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?last_used_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?revoked_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?expires_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?role_arn:role_arn ->
-  ?acme_endpoint_arn:acme_endpoint_arn ->
-  ?acme_external_account_binding_arn:acme_external_account_binding_arn ->
-  unit ->
-  acme_external_account_binding_summary
-
 val make_list_acme_external_account_bindings_response :
-  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
   ?external_account_bindings:acme_external_account_binding_list ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
   unit ->
   list_acme_external_account_bindings_response
 
 val make_list_acme_external_account_bindings_request :
-  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
   ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
   acme_endpoint_arn:acme_endpoint_arn ->
   unit ->
   list_acme_external_account_bindings_request
 
-val make_acme_endpoint_summary :
-  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?certificate_tags:tag_list ->
-  ?certificate_authority:certificate_authority ->
-  ?contact:acme_contact ->
-  ?authorization_behavior:acme_authorization_behavior ->
-  ?failure_reason:Smaws_Lib.Smithy_api.Types.string_ ->
-  ?status:acme_endpoint_status ->
-  ?endpoint_url:Smaws_Lib.Smithy_api.Types.string_ ->
-  ?acme_endpoint_arn:acme_endpoint_arn ->
-  unit ->
-  acme_endpoint_summary
-
 val make_list_acme_endpoints_response :
-  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
   ?acme_endpoints:acme_endpoint_list ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
   unit ->
   list_acme_endpoints_response
 
 val make_list_acme_endpoints_request :
-  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
   ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
   unit ->
   list_acme_endpoints_request
 
-val make_failure_details :
-  ?message:Smaws_Lib.Smithy_api.Types.string_ ->
-  ?reason:acme_domain_validation_failure_reason ->
-  unit ->
-  failure_details
-
-val make_acme_domain_validation_summary :
-  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?failure_details:failure_details ->
-  ?status:acme_domain_validation_status ->
-  ?prevalidation_details:prevalidation_details ->
-  ?prevalidation_type:prevalidation_type ->
-  ?domain_name:domain_name ->
-  ?acme_endpoint_arn:acme_endpoint_arn ->
-  ?acme_domain_validation_arn:acme_domain_validation_arn ->
-  unit ->
-  acme_domain_validation_summary
-
 val make_list_acme_domain_validations_response :
-  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
   ?acme_domain_validations:acme_domain_validation_list ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
   unit ->
   list_acme_domain_validations_response
 
 val make_list_acme_domain_validations_request :
-  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
   ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
   acme_endpoint_arn:acme_endpoint_arn ->
   unit ->
   list_acme_domain_validations_request
 
-val make_acme_account_summary :
-  ?contacts:contact_list ->
-  ?acme_external_account_binding_arn:acme_external_account_binding_arn ->
-  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?status:acme_account_status ->
-  ?public_key_thumbprint:Smaws_Lib.Smithy_api.Types.string_ ->
-  ?account_url:Smaws_Lib.Smithy_api.Types.string_ ->
-  unit ->
-  acme_account_summary
-
 val make_list_acme_accounts_response :
-  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
   ?acme_accounts:acme_account_list ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
   unit ->
   list_acme_accounts_response
 
 val make_list_acme_accounts_request :
-  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
   ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
   acme_endpoint_arn:acme_endpoint_arn ->
   unit ->
   list_acme_accounts_request
 
-val make_key_usage : ?name:key_usage_name -> unit -> key_usage
 val make_import_certificate_response : ?certificate_arn:arn -> unit -> import_certificate_response
 
 val make_import_certificate_request :
-  ?tags:tag_list ->
-  ?certificate_chain:certificate_chain_blob ->
   ?certificate_arn:arn ->
-  private_key:private_key_blob ->
+  ?certificate_chain:certificate_chain_blob ->
+  ?tags:tag_list ->
   certificate:certificate_body_blob ->
+  private_key:private_key_blob ->
   unit ->
   import_certificate_request
 
 val make_get_certificate_response :
-  ?certificate_chain:certificate_chain ->
   ?certificate:certificate_body ->
+  ?certificate_chain:certificate_chain ->
   unit ->
   get_certificate_response
 
 val make_get_certificate_request : certificate_arn:arn -> unit -> get_certificate_request
 
 val make_get_acme_external_account_binding_credentials_response :
-  ?mac_key:mac_key ->
   ?key_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?mac_key:mac_key ->
   unit ->
   get_acme_external_account_binding_credentials_response
 
@@ -426,71 +514,20 @@ val make_get_acme_external_account_binding_credentials_request :
 val make_get_account_configuration_response :
   ?expiry_events:expiry_events_configuration -> unit -> get_account_configuration_response
 
-val make_extended_key_usage :
-  ?oi_d:string_ -> ?name:extended_key_usage_name -> unit -> extended_key_usage
-
 val make_export_certificate_response :
-  ?private_key:private_key ->
-  ?certificate_chain:certificate_chain ->
   ?certificate:certificate_body ->
+  ?certificate_chain:certificate_chain ->
+  ?private_key:private_key ->
   unit ->
   export_certificate_response
 
 val make_export_certificate_request :
-  passphrase:passphrase_blob -> certificate_arn:arn -> unit -> export_certificate_request
-
-val make_expiration : type_:time_type -> value:Smaws_Lib.Smithy_api.Types.long -> unit -> expiration
-
-val make_certificate_detail :
-  ?acme_account_id:acme_account_id ->
-  ?acme_endpoint_arn:arn ->
-  ?certificate_key_pair_origin:certificate_key_pair_origin ->
-  ?options:certificate_options ->
-  ?renewal_eligibility:renewal_eligibility ->
-  ?certificate_authority_arn:arn ->
-  ?extended_key_usages:extended_key_usage_list ->
-  ?key_usages:key_usage_list ->
-  ?renewal_summary:renewal_summary ->
-  ?type_:certificate_type ->
-  ?failure_reason:failure_reason ->
-  ?in_use_by:in_use_list ->
-  ?signature_algorithm:string_ ->
-  ?key_algorithm:key_algorithm ->
-  ?not_after:t_stamp ->
-  ?not_before:t_stamp ->
-  ?revocation_reason:revocation_reason ->
-  ?revoked_at:t_stamp ->
-  ?status:certificate_status ->
-  ?imported_at:t_stamp ->
-  ?issued_at:t_stamp ->
-  ?created_at:t_stamp ->
-  ?issuer:string_ ->
-  ?subject:string_ ->
-  ?serial:string_ ->
-  ?domain_validation_options:domain_validation_list ->
-  ?managed_by:certificate_managed_by ->
-  ?subject_alternative_names:domain_list ->
-  ?domain_name:domain_name_string ->
-  ?certificate_arn:arn ->
-  unit ->
-  certificate_detail
+  certificate_arn:arn -> passphrase:passphrase_blob -> unit -> export_certificate_request
 
 val make_describe_certificate_response :
   ?certificate:certificate_detail -> unit -> describe_certificate_response
 
 val make_describe_certificate_request : certificate_arn:arn -> unit -> describe_certificate_request
-
-val make_acme_external_account_binding :
-  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?last_used_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?revoked_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?expires_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?role_arn:role_arn ->
-  ?acme_endpoint_arn:acme_endpoint_arn ->
-  ?acme_external_account_binding_arn:acme_external_account_binding_arn ->
-  unit ->
-  acme_external_account_binding
 
 val make_describe_acme_external_account_binding_response :
   ?external_account_binding:acme_external_account_binding ->
@@ -502,38 +539,11 @@ val make_describe_acme_external_account_binding_request :
   unit ->
   describe_acme_external_account_binding_request
 
-val make_acme_endpoint :
-  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?certificate_tags:tag_list ->
-  ?certificate_authority:certificate_authority ->
-  ?contact:acme_contact ->
-  ?authorization_behavior:acme_authorization_behavior ->
-  ?failure_reason:Smaws_Lib.Smithy_api.Types.string_ ->
-  ?status:acme_endpoint_status ->
-  ?endpoint_url:Smaws_Lib.Smithy_api.Types.string_ ->
-  ?acme_endpoint_arn:acme_endpoint_arn ->
-  unit ->
-  acme_endpoint
-
 val make_describe_acme_endpoint_response :
   ?acme_endpoint:acme_endpoint -> unit -> describe_acme_endpoint_response
 
 val make_describe_acme_endpoint_request :
   acme_endpoint_arn:acme_endpoint_arn -> unit -> describe_acme_endpoint_request
-
-val make_acme_domain_validation :
-  ?updated_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?failure_details:failure_details ->
-  ?status:acme_domain_validation_status ->
-  ?prevalidation_details:prevalidation_details ->
-  ?prevalidation_type:prevalidation_type ->
-  ?domain_name:domain_name ->
-  ?acme_endpoint_arn:acme_endpoint_arn ->
-  ?acme_domain_validation_arn:acme_domain_validation_arn ->
-  unit ->
-  acme_domain_validation
 
 val make_describe_acme_domain_validation_response :
   ?acme_domain_validation:acme_domain_validation -> unit -> describe_acme_domain_validation_response
@@ -543,22 +553,12 @@ val make_describe_acme_domain_validation_request :
   unit ->
   describe_acme_domain_validation_request
 
-val make_acme_account :
-  ?contacts:contact_list ->
-  ?acme_external_account_binding_arn:acme_external_account_binding_arn ->
-  ?created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
-  ?status:acme_account_status ->
-  ?public_key_thumbprint:Smaws_Lib.Smithy_api.Types.string_ ->
-  ?account_url:Smaws_Lib.Smithy_api.Types.string_ ->
-  unit ->
-  acme_account
-
 val make_describe_acme_account_response :
   ?acme_account:acme_account -> unit -> describe_acme_account_response
 
 val make_describe_acme_account_request :
-  account_url:Smaws_Lib.Smithy_api.Types.string_ ->
   acme_endpoint_arn:acme_endpoint_arn ->
+  account_url:Smaws_Lib.Smithy_api.Types.string_ ->
   unit ->
   describe_acme_account_request
 
@@ -582,12 +582,14 @@ val make_create_acme_external_account_binding_response :
   unit ->
   create_acme_external_account_binding_response
 
+val make_expiration : value:Smaws_Lib.Smithy_api.Types.long -> type_:time_type -> unit -> expiration
+
 val make_create_acme_external_account_binding_request :
-  ?tags:tag_list ->
-  ?expiration:expiration ->
   ?idempotency_token:Smaws_Lib.Smithy_api.Types.string_ ->
-  role_arn:role_arn ->
+  ?expiration:expiration ->
+  ?tags:tag_list ->
   acme_endpoint_arn:acme_endpoint_arn ->
+  role_arn:role_arn ->
   unit ->
   create_acme_external_account_binding_request
 
@@ -595,12 +597,12 @@ val make_create_acme_endpoint_response :
   ?acme_endpoint_arn:acme_endpoint_arn -> unit -> create_acme_endpoint_response
 
 val make_create_acme_endpoint_request :
-  ?certificate_tags:tag_list ->
-  ?tags:tag_list ->
-  ?contact:acme_contact ->
   ?idempotency_token:Smaws_Lib.Smithy_api.Types.string_ ->
-  certificate_authority:certificate_authority ->
+  ?contact:acme_contact ->
+  ?tags:tag_list ->
+  ?certificate_tags:tag_list ->
   authorization_behavior:acme_authorization_behavior ->
+  certificate_authority:certificate_authority ->
   unit ->
   create_acme_endpoint_request
 
@@ -610,81 +612,14 @@ val make_create_acme_domain_validation_response :
   create_acme_domain_validation_response
 
 val make_create_acme_domain_validation_request :
-  ?tags:tag_list ->
   ?idempotency_token:Smaws_Lib.Smithy_api.Types.string_ ->
-  prevalidation_options:prevalidation_options ->
-  domain_name:domain_name ->
+  ?tags:tag_list ->
   acme_endpoint_arn:acme_endpoint_arn ->
+  domain_name:domain_name ->
+  prevalidation_options:prevalidation_options ->
   unit ->
   create_acme_domain_validation_request
-
-val make_add_tags_to_certificate_request :
-  tags:tag_list -> certificate_arn:arn -> unit -> add_tags_to_certificate_request
 (** {1:operations Operations} *)
-
-module AddTagsToCertificate : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidArnException of invalid_arn_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `InvalidTagException of invalid_tag_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `TagPolicyException of tag_policy_exception
-    | `ThrottlingException of throttling_exception
-    | `TooManyTagsException of too_many_tags_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_certificate_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidArnException of invalid_arn_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `InvalidTagException of invalid_tag_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `TagPolicyException of tag_policy_exception
-      | `ThrottlingException of throttling_exception
-      | `TooManyTagsException of too_many_tags_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_certificate_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidArnException of invalid_arn_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `InvalidTagException of invalid_tag_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `TagPolicyException of tag_policy_exception
-      | `ThrottlingException of throttling_exception
-      | `TooManyTagsException of too_many_tags_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds one or more tags to an ACM certificate. Tags are labels that you can use to identify and \
-   organize your Amazon Web Services resources. Each tag consists of a [key] and an optional \
-   [value]. You specify the certificate on input by its Amazon Resource Name (ARN). You specify \
-   the tag by using a key-value pair. \n\n\
-  \  This action applies only to the [certificate] resource type. For all other ACM resource \
-   types, use [TagResource] instead.\n\
-  \  \n\
-  \    You can apply a tag to just one certificate if you want to identify a specific \
-   characteristic of that certificate, or you can apply the same tag to multiple certificates if \
-   you want to filter for a common relationship among those certificates. Similarly, you can apply \
-   the same tag to multiple resources if you want to specify a relationship among those resources. \
-   For example, you can add the same tag to an ACM certificate and an Elastic Load Balancing load \
-   balancer to indicate that they are both used by the same website. For more information, see \
-   {{:https://docs.aws.amazon.com/acm/latest/userguide/tags.html}Tagging ACM certificates}. \n\
-  \    \n\
-  \     To remove one or more tags, use the [RemoveTagsFromCertificate] action. To view all of the \
-   tags that have been applied to the certificate, use the [ListTagsForCertificate] action. \n\
-  \     "]
 
 module CreateAcmeDomainValidation : sig
   val error_to_string :
@@ -2293,7 +2228,6 @@ end
   "Updates the configuration of an existing ACME endpoint. You can change the authorization \
    behavior, contact requirement, or certificate authority settings.\n"]
 
-(** {1:Serialization and Deserialization} *)
 module UpdateCertificateOptions : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2336,6 +2270,71 @@ end
    Transparency Logging} and \
    {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html}Certificate \
    Manager Exportable Managed Certificates}.\n"]
+
+(** {1:Serialization and Deserialization} *)
+module AddTagsToCertificate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidArnException of invalid_arn_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidTagException of invalid_tag_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TagPolicyException of tag_policy_exception
+    | `ThrottlingException of throttling_exception
+    | `TooManyTagsException of too_many_tags_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_certificate_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArnException of invalid_arn_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTagException of invalid_tag_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TagPolicyException of tag_policy_exception
+      | `ThrottlingException of throttling_exception
+      | `TooManyTagsException of too_many_tags_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_certificate_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArnException of invalid_arn_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTagException of invalid_tag_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TagPolicyException of tag_policy_exception
+      | `ThrottlingException of throttling_exception
+      | `TooManyTagsException of too_many_tags_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds one or more tags to an ACM certificate. Tags are labels that you can use to identify and \
+   organize your Amazon Web Services resources. Each tag consists of a [key] and an optional \
+   [value]. You specify the certificate on input by its Amazon Resource Name (ARN). You specify \
+   the tag by using a key-value pair. \n\n\
+  \  This action applies only to the [certificate] resource type. For all other ACM resource \
+   types, use [TagResource] instead.\n\
+  \  \n\
+  \    You can apply a tag to just one certificate if you want to identify a specific \
+   characteristic of that certificate, or you can apply the same tag to multiple certificates if \
+   you want to filter for a common relationship among those certificates. Similarly, you can apply \
+   the same tag to multiple resources if you want to specify a relationship among those resources. \
+   For example, you can add the same tag to an ACM certificate and an Elastic Load Balancing load \
+   balancer to indicate that they are both used by the same website. For more information, see \
+   {{:https://docs.aws.amazon.com/acm/latest/userguide/tags.html}Tagging ACM certificates}. \n\
+  \    \n\
+  \     To remove one or more tags, use the [RemoveTagsFromCertificate] action. To view all of the \
+   tags that have been applied to the certificate, use the [ListTagsForCertificate] action. \n\
+  \     "]
 
 module Json_serializers = Json_serializers
 module Json_deserializers = Json_deserializers

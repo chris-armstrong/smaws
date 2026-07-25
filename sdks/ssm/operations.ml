@@ -1,46 +1,6 @@
 open Types
 open Service_metadata
 
-module AddTagsToResource = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
-    | `InvalidResourceId _ -> "com.amazonaws.ssm#InvalidResourceId"
-    | `InvalidResourceType _ -> "com.amazonaws.ssm#InvalidResourceType"
-    | `TooManyTagsError _ -> "com.amazonaws.ssm#TooManyTagsError"
-    | `TooManyUpdates _ -> "com.amazonaws.ssm#TooManyUpdates"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "InvalidResourceId" ->
-          `InvalidResourceId (Json_deserializers.invalid_resource_id_of_yojson tree path)
-      | _, "InvalidResourceType" ->
-          `InvalidResourceType (Json_deserializers.invalid_resource_type_of_yojson tree path)
-      | _, "TooManyTagsError" ->
-          `TooManyTagsError (Json_deserializers.too_many_tags_error_of_yojson tree path)
-      | _, "TooManyUpdates" ->
-          `TooManyUpdates (Json_deserializers.too_many_updates_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_tags_to_resource_request) =
-    let input = Json_serializers.add_tags_to_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.AddTagsToResource" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.add_tags_to_resource_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_to_resource_request) =
-    let input = Json_serializers.add_tags_to_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.AddTagsToResource"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.add_tags_to_resource_result_of_yojson
-      ~error_deserializer
-end
-
 module AssociateOpsItemRelatedItem = struct
   let error_to_string = function
     | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
@@ -1234,6 +1194,42 @@ module DescribeAssociation = struct
       ~error_deserializer
 end
 
+module DescribeAssociationExecutions = struct
+  let error_to_string = function
+    | `AssociationDoesNotExist _ -> "com.amazonaws.ssm#AssociationDoesNotExist"
+    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
+    | `InvalidNextToken _ -> "com.amazonaws.ssm#InvalidNextToken"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AssociationDoesNotExist" ->
+          `AssociationDoesNotExist
+            (Json_deserializers.association_does_not_exist_of_yojson tree path)
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "InvalidNextToken" ->
+          `InvalidNextToken (Json_deserializers.invalid_next_token_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_association_executions_request) =
+    let input = Json_serializers.describe_association_executions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeAssociationExecutions"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_association_executions_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_association_executions_request) =
+    let input = Json_serializers.describe_association_executions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeAssociationExecutions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_association_executions_result_of_yojson
+      ~error_deserializer
+end
+
 module DescribeAssociationExecutionTargets = struct
   let error_to_string = function
     | `AssociationDoesNotExist _ -> "com.amazonaws.ssm#AssociationDoesNotExist"
@@ -1273,42 +1269,6 @@ module DescribeAssociationExecutionTargets = struct
       ~shape_name:"AmazonSSM.DescribeAssociationExecutionTargets" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_association_execution_targets_result_of_yojson
-      ~error_deserializer
-end
-
-module DescribeAssociationExecutions = struct
-  let error_to_string = function
-    | `AssociationDoesNotExist _ -> "com.amazonaws.ssm#AssociationDoesNotExist"
-    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
-    | `InvalidNextToken _ -> "com.amazonaws.ssm#InvalidNextToken"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AssociationDoesNotExist" ->
-          `AssociationDoesNotExist
-            (Json_deserializers.association_does_not_exist_of_yojson tree path)
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "InvalidNextToken" ->
-          `InvalidNextToken (Json_deserializers.invalid_next_token_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_association_executions_request) =
-    let input = Json_serializers.describe_association_executions_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeAssociationExecutions"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_association_executions_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_association_executions_request) =
-    let input = Json_serializers.describe_association_executions_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonSSM.DescribeAssociationExecutions" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_association_executions_result_of_yojson
       ~error_deserializer
 end
 
@@ -1662,6 +1622,43 @@ module DescribeInstanceInformation = struct
       ~error_deserializer
 end
 
+module DescribeInstancePatches = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
+    | `InvalidFilter _ -> "com.amazonaws.ssm#InvalidFilter"
+    | `InvalidInstanceId _ -> "com.amazonaws.ssm#InvalidInstanceId"
+    | `InvalidNextToken _ -> "com.amazonaws.ssm#InvalidNextToken"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "InvalidFilter" -> `InvalidFilter (Json_deserializers.invalid_filter_of_yojson tree path)
+      | _, "InvalidInstanceId" ->
+          `InvalidInstanceId (Json_deserializers.invalid_instance_id_of_yojson tree path)
+      | _, "InvalidNextToken" ->
+          `InvalidNextToken (Json_deserializers.invalid_next_token_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_instance_patches_request) =
+    let input = Json_serializers.describe_instance_patches_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeInstancePatches" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.describe_instance_patches_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_instance_patches_request) =
+    let input = Json_serializers.describe_instance_patches_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeInstancePatches" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_instance_patches_result_of_yojson
+      ~error_deserializer
+end
+
 module DescribeInstancePatchStates = struct
   let error_to_string = function
     | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
@@ -1732,43 +1729,6 @@ module DescribeInstancePatchStatesForPatchGroup = struct
       ~shape_name:"AmazonSSM.DescribeInstancePatchStatesForPatchGroup" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_instance_patch_states_for_patch_group_result_of_yojson
-      ~error_deserializer
-end
-
-module DescribeInstancePatches = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
-    | `InvalidFilter _ -> "com.amazonaws.ssm#InvalidFilter"
-    | `InvalidInstanceId _ -> "com.amazonaws.ssm#InvalidInstanceId"
-    | `InvalidNextToken _ -> "com.amazonaws.ssm#InvalidNextToken"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "InvalidFilter" -> `InvalidFilter (Json_deserializers.invalid_filter_of_yojson tree path)
-      | _, "InvalidInstanceId" ->
-          `InvalidInstanceId (Json_deserializers.invalid_instance_id_of_yojson tree path)
-      | _, "InvalidNextToken" ->
-          `InvalidNextToken (Json_deserializers.invalid_next_token_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_instance_patches_request) =
-    let input = Json_serializers.describe_instance_patches_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeInstancePatches" ~service
-      ~context ~input
-      ~output_deserializer:Json_deserializers.describe_instance_patches_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_instance_patches_request) =
-    let input = Json_serializers.describe_instance_patches_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonSSM.DescribeInstancePatches" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_instance_patches_result_of_yojson
       ~error_deserializer
 end
 
@@ -1857,6 +1817,37 @@ module DescribeInventoryDeletions = struct
       ~error_deserializer
 end
 
+module DescribeMaintenanceWindowExecutions = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_maintenance_window_executions_request) =
+    let input = Json_serializers.describe_maintenance_window_executions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeMaintenanceWindowExecutions"
+      ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_maintenance_window_executions_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_maintenance_window_executions_request) =
+    let input = Json_serializers.describe_maintenance_window_executions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowExecutions" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_maintenance_window_executions_result_of_yojson
+      ~error_deserializer
+end
+
 module DescribeMaintenanceWindowExecutionTaskInvocations = struct
   let error_to_string = function
     | `DoesNotExistException _ -> "com.amazonaws.ssm#DoesNotExistException"
@@ -1939,7 +1930,7 @@ module DescribeMaintenanceWindowExecutionTasks = struct
       ~error_deserializer
 end
 
-module DescribeMaintenanceWindowExecutions = struct
+module DescribeMaintenanceWindows = struct
   let error_to_string = function
     | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1953,20 +1944,18 @@ module DescribeMaintenanceWindowExecutions = struct
     Smaws_Lib.Protocols.AwsJson.(
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
-  let request context (request : describe_maintenance_window_executions_request) =
-    let input = Json_serializers.describe_maintenance_window_executions_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeMaintenanceWindowExecutions"
-      ~service ~context ~input
-      ~output_deserializer:
-        Json_deserializers.describe_maintenance_window_executions_result_of_yojson
+  let request context (request : describe_maintenance_windows_request) =
+    let input = Json_serializers.describe_maintenance_windows_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeMaintenanceWindows" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.describe_maintenance_windows_result_of_yojson
       ~error_deserializer
 
-  let request_with_metadata context (request : describe_maintenance_window_executions_request) =
-    let input = Json_serializers.describe_maintenance_window_executions_request_to_yojson request in
+  let request_with_metadata context (request : describe_maintenance_windows_request) =
+    let input = Json_serializers.describe_maintenance_windows_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowExecutions" ~service ~context ~input
-      ~output_deserializer:
-        Json_deserializers.describe_maintenance_window_executions_result_of_yojson
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindows" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_maintenance_windows_result_of_yojson
       ~error_deserializer
 end
 
@@ -1999,6 +1988,41 @@ module DescribeMaintenanceWindowSchedule = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AmazonSSM.DescribeMaintenanceWindowSchedule" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_maintenance_window_schedule_result_of_yojson
+      ~error_deserializer
+end
+
+module DescribeMaintenanceWindowsForTarget = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_maintenance_windows_for_target_request) =
+    let input =
+      Json_serializers.describe_maintenance_windows_for_target_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeMaintenanceWindowsForTarget"
+      ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_maintenance_windows_for_target_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_maintenance_windows_for_target_request) =
+    let input =
+      Json_serializers.describe_maintenance_windows_for_target_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowsForTarget" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_maintenance_windows_for_target_result_of_yojson
       ~error_deserializer
 end
 
@@ -2063,70 +2087,6 @@ module DescribeMaintenanceWindowTasks = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AmazonSSM.DescribeMaintenanceWindowTasks" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_maintenance_window_tasks_result_of_yojson
-      ~error_deserializer
-end
-
-module DescribeMaintenanceWindows = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_maintenance_windows_request) =
-    let input = Json_serializers.describe_maintenance_windows_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeMaintenanceWindows" ~service
-      ~context ~input
-      ~output_deserializer:Json_deserializers.describe_maintenance_windows_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_maintenance_windows_request) =
-    let input = Json_serializers.describe_maintenance_windows_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonSSM.DescribeMaintenanceWindows" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_maintenance_windows_result_of_yojson
-      ~error_deserializer
-end
-
-module DescribeMaintenanceWindowsForTarget = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_maintenance_windows_for_target_request) =
-    let input =
-      Json_serializers.describe_maintenance_windows_for_target_request_to_yojson request
-    in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeMaintenanceWindowsForTarget"
-      ~service ~context ~input
-      ~output_deserializer:
-        Json_deserializers.describe_maintenance_windows_for_target_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_maintenance_windows_for_target_request) =
-    let input =
-      Json_serializers.describe_maintenance_windows_for_target_request_to_yojson request
-    in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowsForTarget" ~service ~context ~input
-      ~output_deserializer:
-        Json_deserializers.describe_maintenance_windows_for_target_result_of_yojson
       ~error_deserializer
 end
 
@@ -2227,6 +2187,34 @@ module DescribePatchBaselines = struct
       ~error_deserializer
 end
 
+module DescribePatchGroups = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_patch_groups_request) =
+    let input = Json_serializers.describe_patch_groups_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribePatchGroups" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_patch_groups_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_patch_groups_request) =
+    let input = Json_serializers.describe_patch_groups_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DescribePatchGroups"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_patch_groups_result_of_yojson
+      ~error_deserializer
+end
+
 module DescribePatchGroupState = struct
   let error_to_string = function
     | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
@@ -2256,34 +2244,6 @@ module DescribePatchGroupState = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AmazonSSM.DescribePatchGroupState" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_patch_group_state_result_of_yojson
-      ~error_deserializer
-end
-
-module DescribePatchGroups = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_patch_groups_request) =
-    let input = Json_serializers.describe_patch_groups_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribePatchGroups" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.describe_patch_groups_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_patch_groups_request) =
-    let input = Json_serializers.describe_patch_groups_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DescribePatchGroups"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_patch_groups_result_of_yojson
       ~error_deserializer
 end
 
@@ -3402,6 +3362,36 @@ module LabelParameterVersion = struct
       ~error_deserializer
 end
 
+module ListAssociations = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
+    | `InvalidNextToken _ -> "com.amazonaws.ssm#InvalidNextToken"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "InvalidNextToken" ->
+          `InvalidNextToken (Json_deserializers.invalid_next_token_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_associations_request) =
+    let input = Json_serializers.list_associations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListAssociations" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.list_associations_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_associations_request) =
+    let input = Json_serializers.list_associations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListAssociations"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_associations_result_of_yojson ~error_deserializer
+end
+
 module ListAssociationVersions = struct
   let error_to_string = function
     | `AssociationDoesNotExist _ -> "com.amazonaws.ssm#AssociationDoesNotExist"
@@ -3436,36 +3426,6 @@ module ListAssociationVersions = struct
       ~shape_name:"AmazonSSM.ListAssociationVersions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_association_versions_result_of_yojson
       ~error_deserializer
-end
-
-module ListAssociations = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
-    | `InvalidNextToken _ -> "com.amazonaws.ssm#InvalidNextToken"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "InvalidNextToken" ->
-          `InvalidNextToken (Json_deserializers.invalid_next_token_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_associations_request) =
-    let input = Json_serializers.list_associations_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListAssociations" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.list_associations_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_associations_request) =
-    let input = Json_serializers.list_associations_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListAssociations"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_associations_result_of_yojson ~error_deserializer
 end
 
 module ListCommandInvocations = struct
@@ -3659,6 +3619,39 @@ module ListDocumentMetadataHistory = struct
       ~error_deserializer
 end
 
+module ListDocuments = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
+    | `InvalidFilterKey _ -> "com.amazonaws.ssm#InvalidFilterKey"
+    | `InvalidNextToken _ -> "com.amazonaws.ssm#InvalidNextToken"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "InvalidFilterKey" ->
+          `InvalidFilterKey (Json_deserializers.invalid_filter_key_of_yojson tree path)
+      | _, "InvalidNextToken" ->
+          `InvalidNextToken (Json_deserializers.invalid_next_token_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_documents_request) =
+    let input = Json_serializers.list_documents_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListDocuments" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.list_documents_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_documents_request) =
+    let input = Json_serializers.list_documents_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListDocuments" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_documents_result_of_yojson
+      ~error_deserializer
+end
+
 module ListDocumentVersions = struct
   let error_to_string = function
     | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
@@ -3691,39 +3684,6 @@ module ListDocumentVersions = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListDocumentVersions"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_document_versions_result_of_yojson
-      ~error_deserializer
-end
-
-module ListDocuments = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
-    | `InvalidFilterKey _ -> "com.amazonaws.ssm#InvalidFilterKey"
-    | `InvalidNextToken _ -> "com.amazonaws.ssm#InvalidNextToken"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "InvalidFilterKey" ->
-          `InvalidFilterKey (Json_deserializers.invalid_filter_key_of_yojson tree path)
-      | _, "InvalidNextToken" ->
-          `InvalidNextToken (Json_deserializers.invalid_next_token_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_documents_request) =
-    let input = Json_serializers.list_documents_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListDocuments" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.list_documents_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_documents_request) =
-    let input = Json_serializers.list_documents_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListDocuments" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.list_documents_result_of_yojson
       ~error_deserializer
 end
 
@@ -5694,5 +5654,45 @@ module UpdateServiceSetting = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.UpdateServiceSetting"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_setting_result_of_yojson
+      ~error_deserializer
+end
+
+module AddTagsToResource = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
+    | `InvalidResourceId _ -> "com.amazonaws.ssm#InvalidResourceId"
+    | `InvalidResourceType _ -> "com.amazonaws.ssm#InvalidResourceType"
+    | `TooManyTagsError _ -> "com.amazonaws.ssm#TooManyTagsError"
+    | `TooManyUpdates _ -> "com.amazonaws.ssm#TooManyUpdates"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "InvalidResourceId" ->
+          `InvalidResourceId (Json_deserializers.invalid_resource_id_of_yojson tree path)
+      | _, "InvalidResourceType" ->
+          `InvalidResourceType (Json_deserializers.invalid_resource_type_of_yojson tree path)
+      | _, "TooManyTagsError" ->
+          `TooManyTagsError (Json_deserializers.too_many_tags_error_of_yojson tree path)
+      | _, "TooManyUpdates" ->
+          `TooManyUpdates (Json_deserializers.too_many_updates_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_tags_to_resource_request) =
+    let input = Json_serializers.add_tags_to_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.AddTagsToResource" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.add_tags_to_resource_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_resource_request) =
+    let input = Json_serializers.add_tags_to_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.AddTagsToResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_tags_to_resource_result_of_yojson
       ~error_deserializer
 end

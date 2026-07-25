@@ -2218,35 +2218,6 @@ module DeleteSAMLProvider = struct
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
 
-module DeleteSSHPublicKey = struct
-  let error_to_string = function
-    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "NoSuchEntity" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:no_such_entity_exception_of_xml
-        with
-        | Ok s -> `NoSuchEntityException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : delete_ssh_public_key_request) =
-    let fields = delete_ssh_public_key_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DeleteSSHPublicKey"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-
-  let request_with_metadata context (request : delete_ssh_public_key_request) =
-    let fields = delete_ssh_public_key_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DeleteSSHPublicKey"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-end
-
 module DeleteServerCertificate = struct
   let error_to_string = function
     | `DeleteConflictException _ -> "com.amazonaws.iam#DeleteConflictException"
@@ -2423,6 +2394,35 @@ module DeleteSigningCertificate = struct
   let request_with_metadata context (request : delete_signing_certificate_request) =
     let fields = delete_signing_certificate_request_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DeleteSigningCertificate"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+end
+
+module DeleteSSHPublicKey = struct
+  let error_to_string = function
+    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "NoSuchEntity" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:no_such_entity_exception_of_xml
+        with
+        | Ok s -> `NoSuchEntityException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : delete_ssh_public_key_request) =
+    let fields = delete_ssh_public_key_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DeleteSSHPublicKey"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : delete_ssh_public_key_request) =
+    let fields = delete_ssh_public_key_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DeleteSSHPublicKey"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
@@ -4106,44 +4106,6 @@ module GetSAMLProvider = struct
       ~output_deserializer:get_saml_provider_response_of_xml ~error_deserializer
 end
 
-module GetSSHPublicKey = struct
-  let error_to_string = function
-    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
-    | `UnrecognizedPublicKeyEncodingException _ ->
-        "com.amazonaws.iam#UnrecognizedPublicKeyEncodingException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "NoSuchEntity" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:no_such_entity_exception_of_xml
-        with
-        | Ok s -> `NoSuchEntityException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "UnrecognizedPublicKeyEncoding" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:unrecognized_public_key_encoding_exception_of_xml
-        with
-        | Ok s -> `UnrecognizedPublicKeyEncodingException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : get_ssh_public_key_request) =
-    let fields = get_ssh_public_key_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"GetSSHPublicKey"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:get_ssh_public_key_response_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : get_ssh_public_key_request) =
-    let fields = get_ssh_public_key_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"GetSSHPublicKey"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:get_ssh_public_key_response_of_xml ~error_deserializer
-end
-
 module GetServerCertificate = struct
   let error_to_string = function
     | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
@@ -4304,6 +4266,44 @@ module GetServiceLinkedRoleDeletionStatus = struct
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
       ~output_deserializer:get_service_linked_role_deletion_status_response_of_xml
       ~error_deserializer
+end
+
+module GetSSHPublicKey = struct
+  let error_to_string = function
+    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
+    | `UnrecognizedPublicKeyEncodingException _ ->
+        "com.amazonaws.iam#UnrecognizedPublicKeyEncodingException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "NoSuchEntity" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:no_such_entity_exception_of_xml
+        with
+        | Ok s -> `NoSuchEntityException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "UnrecognizedPublicKeyEncoding" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:unrecognized_public_key_encoding_exception_of_xml
+        with
+        | Ok s -> `UnrecognizedPublicKeyEncodingException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : get_ssh_public_key_request) =
+    let fields = get_ssh_public_key_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"GetSSHPublicKey"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:get_ssh_public_key_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : get_ssh_public_key_request) =
+    let fields = get_ssh_public_key_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"GetSSHPublicKey"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:get_ssh_public_key_response_of_xml ~error_deserializer
 end
 
 module GetUser = struct
@@ -4774,43 +4774,6 @@ module ListGroupsForUser = struct
       ~output_deserializer:list_groups_for_user_response_of_xml ~error_deserializer
 end
 
-module ListInstanceProfileTags = struct
-  let error_to_string = function
-    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
-    | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "NoSuchEntity" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:no_such_entity_exception_of_xml
-        with
-        | Ok s -> `NoSuchEntityException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ServiceFailure" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:service_failure_exception_of_xml
-        with
-        | Ok s -> `ServiceFailureException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : list_instance_profile_tags_request) =
-    let fields = list_instance_profile_tags_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListInstanceProfileTags"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_instance_profile_tags_response_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : list_instance_profile_tags_request) =
-    let fields = list_instance_profile_tags_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListInstanceProfileTags"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_instance_profile_tags_response_of_xml ~error_deserializer
-end
-
 module ListInstanceProfiles = struct
   let error_to_string = function
     | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
@@ -4877,6 +4840,80 @@ module ListInstanceProfilesForRole = struct
       ~output_deserializer:list_instance_profiles_for_role_response_of_xml ~error_deserializer
 end
 
+module ListInstanceProfileTags = struct
+  let error_to_string = function
+    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
+    | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "NoSuchEntity" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:no_such_entity_exception_of_xml
+        with
+        | Ok s -> `NoSuchEntityException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ServiceFailure" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:service_failure_exception_of_xml
+        with
+        | Ok s -> `ServiceFailureException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : list_instance_profile_tags_request) =
+    let fields = list_instance_profile_tags_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListInstanceProfileTags"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:list_instance_profile_tags_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : list_instance_profile_tags_request) =
+    let fields = list_instance_profile_tags_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListInstanceProfileTags"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:list_instance_profile_tags_response_of_xml ~error_deserializer
+end
+
+module ListMFADevices = struct
+  let error_to_string = function
+    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
+    | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "NoSuchEntity" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:no_such_entity_exception_of_xml
+        with
+        | Ok s -> `NoSuchEntityException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ServiceFailure" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:service_failure_exception_of_xml
+        with
+        | Ok s -> `ServiceFailureException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : list_mfa_devices_request) =
+    let fields = list_mfa_devices_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListMFADevices"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:list_mfa_devices_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : list_mfa_devices_request) =
+    let fields = list_mfa_devices_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListMFADevices"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:list_mfa_devices_response_of_xml ~error_deserializer
+end
+
 module ListMFADeviceTags = struct
   let error_to_string = function
     | `InvalidInputException _ -> "com.amazonaws.iam#InvalidInputException"
@@ -4922,21 +4959,13 @@ module ListMFADeviceTags = struct
       ~output_deserializer:list_mfa_device_tags_response_of_xml ~error_deserializer
 end
 
-module ListMFADevices = struct
+module ListOpenIDConnectProviders = struct
   let error_to_string = function
-    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
     | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
     | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
 
   let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
     match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "NoSuchEntity" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:no_such_entity_exception_of_xml
-        with
-        | Ok s -> `NoSuchEntityException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | "ServiceFailure" -> (
         match
           Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
@@ -4946,17 +4975,17 @@ module ListMFADevices = struct
         | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
-  let request context (request : list_mfa_devices_request) =
-    let fields = list_mfa_devices_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListMFADevices"
+  let request context (request : list_open_id_connect_providers_request) =
+    let fields = list_open_id_connect_providers_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListOpenIDConnectProviders"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_mfa_devices_response_of_xml ~error_deserializer
+      ~output_deserializer:list_open_id_connect_providers_response_of_xml ~error_deserializer
 
-  let request_with_metadata context (request : list_mfa_devices_request) =
-    let fields = list_mfa_devices_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListMFADevices"
+  let request_with_metadata context (request : list_open_id_connect_providers_request) =
+    let fields = list_open_id_connect_providers_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListOpenIDConnectProviders"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_mfa_devices_response_of_xml ~error_deserializer
+      ~output_deserializer:list_open_id_connect_providers_response_of_xml ~error_deserializer
 end
 
 module ListOpenIDConnectProviderTags = struct
@@ -5002,35 +5031,6 @@ module ListOpenIDConnectProviderTags = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListOpenIDConnectProviderTags"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
       ~output_deserializer:list_open_id_connect_provider_tags_response_of_xml ~error_deserializer
-end
-
-module ListOpenIDConnectProviders = struct
-  let error_to_string = function
-    | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "ServiceFailure" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:service_failure_exception_of_xml
-        with
-        | Ok s -> `ServiceFailureException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : list_open_id_connect_providers_request) =
-    let fields = list_open_id_connect_providers_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListOpenIDConnectProviders"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_open_id_connect_providers_response_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : list_open_id_connect_providers_request) =
-    let fields = list_open_id_connect_providers_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListOpenIDConnectProviders"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_open_id_connect_providers_response_of_xml ~error_deserializer
 end
 
 module ListOrganizationsFeatures = struct
@@ -5281,6 +5281,35 @@ module ListRolePolicies = struct
       ~output_deserializer:list_role_policies_response_of_xml ~error_deserializer
 end
 
+module ListRoles = struct
+  let error_to_string = function
+    | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "ServiceFailure" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:service_failure_exception_of_xml
+        with
+        | Ok s -> `ServiceFailureException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : list_roles_request) =
+    let fields = list_roles_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListRoles"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:list_roles_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : list_roles_request) =
+    let fields = list_roles_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListRoles"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:list_roles_response_of_xml ~error_deserializer
+end
+
 module ListRoleTags = struct
   let error_to_string = function
     | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
@@ -5318,7 +5347,7 @@ module ListRoleTags = struct
       ~output_deserializer:list_role_tags_response_of_xml ~error_deserializer
 end
 
-module ListRoles = struct
+module ListSAMLProviders = struct
   let error_to_string = function
     | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
     | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
@@ -5334,17 +5363,17 @@ module ListRoles = struct
         | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
-  let request context (request : list_roles_request) =
-    let fields = list_roles_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListRoles"
+  let request context (request : list_saml_providers_request) =
+    let fields = list_saml_providers_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListSAMLProviders"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_roles_response_of_xml ~error_deserializer
+      ~output_deserializer:list_saml_providers_response_of_xml ~error_deserializer
 
-  let request_with_metadata context (request : list_roles_request) =
-    let fields = list_roles_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListRoles"
+  let request_with_metadata context (request : list_saml_providers_request) =
+    let fields = list_saml_providers_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListSAMLProviders"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_roles_response_of_xml ~error_deserializer
+      ~output_deserializer:list_saml_providers_response_of_xml ~error_deserializer
 end
 
 module ListSAMLProviderTags = struct
@@ -5392,7 +5421,7 @@ module ListSAMLProviderTags = struct
       ~output_deserializer:list_saml_provider_tags_response_of_xml ~error_deserializer
 end
 
-module ListSAMLProviders = struct
+module ListServerCertificates = struct
   let error_to_string = function
     | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
     | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
@@ -5408,46 +5437,17 @@ module ListSAMLProviders = struct
         | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
-  let request context (request : list_saml_providers_request) =
-    let fields = list_saml_providers_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListSAMLProviders"
+  let request context (request : list_server_certificates_request) =
+    let fields = list_server_certificates_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListServerCertificates"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_saml_providers_response_of_xml ~error_deserializer
+      ~output_deserializer:list_server_certificates_response_of_xml ~error_deserializer
 
-  let request_with_metadata context (request : list_saml_providers_request) =
-    let fields = list_saml_providers_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListSAMLProviders"
+  let request_with_metadata context (request : list_server_certificates_request) =
+    let fields = list_server_certificates_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListServerCertificates"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_saml_providers_response_of_xml ~error_deserializer
-end
-
-module ListSSHPublicKeys = struct
-  let error_to_string = function
-    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "NoSuchEntity" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:no_such_entity_exception_of_xml
-        with
-        | Ok s -> `NoSuchEntityException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : list_ssh_public_keys_request) =
-    let fields = list_ssh_public_keys_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListSSHPublicKeys"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_ssh_public_keys_response_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : list_ssh_public_keys_request) =
-    let fields = list_ssh_public_keys_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListSSHPublicKeys"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_ssh_public_keys_response_of_xml ~error_deserializer
+      ~output_deserializer:list_server_certificates_response_of_xml ~error_deserializer
 end
 
 module ListServerCertificateTags = struct
@@ -5485,35 +5485,6 @@ module ListServerCertificateTags = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListServerCertificateTags"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
       ~output_deserializer:list_server_certificate_tags_response_of_xml ~error_deserializer
-end
-
-module ListServerCertificates = struct
-  let error_to_string = function
-    | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "ServiceFailure" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:service_failure_exception_of_xml
-        with
-        | Ok s -> `ServiceFailureException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : list_server_certificates_request) =
-    let fields = list_server_certificates_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListServerCertificates"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_server_certificates_response_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : list_server_certificates_request) =
-    let fields = list_server_certificates_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListServerCertificates"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_server_certificates_response_of_xml ~error_deserializer
 end
 
 module ListServiceSpecificCredentials = struct
@@ -5590,6 +5561,35 @@ module ListSigningCertificates = struct
       ~output_deserializer:list_signing_certificates_response_of_xml ~error_deserializer
 end
 
+module ListSSHPublicKeys = struct
+  let error_to_string = function
+    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "NoSuchEntity" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:no_such_entity_exception_of_xml
+        with
+        | Ok s -> `NoSuchEntityException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : list_ssh_public_keys_request) =
+    let fields = list_ssh_public_keys_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListSSHPublicKeys"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:list_ssh_public_keys_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : list_ssh_public_keys_request) =
+    let fields = list_ssh_public_keys_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListSSHPublicKeys"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:list_ssh_public_keys_response_of_xml ~error_deserializer
+end
+
 module ListUserPolicies = struct
   let error_to_string = function
     | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
@@ -5627,6 +5627,35 @@ module ListUserPolicies = struct
       ~output_deserializer:list_user_policies_response_of_xml ~error_deserializer
 end
 
+module ListUsers = struct
+  let error_to_string = function
+    | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "ServiceFailure" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:service_failure_exception_of_xml
+        with
+        | Ok s -> `ServiceFailureException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : list_users_request) =
+    let fields = list_users_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListUsers"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:list_users_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : list_users_request) =
+    let fields = list_users_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListUsers"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:list_users_response_of_xml ~error_deserializer
+end
+
 module ListUserTags = struct
   let error_to_string = function
     | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
@@ -5662,35 +5691,6 @@ module ListUserTags = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListUserTags"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
       ~output_deserializer:list_user_tags_response_of_xml ~error_deserializer
-end
-
-module ListUsers = struct
-  let error_to_string = function
-    | `ServiceFailureException _ -> "com.amazonaws.iam#ServiceFailureException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "ServiceFailure" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:service_failure_exception_of_xml
-        with
-        | Ok s -> `ServiceFailureException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : list_users_request) =
-    let fields = list_users_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListUsers"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_users_response_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : list_users_request) =
-    let fields = list_users_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListUsers"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:list_users_response_of_xml ~error_deserializer
 end
 
 module ListVirtualMFADevices = struct
@@ -7943,43 +7943,6 @@ module UpdateSAMLProvider = struct
       ~output_deserializer:update_saml_provider_response_of_xml ~error_deserializer
 end
 
-module UpdateSSHPublicKey = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.iam#InvalidInputException"
-    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "InvalidInput" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_input_exception_of_xml
-        with
-        | Ok s -> `InvalidInputException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchEntity" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:no_such_entity_exception_of_xml
-        with
-        | Ok s -> `NoSuchEntityException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : update_ssh_public_key_request) =
-    let fields = update_ssh_public_key_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"UpdateSSHPublicKey"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-
-  let request_with_metadata context (request : update_ssh_public_key_request) =
-    let fields = update_ssh_public_key_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"UpdateSSHPublicKey"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-end
-
 module UpdateServerCertificate = struct
   let error_to_string = function
     | `EntityAlreadyExistsException _ -> "com.amazonaws.iam#EntityAlreadyExistsException"
@@ -8115,6 +8078,43 @@ module UpdateSigningCertificate = struct
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
 
+module UpdateSSHPublicKey = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.iam#InvalidInputException"
+    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "InvalidInput" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_input_exception_of_xml
+        with
+        | Ok s -> `InvalidInputException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchEntity" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:no_such_entity_exception_of_xml
+        with
+        | Ok s -> `NoSuchEntityException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : update_ssh_public_key_request) =
+    let fields = update_ssh_public_key_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"UpdateSSHPublicKey"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : update_ssh_public_key_request) =
+    let fields = update_ssh_public_key_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"UpdateSSHPublicKey"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+end
+
 module UpdateUser = struct
   let error_to_string = function
     | `ConcurrentModificationException _ -> "com.amazonaws.iam#ConcurrentModificationException"
@@ -8183,68 +8183,6 @@ module UpdateUser = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"UpdateUser"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-end
-
-module UploadSSHPublicKey = struct
-  let error_to_string = function
-    | `DuplicateSSHPublicKeyException _ -> "com.amazonaws.iam#DuplicateSSHPublicKeyException"
-    | `InvalidPublicKeyException _ -> "com.amazonaws.iam#InvalidPublicKeyException"
-    | `LimitExceededException _ -> "com.amazonaws.iam#LimitExceededException"
-    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
-    | `UnrecognizedPublicKeyEncodingException _ ->
-        "com.amazonaws.iam#UnrecognizedPublicKeyEncodingException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "DuplicateSSHPublicKey" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:duplicate_ssh_public_key_exception_of_xml
-        with
-        | Ok s -> `DuplicateSSHPublicKeyException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidPublicKey" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_public_key_exception_of_xml
-        with
-        | Ok s -> `InvalidPublicKeyException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "LimitExceeded" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:limit_exceeded_exception_of_xml
-        with
-        | Ok s -> `LimitExceededException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchEntity" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:no_such_entity_exception_of_xml
-        with
-        | Ok s -> `NoSuchEntityException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "UnrecognizedPublicKeyEncoding" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:unrecognized_public_key_encoding_exception_of_xml
-        with
-        | Ok s -> `UnrecognizedPublicKeyEncodingException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : upload_ssh_public_key_request) =
-    let fields = upload_ssh_public_key_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"UploadSSHPublicKey"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:upload_ssh_public_key_response_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : upload_ssh_public_key_request) =
-    let fields = upload_ssh_public_key_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"UploadSSHPublicKey"
-      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
-      ~output_deserializer:upload_ssh_public_key_response_of_xml ~error_deserializer
 end
 
 module UploadServerCertificate = struct
@@ -8407,4 +8345,66 @@ module UploadSigningCertificate = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"UploadSigningCertificate"
       ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
       ~output_deserializer:upload_signing_certificate_response_of_xml ~error_deserializer
+end
+
+module UploadSSHPublicKey = struct
+  let error_to_string = function
+    | `DuplicateSSHPublicKeyException _ -> "com.amazonaws.iam#DuplicateSSHPublicKeyException"
+    | `InvalidPublicKeyException _ -> "com.amazonaws.iam#InvalidPublicKeyException"
+    | `LimitExceededException _ -> "com.amazonaws.iam#LimitExceededException"
+    | `NoSuchEntityException _ -> "com.amazonaws.iam#NoSuchEntityException"
+    | `UnrecognizedPublicKeyEncodingException _ ->
+        "com.amazonaws.iam#UnrecognizedPublicKeyEncodingException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "DuplicateSSHPublicKey" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:duplicate_ssh_public_key_exception_of_xml
+        with
+        | Ok s -> `DuplicateSSHPublicKeyException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidPublicKey" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_public_key_exception_of_xml
+        with
+        | Ok s -> `InvalidPublicKeyException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "LimitExceeded" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:limit_exceeded_exception_of_xml
+        with
+        | Ok s -> `LimitExceededException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchEntity" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:no_such_entity_exception_of_xml
+        with
+        | Ok s -> `NoSuchEntityException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "UnrecognizedPublicKeyEncoding" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:unrecognized_public_key_encoding_exception_of_xml
+        with
+        | Ok s -> `UnrecognizedPublicKeyEncodingException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : upload_ssh_public_key_request) =
+    let fields = upload_ssh_public_key_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"UploadSSHPublicKey"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:upload_ssh_public_key_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : upload_ssh_public_key_request) =
+    let fields = upload_ssh_public_key_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"UploadSSHPublicKey"
+      ~xmlNamespace:"https://iam.amazonaws.com/doc/2010-05-08/" ~service ~context ~fields
+      ~output_deserializer:upload_ssh_public_key_response_of_xml ~error_deserializer
 end

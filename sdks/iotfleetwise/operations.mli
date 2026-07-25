@@ -1,9 +1,10 @@
 open Types
 
-module AssociateVehicleFleet : sig
+module UpdateVehicle : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
     | `InternalServerException of internal_server_exception
     | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
@@ -13,10 +14,11 @@ module AssociateVehicleFleet : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    associate_vehicle_fleet_request ->
-    ( associate_vehicle_fleet_response,
+    update_vehicle_request ->
+    ( update_vehicle_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
@@ -26,51 +28,12 @@ module AssociateVehicleFleet : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    associate_vehicle_fleet_request ->
-    ( associate_vehicle_fleet_response Smaws_Lib.Response.t,
+    update_vehicle_request ->
+    ( update_vehicle_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Adds, or associates, a vehicle with a fleet. \n"]
-
-module CreateCampaign : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_campaign_request ->
-    ( create_campaign_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_campaign_request ->
-    ( create_campaign_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
@@ -79,137 +42,20 @@ module CreateCampaign : sig
     result
 end
 [@@ocaml.doc
-  "Creates an orchestration of data collection rules. The Amazon Web Services IoT FleetWise Edge \
-   Agent software running in vehicles uses campaigns to decide how to collect and transfer data to \
-   the cloud. You create campaigns in the cloud. After you or your team approve campaigns, Amazon \
-   Web Services IoT FleetWise automatically deploys them to vehicles. \n\n\
-  \ For more information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/campaigns.html}Collect and \
-   transfer data with campaigns} in the {i Amazon Web Services IoT FleetWise Developer Guide}.\n\
-  \ \n\
-  \   Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
+  " Updates a vehicle.\n\n\
+  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
    information, see \
    {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
    Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
    Developer Guide}.\n\
-  \   \n\
-  \    "]
-
-module CreateDecoderManifest : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `DecoderManifestValidationException of decoder_manifest_validation_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_decoder_manifest_request ->
-    ( create_decoder_manifest_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `DecoderManifestValidationException of decoder_manifest_validation_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_decoder_manifest_request ->
-    ( create_decoder_manifest_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `DecoderManifestValidationException of decoder_manifest_validation_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates the decoder manifest associated with a model manifest. To create a decoder manifest, \
-   the following must be true:\n\n\
-  \ {ul\n\
-  \       {-  Every signal decoder has a unique name.\n\
-  \           \n\
-  \            }\n\
-  \       {-  Each signal decoder is associated with a network interface.\n\
-  \           \n\
-  \            }\n\
-  \       {-  Each network interface has a unique ID.\n\
-  \           \n\
-  \            }\n\
-  \       {-  The signal decoders are specified in the model manifest.\n\
-  \           \n\
-  \            }\n\
-  \       }\n\
-  \  "]
-
-module CreateFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_fleet_request ->
-    ( create_fleet_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_fleet_request ->
-    ( create_fleet_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Creates a fleet that represents a group of vehicles. \n\n\
-  \  You must create both a signal catalog and vehicles before you can create a fleet. \n\
   \  \n\
-  \    For more information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleets.html}Fleets} in the \
-   {i Amazon Web Services IoT FleetWise Developer Guide}.\n\
-  \    "]
+  \   "]
 
-module CreateModelManifest : sig
+module UpdateStateTemplate : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
     | `InvalidSignalsException of invalid_signals_exception
     | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
@@ -219,11 +65,11 @@ module CreateModelManifest : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_model_manifest_request ->
-    ( create_model_manifest_response,
+    update_state_template_request ->
+    ( update_state_template_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
       | `InvalidSignalsException of invalid_signals_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
@@ -233,11 +79,11 @@ module CreateModelManifest : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_model_manifest_request ->
-    ( create_model_manifest_response Smaws_Lib.Response.t,
+    update_state_template_request ->
+    ( update_state_template_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
       | `InvalidSignalsException of invalid_signals_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
@@ -247,65 +93,71 @@ module CreateModelManifest : sig
     result
 end
 [@@ocaml.doc
-  " Creates a vehicle model (model manifest) that specifies signals (attributes, branches, \
-   sensors, and actuators). \n\n\
-  \ For more information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/vehicle-models.html}Vehicle \
-   models} in the {i Amazon Web Services IoT FleetWise Developer Guide}.\n\
-  \ "]
+  "Updates a state template.\n\n\
+  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
+   information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
+   Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
+   Developer Guide}.\n\
+  \  \n\
+  \   "]
 
-module CreateSignalCatalog : sig
+module UpdateSignalCatalog : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
     | `InvalidNodeException of invalid_node_exception
     | `InvalidSignalsException of invalid_signals_exception
     | `LimitExceededException of limit_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_signal_catalog_request ->
-    ( create_signal_catalog_response,
+    update_signal_catalog_request ->
+    ( update_signal_catalog_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
       | `InvalidNodeException of invalid_node_exception
       | `InvalidSignalsException of invalid_signals_exception
       | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_signal_catalog_request ->
-    ( create_signal_catalog_response Smaws_Lib.Response.t,
+    update_signal_catalog_request ->
+    ( update_signal_catalog_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
       | `InvalidNodeException of invalid_node_exception
       | `InvalidSignalsException of invalid_signals_exception
       | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc
-  " Creates a collection of standardized signals that can be reused to create vehicle models.\n"]
+[@@ocaml.doc " Updates a signal catalog. \n"]
 
-module CreateStateTemplate : sig
+module UpdateModelManifest : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
     | `InternalServerException of internal_server_exception
     | `InvalidSignalsException of invalid_signals_exception
-    | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
@@ -313,14 +165,13 @@ module CreateStateTemplate : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_state_template_request ->
-    ( create_state_template_response,
+    update_model_manifest_request ->
+    ( update_model_manifest_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `InvalidSignalsException of invalid_signals_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
@@ -328,14 +179,13 @@ module CreateStateTemplate : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_state_template_request ->
-    ( create_state_template_response Smaws_Lib.Response.t,
+    update_model_manifest_request ->
+    ( update_model_manifest_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `InvalidSignalsException of invalid_signals_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
@@ -343,24 +193,15 @@ module CreateStateTemplate : sig
     result
 end
 [@@ocaml.doc
-  "Creates a state template. State templates contain state properties, which are signals that \
-   belong to a signal catalog that is synchronized between the Amazon Web Services IoT FleetWise \
-   Edge and the Amazon Web Services Cloud.\n\n\
-  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
-   information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
-   Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
-   Developer Guide}.\n\
-  \  \n\
-  \   "]
+  " Updates a vehicle model (model manifest). If created vehicles are associated with a vehicle \
+   model, it can't be updated.\n"]
 
-module CreateVehicle : sig
+module UpdateFleet : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
     | `InternalServerException of internal_server_exception
-    | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
@@ -368,13 +209,12 @@ module CreateVehicle : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_vehicle_request ->
-    ( create_vehicle_response,
+    update_fleet_request ->
+    ( update_fleet_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
@@ -382,594 +222,27 @@ module CreateVehicle : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_vehicle_request ->
-    ( create_vehicle_response Smaws_Lib.Response.t,
+    update_fleet_request ->
+    ( update_fleet_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc
-  " Creates a vehicle, which is an instance of a vehicle model (model manifest). Vehicles created \
-   from the same vehicle model consist of the same signals inherited from the vehicle model.\n\n\
-  \   If you have an existing Amazon Web Services IoT thing, you can use Amazon Web Services IoT \
-   FleetWise to create a vehicle and collect data from your thing. \n\
-  \  \n\
-  \    For more information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/create-vehicle-cli.html}Create \
-   a vehicle (AWS CLI)} in the {i Amazon Web Services IoT FleetWise Developer Guide}.\n\
-  \    "]
+[@@ocaml.doc " Updates the description of an existing fleet. \n"]
 
-module DeleteCampaign : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_campaign_request ->
-    ( delete_campaign_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_campaign_request ->
-    ( delete_campaign_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Deletes a data collection campaign. Deleting a campaign suspends all data collection and \
-   removes it from any vehicles. \n"]
-
-module DeleteDecoderManifest : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_decoder_manifest_request ->
-    ( delete_decoder_manifest_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_decoder_manifest_request ->
-    ( delete_decoder_manifest_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Deletes a decoder manifest. You can't delete a decoder manifest if it has vehicles associated \
-   with it. \n"]
-
-module DeleteFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_fleet_request ->
-    ( delete_fleet_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_fleet_request ->
-    ( delete_fleet_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Deletes a fleet. Before you delete a fleet, all vehicles must be dissociated from the fleet. \
-   For more information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/delete-fleet-cli.html}Delete \
-   a fleet (AWS CLI)} in the {i Amazon Web Services IoT FleetWise Developer Guide}.\n"]
-
-module DeleteModelManifest : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_model_manifest_request ->
-    ( delete_model_manifest_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_model_manifest_request ->
-    ( delete_model_manifest_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Deletes a vehicle model (model manifest).\n"]
-
-module DeleteSignalCatalog : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_signal_catalog_request ->
-    ( delete_signal_catalog_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_signal_catalog_request ->
-    ( delete_signal_catalog_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Deletes a signal catalog. \n"]
-
-module DeleteStateTemplate : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_state_template_request ->
-    ( delete_state_template_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_state_template_request ->
-    ( delete_state_template_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes a state template.\n"]
-
-module DeleteVehicle : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_vehicle_request ->
-    ( delete_vehicle_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_vehicle_request ->
-    ( delete_vehicle_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Deletes a vehicle and removes it from any campaigns.\n"]
-
-module DisassociateVehicleFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    disassociate_vehicle_fleet_request ->
-    ( disassociate_vehicle_fleet_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    disassociate_vehicle_fleet_request ->
-    ( disassociate_vehicle_fleet_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Removes, or disassociates, a vehicle from a fleet. Disassociating a vehicle from a fleet \
-   doesn't delete the vehicle.\n"]
-
-module GetCampaign : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_campaign_request ->
-    ( get_campaign_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_campaign_request ->
-    ( get_campaign_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Retrieves information about a campaign. \n\n\
-  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
-   information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
-   Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
-   Developer Guide}.\n\
-  \  \n\
-  \   "]
-
-module GetDecoderManifest : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_decoder_manifest_request ->
-    ( get_decoder_manifest_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_decoder_manifest_request ->
-    ( get_decoder_manifest_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Retrieves information about a created decoder manifest. \n"]
-
-module GetFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_fleet_request ->
-    ( get_fleet_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_fleet_request ->
-    ( get_fleet_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Retrieves information about a fleet. \n"]
-
-module GetModelManifest : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_model_manifest_request ->
-    ( get_model_manifest_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_model_manifest_request ->
-    ( get_model_manifest_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Retrieves information about a vehicle model (model manifest). \n"]
-
-module GetSignalCatalog : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_signal_catalog_request ->
-    ( get_signal_catalog_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_signal_catalog_request ->
-    ( get_signal_catalog_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Retrieves information about a signal catalog. \n"]
-
-module GetStateTemplate : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_state_template_request ->
-    ( get_state_template_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_state_template_request ->
-    ( get_state_template_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves information about a state template.\n\n\
-  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
-   information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
-   Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
-   Developer Guide}.\n\
-  \  \n\
-  \   "]
-
-module GetVehicle : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_vehicle_request ->
-    ( get_vehicle_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_vehicle_request ->
-    ( get_vehicle_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Retrieves information about a vehicle. \n"]
-
-module ImportDecoderManifest : sig
+module UpdateDecoderManifest : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
     | `DecoderManifestValidationException of decoder_manifest_validation_exception
-    | `InvalidSignalsException of invalid_signals_exception
+    | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
@@ -977,13 +250,13 @@ module ImportDecoderManifest : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    import_decoder_manifest_request ->
-    ( import_decoder_manifest_response,
+    update_decoder_manifest_request ->
+    ( update_decoder_manifest_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `DecoderManifestValidationException of decoder_manifest_validation_exception
-      | `InvalidSignalsException of invalid_signals_exception
+      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
@@ -991,13 +264,13 @@ module ImportDecoderManifest : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    import_decoder_manifest_request ->
-    ( import_decoder_manifest_response Smaws_Lib.Response.t,
+    update_decoder_manifest_request ->
+    ( update_decoder_manifest_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `DecoderManifestValidationException of decoder_manifest_validation_exception
-      | `InvalidSignalsException of invalid_signals_exception
+      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
@@ -1005,19 +278,16 @@ module ImportDecoderManifest : sig
     result
 end
 [@@ocaml.doc
-  " Creates a decoder manifest using your existing CAN DBC file from your local device. \n\n\
-  \ The CAN signal name must be unique and not repeated across CAN message definitions in a .dbc \
-   file. \n\
+  " Updates a decoder manifest.\n\n\
+  \ A decoder manifest can only be updated when the status is [DRAFT]. Only [ACTIVE] decoder \
+   manifests can be associated with vehicles.\n\
   \ "]
 
-module ImportSignalCatalog : sig
+module UpdateCampaign : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidSignalsException of invalid_signals_exception
-    | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
@@ -1025,14 +295,11 @@ module ImportSignalCatalog : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    import_signal_catalog_request ->
-    ( import_signal_catalog_response,
+    update_campaign_request ->
+    ( update_campaign_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidSignalsException of invalid_signals_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
@@ -1040,112 +307,20 @@ module ImportSignalCatalog : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    import_signal_catalog_request ->
-    ( import_signal_catalog_response Smaws_Lib.Response.t,
+    update_campaign_request ->
+    ( update_campaign_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidSignalsException of invalid_signals_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc
-  " Creates a signal catalog using your existing VSS formatted content from your local device. \n"]
+[@@ocaml.doc " Updates a campaign. \n"]
 
-module BatchCreateVehicle : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_create_vehicle_request ->
-    ( batch_create_vehicle_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_create_vehicle_request ->
-    ( batch_create_vehicle_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Creates a group, or batch, of vehicles. \n\n\
-  \   You must specify a decoder manifest and a vehicle model (model manifest) for each vehicle. \n\
-  \  \n\
-  \    For more information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/create-vehicles-cli.html}Create \
-   multiple vehicles (AWS CLI)} in the {i Amazon Web Services IoT FleetWise Developer Guide}. \n\
-  \    "]
-
-module BatchUpdateVehicle : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_update_vehicle_request ->
-    ( batch_update_vehicle_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_update_vehicle_request ->
-    ( batch_update_vehicle_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Updates a group, or batch, of vehicles.\n\n\
-  \   You must specify a decoder manifest and a vehicle model (model manifest) for each vehicle. \n\
-  \  \n\
-  \    For more information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/update-vehicles-cli.html}Update \
-   multiple vehicles (AWS CLI)} in the {i Amazon Web Services IoT FleetWise Developer Guide}. \n\
-  \    "]
-
-module GetEncryptionConfiguration : sig
+module ListVehiclesInFleet : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
@@ -1157,8 +332,8 @@ module GetEncryptionConfiguration : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    get_encryption_configuration_request ->
-    ( get_encryption_configuration_response,
+    list_vehicles_in_fleet_request ->
+    ( list_vehicles_in_fleet_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1169,8 +344,8 @@ module GetEncryptionConfiguration : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    get_encryption_configuration_request ->
-    ( get_encryption_configuration_response Smaws_Lib.Response.t,
+    list_vehicles_in_fleet_request ->
+    ( list_vehicles_in_fleet_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1181,161 +356,140 @@ module GetEncryptionConfiguration : sig
     result
 end
 [@@ocaml.doc
-  "Retrieves the encryption configuration for resources and data in Amazon Web Services IoT \
-   FleetWise.\n"]
+  " Retrieves a list of summaries of all vehicles associated with a fleet. \n\n\
+  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
+   return more results.\n\
+  \  \n\
+  \   "]
 
-module GetLoggingOptions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_logging_options_request ->
-    ( get_logging_options_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_logging_options_request ->
-    ( get_logging_options_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Retrieves the logging options.\n"]
-
-module GetRegisterAccountStatus : sig
+module ListVehicles : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    get_register_account_status_request ->
-    ( get_register_account_status_response,
+    list_vehicles_request ->
+    ( list_vehicles_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    get_register_account_status_request ->
-    ( get_register_account_status_response Smaws_Lib.Response.t,
+    list_vehicles_request ->
+    ( list_vehicles_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  " Retrieves information about the status of registering your Amazon Web Services account, IAM, \
-   and Amazon Timestream resources so that Amazon Web Services IoT FleetWise can transfer your \
-   vehicle data to the Amazon Web Services Cloud. \n\n\
-  \ For more information, including step-by-step procedures, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/setting-up.html}Setting up \
-   Amazon Web Services IoT FleetWise}. \n\
+  " Retrieves a list of summaries of created vehicles. \n\n\
+  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
+   return more results.\n\
+  \  \n\
+  \   "]
+
+module ListStateTemplates : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_state_templates_request ->
+    ( list_state_templates_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_state_templates_request ->
+    ( list_state_templates_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists information about created state templates.\n\n\
+  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
+   information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
+   Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
+   Developer Guide}.\n\
+  \  \n\
+  \   "]
+
+module ListSignalCatalogs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_signal_catalogs_request ->
+    ( list_signal_catalogs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_signal_catalogs_request ->
+    ( list_signal_catalogs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Lists all the created signal catalogs in an Amazon Web Services account. \n\n\
+  \ You can use to list information about each signal (node) specified in a signal catalog.\n\
   \ \n\
-  \   This API operation doesn't require input parameters.\n\
+  \   This API operation uses pagination. Specify the [nextToken] parameter in the request to \
+   return more results.\n\
   \   \n\
   \    "]
 
-module GetVehicleStatus : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_vehicle_status_request ->
-    ( get_vehicle_status_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_vehicle_status_request ->
-    ( get_vehicle_status_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Retrieves information about the status of campaigns, decoder manifests, or state templates \
-   associated with a vehicle.\n"]
-
-module ListCampaigns : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_campaigns_request ->
-    ( list_campaigns_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_campaigns_request ->
-    ( list_campaigns_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Lists information about created campaigns. \n\n\
-  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
-   return more results.\n\
-  \  \n\
-  \   "]
-
-module ListDecoderManifestNetworkInterfaces : sig
+module ListSignalCatalogNodes : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `InternalServerException of internal_server_exception
+    | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
@@ -1343,11 +497,12 @@ module ListDecoderManifestNetworkInterfaces : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    list_decoder_manifest_network_interfaces_request ->
-    ( list_decoder_manifest_network_interfaces_response,
+    list_signal_catalog_nodes_request ->
+    ( list_signal_catalog_nodes_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
+      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
@@ -1355,11 +510,12 @@ module ListDecoderManifestNetworkInterfaces : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    list_decoder_manifest_network_interfaces_request ->
-    ( list_decoder_manifest_network_interfaces_response Smaws_Lib.Response.t,
+    list_signal_catalog_nodes_request ->
+    ( list_signal_catalog_nodes_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
+      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
@@ -1367,55 +523,13 @@ module ListDecoderManifestNetworkInterfaces : sig
     result
 end
 [@@ocaml.doc
-  " Lists the network interfaces specified in a decoder manifest. \n\n\
+  " Lists of information about the signals (nodes) specified in a signal catalog. \n\n\
   \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
    return more results.\n\
   \  \n\
   \   "]
 
-module ListDecoderManifestSignals : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_decoder_manifest_signals_request ->
-    ( list_decoder_manifest_signals_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_decoder_manifest_signals_request ->
-    ( list_decoder_manifest_signals_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " A list of information about signal decoders specified in a decoder manifest. \n\n\
-  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
-   return more results.\n\
-  \  \n\
-  \   "]
-
-module ListDecoderManifests : sig
+module ListModelManifests : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
@@ -1426,8 +540,8 @@ module ListDecoderManifests : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    list_decoder_manifests_request ->
-    ( list_decoder_manifests_response,
+    list_model_manifests_request ->
+    ( list_model_manifests_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1437,8 +551,8 @@ module ListDecoderManifests : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    list_decoder_manifests_request ->
-    ( list_decoder_manifests_response Smaws_Lib.Response.t,
+    list_model_manifests_request ->
+    ( list_model_manifests_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1448,91 +562,7 @@ module ListDecoderManifests : sig
     result
 end
 [@@ocaml.doc
-  " Lists decoder manifests. \n\n\
-  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
-   return more results.\n\
-  \  \n\
-  \   "]
-
-module ListFleets : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_fleets_request ->
-    ( list_fleets_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_fleets_request ->
-    ( list_fleets_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Retrieves information for each created fleet in an Amazon Web Services account. \n\n\
-  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
-   return more results.\n\
-  \  \n\
-  \   "]
-
-module ListFleetsForVehicle : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_fleets_for_vehicle_request ->
-    ( list_fleets_for_vehicle_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_fleets_for_vehicle_request ->
-    ( list_fleets_for_vehicle_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves a list of IDs for all fleets that the vehicle is associated with.\n\n\
+  " Retrieves a list of vehicle models (model manifests). \n\n\
   \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
    return more results.\n\
   \  \n\
@@ -1583,51 +613,11 @@ end
   \  \n\
   \   "]
 
-module ListModelManifests : sig
+module ListFleetsForVehicle : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_model_manifests_request ->
-    ( list_model_manifests_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_model_manifests_request ->
-    ( list_model_manifests_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Retrieves a list of vehicle models (model manifests). \n\n\
-  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
-   return more results.\n\
-  \  \n\
-  \   "]
-
-module ListSignalCatalogNodes : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
@@ -1635,12 +625,11 @@ module ListSignalCatalogNodes : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    list_signal_catalog_nodes_request ->
-    ( list_signal_catalog_nodes_response,
+    list_fleets_for_vehicle_request ->
+    ( list_fleets_for_vehicle_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
@@ -1648,12 +637,11 @@ module ListSignalCatalogNodes : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    list_signal_catalog_nodes_request ->
-    ( list_signal_catalog_nodes_response Smaws_Lib.Response.t,
+    list_fleets_for_vehicle_request ->
+    ( list_fleets_for_vehicle_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
@@ -1661,54 +649,55 @@ module ListSignalCatalogNodes : sig
     result
 end
 [@@ocaml.doc
-  " Lists of information about the signals (nodes) specified in a signal catalog. \n\n\
+  "Retrieves a list of IDs for all fleets that the vehicle is associated with.\n\n\
   \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
    return more results.\n\
   \  \n\
   \   "]
 
-module ListSignalCatalogs : sig
+module ListFleets : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    list_signal_catalogs_request ->
-    ( list_signal_catalogs_response,
+    list_fleets_request ->
+    ( list_fleets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    list_signal_catalogs_request ->
-    ( list_signal_catalogs_response Smaws_Lib.Response.t,
+    list_fleets_request ->
+    ( list_fleets_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  " Lists all the created signal catalogs in an Amazon Web Services account. \n\n\
-  \ You can use to list information about each signal (node) specified in a signal catalog.\n\
-  \ \n\
-  \   This API operation uses pagination. Specify the [nextToken] parameter in the request to \
+  " Retrieves information for each created fleet in an Amazon Web Services account. \n\n\
+  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
    return more results.\n\
-  \   \n\
-  \    "]
+  \  \n\
+  \   "]
 
-module ListStateTemplates : sig
+module ListDecoderManifests : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
@@ -1719,8 +708,8 @@ module ListStateTemplates : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    list_state_templates_request ->
-    ( list_state_templates_response,
+    list_decoder_manifests_request ->
+    ( list_decoder_manifests_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1730,8 +719,8 @@ module ListStateTemplates : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    list_state_templates_request ->
-    ( list_state_templates_response Smaws_Lib.Response.t,
+    list_decoder_manifests_request ->
+    ( list_decoder_manifests_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1741,12 +730,129 @@ module ListStateTemplates : sig
     result
 end
 [@@ocaml.doc
-  "Lists information about created state templates.\n\n\
-  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
-   information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
-   Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
-   Developer Guide}.\n\
+  " Lists decoder manifests. \n\n\
+  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
+   return more results.\n\
+  \  \n\
+  \   "]
+
+module ListDecoderManifestSignals : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_decoder_manifest_signals_request ->
+    ( list_decoder_manifest_signals_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_decoder_manifest_signals_request ->
+    ( list_decoder_manifest_signals_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " A list of information about signal decoders specified in a decoder manifest. \n\n\
+  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
+   return more results.\n\
+  \  \n\
+  \   "]
+
+module ListDecoderManifestNetworkInterfaces : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_decoder_manifest_network_interfaces_request ->
+    ( list_decoder_manifest_network_interfaces_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_decoder_manifest_network_interfaces_request ->
+    ( list_decoder_manifest_network_interfaces_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Lists the network interfaces specified in a decoder manifest. \n\n\
+  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
+   return more results.\n\
+  \  \n\
+  \   "]
+
+module ListCampaigns : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_campaigns_request ->
+    ( list_campaigns_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_campaigns_request ->
+    ( list_campaigns_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Lists information about created campaigns. \n\n\
+  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
+   return more results.\n\
   \  \n\
   \   "]
 
@@ -1786,87 +892,6 @@ module ListTagsForResource : sig
     result
 end
 [@@ocaml.doc "Lists the tags (metadata) you have assigned to the resource.\n"]
-
-module ListVehicles : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_vehicles_request ->
-    ( list_vehicles_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_vehicles_request ->
-    ( list_vehicles_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Retrieves a list of summaries of created vehicles. \n\n\
-  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
-   return more results.\n\
-  \  \n\
-  \   "]
-
-module ListVehiclesInFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_vehicles_in_fleet_request ->
-    ( list_vehicles_in_fleet_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_vehicles_in_fleet_request ->
-    ( list_vehicles_in_fleet_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Retrieves a list of summaries of all vehicles associated with a fleet. \n\n\
-  \  This API operation uses pagination. Specify the [nextToken] parameter in the request to \
-   return more results.\n\
-  \  \n\
-  \   "]
 
 module PutEncryptionConfiguration : sig
   val error_to_string :
@@ -2100,11 +1125,14 @@ module UntagResource : sig
 end
 [@@ocaml.doc "Removes the given tags (metadata) from the resource.\n"]
 
-module UpdateCampaign : sig
+module ImportSignalCatalog : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidSignalsException of invalid_signals_exception
+    | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
@@ -2112,11 +1140,14 @@ module UpdateCampaign : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    update_campaign_request ->
-    ( update_campaign_response,
+    import_signal_catalog_request ->
+    ( import_signal_catalog_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidSignalsException of invalid_signals_exception
+      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
@@ -2124,20 +1155,1029 @@ module UpdateCampaign : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    update_campaign_request ->
-    ( update_campaign_response Smaws_Lib.Response.t,
+    import_signal_catalog_request ->
+    ( import_signal_catalog_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidSignalsException of invalid_signals_exception
+      | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc " Updates a campaign. \n"]
+[@@ocaml.doc
+  " Creates a signal catalog using your existing VSS formatted content from your local device. \n"]
 
-module UpdateDecoderManifest : sig
+module ImportDecoderManifest : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `DecoderManifestValidationException of decoder_manifest_validation_exception
+    | `InvalidSignalsException of invalid_signals_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    import_decoder_manifest_request ->
+    ( import_decoder_manifest_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `DecoderManifestValidationException of decoder_manifest_validation_exception
+      | `InvalidSignalsException of invalid_signals_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    import_decoder_manifest_request ->
+    ( import_decoder_manifest_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `DecoderManifestValidationException of decoder_manifest_validation_exception
+      | `InvalidSignalsException of invalid_signals_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Creates a decoder manifest using your existing CAN DBC file from your local device. \n\n\
+  \ The CAN signal name must be unique and not repeated across CAN message definitions in a .dbc \
+   file. \n\
+  \ "]
+
+module GetVehicleStatus : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_vehicle_status_request ->
+    ( get_vehicle_status_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_vehicle_status_request ->
+    ( get_vehicle_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Retrieves information about the status of campaigns, decoder manifests, or state templates \
+   associated with a vehicle.\n"]
+
+module GetVehicle : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_vehicle_request ->
+    ( get_vehicle_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_vehicle_request ->
+    ( get_vehicle_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Retrieves information about a vehicle. \n"]
+
+module GetStateTemplate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_state_template_request ->
+    ( get_state_template_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_state_template_request ->
+    ( get_state_template_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves information about a state template.\n\n\
+  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
+   information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
+   Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
+   Developer Guide}.\n\
+  \  \n\
+  \   "]
+
+module GetSignalCatalog : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_signal_catalog_request ->
+    ( get_signal_catalog_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_signal_catalog_request ->
+    ( get_signal_catalog_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Retrieves information about a signal catalog. \n"]
+
+module GetRegisterAccountStatus : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_register_account_status_request ->
+    ( get_register_account_status_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_register_account_status_request ->
+    ( get_register_account_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Retrieves information about the status of registering your Amazon Web Services account, IAM, \
+   and Amazon Timestream resources so that Amazon Web Services IoT FleetWise can transfer your \
+   vehicle data to the Amazon Web Services Cloud. \n\n\
+  \ For more information, including step-by-step procedures, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/setting-up.html}Setting up \
+   Amazon Web Services IoT FleetWise}. \n\
+  \ \n\
+  \   This API operation doesn't require input parameters.\n\
+  \   \n\
+  \    "]
+
+module GetModelManifest : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_model_manifest_request ->
+    ( get_model_manifest_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_model_manifest_request ->
+    ( get_model_manifest_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Retrieves information about a vehicle model (model manifest). \n"]
+
+module GetLoggingOptions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_logging_options_request ->
+    ( get_logging_options_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_logging_options_request ->
+    ( get_logging_options_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Retrieves the logging options.\n"]
+
+module GetFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_fleet_request ->
+    ( get_fleet_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_fleet_request ->
+    ( get_fleet_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Retrieves information about a fleet. \n"]
+
+module GetEncryptionConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_encryption_configuration_request ->
+    ( get_encryption_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_encryption_configuration_request ->
+    ( get_encryption_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves the encryption configuration for resources and data in Amazon Web Services IoT \
+   FleetWise.\n"]
+
+module GetDecoderManifest : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_decoder_manifest_request ->
+    ( get_decoder_manifest_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_decoder_manifest_request ->
+    ( get_decoder_manifest_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Retrieves information about a created decoder manifest. \n"]
+
+module GetCampaign : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_campaign_request ->
+    ( get_campaign_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_campaign_request ->
+    ( get_campaign_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Retrieves information about a campaign. \n\n\
+  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
+   information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
+   Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
+   Developer Guide}.\n\
+  \  \n\
+  \   "]
+
+module DisassociateVehicleFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_vehicle_fleet_request ->
+    ( disassociate_vehicle_fleet_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_vehicle_fleet_request ->
+    ( disassociate_vehicle_fleet_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Removes, or disassociates, a vehicle from a fleet. Disassociating a vehicle from a fleet \
+   doesn't delete the vehicle.\n"]
+
+module DeleteVehicle : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vehicle_request ->
+    ( delete_vehicle_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vehicle_request ->
+    ( delete_vehicle_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Deletes a vehicle and removes it from any campaigns.\n"]
+
+module DeleteStateTemplate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_state_template_request ->
+    ( delete_state_template_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_state_template_request ->
+    ( delete_state_template_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes a state template.\n"]
+
+module DeleteSignalCatalog : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_signal_catalog_request ->
+    ( delete_signal_catalog_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_signal_catalog_request ->
+    ( delete_signal_catalog_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Deletes a signal catalog. \n"]
+
+module DeleteModelManifest : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_model_manifest_request ->
+    ( delete_model_manifest_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_model_manifest_request ->
+    ( delete_model_manifest_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Deletes a vehicle model (model manifest).\n"]
+
+module DeleteFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_fleet_request ->
+    ( delete_fleet_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_fleet_request ->
+    ( delete_fleet_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Deletes a fleet. Before you delete a fleet, all vehicles must be dissociated from the fleet. \
+   For more information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/delete-fleet-cli.html}Delete \
+   a fleet (AWS CLI)} in the {i Amazon Web Services IoT FleetWise Developer Guide}.\n"]
+
+module DeleteDecoderManifest : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_decoder_manifest_request ->
+    ( delete_decoder_manifest_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_decoder_manifest_request ->
+    ( delete_decoder_manifest_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Deletes a decoder manifest. You can't delete a decoder manifest if it has vehicles associated \
+   with it. \n"]
+
+module DeleteCampaign : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_campaign_request ->
+    ( delete_campaign_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_campaign_request ->
+    ( delete_campaign_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Deletes a data collection campaign. Deleting a campaign suspends all data collection and \
+   removes it from any vehicles. \n"]
+
+module CreateVehicle : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_vehicle_request ->
+    ( create_vehicle_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_vehicle_request ->
+    ( create_vehicle_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Creates a vehicle, which is an instance of a vehicle model (model manifest). Vehicles created \
+   from the same vehicle model consist of the same signals inherited from the vehicle model.\n\n\
+  \   If you have an existing Amazon Web Services IoT thing, you can use Amazon Web Services IoT \
+   FleetWise to create a vehicle and collect data from your thing. \n\
+  \  \n\
+  \    For more information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/create-vehicle-cli.html}Create \
+   a vehicle (AWS CLI)} in the {i Amazon Web Services IoT FleetWise Developer Guide}.\n\
+  \    "]
+
+module CreateStateTemplate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidSignalsException of invalid_signals_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_state_template_request ->
+    ( create_state_template_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidSignalsException of invalid_signals_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_state_template_request ->
+    ( create_state_template_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidSignalsException of invalid_signals_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a state template. State templates contain state properties, which are signals that \
+   belong to a signal catalog that is synchronized between the Amazon Web Services IoT FleetWise \
+   Edge and the Amazon Web Services Cloud.\n\n\
+  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
+   information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
+   Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
+   Developer Guide}.\n\
+  \  \n\
+  \   "]
+
+module CreateSignalCatalog : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InvalidNodeException of invalid_node_exception
+    | `InvalidSignalsException of invalid_signals_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_signal_catalog_request ->
+    ( create_signal_catalog_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InvalidNodeException of invalid_node_exception
+      | `InvalidSignalsException of invalid_signals_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_signal_catalog_request ->
+    ( create_signal_catalog_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InvalidNodeException of invalid_node_exception
+      | `InvalidSignalsException of invalid_signals_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Creates a collection of standardized signals that can be reused to create vehicle models.\n"]
+
+module CreateModelManifest : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InvalidSignalsException of invalid_signals_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_model_manifest_request ->
+    ( create_model_manifest_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InvalidSignalsException of invalid_signals_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_model_manifest_request ->
+    ( create_model_manifest_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InvalidSignalsException of invalid_signals_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Creates a vehicle model (model manifest) that specifies signals (attributes, branches, \
+   sensors, and actuators). \n\n\
+  \ For more information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/vehicle-models.html}Vehicle \
+   models} in the {i Amazon Web Services IoT FleetWise Developer Guide}.\n\
+  \ "]
+
+module CreateFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_fleet_request ->
+    ( create_fleet_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_fleet_request ->
+    ( create_fleet_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Creates a fleet that represents a group of vehicles. \n\n\
+  \  You must create both a signal catalog and vehicles before you can create a fleet. \n\
+  \  \n\
+  \    For more information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleets.html}Fleets} in the \
+   {i Amazon Web Services IoT FleetWise Developer Guide}.\n\
+  \    "]
+
+module CreateDecoderManifest : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
@@ -2151,8 +2191,8 @@ module UpdateDecoderManifest : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    update_decoder_manifest_request ->
-    ( update_decoder_manifest_response,
+    create_decoder_manifest_request ->
+    ( create_decoder_manifest_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -2165,8 +2205,8 @@ module UpdateDecoderManifest : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    update_decoder_manifest_request ->
-    ( update_decoder_manifest_response Smaws_Lib.Response.t,
+    create_decoder_manifest_request ->
+    ( create_decoder_manifest_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -2179,104 +2219,29 @@ module UpdateDecoderManifest : sig
     result
 end
 [@@ocaml.doc
-  " Updates a decoder manifest.\n\n\
-  \ A decoder manifest can only be updated when the status is [DRAFT]. Only [ACTIVE] decoder \
-   manifests can be associated with vehicles.\n\
-  \ "]
+  "Creates the decoder manifest associated with a model manifest. To create a decoder manifest, \
+   the following must be true:\n\n\
+  \ {ul\n\
+  \       {-  Every signal decoder has a unique name.\n\
+  \           \n\
+  \            }\n\
+  \       {-  Each signal decoder is associated with a network interface.\n\
+  \           \n\
+  \            }\n\
+  \       {-  Each network interface has a unique ID.\n\
+  \           \n\
+  \            }\n\
+  \       {-  The signal decoders are specified in the model manifest.\n\
+  \           \n\
+  \            }\n\
+  \       }\n\
+  \  "]
 
-module UpdateFleet : sig
+module CreateCampaign : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_fleet_request ->
-    ( update_fleet_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_fleet_request ->
-    ( update_fleet_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Updates the description of an existing fleet. \n"]
-
-module UpdateModelManifest : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidSignalsException of invalid_signals_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_model_manifest_request ->
-    ( update_model_manifest_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidSignalsException of invalid_signals_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_model_manifest_request ->
-    ( update_model_manifest_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidSignalsException of invalid_signals_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Updates a vehicle model (model manifest). If created vehicles are associated with a vehicle \
-   model, it can't be updated.\n"]
-
-module UpdateSignalCatalog : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidNodeException of invalid_node_exception
-    | `InvalidSignalsException of invalid_signals_exception
     | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
     | `ThrottlingException of throttling_exception
@@ -2285,14 +2250,11 @@ module UpdateSignalCatalog : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    update_signal_catalog_request ->
-    ( update_signal_catalog_response,
+    create_campaign_request ->
+    ( create_campaign_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidNodeException of invalid_node_exception
-      | `InvalidSignalsException of invalid_signals_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
@@ -2301,57 +2263,11 @@ module UpdateSignalCatalog : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    update_signal_catalog_request ->
-    ( update_signal_catalog_response Smaws_Lib.Response.t,
+    create_campaign_request ->
+    ( create_campaign_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidNodeException of invalid_node_exception
-      | `InvalidSignalsException of invalid_signals_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Updates a signal catalog. \n"]
-
-module UpdateStateTemplate : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidSignalsException of invalid_signals_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_state_template_request ->
-    ( update_state_template_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidSignalsException of invalid_signals_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_state_template_request ->
-    ( update_state_template_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidSignalsException of invalid_signals_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
@@ -2360,20 +2276,114 @@ module UpdateStateTemplate : sig
     result
 end
 [@@ocaml.doc
-  "Updates a state template.\n\n\
-  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
+  "Creates an orchestration of data collection rules. The Amazon Web Services IoT FleetWise Edge \
+   Agent software running in vehicles uses campaigns to decide how to collect and transfer data to \
+   the cloud. You create campaigns in the cloud. After you or your team approve campaigns, Amazon \
+   Web Services IoT FleetWise automatically deploys them to vehicles. \n\n\
+  \ For more information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/campaigns.html}Collect and \
+   transfer data with campaigns} in the {i Amazon Web Services IoT FleetWise Developer Guide}.\n\
+  \ \n\
+  \   Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
    information, see \
    {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
    Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
    Developer Guide}.\n\
-  \  \n\
-  \   "]
+  \   \n\
+  \    "]
 
-module UpdateVehicle : sig
+module BatchUpdateVehicle : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_update_vehicle_request ->
+    ( batch_update_vehicle_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_update_vehicle_request ->
+    ( batch_update_vehicle_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Updates a group, or batch, of vehicles.\n\n\
+  \   You must specify a decoder manifest and a vehicle model (model manifest) for each vehicle. \n\
+  \  \n\
+  \    For more information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/update-vehicles-cli.html}Update \
+   multiple vehicles (AWS CLI)} in the {i Amazon Web Services IoT FleetWise Developer Guide}. \n\
+  \    "]
+
+module BatchCreateVehicle : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_create_vehicle_request ->
+    ( batch_create_vehicle_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_create_vehicle_request ->
+    ( batch_create_vehicle_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Creates a group, or batch, of vehicles. \n\n\
+  \   You must specify a decoder manifest and a vehicle model (model manifest) for each vehicle. \n\
+  \  \n\
+  \    For more information, see \
+   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/create-vehicles-cli.html}Create \
+   multiple vehicles (AWS CLI)} in the {i Amazon Web Services IoT FleetWise Developer Guide}. \n\
+  \    "]
+
+module AssociateVehicleFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
     | `InternalServerException of internal_server_exception
     | `LimitExceededException of limit_exceeded_exception
     | `ResourceNotFoundException of resource_not_found_exception
@@ -2383,11 +2393,10 @@ module UpdateVehicle : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    update_vehicle_request ->
-    ( update_vehicle_response,
+    associate_vehicle_fleet_request ->
+    ( associate_vehicle_fleet_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
@@ -2397,11 +2406,10 @@ module UpdateVehicle : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    update_vehicle_request ->
-    ( update_vehicle_response Smaws_Lib.Response.t,
+    associate_vehicle_fleet_request ->
+    ( associate_vehicle_fleet_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
@@ -2410,12 +2418,4 @@ module UpdateVehicle : sig
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc
-  " Updates a vehicle.\n\n\
-  \  Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more \
-   information, see \
-   {{:https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html}Amazon \
-   Web Services Region and feature availability} in the {i Amazon Web Services IoT FleetWise \
-   Developer Guide}.\n\
-  \  \n\
-  \   "]
+[@@ocaml.doc " Adds, or associates, a vehicle with a fleet. \n"]

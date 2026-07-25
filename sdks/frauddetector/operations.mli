@@ -669,6 +669,46 @@ end
    data is available through search for up to 30 seconds after the delete operation is completed.\n\
   \ "]
 
+module DeleteEventsByEventType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_events_by_event_type_request ->
+    ( delete_events_by_event_type_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_events_by_event_type_request ->
+    ( delete_events_by_event_type_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes all events of a particular event type.\n"]
+
 module DeleteEventType : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -711,46 +751,6 @@ end
   \  When you delete an event type, Amazon Fraud Detector permanently deletes that event type and \
    the data is no longer stored in Amazon Fraud Detector.\n\
   \  "]
-
-module DeleteEventsByEventType : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_events_by_event_type_request ->
-    ( delete_events_by_event_type_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_events_by_event_type_request ->
-    ( delete_events_by_event_type_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes all events of a particular event type.\n"]
 
 module DeleteExternalModel : sig
   val error_to_string :
@@ -1293,43 +1293,6 @@ module GetDeleteEventsByEventTypeStatus : sig
 end
 [@@ocaml.doc "Retrieves the status of a [DeleteEventsByEventType] action.\n"]
 
-module GetDetectorVersion : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_detector_version_request ->
-    ( get_detector_version_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_detector_version_request ->
-    ( get_detector_version_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets a particular detector version. \n"]
-
 module GetDetectors : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1371,6 +1334,43 @@ end
    page. If you provide a [maxResults], the value must be between 5 and 10. To get the next page \
    results, provide the pagination token from the [GetDetectorsResponse] as part of your request. \
    A null pagination token fetches the records from the beginning. \n"]
+
+module GetDetectorVersion : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_detector_version_request ->
+    ( get_detector_version_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_detector_version_request ->
+    ( get_detector_version_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets a particular detector version. \n"]
 
 module GetEntityTypes : sig
   val error_to_string :
@@ -1775,43 +1775,6 @@ end
 [@@ocaml.doc
   " Gets the metadata of either all the lists under the account or the specified list. \n"]
 
-module GetModelVersion : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_model_version_request ->
-    ( get_model_version_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_model_version_request ->
-    ( get_model_version_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets the details of the specified model version.\n"]
-
 module GetModels : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1857,6 +1820,43 @@ end
    get the next page results, provide the pagination token from the response as part of your \
    request. A null pagination token fetches the records from the beginning.\n\
   \ "]
+
+module GetModelVersion : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_model_version_request ->
+    ( get_model_version_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_model_version_request ->
+    ( get_model_version_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets the details of the specified model version.\n"]
 
 module GetOutcomes : sig
   val error_to_string :

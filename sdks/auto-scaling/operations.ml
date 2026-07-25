@@ -3,181 +3,6 @@ open Service_metadata
 open Query_deserializers
 open Query_serializers
 
-module AttachInstances = struct
-  let error_to_string = function
-    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
-    | `ServiceLinkedRoleFailure _ -> "com.amazonaws.autoscaling#ServiceLinkedRoleFailure"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "ResourceContention" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:resource_contention_fault_of_xml
-        with
-        | Ok s -> `ResourceContentionFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ServiceLinkedRoleFailure" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:service_linked_role_failure_of_xml
-        with
-        | Ok s -> `ServiceLinkedRoleFailure s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : attach_instances_query) =
-    let fields = attach_instances_query_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AttachInstances"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-
-  let request_with_metadata context (request : attach_instances_query) =
-    let fields = attach_instances_query_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AttachInstances"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-end
-
-module AttachLoadBalancers = struct
-  let error_to_string = function
-    | `InstanceRefreshInProgressFault _ ->
-        "com.amazonaws.autoscaling#InstanceRefreshInProgressFault"
-    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
-    | `ServiceLinkedRoleFailure _ -> "com.amazonaws.autoscaling#ServiceLinkedRoleFailure"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "InstanceRefreshInProgress" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:instance_refresh_in_progress_fault_of_xml
-        with
-        | Ok s -> `InstanceRefreshInProgressFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ResourceContention" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:resource_contention_fault_of_xml
-        with
-        | Ok s -> `ResourceContentionFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ServiceLinkedRoleFailure" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:service_linked_role_failure_of_xml
-        with
-        | Ok s -> `ServiceLinkedRoleFailure s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : attach_load_balancers_type) =
-    let fields = attach_load_balancers_type_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AttachLoadBalancers"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:attach_load_balancers_result_type_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : attach_load_balancers_type) =
-    let fields = attach_load_balancers_type_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AttachLoadBalancers"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:attach_load_balancers_result_type_of_xml ~error_deserializer
-end
-
-module AttachLoadBalancerTargetGroups = struct
-  let error_to_string = function
-    | `InstanceRefreshInProgressFault _ ->
-        "com.amazonaws.autoscaling#InstanceRefreshInProgressFault"
-    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
-    | `ServiceLinkedRoleFailure _ -> "com.amazonaws.autoscaling#ServiceLinkedRoleFailure"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "InstanceRefreshInProgress" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:instance_refresh_in_progress_fault_of_xml
-        with
-        | Ok s -> `InstanceRefreshInProgressFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ResourceContention" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:resource_contention_fault_of_xml
-        with
-        | Ok s -> `ResourceContentionFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ServiceLinkedRoleFailure" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:service_linked_role_failure_of_xml
-        with
-        | Ok s -> `ServiceLinkedRoleFailure s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : attach_load_balancer_target_groups_type) =
-    let fields = attach_load_balancer_target_groups_type_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AttachLoadBalancerTargetGroups"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:attach_load_balancer_target_groups_result_type_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : attach_load_balancer_target_groups_type) =
-    let fields = attach_load_balancer_target_groups_type_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AttachLoadBalancerTargetGroups"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:attach_load_balancer_target_groups_result_type_of_xml ~error_deserializer
-end
-
-module AttachTrafficSources = struct
-  let error_to_string = function
-    | `InstanceRefreshInProgressFault _ ->
-        "com.amazonaws.autoscaling#InstanceRefreshInProgressFault"
-    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
-    | `ServiceLinkedRoleFailure _ -> "com.amazonaws.autoscaling#ServiceLinkedRoleFailure"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "InstanceRefreshInProgress" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:instance_refresh_in_progress_fault_of_xml
-        with
-        | Ok s -> `InstanceRefreshInProgressFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ResourceContention" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:resource_contention_fault_of_xml
-        with
-        | Ok s -> `ResourceContentionFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ServiceLinkedRoleFailure" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:service_linked_role_failure_of_xml
-        with
-        | Ok s -> `ServiceLinkedRoleFailure s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : attach_traffic_sources_type) =
-    let fields = attach_traffic_sources_type_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AttachTrafficSources"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:attach_traffic_sources_result_type_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : attach_traffic_sources_type) =
-    let fields = attach_traffic_sources_type_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AttachTrafficSources"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:attach_traffic_sources_result_type_of_xml ~error_deserializer
-end
-
 module BatchDeleteScheduledAction = struct
   let error_to_string = function
     | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
@@ -1014,35 +839,6 @@ module DescribeLaunchConfigurations = struct
       ~output_deserializer:launch_configurations_type_of_xml ~error_deserializer
 end
 
-module DescribeLifecycleHookTypes = struct
-  let error_to_string = function
-    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "ResourceContention" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:resource_contention_fault_of_xml
-        with
-        | Ok s -> `ResourceContentionFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeLifecycleHookTypes"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:describe_lifecycle_hook_types_answer_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeLifecycleHookTypes"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:describe_lifecycle_hook_types_answer_of_xml ~error_deserializer
-end
-
 module DescribeLifecycleHooks = struct
   let error_to_string = function
     | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
@@ -1072,21 +868,13 @@ module DescribeLifecycleHooks = struct
       ~output_deserializer:describe_lifecycle_hooks_answer_of_xml ~error_deserializer
 end
 
-module DescribeLoadBalancerTargetGroups = struct
+module DescribeLifecycleHookTypes = struct
   let error_to_string = function
-    | `InvalidNextToken _ -> "com.amazonaws.autoscaling#InvalidNextToken"
     | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
     | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
 
   let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
     match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "InvalidNextToken" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_next_token_of_xml
-        with
-        | Ok s -> `InvalidNextToken s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | "ResourceContention" -> (
         match
           Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
@@ -1096,17 +884,17 @@ module DescribeLoadBalancerTargetGroups = struct
         | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
-  let request context (request : describe_load_balancer_target_groups_request) =
-    let fields = describe_load_balancer_target_groups_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeLoadBalancerTargetGroups"
+  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeLifecycleHookTypes"
       ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:describe_load_balancer_target_groups_response_of_xml ~error_deserializer
+      ~output_deserializer:describe_lifecycle_hook_types_answer_of_xml ~error_deserializer
 
-  let request_with_metadata context (request : describe_load_balancer_target_groups_request) =
-    let fields = describe_load_balancer_target_groups_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeLoadBalancerTargetGroups"
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeLifecycleHookTypes"
       ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:describe_load_balancer_target_groups_response_of_xml ~error_deserializer
+      ~output_deserializer:describe_lifecycle_hook_types_answer_of_xml ~error_deserializer
 end
 
 module DescribeLoadBalancers = struct
@@ -1144,6 +932,43 @@ module DescribeLoadBalancers = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeLoadBalancers"
       ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
       ~output_deserializer:describe_load_balancers_response_of_xml ~error_deserializer
+end
+
+module DescribeLoadBalancerTargetGroups = struct
+  let error_to_string = function
+    | `InvalidNextToken _ -> "com.amazonaws.autoscaling#InvalidNextToken"
+    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "InvalidNextToken" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_next_token_of_xml
+        with
+        | Ok s -> `InvalidNextToken s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ResourceContention" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:resource_contention_fault_of_xml
+        with
+        | Ok s -> `ResourceContentionFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : describe_load_balancer_target_groups_request) =
+    let fields = describe_load_balancer_target_groups_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeLoadBalancerTargetGroups"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:describe_load_balancer_target_groups_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : describe_load_balancer_target_groups_request) =
+    let fields = describe_load_balancer_target_groups_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeLoadBalancerTargetGroups"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:describe_load_balancer_target_groups_response_of_xml ~error_deserializer
 end
 
 module DescribeMetricCollectionTypes = struct
@@ -1537,35 +1362,6 @@ module DetachInstances = struct
       ~output_deserializer:detach_instances_answer_of_xml ~error_deserializer
 end
 
-module DetachLoadBalancerTargetGroups = struct
-  let error_to_string = function
-    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "ResourceContention" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:resource_contention_fault_of_xml
-        with
-        | Ok s -> `ResourceContentionFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : detach_load_balancer_target_groups_type) =
-    let fields = detach_load_balancer_target_groups_type_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DetachLoadBalancerTargetGroups"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:detach_load_balancer_target_groups_result_type_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : detach_load_balancer_target_groups_type) =
-    let fields = detach_load_balancer_target_groups_type_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DetachLoadBalancerTargetGroups"
-      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
-      ~output_deserializer:detach_load_balancer_target_groups_result_type_of_xml ~error_deserializer
-end
-
 module DetachLoadBalancers = struct
   let error_to_string = function
     | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
@@ -1593,6 +1389,35 @@ module DetachLoadBalancers = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DetachLoadBalancers"
       ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
       ~output_deserializer:detach_load_balancers_result_type_of_xml ~error_deserializer
+end
+
+module DetachLoadBalancerTargetGroups = struct
+  let error_to_string = function
+    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "ResourceContention" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:resource_contention_fault_of_xml
+        with
+        | Ok s -> `ResourceContentionFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : detach_load_balancer_target_groups_type) =
+    let fields = detach_load_balancer_target_groups_type_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DetachLoadBalancerTargetGroups"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:detach_load_balancer_target_groups_result_type_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : detach_load_balancer_target_groups_type) =
+    let fields = detach_load_balancer_target_groups_type_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DetachLoadBalancerTargetGroups"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:detach_load_balancer_target_groups_result_type_of_xml ~error_deserializer
 end
 
 module DetachTrafficSources = struct
@@ -2451,6 +2276,181 @@ module UpdateAutoScalingGroup = struct
   let request_with_metadata context (request : update_auto_scaling_group_type) =
     let fields = update_auto_scaling_group_type_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"UpdateAutoScalingGroup"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+end
+
+module AttachTrafficSources = struct
+  let error_to_string = function
+    | `InstanceRefreshInProgressFault _ ->
+        "com.amazonaws.autoscaling#InstanceRefreshInProgressFault"
+    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
+    | `ServiceLinkedRoleFailure _ -> "com.amazonaws.autoscaling#ServiceLinkedRoleFailure"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "InstanceRefreshInProgress" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:instance_refresh_in_progress_fault_of_xml
+        with
+        | Ok s -> `InstanceRefreshInProgressFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ResourceContention" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:resource_contention_fault_of_xml
+        with
+        | Ok s -> `ResourceContentionFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ServiceLinkedRoleFailure" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:service_linked_role_failure_of_xml
+        with
+        | Ok s -> `ServiceLinkedRoleFailure s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : attach_traffic_sources_type) =
+    let fields = attach_traffic_sources_type_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AttachTrafficSources"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:attach_traffic_sources_result_type_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : attach_traffic_sources_type) =
+    let fields = attach_traffic_sources_type_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AttachTrafficSources"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:attach_traffic_sources_result_type_of_xml ~error_deserializer
+end
+
+module AttachLoadBalancers = struct
+  let error_to_string = function
+    | `InstanceRefreshInProgressFault _ ->
+        "com.amazonaws.autoscaling#InstanceRefreshInProgressFault"
+    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
+    | `ServiceLinkedRoleFailure _ -> "com.amazonaws.autoscaling#ServiceLinkedRoleFailure"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "InstanceRefreshInProgress" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:instance_refresh_in_progress_fault_of_xml
+        with
+        | Ok s -> `InstanceRefreshInProgressFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ResourceContention" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:resource_contention_fault_of_xml
+        with
+        | Ok s -> `ResourceContentionFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ServiceLinkedRoleFailure" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:service_linked_role_failure_of_xml
+        with
+        | Ok s -> `ServiceLinkedRoleFailure s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : attach_load_balancers_type) =
+    let fields = attach_load_balancers_type_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AttachLoadBalancers"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:attach_load_balancers_result_type_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : attach_load_balancers_type) =
+    let fields = attach_load_balancers_type_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AttachLoadBalancers"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:attach_load_balancers_result_type_of_xml ~error_deserializer
+end
+
+module AttachLoadBalancerTargetGroups = struct
+  let error_to_string = function
+    | `InstanceRefreshInProgressFault _ ->
+        "com.amazonaws.autoscaling#InstanceRefreshInProgressFault"
+    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
+    | `ServiceLinkedRoleFailure _ -> "com.amazonaws.autoscaling#ServiceLinkedRoleFailure"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "InstanceRefreshInProgress" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:instance_refresh_in_progress_fault_of_xml
+        with
+        | Ok s -> `InstanceRefreshInProgressFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ResourceContention" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:resource_contention_fault_of_xml
+        with
+        | Ok s -> `ResourceContentionFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ServiceLinkedRoleFailure" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:service_linked_role_failure_of_xml
+        with
+        | Ok s -> `ServiceLinkedRoleFailure s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : attach_load_balancer_target_groups_type) =
+    let fields = attach_load_balancer_target_groups_type_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AttachLoadBalancerTargetGroups"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:attach_load_balancer_target_groups_result_type_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : attach_load_balancer_target_groups_type) =
+    let fields = attach_load_balancer_target_groups_type_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AttachLoadBalancerTargetGroups"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:attach_load_balancer_target_groups_result_type_of_xml ~error_deserializer
+end
+
+module AttachInstances = struct
+  let error_to_string = function
+    | `ResourceContentionFault _ -> "com.amazonaws.autoscaling#ResourceContentionFault"
+    | `ServiceLinkedRoleFailure _ -> "com.amazonaws.autoscaling#ServiceLinkedRoleFailure"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "ResourceContention" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:resource_contention_fault_of_xml
+        with
+        | Ok s -> `ResourceContentionFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ServiceLinkedRoleFailure" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:service_linked_role_failure_of_xml
+        with
+        | Ok s -> `ServiceLinkedRoleFailure s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : attach_instances_query) =
+    let fields = attach_instances_query_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AttachInstances"
+      ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : attach_instances_query) =
+    let fields = attach_instances_query_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AttachInstances"
       ~xmlNamespace:"http://autoscaling.amazonaws.com/doc/2011-01-01/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end

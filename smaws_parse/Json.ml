@@ -70,6 +70,7 @@ module Decode = struct
                 | Error (CustomError y) -> Error (RecordParseError (path ^ "." ^ key, y))
                 | Error x -> Error x))
           ~init:(Ok []) object_)
+    |> Result.map ~f:List.rev
 
   let parseString x =
     Result.bind x ~f:(fun { tree; path } ->

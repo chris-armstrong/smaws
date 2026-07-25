@@ -5751,56 +5751,6 @@ module ListUserImportJobs = struct
       ~error_deserializer
 end
 
-module ListUserPoolClientSecrets = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.cognitoidentityprovider#InternalServerException"
-    | `InvalidParameterException _ ->
-        "com.amazonaws.cognitoidentityprovider#InvalidParameterException"
-    | `LimitExceededException _ -> "com.amazonaws.cognitoidentityprovider#LimitExceededException"
-    | `ResourceNotFoundException _ ->
-        "com.amazonaws.cognitoidentityprovider#ResourceNotFoundException"
-    | `TooManyRequestsException _ ->
-        "com.amazonaws.cognitoidentityprovider#TooManyRequestsException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidParameterException" ->
-          `InvalidParameterException
-            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _, "TooManyRequestsException" ->
-          `TooManyRequestsException
-            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_user_pool_client_secrets_request) =
-    let input = Json_serializers.list_user_pool_client_secrets_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"AWSCognitoIdentityProviderService.ListUserPoolClientSecrets" ~service ~context
-      ~input
-      ~output_deserializer:Json_deserializers.list_user_pool_client_secrets_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_user_pool_client_secrets_request) =
-    let input = Json_serializers.list_user_pool_client_secrets_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSCognitoIdentityProviderService.ListUserPoolClientSecrets" ~service ~context
-      ~input
-      ~output_deserializer:Json_deserializers.list_user_pool_client_secrets_response_of_yojson
-      ~error_deserializer
-end
-
 module ListUserPoolClients = struct
   let error_to_string = function
     | `InternalErrorException _ -> "com.amazonaws.cognitoidentityprovider#InternalErrorException"
@@ -5850,6 +5800,56 @@ module ListUserPoolClients = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSCognitoIdentityProviderService.ListUserPoolClients" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_user_pool_clients_response_of_yojson
+      ~error_deserializer
+end
+
+module ListUserPoolClientSecrets = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.cognitoidentityprovider#InternalServerException"
+    | `InvalidParameterException _ ->
+        "com.amazonaws.cognitoidentityprovider#InvalidParameterException"
+    | `LimitExceededException _ -> "com.amazonaws.cognitoidentityprovider#LimitExceededException"
+    | `ResourceNotFoundException _ ->
+        "com.amazonaws.cognitoidentityprovider#ResourceNotFoundException"
+    | `TooManyRequestsException _ ->
+        "com.amazonaws.cognitoidentityprovider#TooManyRequestsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "TooManyRequestsException" ->
+          `TooManyRequestsException
+            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_user_pool_client_secrets_request) =
+    let input = Json_serializers.list_user_pool_client_secrets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSCognitoIdentityProviderService.ListUserPoolClientSecrets" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.list_user_pool_client_secrets_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_user_pool_client_secrets_request) =
+    let input = Json_serializers.list_user_pool_client_secrets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSCognitoIdentityProviderService.ListUserPoolClientSecrets" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.list_user_pool_client_secrets_response_of_yojson
       ~error_deserializer
 end
 

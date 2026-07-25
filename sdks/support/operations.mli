@@ -637,56 +637,6 @@ end
    Amazon Web Services Support API} in the {i Amazon Web Services Support User Guide}.\n\
   \    "]
 
-module DescribeTrustedAdvisorCheckSummaries : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_trusted_advisor_check_summaries_request ->
-    ( describe_trusted_advisor_check_summaries_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_trusted_advisor_check_summaries_request ->
-    ( describe_trusted_advisor_check_summaries_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the results for the Trusted Advisor check summaries for the check IDs that you \
-   specified. You can get the check IDs by calling the [DescribeTrustedAdvisorChecks] operation.\n\n\
-  \ The response contains an array of [TrustedAdvisorCheckSummary] objects.\n\
-  \ \n\
-  \   {ul\n\
-  \         {-  You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use \
-   the Amazon Web Services Support API. \n\
-  \             \n\
-  \              }\n\
-  \         {-  If you call the Amazon Web Services Support API from an account that doesn't have \
-   a Business, Enterprise On-Ramp, or Enterprise Support plan, the [SubscriptionRequiredException] \
-   error message appears. For information about changing your support plan, see \
-   {{:http://aws.amazon.com/premiumsupport/}Amazon Web Services Support}.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \    To call the Trusted Advisor operations in the Amazon Web Services Support API, you must use \
-   the US East (N. Virginia) endpoint. Currently, the US West (Oregon) and Europe (Ireland) \
-   endpoints don't support the Trusted Advisor operations. For more information, see \
-   {{:https://docs.aws.amazon.com/awssupport/latest/user/about-support-api.html#endpoint}About the \
-   Amazon Web Services Support API} in the {i Amazon Web Services Support User Guide}.\n\
-  \    "]
-
 module DescribeTrustedAdvisorChecks : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -732,6 +682,56 @@ end
   \              }\n\
   \         {-  The names and descriptions for Trusted Advisor checks are subject to change. We \
    recommend that you specify the check ID in your code to uniquely identify a check.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \    To call the Trusted Advisor operations in the Amazon Web Services Support API, you must use \
+   the US East (N. Virginia) endpoint. Currently, the US West (Oregon) and Europe (Ireland) \
+   endpoints don't support the Trusted Advisor operations. For more information, see \
+   {{:https://docs.aws.amazon.com/awssupport/latest/user/about-support-api.html#endpoint}About the \
+   Amazon Web Services Support API} in the {i Amazon Web Services Support User Guide}.\n\
+  \    "]
+
+module DescribeTrustedAdvisorCheckSummaries : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_trusted_advisor_check_summaries_request ->
+    ( describe_trusted_advisor_check_summaries_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_trusted_advisor_check_summaries_request ->
+    ( describe_trusted_advisor_check_summaries_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the results for the Trusted Advisor check summaries for the check IDs that you \
+   specified. You can get the check IDs by calling the [DescribeTrustedAdvisorChecks] operation.\n\n\
+  \ The response contains an array of [TrustedAdvisorCheckSummary] objects.\n\
+  \ \n\
+  \   {ul\n\
+  \         {-  You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use \
+   the Amazon Web Services Support API. \n\
+  \             \n\
+  \              }\n\
+  \         {-  If you call the Amazon Web Services Support API from an account that doesn't have \
+   a Business, Enterprise On-Ramp, or Enterprise Support plan, the [SubscriptionRequiredException] \
+   error message appears. For information about changing your support plan, see \
+   {{:http://aws.amazon.com/premiumsupport/}Amazon Web Services Support}.\n\
   \             \n\
   \              }\n\
   \         }\n\

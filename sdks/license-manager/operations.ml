@@ -2163,6 +2163,52 @@ module ListLicenseManagerReportGenerators = struct
       ~error_deserializer
 end
 
+module ListLicenses = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.licensemanager#AccessDeniedException"
+    | `AuthorizationException _ -> "com.amazonaws.licensemanager#AuthorizationException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.licensemanager#InvalidParameterValueException"
+    | `RateLimitExceededException _ -> "com.amazonaws.licensemanager#RateLimitExceededException"
+    | `ServerInternalException _ -> "com.amazonaws.licensemanager#ServerInternalException"
+    | `ValidationException _ -> "com.amazonaws.licensemanager#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "AuthorizationException" ->
+          `AuthorizationException (Json_deserializers.authorization_exception_of_yojson tree path)
+      | _, "InvalidParameterValueException" ->
+          `InvalidParameterValueException
+            (Json_deserializers.invalid_parameter_value_exception_of_yojson tree path)
+      | _, "RateLimitExceededException" ->
+          `RateLimitExceededException
+            (Json_deserializers.rate_limit_exceeded_exception_of_yojson tree path)
+      | _, "ServerInternalException" ->
+          `ServerInternalException
+            (Json_deserializers.server_internal_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_licenses_request) =
+    let input = Json_serializers.list_licenses_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSLicenseManager.ListLicenses" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_licenses_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_licenses_request) =
+    let input = Json_serializers.list_licenses_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSLicenseManager.ListLicenses"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_licenses_response_of_yojson ~error_deserializer
+end
+
 module ListLicenseSpecificationsForResource = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.licensemanager#AccessDeniedException"
@@ -2257,52 +2303,6 @@ module ListLicenseVersions = struct
       ~shape_name:"AWSLicenseManager.ListLicenseVersions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_license_versions_response_of_yojson
       ~error_deserializer
-end
-
-module ListLicenses = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.licensemanager#AccessDeniedException"
-    | `AuthorizationException _ -> "com.amazonaws.licensemanager#AuthorizationException"
-    | `InvalidParameterValueException _ ->
-        "com.amazonaws.licensemanager#InvalidParameterValueException"
-    | `RateLimitExceededException _ -> "com.amazonaws.licensemanager#RateLimitExceededException"
-    | `ServerInternalException _ -> "com.amazonaws.licensemanager#ServerInternalException"
-    | `ValidationException _ -> "com.amazonaws.licensemanager#ValidationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "AuthorizationException" ->
-          `AuthorizationException (Json_deserializers.authorization_exception_of_yojson tree path)
-      | _, "InvalidParameterValueException" ->
-          `InvalidParameterValueException
-            (Json_deserializers.invalid_parameter_value_exception_of_yojson tree path)
-      | _, "RateLimitExceededException" ->
-          `RateLimitExceededException
-            (Json_deserializers.rate_limit_exceeded_exception_of_yojson tree path)
-      | _, "ServerInternalException" ->
-          `ServerInternalException
-            (Json_deserializers.server_internal_exception_of_yojson tree path)
-      | _, "ValidationException" ->
-          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_licenses_request) =
-    let input = Json_serializers.list_licenses_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSLicenseManager.ListLicenses" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.list_licenses_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_licenses_request) =
-    let input = Json_serializers.list_licenses_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSLicenseManager.ListLicenses"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_licenses_response_of_yojson ~error_deserializer
 end
 
 module ListReceivedGrants = struct

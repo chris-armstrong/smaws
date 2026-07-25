@@ -1,164 +1,6 @@
 open Types
 open Service_metadata
 
-module AddTags = struct
-  let error_to_string = function
-    | `ChannelARNInvalidException _ -> "com.amazonaws.cloudtrail#ChannelARNInvalidException"
-    | `ChannelNotFoundException _ -> "com.amazonaws.cloudtrail#ChannelNotFoundException"
-    | `CloudTrailARNInvalidException _ -> "com.amazonaws.cloudtrail#CloudTrailARNInvalidException"
-    | `ConflictException _ -> "com.amazonaws.cloudtrail#ConflictException"
-    | `EventDataStoreARNInvalidException _ ->
-        "com.amazonaws.cloudtrail#EventDataStoreARNInvalidException"
-    | `EventDataStoreNotFoundException _ ->
-        "com.amazonaws.cloudtrail#EventDataStoreNotFoundException"
-    | `InactiveEventDataStoreException _ ->
-        "com.amazonaws.cloudtrail#InactiveEventDataStoreException"
-    | `InvalidTagParameterException _ -> "com.amazonaws.cloudtrail#InvalidTagParameterException"
-    | `InvalidTrailNameException _ -> "com.amazonaws.cloudtrail#InvalidTrailNameException"
-    | `NoManagementAccountSLRExistsException _ ->
-        "com.amazonaws.cloudtrail#NoManagementAccountSLRExistsException"
-    | `NotOrganizationMasterAccountException _ ->
-        "com.amazonaws.cloudtrail#NotOrganizationMasterAccountException"
-    | `OperationNotPermittedException _ -> "com.amazonaws.cloudtrail#OperationNotPermittedException"
-    | `ResourceNotFoundException _ -> "com.amazonaws.cloudtrail#ResourceNotFoundException"
-    | `ResourceTypeNotSupportedException _ ->
-        "com.amazonaws.cloudtrail#ResourceTypeNotSupportedException"
-    | `TagsLimitExceededException _ -> "com.amazonaws.cloudtrail#TagsLimitExceededException"
-    | `UnsupportedOperationException _ -> "com.amazonaws.cloudtrail#UnsupportedOperationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ChannelARNInvalidException" ->
-          `ChannelARNInvalidException
-            (Json_deserializers.channel_arn_invalid_exception_of_yojson tree path)
-      | _, "ChannelNotFoundException" ->
-          `ChannelNotFoundException
-            (Json_deserializers.channel_not_found_exception_of_yojson tree path)
-      | _, "CloudTrailARNInvalidException" ->
-          `CloudTrailARNInvalidException
-            (Json_deserializers.cloud_trail_arn_invalid_exception_of_yojson tree path)
-      | _, "ConflictException" ->
-          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
-      | _, "EventDataStoreARNInvalidException" ->
-          `EventDataStoreARNInvalidException
-            (Json_deserializers.event_data_store_arn_invalid_exception_of_yojson tree path)
-      | _, "EventDataStoreNotFoundException" ->
-          `EventDataStoreNotFoundException
-            (Json_deserializers.event_data_store_not_found_exception_of_yojson tree path)
-      | _, "InactiveEventDataStoreException" ->
-          `InactiveEventDataStoreException
-            (Json_deserializers.inactive_event_data_store_exception_of_yojson tree path)
-      | _, "InvalidTagParameterException" ->
-          `InvalidTagParameterException
-            (Json_deserializers.invalid_tag_parameter_exception_of_yojson tree path)
-      | _, "InvalidTrailNameException" ->
-          `InvalidTrailNameException
-            (Json_deserializers.invalid_trail_name_exception_of_yojson tree path)
-      | _, "NoManagementAccountSLRExistsException" ->
-          `NoManagementAccountSLRExistsException
-            (Json_deserializers.no_management_account_slr_exists_exception_of_yojson tree path)
-      | _, "NotOrganizationMasterAccountException" ->
-          `NotOrganizationMasterAccountException
-            (Json_deserializers.not_organization_master_account_exception_of_yojson tree path)
-      | _, "OperationNotPermittedException" ->
-          `OperationNotPermittedException
-            (Json_deserializers.operation_not_permitted_exception_of_yojson tree path)
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _, "ResourceTypeNotSupportedException" ->
-          `ResourceTypeNotSupportedException
-            (Json_deserializers.resource_type_not_supported_exception_of_yojson tree path)
-      | _, "TagsLimitExceededException" ->
-          `TagsLimitExceededException
-            (Json_deserializers.tags_limit_exceeded_exception_of_yojson tree path)
-      | _, "UnsupportedOperationException" ->
-          `UnsupportedOperationException
-            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_tags_request) =
-    let input = Json_serializers.add_tags_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.AddTags" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.add_tags_response_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_request) =
-    let input = Json_serializers.add_tags_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.AddTags"
-      ~service ~context ~input ~output_deserializer:Json_deserializers.add_tags_response_of_yojson
-      ~error_deserializer
-end
-
-module CancelQuery = struct
-  let error_to_string = function
-    | `ConflictException _ -> "com.amazonaws.cloudtrail#ConflictException"
-    | `EventDataStoreARNInvalidException _ ->
-        "com.amazonaws.cloudtrail#EventDataStoreARNInvalidException"
-    | `EventDataStoreNotFoundException _ ->
-        "com.amazonaws.cloudtrail#EventDataStoreNotFoundException"
-    | `InactiveEventDataStoreException _ ->
-        "com.amazonaws.cloudtrail#InactiveEventDataStoreException"
-    | `InactiveQueryException _ -> "com.amazonaws.cloudtrail#InactiveQueryException"
-    | `InvalidParameterException _ -> "com.amazonaws.cloudtrail#InvalidParameterException"
-    | `NoManagementAccountSLRExistsException _ ->
-        "com.amazonaws.cloudtrail#NoManagementAccountSLRExistsException"
-    | `OperationNotPermittedException _ -> "com.amazonaws.cloudtrail#OperationNotPermittedException"
-    | `QueryIdNotFoundException _ -> "com.amazonaws.cloudtrail#QueryIdNotFoundException"
-    | `UnsupportedOperationException _ -> "com.amazonaws.cloudtrail#UnsupportedOperationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ConflictException" ->
-          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
-      | _, "EventDataStoreARNInvalidException" ->
-          `EventDataStoreARNInvalidException
-            (Json_deserializers.event_data_store_arn_invalid_exception_of_yojson tree path)
-      | _, "EventDataStoreNotFoundException" ->
-          `EventDataStoreNotFoundException
-            (Json_deserializers.event_data_store_not_found_exception_of_yojson tree path)
-      | _, "InactiveEventDataStoreException" ->
-          `InactiveEventDataStoreException
-            (Json_deserializers.inactive_event_data_store_exception_of_yojson tree path)
-      | _, "InactiveQueryException" ->
-          `InactiveQueryException (Json_deserializers.inactive_query_exception_of_yojson tree path)
-      | _, "InvalidParameterException" ->
-          `InvalidParameterException
-            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
-      | _, "NoManagementAccountSLRExistsException" ->
-          `NoManagementAccountSLRExistsException
-            (Json_deserializers.no_management_account_slr_exists_exception_of_yojson tree path)
-      | _, "OperationNotPermittedException" ->
-          `OperationNotPermittedException
-            (Json_deserializers.operation_not_permitted_exception_of_yojson tree path)
-      | _, "QueryIdNotFoundException" ->
-          `QueryIdNotFoundException
-            (Json_deserializers.query_id_not_found_exception_of_yojson tree path)
-      | _, "UnsupportedOperationException" ->
-          `UnsupportedOperationException
-            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : cancel_query_request) =
-    let input = Json_serializers.cancel_query_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.CancelQuery" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.cancel_query_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : cancel_query_request) =
-    let input = Json_serializers.cancel_query_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.CancelQuery"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.cancel_query_response_of_yojson ~error_deserializer
-end
-
 module CreateChannel = struct
   let error_to_string = function
     | `ChannelAlreadyExistsException _ -> "com.amazonaws.cloudtrail#ChannelAlreadyExistsException"
@@ -4006,4 +3848,162 @@ module UpdateTrail = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.UpdateTrail"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_trail_response_of_yojson ~error_deserializer
+end
+
+module CancelQuery = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.cloudtrail#ConflictException"
+    | `EventDataStoreARNInvalidException _ ->
+        "com.amazonaws.cloudtrail#EventDataStoreARNInvalidException"
+    | `EventDataStoreNotFoundException _ ->
+        "com.amazonaws.cloudtrail#EventDataStoreNotFoundException"
+    | `InactiveEventDataStoreException _ ->
+        "com.amazonaws.cloudtrail#InactiveEventDataStoreException"
+    | `InactiveQueryException _ -> "com.amazonaws.cloudtrail#InactiveQueryException"
+    | `InvalidParameterException _ -> "com.amazonaws.cloudtrail#InvalidParameterException"
+    | `NoManagementAccountSLRExistsException _ ->
+        "com.amazonaws.cloudtrail#NoManagementAccountSLRExistsException"
+    | `OperationNotPermittedException _ -> "com.amazonaws.cloudtrail#OperationNotPermittedException"
+    | `QueryIdNotFoundException _ -> "com.amazonaws.cloudtrail#QueryIdNotFoundException"
+    | `UnsupportedOperationException _ -> "com.amazonaws.cloudtrail#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "EventDataStoreARNInvalidException" ->
+          `EventDataStoreARNInvalidException
+            (Json_deserializers.event_data_store_arn_invalid_exception_of_yojson tree path)
+      | _, "EventDataStoreNotFoundException" ->
+          `EventDataStoreNotFoundException
+            (Json_deserializers.event_data_store_not_found_exception_of_yojson tree path)
+      | _, "InactiveEventDataStoreException" ->
+          `InactiveEventDataStoreException
+            (Json_deserializers.inactive_event_data_store_exception_of_yojson tree path)
+      | _, "InactiveQueryException" ->
+          `InactiveQueryException (Json_deserializers.inactive_query_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "NoManagementAccountSLRExistsException" ->
+          `NoManagementAccountSLRExistsException
+            (Json_deserializers.no_management_account_slr_exists_exception_of_yojson tree path)
+      | _, "OperationNotPermittedException" ->
+          `OperationNotPermittedException
+            (Json_deserializers.operation_not_permitted_exception_of_yojson tree path)
+      | _, "QueryIdNotFoundException" ->
+          `QueryIdNotFoundException
+            (Json_deserializers.query_id_not_found_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : cancel_query_request) =
+    let input = Json_serializers.cancel_query_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.CancelQuery" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.cancel_query_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : cancel_query_request) =
+    let input = Json_serializers.cancel_query_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.CancelQuery"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_query_response_of_yojson ~error_deserializer
+end
+
+module AddTags = struct
+  let error_to_string = function
+    | `ChannelARNInvalidException _ -> "com.amazonaws.cloudtrail#ChannelARNInvalidException"
+    | `ChannelNotFoundException _ -> "com.amazonaws.cloudtrail#ChannelNotFoundException"
+    | `CloudTrailARNInvalidException _ -> "com.amazonaws.cloudtrail#CloudTrailARNInvalidException"
+    | `ConflictException _ -> "com.amazonaws.cloudtrail#ConflictException"
+    | `EventDataStoreARNInvalidException _ ->
+        "com.amazonaws.cloudtrail#EventDataStoreARNInvalidException"
+    | `EventDataStoreNotFoundException _ ->
+        "com.amazonaws.cloudtrail#EventDataStoreNotFoundException"
+    | `InactiveEventDataStoreException _ ->
+        "com.amazonaws.cloudtrail#InactiveEventDataStoreException"
+    | `InvalidTagParameterException _ -> "com.amazonaws.cloudtrail#InvalidTagParameterException"
+    | `InvalidTrailNameException _ -> "com.amazonaws.cloudtrail#InvalidTrailNameException"
+    | `NoManagementAccountSLRExistsException _ ->
+        "com.amazonaws.cloudtrail#NoManagementAccountSLRExistsException"
+    | `NotOrganizationMasterAccountException _ ->
+        "com.amazonaws.cloudtrail#NotOrganizationMasterAccountException"
+    | `OperationNotPermittedException _ -> "com.amazonaws.cloudtrail#OperationNotPermittedException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.cloudtrail#ResourceNotFoundException"
+    | `ResourceTypeNotSupportedException _ ->
+        "com.amazonaws.cloudtrail#ResourceTypeNotSupportedException"
+    | `TagsLimitExceededException _ -> "com.amazonaws.cloudtrail#TagsLimitExceededException"
+    | `UnsupportedOperationException _ -> "com.amazonaws.cloudtrail#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ChannelARNInvalidException" ->
+          `ChannelARNInvalidException
+            (Json_deserializers.channel_arn_invalid_exception_of_yojson tree path)
+      | _, "ChannelNotFoundException" ->
+          `ChannelNotFoundException
+            (Json_deserializers.channel_not_found_exception_of_yojson tree path)
+      | _, "CloudTrailARNInvalidException" ->
+          `CloudTrailARNInvalidException
+            (Json_deserializers.cloud_trail_arn_invalid_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "EventDataStoreARNInvalidException" ->
+          `EventDataStoreARNInvalidException
+            (Json_deserializers.event_data_store_arn_invalid_exception_of_yojson tree path)
+      | _, "EventDataStoreNotFoundException" ->
+          `EventDataStoreNotFoundException
+            (Json_deserializers.event_data_store_not_found_exception_of_yojson tree path)
+      | _, "InactiveEventDataStoreException" ->
+          `InactiveEventDataStoreException
+            (Json_deserializers.inactive_event_data_store_exception_of_yojson tree path)
+      | _, "InvalidTagParameterException" ->
+          `InvalidTagParameterException
+            (Json_deserializers.invalid_tag_parameter_exception_of_yojson tree path)
+      | _, "InvalidTrailNameException" ->
+          `InvalidTrailNameException
+            (Json_deserializers.invalid_trail_name_exception_of_yojson tree path)
+      | _, "NoManagementAccountSLRExistsException" ->
+          `NoManagementAccountSLRExistsException
+            (Json_deserializers.no_management_account_slr_exists_exception_of_yojson tree path)
+      | _, "NotOrganizationMasterAccountException" ->
+          `NotOrganizationMasterAccountException
+            (Json_deserializers.not_organization_master_account_exception_of_yojson tree path)
+      | _, "OperationNotPermittedException" ->
+          `OperationNotPermittedException
+            (Json_deserializers.operation_not_permitted_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ResourceTypeNotSupportedException" ->
+          `ResourceTypeNotSupportedException
+            (Json_deserializers.resource_type_not_supported_exception_of_yojson tree path)
+      | _, "TagsLimitExceededException" ->
+          `TagsLimitExceededException
+            (Json_deserializers.tags_limit_exceeded_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_tags_request) =
+    let input = Json_serializers.add_tags_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.AddTags" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.add_tags_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_request) =
+    let input = Json_serializers.add_tags_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.AddTags"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.add_tags_response_of_yojson
+      ~error_deserializer
 end

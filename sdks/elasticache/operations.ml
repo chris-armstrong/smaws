@@ -3,162 +3,6 @@ open Service_metadata
 open Query_deserializers
 open Query_serializers
 
-module AddTagsToResource = struct
-  let error_to_string = function
-    | `CacheClusterNotFoundFault _ -> "com.amazonaws.elasticache#CacheClusterNotFoundFault"
-    | `CacheParameterGroupNotFoundFault _ ->
-        "com.amazonaws.elasticache#CacheParameterGroupNotFoundFault"
-    | `CacheSecurityGroupNotFoundFault _ ->
-        "com.amazonaws.elasticache#CacheSecurityGroupNotFoundFault"
-    | `CacheSubnetGroupNotFoundFault _ -> "com.amazonaws.elasticache#CacheSubnetGroupNotFoundFault"
-    | `InvalidARNFault _ -> "com.amazonaws.elasticache#InvalidARNFault"
-    | `InvalidReplicationGroupStateFault _ ->
-        "com.amazonaws.elasticache#InvalidReplicationGroupStateFault"
-    | `InvalidServerlessCacheSnapshotStateFault _ ->
-        "com.amazonaws.elasticache#InvalidServerlessCacheSnapshotStateFault"
-    | `InvalidServerlessCacheStateFault _ ->
-        "com.amazonaws.elasticache#InvalidServerlessCacheStateFault"
-    | `ReplicationGroupNotFoundFault _ -> "com.amazonaws.elasticache#ReplicationGroupNotFoundFault"
-    | `ReservedCacheNodeNotFoundFault _ ->
-        "com.amazonaws.elasticache#ReservedCacheNodeNotFoundFault"
-    | `ServerlessCacheNotFoundFault _ -> "com.amazonaws.elasticache#ServerlessCacheNotFoundFault"
-    | `ServerlessCacheSnapshotNotFoundFault _ ->
-        "com.amazonaws.elasticache#ServerlessCacheSnapshotNotFoundFault"
-    | `SnapshotNotFoundFault _ -> "com.amazonaws.elasticache#SnapshotNotFoundFault"
-    | `TagQuotaPerResourceExceeded _ -> "com.amazonaws.elasticache#TagQuotaPerResourceExceeded"
-    | `UserGroupNotFoundFault _ -> "com.amazonaws.elasticache#UserGroupNotFoundFault"
-    | `UserNotFoundFault _ -> "com.amazonaws.elasticache#UserNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "CacheClusterNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:cache_cluster_not_found_fault_of_xml
-        with
-        | Ok s -> `CacheClusterNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "CacheParameterGroupNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:cache_parameter_group_not_found_fault_of_xml
-        with
-        | Ok s -> `CacheParameterGroupNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "CacheSecurityGroupNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:cache_security_group_not_found_fault_of_xml
-        with
-        | Ok s -> `CacheSecurityGroupNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "CacheSubnetGroupNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:cache_subnet_group_not_found_fault_of_xml
-        with
-        | Ok s -> `CacheSubnetGroupNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidARN" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_arn_fault_of_xml
-        with
-        | Ok s -> `InvalidARNFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidReplicationGroupState" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_replication_group_state_fault_of_xml
-        with
-        | Ok s -> `InvalidReplicationGroupStateFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidServerlessCacheSnapshotStateFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_serverless_cache_snapshot_state_fault_of_xml
-        with
-        | Ok s -> `InvalidServerlessCacheSnapshotStateFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidServerlessCacheStateFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_serverless_cache_state_fault_of_xml
-        with
-        | Ok s -> `InvalidServerlessCacheStateFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ReplicationGroupNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:replication_group_not_found_fault_of_xml
-        with
-        | Ok s -> `ReplicationGroupNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ReservedCacheNodeNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:reserved_cache_node_not_found_fault_of_xml
-        with
-        | Ok s -> `ReservedCacheNodeNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ServerlessCacheNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:serverless_cache_not_found_fault_of_xml
-        with
-        | Ok s -> `ServerlessCacheNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ServerlessCacheSnapshotNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:serverless_cache_snapshot_not_found_fault_of_xml
-        with
-        | Ok s -> `ServerlessCacheSnapshotNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "SnapshotNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:snapshot_not_found_fault_of_xml
-        with
-        | Ok s -> `SnapshotNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "TagQuotaPerResourceExceeded" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:tag_quota_per_resource_exceeded_of_xml
-        with
-        | Ok s -> `TagQuotaPerResourceExceeded s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "UserGroupNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:user_group_not_found_fault_of_xml
-        with
-        | Ok s -> `UserGroupNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "UserNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:user_not_found_fault_of_xml
-        with
-        | Ok s -> `UserNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : add_tags_to_resource_message) =
-    let fields = add_tags_to_resource_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddTagsToResource"
-      ~xmlNamespace:"http://elasticache.amazonaws.com/doc/2015-02-02/" ~service ~context ~fields
-      ~output_deserializer:tag_list_message_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_to_resource_message) =
-    let fields = add_tags_to_resource_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddTagsToResource"
-      ~xmlNamespace:"http://elasticache.amazonaws.com/doc/2015-02-02/" ~service ~context ~fields
-      ~output_deserializer:tag_list_message_of_xml ~error_deserializer
-end
-
 module AuthorizeCacheSecurityGroupIngress = struct
   let error_to_string = function
     | `AuthorizationAlreadyExistsFault _ ->
@@ -2967,6 +2811,53 @@ module DescribeReservedCacheNodesOfferings = struct
       ~output_deserializer:reserved_cache_nodes_offering_message_of_xml ~error_deserializer
 end
 
+module DescribeServerlessCaches = struct
+  let error_to_string = function
+    | `InvalidParameterCombinationException _ ->
+        "com.amazonaws.elasticache#InvalidParameterCombinationException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.elasticache#InvalidParameterValueException"
+    | `ServerlessCacheNotFoundFault _ -> "com.amazonaws.elasticache#ServerlessCacheNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "InvalidParameterCombination" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_parameter_combination_exception_of_xml
+        with
+        | Ok s -> `InvalidParameterCombinationException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidParameterValue" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_parameter_value_exception_of_xml
+        with
+        | Ok s -> `InvalidParameterValueException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ServerlessCacheNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:serverless_cache_not_found_fault_of_xml
+        with
+        | Ok s -> `ServerlessCacheNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : describe_serverless_caches_request) =
+    let fields = describe_serverless_caches_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeServerlessCaches"
+      ~xmlNamespace:"http://elasticache.amazonaws.com/doc/2015-02-02/" ~service ~context ~fields
+      ~output_deserializer:describe_serverless_caches_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : describe_serverless_caches_request) =
+    let fields = describe_serverless_caches_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeServerlessCaches"
+      ~xmlNamespace:"http://elasticache.amazonaws.com/doc/2015-02-02/" ~service ~context ~fields
+      ~output_deserializer:describe_serverless_caches_response_of_xml ~error_deserializer
+end
+
 module DescribeServerlessCacheSnapshots = struct
   let error_to_string = function
     | `InvalidParameterCombinationException _ ->
@@ -3021,53 +2912,6 @@ module DescribeServerlessCacheSnapshots = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeServerlessCacheSnapshots"
       ~xmlNamespace:"http://elasticache.amazonaws.com/doc/2015-02-02/" ~service ~context ~fields
       ~output_deserializer:describe_serverless_cache_snapshots_response_of_xml ~error_deserializer
-end
-
-module DescribeServerlessCaches = struct
-  let error_to_string = function
-    | `InvalidParameterCombinationException _ ->
-        "com.amazonaws.elasticache#InvalidParameterCombinationException"
-    | `InvalidParameterValueException _ ->
-        "com.amazonaws.elasticache#InvalidParameterValueException"
-    | `ServerlessCacheNotFoundFault _ -> "com.amazonaws.elasticache#ServerlessCacheNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "InvalidParameterCombination" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_parameter_combination_exception_of_xml
-        with
-        | Ok s -> `InvalidParameterCombinationException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidParameterValue" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_parameter_value_exception_of_xml
-        with
-        | Ok s -> `InvalidParameterValueException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "ServerlessCacheNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:serverless_cache_not_found_fault_of_xml
-        with
-        | Ok s -> `ServerlessCacheNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : describe_serverless_caches_request) =
-    let fields = describe_serverless_caches_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeServerlessCaches"
-      ~xmlNamespace:"http://elasticache.amazonaws.com/doc/2015-02-02/" ~service ~context ~fields
-      ~output_deserializer:describe_serverless_caches_response_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : describe_serverless_caches_request) =
-    let fields = describe_serverless_caches_request_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeServerlessCaches"
-      ~xmlNamespace:"http://elasticache.amazonaws.com/doc/2015-02-02/" ~service ~context ~fields
-      ~output_deserializer:describe_serverless_caches_response_of_xml ~error_deserializer
 end
 
 module DescribeServiceUpdates = struct
@@ -5314,4 +5158,160 @@ module TestMigration = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"TestMigration"
       ~xmlNamespace:"http://elasticache.amazonaws.com/doc/2015-02-02/" ~service ~context ~fields
       ~output_deserializer:test_migration_response_of_xml ~error_deserializer
+end
+
+module AddTagsToResource = struct
+  let error_to_string = function
+    | `CacheClusterNotFoundFault _ -> "com.amazonaws.elasticache#CacheClusterNotFoundFault"
+    | `CacheParameterGroupNotFoundFault _ ->
+        "com.amazonaws.elasticache#CacheParameterGroupNotFoundFault"
+    | `CacheSecurityGroupNotFoundFault _ ->
+        "com.amazonaws.elasticache#CacheSecurityGroupNotFoundFault"
+    | `CacheSubnetGroupNotFoundFault _ -> "com.amazonaws.elasticache#CacheSubnetGroupNotFoundFault"
+    | `InvalidARNFault _ -> "com.amazonaws.elasticache#InvalidARNFault"
+    | `InvalidReplicationGroupStateFault _ ->
+        "com.amazonaws.elasticache#InvalidReplicationGroupStateFault"
+    | `InvalidServerlessCacheSnapshotStateFault _ ->
+        "com.amazonaws.elasticache#InvalidServerlessCacheSnapshotStateFault"
+    | `InvalidServerlessCacheStateFault _ ->
+        "com.amazonaws.elasticache#InvalidServerlessCacheStateFault"
+    | `ReplicationGroupNotFoundFault _ -> "com.amazonaws.elasticache#ReplicationGroupNotFoundFault"
+    | `ReservedCacheNodeNotFoundFault _ ->
+        "com.amazonaws.elasticache#ReservedCacheNodeNotFoundFault"
+    | `ServerlessCacheNotFoundFault _ -> "com.amazonaws.elasticache#ServerlessCacheNotFoundFault"
+    | `ServerlessCacheSnapshotNotFoundFault _ ->
+        "com.amazonaws.elasticache#ServerlessCacheSnapshotNotFoundFault"
+    | `SnapshotNotFoundFault _ -> "com.amazonaws.elasticache#SnapshotNotFoundFault"
+    | `TagQuotaPerResourceExceeded _ -> "com.amazonaws.elasticache#TagQuotaPerResourceExceeded"
+    | `UserGroupNotFoundFault _ -> "com.amazonaws.elasticache#UserGroupNotFoundFault"
+    | `UserNotFoundFault _ -> "com.amazonaws.elasticache#UserNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "CacheClusterNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:cache_cluster_not_found_fault_of_xml
+        with
+        | Ok s -> `CacheClusterNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "CacheParameterGroupNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:cache_parameter_group_not_found_fault_of_xml
+        with
+        | Ok s -> `CacheParameterGroupNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "CacheSecurityGroupNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:cache_security_group_not_found_fault_of_xml
+        with
+        | Ok s -> `CacheSecurityGroupNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "CacheSubnetGroupNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:cache_subnet_group_not_found_fault_of_xml
+        with
+        | Ok s -> `CacheSubnetGroupNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidARN" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_arn_fault_of_xml
+        with
+        | Ok s -> `InvalidARNFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidReplicationGroupState" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_replication_group_state_fault_of_xml
+        with
+        | Ok s -> `InvalidReplicationGroupStateFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidServerlessCacheSnapshotStateFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_serverless_cache_snapshot_state_fault_of_xml
+        with
+        | Ok s -> `InvalidServerlessCacheSnapshotStateFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidServerlessCacheStateFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_serverless_cache_state_fault_of_xml
+        with
+        | Ok s -> `InvalidServerlessCacheStateFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ReplicationGroupNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:replication_group_not_found_fault_of_xml
+        with
+        | Ok s -> `ReplicationGroupNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ReservedCacheNodeNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:reserved_cache_node_not_found_fault_of_xml
+        with
+        | Ok s -> `ReservedCacheNodeNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ServerlessCacheNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:serverless_cache_not_found_fault_of_xml
+        with
+        | Ok s -> `ServerlessCacheNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "ServerlessCacheSnapshotNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:serverless_cache_snapshot_not_found_fault_of_xml
+        with
+        | Ok s -> `ServerlessCacheSnapshotNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "SnapshotNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:snapshot_not_found_fault_of_xml
+        with
+        | Ok s -> `SnapshotNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "TagQuotaPerResourceExceeded" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:tag_quota_per_resource_exceeded_of_xml
+        with
+        | Ok s -> `TagQuotaPerResourceExceeded s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "UserGroupNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:user_group_not_found_fault_of_xml
+        with
+        | Ok s -> `UserGroupNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "UserNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:user_not_found_fault_of_xml
+        with
+        | Ok s -> `UserNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : add_tags_to_resource_message) =
+    let fields = add_tags_to_resource_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddTagsToResource"
+      ~xmlNamespace:"http://elasticache.amazonaws.com/doc/2015-02-02/" ~service ~context ~fields
+      ~output_deserializer:tag_list_message_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_resource_message) =
+    let fields = add_tags_to_resource_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddTagsToResource"
+      ~xmlNamespace:"http://elasticache.amazonaws.com/doc/2015-02-02/" ~service ~context ~fields
+      ~output_deserializer:tag_list_message_of_xml ~error_deserializer
 end

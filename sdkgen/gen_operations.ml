@@ -41,6 +41,27 @@ let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~str
     with _ as a ->
       Fmt.pf Fmt.stderr "Unable to generate operations for %s: %s" name (Printexc.to_string a);
       raise (Generate_failure (name, a)))
+  else if
+    Trait.hasTrait service.traits (function Trait.AwsProtocolRestXmlTrait _ -> true | _ -> false)
+  then (
+    let opens =
+      [
+        Codegen.Ppx_util.stri_open [ "Types" ];
+        Codegen.Ppx_util.stri_open [ "Service_metadata" ];
+        Codegen.Ppx_util.stri_open [ "Xml_deserializers" ];
+        Codegen.Ppx_util.stri_open [ "Xml_serializers" ];
+        Codegen.Ppx_util.stri_open [ "Smaws_Lib"; "Xml"; "Parse" ];
+      ]
+    in
+    try
+      let structure =
+        Codegen.AwsProtocolRestXml.Operations.generate ~name ~service ~operation_shapes
+          ~alias_context ~namespace_resolver ~shape_resolver ()
+      in
+      Ppxlib.Pprintast.structure oc (opens @ structure)
+    with _ as a ->
+      Fmt.pf Fmt.stderr "Unable to generate operations for %s: %s" name (Printexc.to_string a);
+      raise (Generate_failure (name, a)))
 
 let generate_mli ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
     ~alias_context ?(no_open = false)
@@ -68,6 +89,21 @@ let generate_mli ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes 
       let sign =
         Codegen.AwsProtocolJson.Operations.generate_mli ~name ~operation_shapes ~alias_context
           ~namespace_resolver ()
+      in
+      Ppxlib.Pprintast.signature oc (opens @ sign)
+    with _ as a ->
+      Fmt.pf Fmt.stderr "Unable to generate operations for %s: %s" name (Printexc.to_string a);
+      raise (Generate_failure (name, a)))
+  else if
+    Trait.hasTrait service.traits (function Trait.AwsProtocolRestXmlTrait _ -> true | _ -> false)
+  then (
+    try
+      let sign =
+        Codegen.AwsProtocolRestXml.Operations.generate_mli ~name ~service ~operation_shapes
+          ~alias_context ~namespace_resolver ()
+      in
+      let opens =
+        if no_open || List.is_empty sign then [] else [ Codegen.Ppx_util.sigi_open [ "Types" ] ]
       in
       Ppxlib.Pprintast.signature oc (opens @ sign)
     with _ as a ->

@@ -139,6 +139,7 @@
   Smaws_Client_Route53Domains
   Smaws_Client_Route53RecoveryCluster
   Smaws_Client_Route53Resolver
+  Smaws_Client_S3
   Smaws_Client_SageMaker
   Smaws_Client_SecretsManager
   Smaws_Client_ServiceCatalog

@@ -1695,40 +1695,6 @@ end
    client application integration} in the {i WAF Developer Guide}.\n\
   \ "]
 
-module ListAvailableManagedRuleGroupVersions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `WAFInternalErrorException of waf_internal_error_exception
-    | `WAFInvalidOperationException of waf_invalid_operation_exception
-    | `WAFInvalidParameterException of waf_invalid_parameter_exception
-    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_available_managed_rule_group_versions_request ->
-    ( list_available_managed_rule_group_versions_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `WAFInternalErrorException of waf_internal_error_exception
-      | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_available_managed_rule_group_versions_request ->
-    ( list_available_managed_rule_group_versions_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `WAFInternalErrorException of waf_internal_error_exception
-      | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns a list of the available versions for the specified managed rule group. \n"]
-
 module ListAvailableManagedRuleGroups : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1762,6 +1728,40 @@ end
   "Retrieves an array of managed rule groups that are available for you to use. This list includes \
    all Amazon Web Services Managed Rules rule groups and all of the Amazon Web Services \
    Marketplace managed rule groups that you're subscribed to.\n"]
+
+module ListAvailableManagedRuleGroupVersions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_available_managed_rule_group_versions_request ->
+    ( list_available_managed_rule_group_versions_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_available_managed_rule_group_versions_request ->
+    ( list_available_managed_rule_group_versions_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns a list of the available versions for the specified managed rule group. \n"]
 
 module ListIPSets : sig
   val error_to_string :

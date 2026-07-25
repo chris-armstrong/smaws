@@ -554,23 +554,6 @@ end
   \ The result currently has one set of attributes\226\128\148resource quotas.\n\
   \ "]
 
-module DescribeApplicationVersions : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_application_versions_message ->
-    (application_version_descriptions_message, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_application_versions_message ->
-    ( application_version_descriptions_message Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Retrieve a list of application versions.\n"]
-
 module DescribeApplications : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
 
@@ -587,6 +570,23 @@ module DescribeApplications : sig
     result
 end
 [@@ocaml.doc "Returns the descriptions of existing applications.\n"]
+
+module DescribeApplicationVersions : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_application_versions_message ->
+    (application_version_descriptions_message, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_application_versions_message ->
+    ( application_version_descriptions_message Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Retrieve a list of application versions.\n"]
 
 module DescribeConfigurationOptions : sig
   val error_to_string :

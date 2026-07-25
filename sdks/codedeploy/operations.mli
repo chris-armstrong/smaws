@@ -1,355 +1,5 @@
 open Types
 
-module AddTagsToOnPremisesInstances : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InstanceLimitExceededException of instance_limit_exceeded_exception
-    | `InstanceNameRequiredException of instance_name_required_exception
-    | `InstanceNotRegisteredException of instance_not_registered_exception
-    | `InvalidInstanceNameException of invalid_instance_name_exception
-    | `InvalidTagException of invalid_tag_exception
-    | `TagLimitExceededException of tag_limit_exceeded_exception
-    | `TagRequiredException of tag_required_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_on_premises_instances_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InstanceLimitExceededException of instance_limit_exceeded_exception
-      | `InstanceNameRequiredException of instance_name_required_exception
-      | `InstanceNotRegisteredException of instance_not_registered_exception
-      | `InvalidInstanceNameException of invalid_instance_name_exception
-      | `InvalidTagException of invalid_tag_exception
-      | `TagLimitExceededException of tag_limit_exceeded_exception
-      | `TagRequiredException of tag_required_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_on_premises_instances_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InstanceLimitExceededException of instance_limit_exceeded_exception
-      | `InstanceNameRequiredException of instance_name_required_exception
-      | `InstanceNotRegisteredException of instance_not_registered_exception
-      | `InvalidInstanceNameException of invalid_instance_name_exception
-      | `InvalidTagException of invalid_tag_exception
-      | `TagLimitExceededException of tag_limit_exceeded_exception
-      | `TagRequiredException of tag_required_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Adds tags to on-premises instances.\n"]
-
-module BatchGetApplicationRevisions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ApplicationDoesNotExistException of application_does_not_exist_exception
-    | `ApplicationNameRequiredException of application_name_required_exception
-    | `BatchLimitExceededException of batch_limit_exceeded_exception
-    | `InvalidApplicationNameException of invalid_application_name_exception
-    | `InvalidRevisionException of invalid_revision_exception
-    | `RevisionRequiredException of revision_required_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_application_revisions_input ->
-    ( batch_get_application_revisions_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApplicationDoesNotExistException of application_does_not_exist_exception
-      | `ApplicationNameRequiredException of application_name_required_exception
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `InvalidApplicationNameException of invalid_application_name_exception
-      | `InvalidRevisionException of invalid_revision_exception
-      | `RevisionRequiredException of revision_required_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_application_revisions_input ->
-    ( batch_get_application_revisions_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApplicationDoesNotExistException of application_does_not_exist_exception
-      | `ApplicationNameRequiredException of application_name_required_exception
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `InvalidApplicationNameException of invalid_application_name_exception
-      | `InvalidRevisionException of invalid_revision_exception
-      | `RevisionRequiredException of revision_required_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets information about one or more application revisions. The maximum number of application \
-   revisions that can be returned is 25.\n"]
-
-module BatchGetApplications : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ApplicationDoesNotExistException of application_does_not_exist_exception
-    | `ApplicationNameRequiredException of application_name_required_exception
-    | `BatchLimitExceededException of batch_limit_exceeded_exception
-    | `InvalidApplicationNameException of invalid_application_name_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_applications_input ->
-    ( batch_get_applications_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApplicationDoesNotExistException of application_does_not_exist_exception
-      | `ApplicationNameRequiredException of application_name_required_exception
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `InvalidApplicationNameException of invalid_application_name_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_applications_input ->
-    ( batch_get_applications_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApplicationDoesNotExistException of application_does_not_exist_exception
-      | `ApplicationNameRequiredException of application_name_required_exception
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `InvalidApplicationNameException of invalid_application_name_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets information about one or more applications. The maximum number of applications that can be \
-   returned is 100.\n"]
-
-module BatchGetDeploymentGroups : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ApplicationDoesNotExistException of application_does_not_exist_exception
-    | `ApplicationNameRequiredException of application_name_required_exception
-    | `BatchLimitExceededException of batch_limit_exceeded_exception
-    | `DeploymentConfigDoesNotExistException of deployment_config_does_not_exist_exception
-    | `DeploymentGroupNameRequiredException of deployment_group_name_required_exception
-    | `InvalidApplicationNameException of invalid_application_name_exception
-    | `InvalidDeploymentGroupNameException of invalid_deployment_group_name_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_deployment_groups_input ->
-    ( batch_get_deployment_groups_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApplicationDoesNotExistException of application_does_not_exist_exception
-      | `ApplicationNameRequiredException of application_name_required_exception
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `DeploymentConfigDoesNotExistException of deployment_config_does_not_exist_exception
-      | `DeploymentGroupNameRequiredException of deployment_group_name_required_exception
-      | `InvalidApplicationNameException of invalid_application_name_exception
-      | `InvalidDeploymentGroupNameException of invalid_deployment_group_name_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_deployment_groups_input ->
-    ( batch_get_deployment_groups_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApplicationDoesNotExistException of application_does_not_exist_exception
-      | `ApplicationNameRequiredException of application_name_required_exception
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `DeploymentConfigDoesNotExistException of deployment_config_does_not_exist_exception
-      | `DeploymentGroupNameRequiredException of deployment_group_name_required_exception
-      | `InvalidApplicationNameException of invalid_application_name_exception
-      | `InvalidDeploymentGroupNameException of invalid_deployment_group_name_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets information about one or more deployment groups.\n"]
-
-module BatchGetDeploymentInstances : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BatchLimitExceededException of batch_limit_exceeded_exception
-    | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
-    | `DeploymentIdRequiredException of deployment_id_required_exception
-    | `InstanceIdRequiredException of instance_id_required_exception
-    | `InvalidComputePlatformException of invalid_compute_platform_exception
-    | `InvalidDeploymentIdException of invalid_deployment_id_exception
-    | `InvalidInstanceNameException of invalid_instance_name_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_deployment_instances_input ->
-    ( batch_get_deployment_instances_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
-      | `DeploymentIdRequiredException of deployment_id_required_exception
-      | `InstanceIdRequiredException of instance_id_required_exception
-      | `InvalidComputePlatformException of invalid_compute_platform_exception
-      | `InvalidDeploymentIdException of invalid_deployment_id_exception
-      | `InvalidInstanceNameException of invalid_instance_name_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_deployment_instances_input ->
-    ( batch_get_deployment_instances_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
-      | `DeploymentIdRequiredException of deployment_id_required_exception
-      | `InstanceIdRequiredException of instance_id_required_exception
-      | `InvalidComputePlatformException of invalid_compute_platform_exception
-      | `InvalidDeploymentIdException of invalid_deployment_id_exception
-      | `InvalidInstanceNameException of invalid_instance_name_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "  This method works, but is deprecated. Use [BatchGetDeploymentTargets] instead. \n\
-  \ \n\
-  \    Returns an array of one or more instances associated with a deployment. This method works \
-   with EC2/On-premises and Lambda compute platforms. The newer [BatchGetDeploymentTargets] works \
-   with all compute platforms. The maximum number of instances that can be returned is 25.\n\
-  \   "]
-
-module BatchGetDeployments : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BatchLimitExceededException of batch_limit_exceeded_exception
-    | `DeploymentIdRequiredException of deployment_id_required_exception
-    | `InvalidDeploymentIdException of invalid_deployment_id_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_deployments_input ->
-    ( batch_get_deployments_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `DeploymentIdRequiredException of deployment_id_required_exception
-      | `InvalidDeploymentIdException of invalid_deployment_id_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_deployments_input ->
-    ( batch_get_deployments_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `DeploymentIdRequiredException of deployment_id_required_exception
-      | `InvalidDeploymentIdException of invalid_deployment_id_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets information about one or more deployments. The maximum number of deployments that can be \
-   returned is 25.\n"]
-
-module BatchGetDeploymentTargets : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
-    | `DeploymentIdRequiredException of deployment_id_required_exception
-    | `DeploymentNotStartedException of deployment_not_started_exception
-    | `DeploymentTargetDoesNotExistException of deployment_target_does_not_exist_exception
-    | `DeploymentTargetIdRequiredException of deployment_target_id_required_exception
-    | `DeploymentTargetListSizeExceededException of deployment_target_list_size_exceeded_exception
-    | `InstanceDoesNotExistException of instance_does_not_exist_exception
-    | `InvalidDeploymentIdException of invalid_deployment_id_exception
-    | `InvalidDeploymentTargetIdException of invalid_deployment_target_id_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_deployment_targets_input ->
-    ( batch_get_deployment_targets_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
-      | `DeploymentIdRequiredException of deployment_id_required_exception
-      | `DeploymentNotStartedException of deployment_not_started_exception
-      | `DeploymentTargetDoesNotExistException of deployment_target_does_not_exist_exception
-      | `DeploymentTargetIdRequiredException of deployment_target_id_required_exception
-      | `DeploymentTargetListSizeExceededException of deployment_target_list_size_exceeded_exception
-      | `InstanceDoesNotExistException of instance_does_not_exist_exception
-      | `InvalidDeploymentIdException of invalid_deployment_id_exception
-      | `InvalidDeploymentTargetIdException of invalid_deployment_target_id_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_deployment_targets_input ->
-    ( batch_get_deployment_targets_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
-      | `DeploymentIdRequiredException of deployment_id_required_exception
-      | `DeploymentNotStartedException of deployment_not_started_exception
-      | `DeploymentTargetDoesNotExistException of deployment_target_does_not_exist_exception
-      | `DeploymentTargetIdRequiredException of deployment_target_id_required_exception
-      | `DeploymentTargetListSizeExceededException of deployment_target_list_size_exceeded_exception
-      | `InstanceDoesNotExistException of instance_does_not_exist_exception
-      | `InvalidDeploymentIdException of invalid_deployment_id_exception
-      | `InvalidDeploymentTargetIdException of invalid_deployment_target_id_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Returns an array of one or more targets associated with a deployment. This method works with \
-   all compute types and should be used instead of the deprecated [BatchGetDeploymentInstances]. \
-   The maximum number of targets that can be returned is 25.\n\n\
-  \  The type of targets returned depends on the deployment's compute platform or deployment \
-   method: \n\
-  \ \n\
-  \  {ul\n\
-  \        {-   {b EC2/On-premises}: Information about Amazon EC2 instance targets. \n\
-  \            \n\
-  \             }\n\
-  \        {-   {b Lambda}: Information about Lambda functions targets. \n\
-  \            \n\
-  \             }\n\
-  \        {-   {b Amazon ECS}: Information about Amazon ECS service targets. \n\
-  \            \n\
-  \             }\n\
-  \        {-   {b CloudFormation}: Information about targets of blue/green deployments initiated \
-   by a CloudFormation stack update.\n\
-  \            \n\
-  \             }\n\
-  \        }\n\
-  \  "]
-
-module BatchGetOnPremisesInstances : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BatchLimitExceededException of batch_limit_exceeded_exception
-    | `InstanceNameRequiredException of instance_name_required_exception
-    | `InvalidInstanceNameException of invalid_instance_name_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_on_premises_instances_input ->
-    ( batch_get_on_premises_instances_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `InstanceNameRequiredException of instance_name_required_exception
-      | `InvalidInstanceNameException of invalid_instance_name_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_on_premises_instances_input ->
-    ( batch_get_on_premises_instances_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchLimitExceededException of batch_limit_exceeded_exception
-      | `InstanceNameRequiredException of instance_name_required_exception
-      | `InvalidInstanceNameException of invalid_instance_name_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets information about one or more on-premises instances. The maximum number of on-premises \
-   instances that can be returned is 25.\n"]
-
 module ContinueDeployment : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1429,55 +1079,6 @@ end
   \    Lists the instance for a deployment associated with the user or Amazon Web Services account. \n\
   \   "]
 
-module ListDeploymentTargets : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
-    | `DeploymentIdRequiredException of deployment_id_required_exception
-    | `DeploymentNotStartedException of deployment_not_started_exception
-    | `InvalidDeploymentIdException of invalid_deployment_id_exception
-    | `InvalidDeploymentInstanceTypeException of invalid_deployment_instance_type_exception
-    | `InvalidInstanceStatusException of invalid_instance_status_exception
-    | `InvalidInstanceTypeException of invalid_instance_type_exception
-    | `InvalidNextTokenException of invalid_next_token_exception
-    | `InvalidTargetFilterNameException of invalid_target_filter_name_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_deployment_targets_input ->
-    ( list_deployment_targets_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
-      | `DeploymentIdRequiredException of deployment_id_required_exception
-      | `DeploymentNotStartedException of deployment_not_started_exception
-      | `InvalidDeploymentIdException of invalid_deployment_id_exception
-      | `InvalidDeploymentInstanceTypeException of invalid_deployment_instance_type_exception
-      | `InvalidInstanceStatusException of invalid_instance_status_exception
-      | `InvalidInstanceTypeException of invalid_instance_type_exception
-      | `InvalidNextTokenException of invalid_next_token_exception
-      | `InvalidTargetFilterNameException of invalid_target_filter_name_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_deployment_targets_input ->
-    ( list_deployment_targets_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
-      | `DeploymentIdRequiredException of deployment_id_required_exception
-      | `DeploymentNotStartedException of deployment_not_started_exception
-      | `InvalidDeploymentIdException of invalid_deployment_id_exception
-      | `InvalidDeploymentInstanceTypeException of invalid_deployment_instance_type_exception
-      | `InvalidInstanceStatusException of invalid_instance_status_exception
-      | `InvalidInstanceTypeException of invalid_instance_type_exception
-      | `InvalidNextTokenException of invalid_next_token_exception
-      | `InvalidTargetFilterNameException of invalid_target_filter_name_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Returns an array of target IDs that are associated a deployment. \n"]
-
 module ListDeployments : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1534,6 +1135,55 @@ end
 [@@ocaml.doc
   "Lists the deployments in a deployment group for an application registered with the user or \
    Amazon Web Services account.\n"]
+
+module ListDeploymentTargets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
+    | `DeploymentIdRequiredException of deployment_id_required_exception
+    | `DeploymentNotStartedException of deployment_not_started_exception
+    | `InvalidDeploymentIdException of invalid_deployment_id_exception
+    | `InvalidDeploymentInstanceTypeException of invalid_deployment_instance_type_exception
+    | `InvalidInstanceStatusException of invalid_instance_status_exception
+    | `InvalidInstanceTypeException of invalid_instance_type_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidTargetFilterNameException of invalid_target_filter_name_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_deployment_targets_input ->
+    ( list_deployment_targets_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
+      | `DeploymentIdRequiredException of deployment_id_required_exception
+      | `DeploymentNotStartedException of deployment_not_started_exception
+      | `InvalidDeploymentIdException of invalid_deployment_id_exception
+      | `InvalidDeploymentInstanceTypeException of invalid_deployment_instance_type_exception
+      | `InvalidInstanceStatusException of invalid_instance_status_exception
+      | `InvalidInstanceTypeException of invalid_instance_type_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidTargetFilterNameException of invalid_target_filter_name_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_deployment_targets_input ->
+    ( list_deployment_targets_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
+      | `DeploymentIdRequiredException of deployment_id_required_exception
+      | `DeploymentNotStartedException of deployment_not_started_exception
+      | `InvalidDeploymentIdException of invalid_deployment_id_exception
+      | `InvalidDeploymentInstanceTypeException of invalid_deployment_instance_type_exception
+      | `InvalidInstanceStatusException of invalid_instance_status_exception
+      | `InvalidInstanceTypeException of invalid_instance_type_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidTargetFilterNameException of invalid_target_filter_name_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Returns an array of target IDs that are associated a deployment. \n"]
 
 module ListGitHubAccountTokenNames : sig
   val error_to_string :
@@ -2175,3 +1825,353 @@ module UpdateDeploymentGroup : sig
     result
 end
 [@@ocaml.doc "Changes information about a deployment group.\n"]
+
+module BatchGetOnPremisesInstances : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchLimitExceededException of batch_limit_exceeded_exception
+    | `InstanceNameRequiredException of instance_name_required_exception
+    | `InvalidInstanceNameException of invalid_instance_name_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_on_premises_instances_input ->
+    ( batch_get_on_premises_instances_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `InstanceNameRequiredException of instance_name_required_exception
+      | `InvalidInstanceNameException of invalid_instance_name_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_on_premises_instances_input ->
+    ( batch_get_on_premises_instances_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `InstanceNameRequiredException of instance_name_required_exception
+      | `InvalidInstanceNameException of invalid_instance_name_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets information about one or more on-premises instances. The maximum number of on-premises \
+   instances that can be returned is 25.\n"]
+
+module BatchGetDeployments : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchLimitExceededException of batch_limit_exceeded_exception
+    | `DeploymentIdRequiredException of deployment_id_required_exception
+    | `InvalidDeploymentIdException of invalid_deployment_id_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_deployments_input ->
+    ( batch_get_deployments_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `DeploymentIdRequiredException of deployment_id_required_exception
+      | `InvalidDeploymentIdException of invalid_deployment_id_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_deployments_input ->
+    ( batch_get_deployments_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `DeploymentIdRequiredException of deployment_id_required_exception
+      | `InvalidDeploymentIdException of invalid_deployment_id_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets information about one or more deployments. The maximum number of deployments that can be \
+   returned is 25.\n"]
+
+module BatchGetDeploymentTargets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
+    | `DeploymentIdRequiredException of deployment_id_required_exception
+    | `DeploymentNotStartedException of deployment_not_started_exception
+    | `DeploymentTargetDoesNotExistException of deployment_target_does_not_exist_exception
+    | `DeploymentTargetIdRequiredException of deployment_target_id_required_exception
+    | `DeploymentTargetListSizeExceededException of deployment_target_list_size_exceeded_exception
+    | `InstanceDoesNotExistException of instance_does_not_exist_exception
+    | `InvalidDeploymentIdException of invalid_deployment_id_exception
+    | `InvalidDeploymentTargetIdException of invalid_deployment_target_id_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_deployment_targets_input ->
+    ( batch_get_deployment_targets_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
+      | `DeploymentIdRequiredException of deployment_id_required_exception
+      | `DeploymentNotStartedException of deployment_not_started_exception
+      | `DeploymentTargetDoesNotExistException of deployment_target_does_not_exist_exception
+      | `DeploymentTargetIdRequiredException of deployment_target_id_required_exception
+      | `DeploymentTargetListSizeExceededException of deployment_target_list_size_exceeded_exception
+      | `InstanceDoesNotExistException of instance_does_not_exist_exception
+      | `InvalidDeploymentIdException of invalid_deployment_id_exception
+      | `InvalidDeploymentTargetIdException of invalid_deployment_target_id_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_deployment_targets_input ->
+    ( batch_get_deployment_targets_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
+      | `DeploymentIdRequiredException of deployment_id_required_exception
+      | `DeploymentNotStartedException of deployment_not_started_exception
+      | `DeploymentTargetDoesNotExistException of deployment_target_does_not_exist_exception
+      | `DeploymentTargetIdRequiredException of deployment_target_id_required_exception
+      | `DeploymentTargetListSizeExceededException of deployment_target_list_size_exceeded_exception
+      | `InstanceDoesNotExistException of instance_does_not_exist_exception
+      | `InvalidDeploymentIdException of invalid_deployment_id_exception
+      | `InvalidDeploymentTargetIdException of invalid_deployment_target_id_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Returns an array of one or more targets associated with a deployment. This method works with \
+   all compute types and should be used instead of the deprecated [BatchGetDeploymentInstances]. \
+   The maximum number of targets that can be returned is 25.\n\n\
+  \  The type of targets returned depends on the deployment's compute platform or deployment \
+   method: \n\
+  \ \n\
+  \  {ul\n\
+  \        {-   {b EC2/On-premises}: Information about Amazon EC2 instance targets. \n\
+  \            \n\
+  \             }\n\
+  \        {-   {b Lambda}: Information about Lambda functions targets. \n\
+  \            \n\
+  \             }\n\
+  \        {-   {b Amazon ECS}: Information about Amazon ECS service targets. \n\
+  \            \n\
+  \             }\n\
+  \        {-   {b CloudFormation}: Information about targets of blue/green deployments initiated \
+   by a CloudFormation stack update.\n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \  "]
+
+module BatchGetDeploymentInstances : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchLimitExceededException of batch_limit_exceeded_exception
+    | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
+    | `DeploymentIdRequiredException of deployment_id_required_exception
+    | `InstanceIdRequiredException of instance_id_required_exception
+    | `InvalidComputePlatformException of invalid_compute_platform_exception
+    | `InvalidDeploymentIdException of invalid_deployment_id_exception
+    | `InvalidInstanceNameException of invalid_instance_name_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_deployment_instances_input ->
+    ( batch_get_deployment_instances_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
+      | `DeploymentIdRequiredException of deployment_id_required_exception
+      | `InstanceIdRequiredException of instance_id_required_exception
+      | `InvalidComputePlatformException of invalid_compute_platform_exception
+      | `InvalidDeploymentIdException of invalid_deployment_id_exception
+      | `InvalidInstanceNameException of invalid_instance_name_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_deployment_instances_input ->
+    ( batch_get_deployment_instances_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `DeploymentDoesNotExistException of deployment_does_not_exist_exception
+      | `DeploymentIdRequiredException of deployment_id_required_exception
+      | `InstanceIdRequiredException of instance_id_required_exception
+      | `InvalidComputePlatformException of invalid_compute_platform_exception
+      | `InvalidDeploymentIdException of invalid_deployment_id_exception
+      | `InvalidInstanceNameException of invalid_instance_name_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "  This method works, but is deprecated. Use [BatchGetDeploymentTargets] instead. \n\
+  \ \n\
+  \    Returns an array of one or more instances associated with a deployment. This method works \
+   with EC2/On-premises and Lambda compute platforms. The newer [BatchGetDeploymentTargets] works \
+   with all compute platforms. The maximum number of instances that can be returned is 25.\n\
+  \   "]
+
+module BatchGetDeploymentGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ApplicationDoesNotExistException of application_does_not_exist_exception
+    | `ApplicationNameRequiredException of application_name_required_exception
+    | `BatchLimitExceededException of batch_limit_exceeded_exception
+    | `DeploymentConfigDoesNotExistException of deployment_config_does_not_exist_exception
+    | `DeploymentGroupNameRequiredException of deployment_group_name_required_exception
+    | `InvalidApplicationNameException of invalid_application_name_exception
+    | `InvalidDeploymentGroupNameException of invalid_deployment_group_name_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_deployment_groups_input ->
+    ( batch_get_deployment_groups_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApplicationDoesNotExistException of application_does_not_exist_exception
+      | `ApplicationNameRequiredException of application_name_required_exception
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `DeploymentConfigDoesNotExistException of deployment_config_does_not_exist_exception
+      | `DeploymentGroupNameRequiredException of deployment_group_name_required_exception
+      | `InvalidApplicationNameException of invalid_application_name_exception
+      | `InvalidDeploymentGroupNameException of invalid_deployment_group_name_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_deployment_groups_input ->
+    ( batch_get_deployment_groups_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApplicationDoesNotExistException of application_does_not_exist_exception
+      | `ApplicationNameRequiredException of application_name_required_exception
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `DeploymentConfigDoesNotExistException of deployment_config_does_not_exist_exception
+      | `DeploymentGroupNameRequiredException of deployment_group_name_required_exception
+      | `InvalidApplicationNameException of invalid_application_name_exception
+      | `InvalidDeploymentGroupNameException of invalid_deployment_group_name_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets information about one or more deployment groups.\n"]
+
+module BatchGetApplications : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ApplicationDoesNotExistException of application_does_not_exist_exception
+    | `ApplicationNameRequiredException of application_name_required_exception
+    | `BatchLimitExceededException of batch_limit_exceeded_exception
+    | `InvalidApplicationNameException of invalid_application_name_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_applications_input ->
+    ( batch_get_applications_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApplicationDoesNotExistException of application_does_not_exist_exception
+      | `ApplicationNameRequiredException of application_name_required_exception
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `InvalidApplicationNameException of invalid_application_name_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_applications_input ->
+    ( batch_get_applications_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApplicationDoesNotExistException of application_does_not_exist_exception
+      | `ApplicationNameRequiredException of application_name_required_exception
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `InvalidApplicationNameException of invalid_application_name_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets information about one or more applications. The maximum number of applications that can be \
+   returned is 100.\n"]
+
+module BatchGetApplicationRevisions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ApplicationDoesNotExistException of application_does_not_exist_exception
+    | `ApplicationNameRequiredException of application_name_required_exception
+    | `BatchLimitExceededException of batch_limit_exceeded_exception
+    | `InvalidApplicationNameException of invalid_application_name_exception
+    | `InvalidRevisionException of invalid_revision_exception
+    | `RevisionRequiredException of revision_required_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_application_revisions_input ->
+    ( batch_get_application_revisions_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApplicationDoesNotExistException of application_does_not_exist_exception
+      | `ApplicationNameRequiredException of application_name_required_exception
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `InvalidApplicationNameException of invalid_application_name_exception
+      | `InvalidRevisionException of invalid_revision_exception
+      | `RevisionRequiredException of revision_required_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_application_revisions_input ->
+    ( batch_get_application_revisions_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApplicationDoesNotExistException of application_does_not_exist_exception
+      | `ApplicationNameRequiredException of application_name_required_exception
+      | `BatchLimitExceededException of batch_limit_exceeded_exception
+      | `InvalidApplicationNameException of invalid_application_name_exception
+      | `InvalidRevisionException of invalid_revision_exception
+      | `RevisionRequiredException of revision_required_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets information about one or more application revisions. The maximum number of application \
+   revisions that can be returned is 25.\n"]
+
+module AddTagsToOnPremisesInstances : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InstanceLimitExceededException of instance_limit_exceeded_exception
+    | `InstanceNameRequiredException of instance_name_required_exception
+    | `InstanceNotRegisteredException of instance_not_registered_exception
+    | `InvalidInstanceNameException of invalid_instance_name_exception
+    | `InvalidTagException of invalid_tag_exception
+    | `TagLimitExceededException of tag_limit_exceeded_exception
+    | `TagRequiredException of tag_required_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_on_premises_instances_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InstanceLimitExceededException of instance_limit_exceeded_exception
+      | `InstanceNameRequiredException of instance_name_required_exception
+      | `InstanceNotRegisteredException of instance_not_registered_exception
+      | `InvalidInstanceNameException of invalid_instance_name_exception
+      | `InvalidTagException of invalid_tag_exception
+      | `TagLimitExceededException of tag_limit_exceeded_exception
+      | `TagRequiredException of tag_required_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_on_premises_instances_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InstanceLimitExceededException of instance_limit_exceeded_exception
+      | `InstanceNameRequiredException of instance_name_required_exception
+      | `InstanceNotRegisteredException of instance_not_registered_exception
+      | `InvalidInstanceNameException of invalid_instance_name_exception
+      | `InvalidTagException of invalid_tag_exception
+      | `TagLimitExceededException of tag_limit_exceeded_exception
+      | `TagRequiredException of tag_required_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Adds tags to on-premises instances.\n"]

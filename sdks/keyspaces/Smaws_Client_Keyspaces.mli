@@ -8,46 +8,10 @@ module Types = Types
 
 (** {1:builders Builders} *)
 
-val make_warm_throughput_specification_summary :
-  status:warm_throughput_status ->
-  write_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
-  read_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
-  unit ->
-  warm_throughput_specification_summary
-
-val make_warm_throughput_specification :
-  ?write_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
-  ?read_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
-  unit ->
-  warm_throughput_specification
-
-val make_update_table_response : resource_arn:ar_n -> unit -> update_table_response
-
-val make_column_definition :
-  type_:generic_string -> name:generic_string -> unit -> column_definition
-
-val make_capacity_specification :
-  ?write_capacity_units:capacity_units ->
-  ?read_capacity_units:capacity_units ->
-  throughput_mode:throughput_mode ->
-  unit ->
-  capacity_specification
-
-val make_encryption_specification :
-  ?kms_key_identifier:kms_key_ar_n -> type_:encryption_type -> unit -> encryption_specification
-
-val make_point_in_time_recovery :
-  status:point_in_time_recovery_status -> unit -> point_in_time_recovery
-
-val make_time_to_live : status:time_to_live_status -> unit -> time_to_live
-
-val make_client_side_timestamps :
-  status:client_side_timestamps_status -> unit -> client_side_timestamps
-
 val make_target_tracking_scaling_policy_configuration :
-  ?scale_out_cooldown:integer_object ->
-  ?scale_in_cooldown:integer_object ->
   ?disable_scale_in:boolean_object ->
+  ?scale_in_cooldown:integer_object ->
+  ?scale_out_cooldown:integer_object ->
   target_value:double_object ->
   unit ->
   target_tracking_scaling_policy_configuration
@@ -58,133 +22,178 @@ val make_auto_scaling_policy :
   auto_scaling_policy
 
 val make_auto_scaling_settings :
-  ?scaling_policy:auto_scaling_policy ->
-  ?maximum_units:capacity_units ->
-  ?minimum_units:capacity_units ->
   ?auto_scaling_disabled:boolean_object ->
+  ?minimum_units:capacity_units ->
+  ?maximum_units:capacity_units ->
+  ?scaling_policy:auto_scaling_policy ->
   unit ->
   auto_scaling_settings
 
 val make_auto_scaling_specification :
-  ?read_capacity_auto_scaling:auto_scaling_settings ->
   ?write_capacity_auto_scaling:auto_scaling_settings ->
+  ?read_capacity_auto_scaling:auto_scaling_settings ->
   unit ->
   auto_scaling_specification
 
-val make_replica_specification :
-  ?read_capacity_auto_scaling:auto_scaling_settings ->
+val make_capacity_specification :
   ?read_capacity_units:capacity_units ->
-  region:region ->
+  ?write_capacity_units:capacity_units ->
+  throughput_mode:throughput_mode ->
   unit ->
-  replica_specification
-
-val make_tag : value:tag_value -> key:tag_key -> unit -> tag
-
-val make_cdc_specification :
-  ?propagate_tags:cdc_propagate_tags ->
-  ?tags:tag_list ->
-  ?view_type:view_type ->
-  status:cdc_status ->
-  unit ->
-  cdc_specification
-
-val make_update_table_request :
-  ?warm_throughput_specification:warm_throughput_specification ->
-  ?cdc_specification:cdc_specification ->
-  ?replica_specifications:replica_specification_list ->
-  ?auto_scaling_specification:auto_scaling_specification ->
-  ?client_side_timestamps:client_side_timestamps ->
-  ?default_time_to_live:default_time_to_live ->
-  ?ttl:time_to_live ->
-  ?point_in_time_recovery:point_in_time_recovery ->
-  ?encryption_specification:encryption_specification ->
-  ?capacity_specification:capacity_specification ->
-  ?add_columns:column_definition_list ->
-  table_name:table_name ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  update_table_request
-
-val make_update_keyspace_response : resource_arn:ar_n -> unit -> update_keyspace_response
-
-val make_replication_specification :
-  ?region_list:region_list -> replication_strategy:rs -> unit -> replication_specification
-
-val make_update_keyspace_request :
-  ?client_side_timestamps:client_side_timestamps ->
-  replication_specification:replication_specification ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  update_keyspace_request
-
-val make_untag_resource_response : unit -> unit
-
-val make_untag_resource_request :
-  tags:tag_list -> resource_arn:ar_n -> unit -> untag_resource_request
-
-val make_tag_resource_response : unit -> unit
-val make_tag_resource_request : tags:tag_list -> resource_arn:ar_n -> unit -> tag_resource_request
-
-val make_table_summary :
-  resource_arn:ar_n -> table_name:table_name -> keyspace_name:keyspace_name -> unit -> table_summary
-
-val make_static_column : name:generic_string -> unit -> static_column
-val make_partition_key : name:generic_string -> unit -> partition_key
-val make_clustering_key : order_by:sort_order -> name:generic_string -> unit -> clustering_key
-
-val make_schema_definition :
-  ?static_columns:static_column_list ->
-  ?clustering_keys:clustering_key_list ->
-  partition_keys:partition_key_list ->
-  all_columns:column_definition_list ->
-  unit ->
-  schema_definition
-
-val make_restore_table_response : restored_table_ar_n:ar_n -> unit -> restore_table_response
-
-val make_restore_table_request :
-  ?replica_specifications:replica_specification_list ->
-  ?auto_scaling_specification:auto_scaling_specification ->
-  ?tags_override:tag_list ->
-  ?point_in_time_recovery_override:point_in_time_recovery ->
-  ?encryption_specification_override:encryption_specification ->
-  ?capacity_specification_override:capacity_specification ->
-  ?restore_timestamp:timestamp ->
-  target_table_name:table_name ->
-  target_keyspace_name:keyspace_name ->
-  source_table_name:table_name ->
-  source_keyspace_name:keyspace_name ->
-  unit ->
-  restore_table_request
-
-val make_replication_group_status :
-  ?tables_replication_progress:tables_replication_progress ->
-  keyspace_status:keyspace_status ->
-  region:region ->
-  unit ->
-  replication_group_status
+  capacity_specification
 
 val make_capacity_specification_summary :
-  ?last_update_to_pay_per_request_timestamp:timestamp ->
-  ?write_capacity_units:capacity_units ->
   ?read_capacity_units:capacity_units ->
+  ?write_capacity_units:capacity_units ->
+  ?last_update_to_pay_per_request_timestamp:timestamp ->
   throughput_mode:throughput_mode ->
   unit ->
   capacity_specification_summary
 
+val make_tag : key:tag_key -> value:tag_value -> unit -> tag
+
+val make_cdc_specification :
+  ?view_type:view_type ->
+  ?tags:tag_list ->
+  ?propagate_tags:cdc_propagate_tags ->
+  status:cdc_status ->
+  unit ->
+  cdc_specification
+
+val make_cdc_specification_summary :
+  ?view_type:view_type -> status:cdc_status -> unit -> cdc_specification_summary
+
+val make_client_side_timestamps :
+  status:client_side_timestamps_status -> unit -> client_side_timestamps
+
+val make_clustering_key : name:generic_string -> order_by:sort_order -> unit -> clustering_key
+
+val make_column_definition :
+  name:generic_string -> type_:generic_string -> unit -> column_definition
+
+val make_comment : message:Smaws_Lib.Smithy_api.Types.string_ -> unit -> comment
+val make_create_keyspace_response : resource_arn:ar_n -> unit -> create_keyspace_response
+
+val make_replication_specification :
+  ?region_list:region_list -> replication_strategy:rs -> unit -> replication_specification
+
+val make_create_keyspace_request :
+  ?tags:tag_list ->
+  ?replication_specification:replication_specification ->
+  keyspace_name:keyspace_name ->
+  unit ->
+  create_keyspace_request
+
+val make_create_table_response : resource_arn:ar_n -> unit -> create_table_response
+
+val make_warm_throughput_specification :
+  ?read_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
+  ?write_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
+  unit ->
+  warm_throughput_specification
+
+val make_replica_specification :
+  ?read_capacity_units:capacity_units ->
+  ?read_capacity_auto_scaling:auto_scaling_settings ->
+  region:region ->
+  unit ->
+  replica_specification
+
+val make_time_to_live : status:time_to_live_status -> unit -> time_to_live
+
+val make_point_in_time_recovery :
+  status:point_in_time_recovery_status -> unit -> point_in_time_recovery
+
+val make_encryption_specification :
+  ?kms_key_identifier:kms_key_ar_n -> type_:encryption_type -> unit -> encryption_specification
+
+val make_static_column : name:generic_string -> unit -> static_column
+val make_partition_key : name:generic_string -> unit -> partition_key
+
+val make_schema_definition :
+  ?clustering_keys:clustering_key_list ->
+  ?static_columns:static_column_list ->
+  all_columns:column_definition_list ->
+  partition_keys:partition_key_list ->
+  unit ->
+  schema_definition
+
+val make_create_table_request :
+  ?comment:comment ->
+  ?capacity_specification:capacity_specification ->
+  ?encryption_specification:encryption_specification ->
+  ?point_in_time_recovery:point_in_time_recovery ->
+  ?ttl:time_to_live ->
+  ?default_time_to_live:default_time_to_live ->
+  ?tags:tag_list ->
+  ?client_side_timestamps:client_side_timestamps ->
+  ?auto_scaling_specification:auto_scaling_specification ->
+  ?replica_specifications:replica_specification_list ->
+  ?cdc_specification:cdc_specification ->
+  ?warm_throughput_specification:warm_throughput_specification ->
+  keyspace_name:keyspace_name ->
+  table_name:table_name ->
+  schema_definition:schema_definition ->
+  unit ->
+  create_table_request
+
+val make_create_type_response :
+  keyspace_arn:ar_n -> type_name:type_name -> unit -> create_type_response
+
+val make_field_definition : name:generic_string -> type_:generic_string -> unit -> field_definition
+
+val make_create_type_request :
+  keyspace_name:keyspace_name ->
+  type_name:type_name ->
+  field_definitions:field_list ->
+  unit ->
+  create_type_request
+
+val make_delete_keyspace_response : unit -> unit
+val make_delete_keyspace_request : keyspace_name:keyspace_name -> unit -> delete_keyspace_request
+val make_delete_table_response : unit -> unit
+
+val make_delete_table_request :
+  keyspace_name:keyspace_name -> table_name:table_name -> unit -> delete_table_request
+
+val make_delete_type_response :
+  keyspace_arn:ar_n -> type_name:type_name -> unit -> delete_type_response
+
+val make_delete_type_request :
+  keyspace_name:keyspace_name -> type_name:type_name -> unit -> delete_type_request
+
+val make_replication_group_status :
+  ?tables_replication_progress:tables_replication_progress ->
+  region:region ->
+  keyspace_status:keyspace_status ->
+  unit ->
+  replication_group_status
+
+val make_get_keyspace_response :
+  ?replication_regions:region_list ->
+  ?replication_group_statuses:replication_group_status_list ->
+  keyspace_name:keyspace_name ->
+  resource_arn:ar_n ->
+  replication_strategy:rs ->
+  unit ->
+  get_keyspace_response
+
+val make_get_keyspace_request : keyspace_name:keyspace_name -> unit -> get_keyspace_request
+
+val make_warm_throughput_specification_summary :
+  read_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
+  write_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
+  status:warm_throughput_status ->
+  unit ->
+  warm_throughput_specification_summary
+
 val make_replica_specification_summary :
-  ?warm_throughput_specification:warm_throughput_specification_summary ->
-  ?capacity_specification:capacity_specification_summary ->
-  ?status:table_status ->
   ?region:region ->
+  ?status:table_status ->
+  ?capacity_specification:capacity_specification_summary ->
+  ?warm_throughput_specification:warm_throughput_specification_summary ->
   unit ->
   replica_specification_summary
-
-val make_replica_auto_scaling_specification :
-  ?auto_scaling_specification:auto_scaling_specification ->
-  ?region:region ->
-  unit ->
-  replica_auto_scaling_specification
 
 val make_point_in_time_recovery_summary :
   ?earliest_restorable_timestamp:timestamp ->
@@ -192,643 +201,166 @@ val make_point_in_time_recovery_summary :
   unit ->
   point_in_time_recovery_summary
 
+val make_get_table_response :
+  ?creation_timestamp:timestamp ->
+  ?status:table_status ->
+  ?schema_definition:schema_definition ->
+  ?capacity_specification:capacity_specification_summary ->
+  ?encryption_specification:encryption_specification ->
+  ?point_in_time_recovery:point_in_time_recovery_summary ->
+  ?ttl:time_to_live ->
+  ?default_time_to_live:default_time_to_live ->
+  ?comment:comment ->
+  ?client_side_timestamps:client_side_timestamps ->
+  ?replica_specifications:replica_specification_summary_list ->
+  ?latest_stream_arn:stream_arn ->
+  ?cdc_specification:cdc_specification_summary ->
+  ?warm_throughput_specification:warm_throughput_specification_summary ->
+  keyspace_name:keyspace_name ->
+  table_name:table_name ->
+  resource_arn:ar_n ->
+  unit ->
+  get_table_response
+
+val make_get_table_request :
+  keyspace_name:keyspace_name -> table_name:table_name -> unit -> get_table_request
+
+val make_replica_auto_scaling_specification :
+  ?region:region ->
+  ?auto_scaling_specification:auto_scaling_specification ->
+  unit ->
+  replica_auto_scaling_specification
+
+val make_get_table_auto_scaling_settings_response :
+  ?auto_scaling_specification:auto_scaling_specification ->
+  ?replica_specifications:replica_auto_scaling_specification_list ->
+  keyspace_name:keyspace_name ->
+  table_name:table_name ->
+  resource_arn:ar_n ->
+  unit ->
+  get_table_auto_scaling_settings_response
+
+val make_get_table_auto_scaling_settings_request :
+  keyspace_name:keyspace_name ->
+  table_name:table_name ->
+  unit ->
+  get_table_auto_scaling_settings_request
+
+val make_get_type_response :
+  ?field_definitions:field_list ->
+  ?last_modified_timestamp:timestamp ->
+  ?status:type_status ->
+  ?direct_referring_tables:table_name_list ->
+  ?direct_parent_types:type_name_list ->
+  ?max_nesting_depth:depth ->
+  keyspace_name:keyspace_name ->
+  type_name:type_name ->
+  keyspace_arn:ar_n ->
+  unit ->
+  get_type_response
+
+val make_get_type_request :
+  keyspace_name:keyspace_name -> type_name:type_name -> unit -> get_type_request
+
+val make_keyspace_summary :
+  ?replication_regions:region_list ->
+  keyspace_name:keyspace_name ->
+  resource_arn:ar_n ->
+  replication_strategy:rs ->
+  unit ->
+  keyspace_summary
+
+val make_update_table_response : resource_arn:ar_n -> unit -> update_table_response
+
+val make_update_table_request :
+  ?add_columns:column_definition_list ->
+  ?capacity_specification:capacity_specification ->
+  ?encryption_specification:encryption_specification ->
+  ?point_in_time_recovery:point_in_time_recovery ->
+  ?ttl:time_to_live ->
+  ?default_time_to_live:default_time_to_live ->
+  ?client_side_timestamps:client_side_timestamps ->
+  ?auto_scaling_specification:auto_scaling_specification ->
+  ?replica_specifications:replica_specification_list ->
+  ?cdc_specification:cdc_specification ->
+  ?warm_throughput_specification:warm_throughput_specification ->
+  keyspace_name:keyspace_name ->
+  table_name:table_name ->
+  unit ->
+  update_table_request
+
+val make_update_keyspace_response : resource_arn:ar_n -> unit -> update_keyspace_response
+
+val make_update_keyspace_request :
+  ?client_side_timestamps:client_side_timestamps ->
+  keyspace_name:keyspace_name ->
+  replication_specification:replication_specification ->
+  unit ->
+  update_keyspace_request
+
+val make_untag_resource_response : unit -> unit
+
+val make_untag_resource_request :
+  resource_arn:ar_n -> tags:tag_list -> unit -> untag_resource_request
+
+val make_tag_resource_response : unit -> unit
+val make_tag_resource_request : resource_arn:ar_n -> tags:tag_list -> unit -> tag_resource_request
+val make_restore_table_response : restored_table_ar_n:ar_n -> unit -> restore_table_response
+
+val make_restore_table_request :
+  ?restore_timestamp:timestamp ->
+  ?capacity_specification_override:capacity_specification ->
+  ?encryption_specification_override:encryption_specification ->
+  ?point_in_time_recovery_override:point_in_time_recovery ->
+  ?tags_override:tag_list ->
+  ?auto_scaling_specification:auto_scaling_specification ->
+  ?replica_specifications:replica_specification_list ->
+  source_keyspace_name:keyspace_name ->
+  source_table_name:table_name ->
+  target_keyspace_name:keyspace_name ->
+  target_table_name:table_name ->
+  unit ->
+  restore_table_request
+
 val make_list_types_response :
   ?next_token:next_token -> types:type_name_list -> unit -> list_types_response
 
 val make_list_types_request :
-  ?max_results:max_results ->
   ?next_token:next_token ->
+  ?max_results:max_results ->
   keyspace_name:keyspace_name ->
   unit ->
   list_types_request
 
 val make_list_tags_for_resource_response :
-  ?tags:tag_list -> ?next_token:next_token -> unit -> list_tags_for_resource_response
+  ?next_token:next_token -> ?tags:tag_list -> unit -> list_tags_for_resource_response
 
 val make_list_tags_for_resource_request :
-  ?max_results:max_results ->
   ?next_token:next_token ->
+  ?max_results:max_results ->
   resource_arn:ar_n ->
   unit ->
   list_tags_for_resource_request
 
+val make_table_summary :
+  keyspace_name:keyspace_name -> table_name:table_name -> resource_arn:ar_n -> unit -> table_summary
+
 val make_list_tables_response :
-  ?tables:table_summary_list -> ?next_token:next_token -> unit -> list_tables_response
+  ?next_token:next_token -> ?tables:table_summary_list -> unit -> list_tables_response
 
 val make_list_tables_request :
-  ?max_results:max_results ->
   ?next_token:next_token ->
+  ?max_results:max_results ->
   keyspace_name:keyspace_name ->
   unit ->
   list_tables_request
-
-val make_keyspace_summary :
-  ?replication_regions:region_list ->
-  replication_strategy:rs ->
-  resource_arn:ar_n ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  keyspace_summary
 
 val make_list_keyspaces_response :
   ?next_token:next_token -> keyspaces:keyspace_summary_list -> unit -> list_keyspaces_response
 
 val make_list_keyspaces_request :
-  ?max_results:max_results -> ?next_token:next_token -> unit -> list_keyspaces_request
-
-val make_field_definition : type_:generic_string -> name:generic_string -> unit -> field_definition
-
-val make_get_type_response :
-  ?max_nesting_depth:depth ->
-  ?direct_parent_types:type_name_list ->
-  ?direct_referring_tables:table_name_list ->
-  ?status:type_status ->
-  ?last_modified_timestamp:timestamp ->
-  ?field_definitions:field_list ->
-  keyspace_arn:ar_n ->
-  type_name:type_name ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  get_type_response
-
-val make_get_type_request :
-  type_name:type_name -> keyspace_name:keyspace_name -> unit -> get_type_request
-
-val make_get_table_auto_scaling_settings_response :
-  ?replica_specifications:replica_auto_scaling_specification_list ->
-  ?auto_scaling_specification:auto_scaling_specification ->
-  resource_arn:ar_n ->
-  table_name:table_name ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  get_table_auto_scaling_settings_response
-
-val make_get_table_auto_scaling_settings_request :
-  table_name:table_name ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  get_table_auto_scaling_settings_request
-
-val make_comment : message:Smaws_Lib.Smithy_api.Types.string_ -> unit -> comment
-
-val make_cdc_specification_summary :
-  ?view_type:view_type -> status:cdc_status -> unit -> cdc_specification_summary
-
-val make_get_table_response :
-  ?warm_throughput_specification:warm_throughput_specification_summary ->
-  ?cdc_specification:cdc_specification_summary ->
-  ?latest_stream_arn:stream_arn ->
-  ?replica_specifications:replica_specification_summary_list ->
-  ?client_side_timestamps:client_side_timestamps ->
-  ?comment:comment ->
-  ?default_time_to_live:default_time_to_live ->
-  ?ttl:time_to_live ->
-  ?point_in_time_recovery:point_in_time_recovery_summary ->
-  ?encryption_specification:encryption_specification ->
-  ?capacity_specification:capacity_specification_summary ->
-  ?schema_definition:schema_definition ->
-  ?status:table_status ->
-  ?creation_timestamp:timestamp ->
-  resource_arn:ar_n ->
-  table_name:table_name ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  get_table_response
-
-val make_get_table_request :
-  table_name:table_name -> keyspace_name:keyspace_name -> unit -> get_table_request
-
-val make_get_keyspace_response :
-  ?replication_group_statuses:replication_group_status_list ->
-  ?replication_regions:region_list ->
-  replication_strategy:rs ->
-  resource_arn:ar_n ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  get_keyspace_response
-
-val make_get_keyspace_request : keyspace_name:keyspace_name -> unit -> get_keyspace_request
-
-val make_delete_type_response :
-  type_name:type_name -> keyspace_arn:ar_n -> unit -> delete_type_response
-
-val make_delete_type_request :
-  type_name:type_name -> keyspace_name:keyspace_name -> unit -> delete_type_request
-
-val make_delete_table_response : unit -> unit
-
-val make_delete_table_request :
-  table_name:table_name -> keyspace_name:keyspace_name -> unit -> delete_table_request
-
-val make_delete_keyspace_response : unit -> unit
-val make_delete_keyspace_request : keyspace_name:keyspace_name -> unit -> delete_keyspace_request
-
-val make_create_type_response :
-  type_name:type_name -> keyspace_arn:ar_n -> unit -> create_type_response
-
-val make_create_type_request :
-  field_definitions:field_list ->
-  type_name:type_name ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  create_type_request
-
-val make_create_table_response : resource_arn:ar_n -> unit -> create_table_response
-
-val make_create_table_request :
-  ?warm_throughput_specification:warm_throughput_specification ->
-  ?cdc_specification:cdc_specification ->
-  ?replica_specifications:replica_specification_list ->
-  ?auto_scaling_specification:auto_scaling_specification ->
-  ?client_side_timestamps:client_side_timestamps ->
-  ?tags:tag_list ->
-  ?default_time_to_live:default_time_to_live ->
-  ?ttl:time_to_live ->
-  ?point_in_time_recovery:point_in_time_recovery ->
-  ?encryption_specification:encryption_specification ->
-  ?capacity_specification:capacity_specification ->
-  ?comment:comment ->
-  schema_definition:schema_definition ->
-  table_name:table_name ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  create_table_request
-
-val make_create_keyspace_response : resource_arn:ar_n -> unit -> create_keyspace_response
-
-val make_create_keyspace_request :
-  ?replication_specification:replication_specification ->
-  ?tags:tag_list ->
-  keyspace_name:keyspace_name ->
-  unit ->
-  create_keyspace_request
+  ?next_token:next_token -> ?max_results:max_results -> unit -> list_keyspaces_request
 (** {1:operations Operations} *)
-
-module CreateKeyspace : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_keyspace_request ->
-    ( create_keyspace_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_keyspace_request ->
-    ( create_keyspace_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [CreateKeyspace] operation adds a new keyspace to your account. In an Amazon Web Services \
-   account, keyspace names must be unique within each Region.\n\n\
-  \  [CreateKeyspace] is an asynchronous operation. You can monitor the creation status of the new \
-   keyspace by using the [GetKeyspace] operation.\n\
-  \ \n\
-  \  For more information, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/getting-started.keyspaces.html}Create \
-   a keyspace} in the {i Amazon Keyspaces Developer Guide}.\n\
-  \  "]
-
-module CreateTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_table_request ->
-    ( create_table_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_table_request ->
-    ( create_table_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [CreateTable] operation adds a new table to the specified keyspace. Within a keyspace, \
-   table names must be unique.\n\n\
-  \  [CreateTable] is an asynchronous operation. When the request is received, the status of the \
-   table is set to [CREATING]. You can monitor the creation status of the new table by using the \
-   [GetTable] operation, which returns the current [status] of the table. You can start using a \
-   table when the status is [ACTIVE].\n\
-  \ \n\
-  \  For more information, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/getting-started.tables.html}Create a \
-   table} in the {i Amazon Keyspaces Developer Guide}.\n\
-  \  "]
-
-module CreateType : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_type_request ->
-    ( create_type_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_type_request ->
-    ( create_type_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " The [CreateType] operation creates a new user-defined type in the specified keyspace. \n\n\
-  \ To configure the required permissions, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-create}Permissions \
-   to create a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
-  \ \n\
-  \  For more information, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/udts.html}User-defined types (UDTs)} \
-   in the {i Amazon Keyspaces Developer Guide}. \n\
-  \  "]
-
-module DeleteKeyspace : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_keyspace_request ->
-    ( delete_keyspace_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_keyspace_request ->
-    ( delete_keyspace_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "The [DeleteKeyspace] operation deletes a keyspace and all of its tables. \n"]
-
-module DeleteTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_table_request ->
-    ( delete_table_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_table_request ->
-    ( delete_table_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [DeleteTable] operation deletes a table and all of its data. After a [DeleteTable] request \
-   is received, the specified table is in the [DELETING] state until Amazon Keyspaces completes \
-   the deletion. If the table is in the [ACTIVE] state, you can delete it. If a table is either in \
-   the [CREATING] or [UPDATING] states, then Amazon Keyspaces returns a [ResourceInUseException]. \
-   If the specified table does not exist, Amazon Keyspaces returns a [ResourceNotFoundException]. \
-   If the table is already in the [DELETING] state, no error is returned.\n"]
-
-module DeleteType : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_type_request ->
-    ( delete_type_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_type_request ->
-    ( delete_type_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " The [DeleteType] operation deletes a user-defined type (UDT). You can only delete a type that \
-   is not used in a table or another UDT. \n\n\
-  \ To configure the required permissions, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-drop}Permissions \
-   to delete a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
-  \ "]
-
-module GetKeyspace : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_keyspace_request ->
-    ( get_keyspace_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_keyspace_request ->
-    ( get_keyspace_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the name of the specified keyspace, the Amazon Resource Name (ARN), the replication \
-   strategy, the Amazon Web Services Regions of a multi-Region keyspace, and the status of newly \
-   added Regions after an [UpdateKeyspace] operation.\n"]
-
-module GetTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_table_request ->
-    ( get_table_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_table_request ->
-    ( get_table_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the table, including the table's name and current status, the \
-   keyspace name, configuration settings, and metadata.\n\n\
-  \ To read table metadata using [GetTable], the IAM principal needs [Select] action permissions \
-   for the table and the system keyspace.\n\
-  \ "]
-
-module GetTableAutoScalingSettings : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_table_auto_scaling_settings_request ->
-    ( get_table_auto_scaling_settings_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_table_auto_scaling_settings_request ->
-    ( get_table_auto_scaling_settings_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns auto scaling related settings of the specified table in JSON format. If the table is a \
-   multi-Region table, the Amazon Web Services Region specific auto scaling settings of the table \
-   are included.\n\n\
-  \ Amazon Keyspaces auto scaling helps you provision throughput capacity for variable workloads \
-   efficiently by increasing and decreasing your table's read and write capacity automatically in \
-   response to application traffic. For more information, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/autoscaling.html}Managing throughput \
-   capacity automatically with Amazon Keyspaces auto scaling} in the {i Amazon Keyspaces Developer \
-   Guide}.\n\
-  \ \n\
-  \    [GetTableAutoScalingSettings] can't be used as an action in an IAM policy.\n\
-  \   \n\
-  \     To define permissions for [GetTableAutoScalingSettings], you must allow the following two \
-   actions in the IAM policy statement's [Action] element:\n\
-  \     \n\
-  \      {ul\n\
-  \            {-   [application-autoscaling:DescribeScalableTargets] \n\
-  \                \n\
-  \                 }\n\
-  \            {-   [application-autoscaling:DescribeScalingPolicies] \n\
-  \                \n\
-  \                 }\n\
-  \            }\n\
-  \  "]
-
-module GetType : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_type_request ->
-    ( get_type_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_type_request ->
-    ( get_type_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " The [GetType] operation returns information about the type, for example the field definitions, \
-   the timestamp when the type was last modified, the level of nesting, the status, and details \
-   about if the type is used in other types and tables. \n\n\
-  \ To read keyspace metadata using [GetType], the IAM principal needs [Select] action permissions \
-   for the system keyspace. To configure the required permissions, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-view}Permissions \
-   to view a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
-  \ "]
 
 module ListKeyspaces : sig
   val error_to_string :
@@ -1294,7 +826,6 @@ end
    Amazon Keyspaces Developer Guide}.\n\
   \   "]
 
-(** {1:Serialization and Deserialization} *)
 module UpdateTable : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1337,6 +868,473 @@ end
   "Adds new columns to the table or updates one of the table's settings, for example capacity \
    mode, auto scaling, encryption, point-in-time recovery, or ttl settings. Note that you can only \
    update one specific table setting per update operation.\n"]
+
+module GetType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_type_request ->
+    ( get_type_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_type_request ->
+    ( get_type_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " The [GetType] operation returns information about the type, for example the field definitions, \
+   the timestamp when the type was last modified, the level of nesting, the status, and details \
+   about if the type is used in other types and tables. \n\n\
+  \ To read keyspace metadata using [GetType], the IAM principal needs [Select] action permissions \
+   for the system keyspace. To configure the required permissions, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-view}Permissions \
+   to view a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \ "]
+
+module GetTableAutoScalingSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_table_auto_scaling_settings_request ->
+    ( get_table_auto_scaling_settings_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_table_auto_scaling_settings_request ->
+    ( get_table_auto_scaling_settings_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns auto scaling related settings of the specified table in JSON format. If the table is a \
+   multi-Region table, the Amazon Web Services Region specific auto scaling settings of the table \
+   are included.\n\n\
+  \ Amazon Keyspaces auto scaling helps you provision throughput capacity for variable workloads \
+   efficiently by increasing and decreasing your table's read and write capacity automatically in \
+   response to application traffic. For more information, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/autoscaling.html}Managing throughput \
+   capacity automatically with Amazon Keyspaces auto scaling} in the {i Amazon Keyspaces Developer \
+   Guide}.\n\
+  \ \n\
+  \    [GetTableAutoScalingSettings] can't be used as an action in an IAM policy.\n\
+  \   \n\
+  \     To define permissions for [GetTableAutoScalingSettings], you must allow the following two \
+   actions in the IAM policy statement's [Action] element:\n\
+  \     \n\
+  \      {ul\n\
+  \            {-   [application-autoscaling:DescribeScalableTargets] \n\
+  \                \n\
+  \                 }\n\
+  \            {-   [application-autoscaling:DescribeScalingPolicies] \n\
+  \                \n\
+  \                 }\n\
+  \            }\n\
+  \  "]
+
+module GetTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_table_request ->
+    ( get_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_table_request ->
+    ( get_table_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the table, including the table's name and current status, the \
+   keyspace name, configuration settings, and metadata.\n\n\
+  \ To read table metadata using [GetTable], the IAM principal needs [Select] action permissions \
+   for the table and the system keyspace.\n\
+  \ "]
+
+module GetKeyspace : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_keyspace_request ->
+    ( get_keyspace_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_keyspace_request ->
+    ( get_keyspace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the name of the specified keyspace, the Amazon Resource Name (ARN), the replication \
+   strategy, the Amazon Web Services Regions of a multi-Region keyspace, and the status of newly \
+   added Regions after an [UpdateKeyspace] operation.\n"]
+
+module DeleteType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_type_request ->
+    ( delete_type_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_type_request ->
+    ( delete_type_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " The [DeleteType] operation deletes a user-defined type (UDT). You can only delete a type that \
+   is not used in a table or another UDT. \n\n\
+  \ To configure the required permissions, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-drop}Permissions \
+   to delete a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \ "]
+
+module DeleteTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_request ->
+    ( delete_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_request ->
+    ( delete_table_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [DeleteTable] operation deletes a table and all of its data. After a [DeleteTable] request \
+   is received, the specified table is in the [DELETING] state until Amazon Keyspaces completes \
+   the deletion. If the table is in the [ACTIVE] state, you can delete it. If a table is either in \
+   the [CREATING] or [UPDATING] states, then Amazon Keyspaces returns a [ResourceInUseException]. \
+   If the specified table does not exist, Amazon Keyspaces returns a [ResourceNotFoundException]. \
+   If the table is already in the [DELETING] state, no error is returned.\n"]
+
+module DeleteKeyspace : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_keyspace_request ->
+    ( delete_keyspace_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_keyspace_request ->
+    ( delete_keyspace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "The [DeleteKeyspace] operation deletes a keyspace and all of its tables. \n"]
+
+module CreateType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_type_request ->
+    ( create_type_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_type_request ->
+    ( create_type_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " The [CreateType] operation creates a new user-defined type in the specified keyspace. \n\n\
+  \ To configure the required permissions, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-create}Permissions \
+   to create a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \ \n\
+  \  For more information, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/udts.html}User-defined types (UDTs)} \
+   in the {i Amazon Keyspaces Developer Guide}. \n\
+  \  "]
+
+module CreateTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_request ->
+    ( create_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_request ->
+    ( create_table_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [CreateTable] operation adds a new table to the specified keyspace. Within a keyspace, \
+   table names must be unique.\n\n\
+  \  [CreateTable] is an asynchronous operation. When the request is received, the status of the \
+   table is set to [CREATING]. You can monitor the creation status of the new table by using the \
+   [GetTable] operation, which returns the current [status] of the table. You can start using a \
+   table when the status is [ACTIVE].\n\
+  \ \n\
+  \  For more information, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/getting-started.tables.html}Create a \
+   table} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \  "]
+
+(** {1:Serialization and Deserialization} *)
+module CreateKeyspace : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_keyspace_request ->
+    ( create_keyspace_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_keyspace_request ->
+    ( create_keyspace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [CreateKeyspace] operation adds a new keyspace to your account. In an Amazon Web Services \
+   account, keyspace names must be unique within each Region.\n\n\
+  \  [CreateKeyspace] is an asynchronous operation. You can monitor the creation status of the new \
+   keyspace by using the [GetKeyspace] operation.\n\
+  \ \n\
+  \  For more information, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/getting-started.keyspaces.html}Create \
+   a keyspace} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \  "]
 
 module Json_serializers = Json_serializers
 module Json_deserializers = Json_deserializers

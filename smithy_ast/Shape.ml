@@ -3,7 +3,14 @@ open Base
 type member = { name : string; target : string; traits : Trait.t list option }
 [@@deriving show, equal]
 
-type structureShapeDetails = { traits : Trait.t list option; members : member list }
+type structureShapeDetails = {
+  traits : Trait.t list option;
+  members : member list;
+  (* Shapes mixed into this structure/union (transitively flattened by
+     [Smaws_parse.Smithy.resolve_mixins] before codegen consumes the model).
+     Direct members and traits take precedence over mixin members/traits. *)
+  mixins : string list;
+}
 [@@deriving show, equal]
 
 type setShapeDetails = { traits : Trait.t list option; target : string } [@@deriving show, equal]

@@ -1,40 +1,6 @@
 open Types
 open Service_metadata
 
-module AddTagsToResource = struct
-  let error_to_string = function
-    | `InvalidResourceStateFault _ ->
-        "com.amazonaws.databasemigrationservice#InvalidResourceStateFault"
-    | `ResourceNotFoundFault _ -> "com.amazonaws.databasemigrationservice#ResourceNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidResourceStateFault" ->
-          `InvalidResourceStateFault
-            (Json_deserializers.invalid_resource_state_fault_of_yojson tree path)
-      | _, "ResourceNotFoundFault" ->
-          `ResourceNotFoundFault (Json_deserializers.resource_not_found_fault_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_tags_to_resource_message) =
-    let input = Json_serializers.add_tags_to_resource_message_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDMSv20160101.AddTagsToResource" ~service
-      ~context ~input
-      ~output_deserializer:Json_deserializers.add_tags_to_resource_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_to_resource_message) =
-    let input = Json_serializers.add_tags_to_resource_message_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonDMSv20160101.AddTagsToResource" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.add_tags_to_resource_response_of_yojson
-      ~error_deserializer
-end
-
 module ApplyPendingMaintenanceAction = struct
   let error_to_string = function
     | `ResourceNotFoundFault _ -> "com.amazonaws.databasemigrationservice#ResourceNotFoundFault"
@@ -1582,6 +1548,34 @@ module DescribeDataProviders = struct
       ~error_deserializer
 end
 
+module DescribeEndpoints = struct
+  let error_to_string = function
+    | `ResourceNotFoundFault _ -> "com.amazonaws.databasemigrationservice#ResourceNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ResourceNotFoundFault" ->
+          `ResourceNotFoundFault (Json_deserializers.resource_not_found_fault_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_endpoints_message) =
+    let input = Json_serializers.describe_endpoints_message_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDMSv20160101.DescribeEndpoints" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_endpoints_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_endpoints_message) =
+    let input = Json_serializers.describe_endpoints_message_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonDMSv20160101.DescribeEndpoints" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_endpoints_response_of_yojson
+      ~error_deserializer
+end
+
 module DescribeEndpointSettings = struct
   let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
 
@@ -1625,34 +1619,6 @@ module DescribeEndpointTypes = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AmazonDMSv20160101.DescribeEndpointTypes" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_endpoint_types_response_of_yojson
-      ~error_deserializer
-end
-
-module DescribeEndpoints = struct
-  let error_to_string = function
-    | `ResourceNotFoundFault _ -> "com.amazonaws.databasemigrationservice#ResourceNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ResourceNotFoundFault" ->
-          `ResourceNotFoundFault (Json_deserializers.resource_not_found_fault_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_endpoints_message) =
-    let input = Json_serializers.describe_endpoints_message_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDMSv20160101.DescribeEndpoints" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.describe_endpoints_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_endpoints_message) =
-    let input = Json_serializers.describe_endpoints_message_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonDMSv20160101.DescribeEndpoints" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_endpoints_response_of_yojson
       ~error_deserializer
 end
 
@@ -1702,6 +1668,27 @@ module DescribeEventCategories = struct
       ~error_deserializer
 end
 
+module DescribeEvents = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
+  let error_deserializer tree path =
+    let handler a = a in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_events_message) =
+    let input = Json_serializers.describe_events_message_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDMSv20160101.DescribeEvents" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_events_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_events_message) =
+    let input = Json_serializers.describe_events_message_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonDMSv20160101.DescribeEvents" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_events_response_of_yojson ~error_deserializer
+end
+
 module DescribeEventSubscriptions = struct
   let error_to_string = function
     | `ResourceNotFoundFault _ -> "com.amazonaws.databasemigrationservice#ResourceNotFoundFault"
@@ -1729,27 +1716,6 @@ module DescribeEventSubscriptions = struct
       ~shape_name:"AmazonDMSv20160101.DescribeEventSubscriptions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_event_subscriptions_response_of_yojson
       ~error_deserializer
-end
-
-module DescribeEvents = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
-
-  let error_deserializer tree path =
-    let handler a = a in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_events_message) =
-    let input = Json_serializers.describe_events_message_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDMSv20160101.DescribeEvents" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.describe_events_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_events_message) =
-    let input = Json_serializers.describe_events_message_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonDMSv20160101.DescribeEvents" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_events_response_of_yojson ~error_deserializer
 end
 
 module DescribeExtensionPackAssociations = struct
@@ -2457,6 +2423,35 @@ module DescribeReplicationConfigs = struct
       ~error_deserializer
 end
 
+module DescribeReplicationInstances = struct
+  let error_to_string = function
+    | `ResourceNotFoundFault _ -> "com.amazonaws.databasemigrationservice#ResourceNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ResourceNotFoundFault" ->
+          `ResourceNotFoundFault (Json_deserializers.resource_not_found_fault_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_replication_instances_message) =
+    let input = Json_serializers.describe_replication_instances_message_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AmazonDMSv20160101.DescribeReplicationInstances" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_replication_instances_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_replication_instances_message) =
+    let input = Json_serializers.describe_replication_instances_message_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonDMSv20160101.DescribeReplicationInstances" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_replication_instances_response_of_yojson
+      ~error_deserializer
+end
+
 module DescribeReplicationInstanceTaskLogs = struct
   let error_to_string = function
     | `InvalidResourceStateFault _ ->
@@ -2497,7 +2492,7 @@ module DescribeReplicationInstanceTaskLogs = struct
       ~error_deserializer
 end
 
-module DescribeReplicationInstances = struct
+module DescribeReplications = struct
   let error_to_string = function
     | `ResourceNotFoundFault _ -> "com.amazonaws.databasemigrationservice#ResourceNotFoundFault"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2511,18 +2506,18 @@ module DescribeReplicationInstances = struct
     Smaws_Lib.Protocols.AwsJson.(
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
-  let request context (request : describe_replication_instances_message) =
-    let input = Json_serializers.describe_replication_instances_message_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"AmazonDMSv20160101.DescribeReplicationInstances" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_replication_instances_response_of_yojson
+  let request context (request : describe_replications_message) =
+    let input = Json_serializers.describe_replications_message_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDMSv20160101.DescribeReplications"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_replications_response_of_yojson
       ~error_deserializer
 
-  let request_with_metadata context (request : describe_replication_instances_message) =
-    let input = Json_serializers.describe_replication_instances_message_to_yojson request in
+  let request_with_metadata context (request : describe_replications_message) =
+    let input = Json_serializers.describe_replications_message_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonDMSv20160101.DescribeReplicationInstances" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_replication_instances_response_of_yojson
+      ~shape_name:"AmazonDMSv20160101.DescribeReplications" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_replications_response_of_yojson
       ~error_deserializer
 end
 
@@ -2730,35 +2725,6 @@ module DescribeReplicationTasks = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AmazonDMSv20160101.DescribeReplicationTasks" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_replication_tasks_response_of_yojson
-      ~error_deserializer
-end
-
-module DescribeReplications = struct
-  let error_to_string = function
-    | `ResourceNotFoundFault _ -> "com.amazonaws.databasemigrationservice#ResourceNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ResourceNotFoundFault" ->
-          `ResourceNotFoundFault (Json_deserializers.resource_not_found_fault_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_replications_message) =
-    let input = Json_serializers.describe_replications_message_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDMSv20160101.DescribeReplications"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_replications_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_replications_message) =
-    let input = Json_serializers.describe_replications_message_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonDMSv20160101.DescribeReplications" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_replications_response_of_yojson
       ~error_deserializer
 end
 
@@ -4589,5 +4555,39 @@ module UpdateSubscriptionsToEventBridge = struct
       ~shape_name:"AmazonDMSv20160101.UpdateSubscriptionsToEventBridge" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.update_subscriptions_to_event_bridge_response_of_yojson
+      ~error_deserializer
+end
+
+module AddTagsToResource = struct
+  let error_to_string = function
+    | `InvalidResourceStateFault _ ->
+        "com.amazonaws.databasemigrationservice#InvalidResourceStateFault"
+    | `ResourceNotFoundFault _ -> "com.amazonaws.databasemigrationservice#ResourceNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidResourceStateFault" ->
+          `InvalidResourceStateFault
+            (Json_deserializers.invalid_resource_state_fault_of_yojson tree path)
+      | _, "ResourceNotFoundFault" ->
+          `ResourceNotFoundFault (Json_deserializers.resource_not_found_fault_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_tags_to_resource_message) =
+    let input = Json_serializers.add_tags_to_resource_message_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDMSv20160101.AddTagsToResource" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.add_tags_to_resource_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_resource_message) =
+    let input = Json_serializers.add_tags_to_resource_message_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonDMSv20160101.AddTagsToResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_tags_to_resource_response_of_yojson
       ~error_deserializer
 end

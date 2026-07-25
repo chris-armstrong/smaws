@@ -8,76 +8,79 @@ module Types = Types
 
 (** {1:builders Builders} *)
 
-val make_tag : value:tag_value -> key:tag_key -> unit -> tag
-val make_pipeline_id_name : ?name:id -> ?id:id -> unit -> pipeline_id_name
+val make_activate_pipeline_output : unit -> unit
 
-val make_field :
-  ?ref_value:field_name_string ->
-  ?string_value:field_string_value ->
-  key:field_name_string ->
+val make_parameter_value :
+  id:field_name_string -> string_value:field_string_value -> unit -> parameter_value
+
+val make_activate_pipeline_input :
+  ?parameter_values:parameter_value_list ->
+  ?start_timestamp:timestamp ->
+  pipeline_id:id ->
   unit ->
-  field
+  activate_pipeline_input
 
-val make_validation_warning : ?warnings:validation_messages -> ?id:id -> unit -> validation_warning
-val make_validation_error : ?errors:validation_messages -> ?id:id -> unit -> validation_error
+val make_add_tags_output : unit -> unit
+val make_tag : key:tag_key -> value:tag_value -> unit -> tag
+val make_add_tags_input : pipeline_id:id -> tags:tag_list -> unit -> add_tags_input
+val make_create_pipeline_output : pipeline_id:id -> unit -> create_pipeline_output
+
+val make_create_pipeline_input :
+  ?description:string_ -> ?tags:tag_list -> name:id -> unique_id:id -> unit -> create_pipeline_input
+
+val make_validation_warning : ?id:id -> ?warnings:validation_messages -> unit -> validation_warning
+val make_validation_error : ?id:id -> ?errors:validation_messages -> unit -> validation_error
 
 val make_validate_pipeline_definition_output :
-  ?validation_warnings:validation_warnings ->
   ?validation_errors:validation_errors ->
+  ?validation_warnings:validation_warnings ->
   errored:boolean_ ->
   unit ->
   validate_pipeline_definition_output
 
-val make_pipeline_object : fields:field_list -> name:id -> id:id -> unit -> pipeline_object
-
 val make_parameter_attribute :
-  string_value:attribute_value_string -> key:attribute_name_string -> unit -> parameter_attribute
+  key:attribute_name_string -> string_value:attribute_value_string -> unit -> parameter_attribute
 
 val make_parameter_object :
-  attributes:parameter_attribute_list -> id:field_name_string -> unit -> parameter_object
+  id:field_name_string -> attributes:parameter_attribute_list -> unit -> parameter_object
 
-val make_parameter_value :
-  string_value:field_string_value -> id:field_name_string -> unit -> parameter_value
+val make_field :
+  ?string_value:field_string_value ->
+  ?ref_value:field_name_string ->
+  key:field_name_string ->
+  unit ->
+  field
+
+val make_pipeline_object : id:id -> name:id -> fields:field_list -> unit -> pipeline_object
 
 val make_validate_pipeline_definition_input :
-  ?parameter_values:parameter_value_list ->
   ?parameter_objects:parameter_object_list ->
-  pipeline_objects:pipeline_object_list ->
+  ?parameter_values:parameter_value_list ->
   pipeline_id:id ->
+  pipeline_objects:pipeline_object_list ->
   unit ->
   validate_pipeline_definition_input
-
-val make_task_object :
-  ?objects:pipeline_object_map ->
-  ?attempt_id:id ->
-  ?pipeline_id:id ->
-  ?task_id:task_id ->
-  unit ->
-  task_object
 
 val make_set_task_status_output : unit -> unit
 
 val make_set_task_status_input :
-  ?error_stack_trace:string_ ->
-  ?error_message:error_message ->
   ?error_id:string_ ->
-  task_status:task_status ->
+  ?error_message:error_message ->
+  ?error_stack_trace:string_ ->
   task_id:task_id ->
+  task_status:task_status ->
   unit ->
   set_task_status_input
 
 val make_set_status_input :
-  status:string_ -> object_ids:id_list -> pipeline_id:id -> unit -> set_status_input
-
-val make_operator : ?values:string_list -> ?type_:operator_type -> unit -> operator
-val make_selector : ?operator:operator -> ?field_name:string_ -> unit -> selector
+  pipeline_id:id -> object_ids:id_list -> status:string_ -> unit -> set_status_input
 
 val make_report_task_runner_heartbeat_output :
   terminate:boolean_ -> unit -> report_task_runner_heartbeat_output
 
 val make_report_task_runner_heartbeat_input :
-  ?hostname:id ->
   ?worker_group:string_ ->
+  ?hostname:id ->
   taskrunner_id:id ->
   unit ->
   report_task_runner_heartbeat_input
@@ -88,59 +91,62 @@ val make_report_task_progress_input :
   ?fields:field_list -> task_id:task_id -> unit -> report_task_progress_input
 
 val make_remove_tags_output : unit -> unit
-val make_remove_tags_input : tag_keys:string_list -> pipeline_id:id -> unit -> remove_tags_input
+val make_remove_tags_input : pipeline_id:id -> tag_keys:string_list -> unit -> remove_tags_input
 
 val make_query_objects_output :
-  ?has_more_results:boolean_ -> ?marker:string_ -> ?ids:id_list -> unit -> query_objects_output
+  ?ids:id_list -> ?marker:string_ -> ?has_more_results:boolean_ -> unit -> query_objects_output
 
+val make_operator : ?type_:operator_type -> ?values:string_list -> unit -> operator
+val make_selector : ?field_name:string_ -> ?operator:operator -> unit -> selector
 val make_query : ?selectors:selector_list -> unit -> query
 
 val make_query_objects_input :
-  ?limit:int_ ->
-  ?marker:string_ ->
   ?query:query ->
-  sphere:string_ ->
+  ?marker:string_ ->
+  ?limit:int_ ->
   pipeline_id:id ->
+  sphere:string_ ->
   unit ->
   query_objects_input
 
 val make_put_pipeline_definition_output :
-  ?validation_warnings:validation_warnings ->
   ?validation_errors:validation_errors ->
+  ?validation_warnings:validation_warnings ->
   errored:boolean_ ->
   unit ->
   put_pipeline_definition_output
 
 val make_put_pipeline_definition_input :
-  ?parameter_values:parameter_value_list ->
   ?parameter_objects:parameter_object_list ->
-  pipeline_objects:pipeline_object_list ->
+  ?parameter_values:parameter_value_list ->
   pipeline_id:id ->
+  pipeline_objects:pipeline_object_list ->
   unit ->
   put_pipeline_definition_input
 
+val make_task_object :
+  ?task_id:task_id ->
+  ?pipeline_id:id ->
+  ?attempt_id:id ->
+  ?objects:pipeline_object_map ->
+  unit ->
+  task_object
+
 val make_poll_for_task_output : ?task_object:task_object -> unit -> poll_for_task_output
-val make_instance_identity : ?signature:string_ -> ?document:string_ -> unit -> instance_identity
+val make_instance_identity : ?document:string_ -> ?signature:string_ -> unit -> instance_identity
 
 val make_poll_for_task_input :
-  ?instance_identity:instance_identity ->
   ?hostname:id ->
+  ?instance_identity:instance_identity ->
   worker_group:string_ ->
   unit ->
   poll_for_task_input
 
-val make_pipeline_description :
-  ?tags:tag_list ->
-  ?description:string_ ->
-  fields:field_list ->
-  name:id ->
-  pipeline_id:id ->
-  unit ->
-  pipeline_description
+val make_pipeline_id_name : ?id:id -> ?name:id -> unit -> pipeline_id_name
 
 val make_list_pipelines_output :
-  ?has_more_results:boolean_ ->
   ?marker:string_ ->
+  ?has_more_results:boolean_ ->
   pipeline_id_list:pipeline_list ->
   unit ->
   list_pipelines_output
@@ -148,9 +154,9 @@ val make_list_pipelines_output :
 val make_list_pipelines_input : ?marker:string_ -> unit -> list_pipelines_input
 
 val make_get_pipeline_definition_output :
-  ?parameter_values:parameter_value_list ->
-  ?parameter_objects:parameter_object_list ->
   ?pipeline_objects:pipeline_object_list ->
+  ?parameter_objects:parameter_object_list ->
+  ?parameter_values:parameter_value_list ->
   unit ->
   get_pipeline_definition_output
 
@@ -161,7 +167,16 @@ val make_evaluate_expression_output :
   evaluated_expression:long_string -> unit -> evaluate_expression_output
 
 val make_evaluate_expression_input :
-  expression:long_string -> object_id:id -> pipeline_id:id -> unit -> evaluate_expression_input
+  pipeline_id:id -> object_id:id -> expression:long_string -> unit -> evaluate_expression_input
+
+val make_pipeline_description :
+  ?description:string_ ->
+  ?tags:tag_list ->
+  pipeline_id:id ->
+  name:id ->
+  fields:field_list ->
+  unit ->
+  pipeline_description
 
 val make_describe_pipelines_output :
   pipeline_description_list:pipeline_description_list -> unit -> describe_pipelines_output
@@ -169,17 +184,17 @@ val make_describe_pipelines_output :
 val make_describe_pipelines_input : pipeline_ids:id_list -> unit -> describe_pipelines_input
 
 val make_describe_objects_output :
-  ?has_more_results:boolean_ ->
   ?marker:string_ ->
+  ?has_more_results:boolean_ ->
   pipeline_objects:pipeline_object_list ->
   unit ->
   describe_objects_output
 
 val make_describe_objects_input :
-  ?marker:string_ ->
   ?evaluate_expressions:boolean_ ->
-  object_ids:id_list ->
+  ?marker:string_ ->
   pipeline_id:id ->
+  object_ids:id_list ->
   unit ->
   describe_objects_input
 
@@ -188,140 +203,7 @@ val make_deactivate_pipeline_output : unit -> unit
 
 val make_deactivate_pipeline_input :
   ?cancel_active:cancel_active -> pipeline_id:id -> unit -> deactivate_pipeline_input
-
-val make_create_pipeline_output : pipeline_id:id -> unit -> create_pipeline_output
-
-val make_create_pipeline_input :
-  ?tags:tag_list -> ?description:string_ -> unique_id:id -> name:id -> unit -> create_pipeline_input
-
-val make_add_tags_output : unit -> unit
-val make_add_tags_input : tags:tag_list -> pipeline_id:id -> unit -> add_tags_input
-val make_activate_pipeline_output : unit -> unit
-
-val make_activate_pipeline_input :
-  ?start_timestamp:timestamp ->
-  ?parameter_values:parameter_value_list ->
-  pipeline_id:id ->
-  unit ->
-  activate_pipeline_input
 (** {1:operations Operations} *)
-
-module ActivatePipeline : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceError of internal_service_error
-    | `InvalidRequestException of invalid_request_exception
-    | `PipelineDeletedException of pipeline_deleted_exception
-    | `PipelineNotFoundException of pipeline_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    activate_pipeline_input ->
-    ( activate_pipeline_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception
-      | `PipelineDeletedException of pipeline_deleted_exception
-      | `PipelineNotFoundException of pipeline_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    activate_pipeline_input ->
-    ( activate_pipeline_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception
-      | `PipelineDeletedException of pipeline_deleted_exception
-      | `PipelineNotFoundException of pipeline_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Validates the specified pipeline and starts processing pipeline tasks. If the pipeline does not \
-   pass validation, activation fails.\n\n\
-  \ If you need to pause the pipeline to investigate an issue with a component, such as a data \
-   source or script, call [DeactivatePipeline].\n\
-  \ \n\
-  \  To activate a finished pipeline, modify the end date for the pipeline and then activate it.\n\
-  \  \n\
-  \     POST / HTTP/1.1 Content-Type: application/x-amz-json-1.1 X-Amz-Target: \
-   DataPipeline.ActivatePipeline Content-Length: 39 Host: datapipeline.us-east-1.amazonaws.com \
-   X-Amz-Date: Mon, 12 Nov 2012 17:49:52 GMT Authorization: AuthParams \\{\"pipelineId\": \
-   \"df-06372391ZG65EXAMPLE\"\\}   HTTP/1.1 200 x-amzn-RequestId: \
-   ee19d5bf-074e-11e2-af6f-6bc7a6be60d9 Content-Type: application/x-amz-json-1.1 Content-Length: 2 \
-   Date: Mon, 12 Nov 2012 17:50:53 GMT \\{\\}  "]
-
-module AddTags : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceError of internal_service_error
-    | `InvalidRequestException of invalid_request_exception
-    | `PipelineDeletedException of pipeline_deleted_exception
-    | `PipelineNotFoundException of pipeline_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_input ->
-    ( add_tags_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception
-      | `PipelineDeletedException of pipeline_deleted_exception
-      | `PipelineNotFoundException of pipeline_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_input ->
-    ( add_tags_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception
-      | `PipelineDeletedException of pipeline_deleted_exception
-      | `PipelineNotFoundException of pipeline_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Adds or modifies tags for the specified pipeline.\n"]
-
-module CreatePipeline : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceError of internal_service_error
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_pipeline_input ->
-    ( create_pipeline_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_pipeline_input ->
-    ( create_pipeline_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a new, empty pipeline. Use [PutPipelineDefinition] to populate the pipeline.\n\n\
-  \   POST / HTTP/1.1 Content-Type: application/x-amz-json-1.1 X-Amz-Target: \
-   DataPipeline.CreatePipeline Content-Length: 91 Host: datapipeline.us-east-1.amazonaws.com \
-   X-Amz-Date: Mon, 12 Nov 2012 17:49:52 GMT Authorization: AuthParams \\{\"name\": \
-   \"myPipeline\", \"uniqueId\": \"123456789\", \"description\": \"This is my first \
-   pipeline\"\\}   HTTP/1.1 200 x-amzn-RequestId: b16911ce-0774-11e2-af6f-6bc7a6be60d9 \
-   Content-Type: application/x-amz-json-1.1 Content-Length: 40 Date: Mon, 12 Nov 2012 17:50:53 GMT \
-   \\{\"pipelineId\": \"df-06372391ZG65EXAMPLE\"\\}  "]
 
 module DeactivatePipeline : sig
   val error_to_string :
@@ -1065,7 +947,6 @@ end
    Content-Type: application/x-amz-json-1.1 Content-Length: 0 Date: Mon, 12 Nov 2012 17:50:53 GMT \
    \\{\\}  "]
 
-(** {1:Serialization and Deserialization} *)
 module ValidatePipelineDefinition : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1135,6 +1016,124 @@ end
    278 Date: Mon, 12 Nov 2012 17:50:53 GMT \\{\"errored\": true, \"validationErrors\": \\[ \
    \\{\"errors\": \\[\"INVALID_FIELD_VALUE: 'startDateTime' value must be a literal datetime \
    value.\"\\], \"id\": \"Schedule\"\\} \\] \\}   "]
+
+module CreatePipeline : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceError of internal_service_error
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_pipeline_input ->
+    ( create_pipeline_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_pipeline_input ->
+    ( create_pipeline_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a new, empty pipeline. Use [PutPipelineDefinition] to populate the pipeline.\n\n\
+  \   POST / HTTP/1.1 Content-Type: application/x-amz-json-1.1 X-Amz-Target: \
+   DataPipeline.CreatePipeline Content-Length: 91 Host: datapipeline.us-east-1.amazonaws.com \
+   X-Amz-Date: Mon, 12 Nov 2012 17:49:52 GMT Authorization: AuthParams \\{\"name\": \
+   \"myPipeline\", \"uniqueId\": \"123456789\", \"description\": \"This is my first \
+   pipeline\"\\}   HTTP/1.1 200 x-amzn-RequestId: b16911ce-0774-11e2-af6f-6bc7a6be60d9 \
+   Content-Type: application/x-amz-json-1.1 Content-Length: 40 Date: Mon, 12 Nov 2012 17:50:53 GMT \
+   \\{\"pipelineId\": \"df-06372391ZG65EXAMPLE\"\\}  "]
+
+module AddTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceError of internal_service_error
+    | `InvalidRequestException of invalid_request_exception
+    | `PipelineDeletedException of pipeline_deleted_exception
+    | `PipelineNotFoundException of pipeline_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_input ->
+    ( add_tags_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception
+      | `PipelineDeletedException of pipeline_deleted_exception
+      | `PipelineNotFoundException of pipeline_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_input ->
+    ( add_tags_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception
+      | `PipelineDeletedException of pipeline_deleted_exception
+      | `PipelineNotFoundException of pipeline_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Adds or modifies tags for the specified pipeline.\n"]
+
+(** {1:Serialization and Deserialization} *)
+module ActivatePipeline : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceError of internal_service_error
+    | `InvalidRequestException of invalid_request_exception
+    | `PipelineDeletedException of pipeline_deleted_exception
+    | `PipelineNotFoundException of pipeline_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    activate_pipeline_input ->
+    ( activate_pipeline_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception
+      | `PipelineDeletedException of pipeline_deleted_exception
+      | `PipelineNotFoundException of pipeline_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    activate_pipeline_input ->
+    ( activate_pipeline_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception
+      | `PipelineDeletedException of pipeline_deleted_exception
+      | `PipelineNotFoundException of pipeline_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Validates the specified pipeline and starts processing pipeline tasks. If the pipeline does not \
+   pass validation, activation fails.\n\n\
+  \ If you need to pause the pipeline to investigate an issue with a component, such as a data \
+   source or script, call [DeactivatePipeline].\n\
+  \ \n\
+  \  To activate a finished pipeline, modify the end date for the pipeline and then activate it.\n\
+  \  \n\
+  \     POST / HTTP/1.1 Content-Type: application/x-amz-json-1.1 X-Amz-Target: \
+   DataPipeline.ActivatePipeline Content-Length: 39 Host: datapipeline.us-east-1.amazonaws.com \
+   X-Amz-Date: Mon, 12 Nov 2012 17:49:52 GMT Authorization: AuthParams \\{\"pipelineId\": \
+   \"df-06372391ZG65EXAMPLE\"\\}   HTTP/1.1 200 x-amzn-RequestId: \
+   ee19d5bf-074e-11e2-af6f-6bc7a6be60d9 Content-Type: application/x-amz-json-1.1 Content-Length: 2 \
+   Date: Mon, 12 Nov 2012 17:50:53 GMT \\{\\}  "]
 
 module Json_serializers = Json_serializers
 module Json_deserializers = Json_deserializers

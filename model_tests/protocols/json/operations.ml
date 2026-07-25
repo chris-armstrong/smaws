@@ -1,236 +1,6 @@
 open Types
 open Service_metadata
 
-module ContentTypeParameters = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
-
-  let error_deserializer tree path =
-    let handler a = a in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : content_type_parameters_input) =
-    let input = Json_serializers.content_type_parameters_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.ContentTypeParameters" ~service
-      ~context ~input
-      ~output_deserializer:Json_deserializers.content_type_parameters_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : content_type_parameters_input) =
-    let input = Json_serializers.content_type_parameters_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"JsonProtocol.ContentTypeParameters" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.content_type_parameters_output_of_yojson
-      ~error_deserializer
-end
-
-module DatetimeOffsets = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
-
-  let error_deserializer tree path =
-    let handler a = a in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.DatetimeOffsets" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.datetime_offsets_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.DatetimeOffsets"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.datetime_offsets_output_of_yojson ~error_deserializer
-end
-
-module EmptyOperation = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
-
-  let error_deserializer tree path =
-    let handler a = a in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.EmptyOperation" ~service ~context
-      ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.EmptyOperation"
-      ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
-module EndpointOperation = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
-
-  let error_deserializer tree path =
-    let handler a = a in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.EndpointOperation" ~service
-      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.EndpointOperation"
-      ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
-module EndpointWithHostLabelOperation = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
-
-  let error_deserializer tree path =
-    let handler a = a in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : host_label_input) =
-    let input = Json_serializers.host_label_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.EndpointWithHostLabelOperation"
-      ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : host_label_input) =
-    let input = Json_serializers.host_label_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"JsonProtocol.EndpointWithHostLabelOperation" ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
-module FractionalSeconds = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
-
-  let error_deserializer tree path =
-    let handler a = a in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.FractionalSeconds" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.fractional_seconds_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.FractionalSeconds"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.fractional_seconds_output_of_yojson
-      ~error_deserializer
-end
-
-module GreetingWithErrors = struct
-  let error_to_string = function
-    | `ComplexError _ -> "aws.protocoltests.json#ComplexError"
-    | `FooError _ -> "aws.protocoltests.json#FooError"
-    | `InvalidGreeting _ -> "aws.protocoltests.json#InvalidGreeting"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ComplexError" -> `ComplexError (Json_deserializers.complex_error_of_yojson tree path)
-      | _, "FooError" -> `FooError (Json_deserializers.foo_error_of_yojson tree path)
-      | _, "InvalidGreeting" ->
-          `InvalidGreeting (Json_deserializers.invalid_greeting_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.GreetingWithErrors" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.greeting_with_errors_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.GreetingWithErrors"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.greeting_with_errors_output_of_yojson
-      ~error_deserializer
-end
-
-module HostWithPathOperation = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
-
-  let error_deserializer tree path =
-    let handler a = a in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.HostWithPathOperation" ~service
-      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"JsonProtocol.HostWithPathOperation" ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
-module JsonEnums = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
-
-  let error_deserializer tree path =
-    let handler a = a in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : json_enums_input_output) =
-    let input = Json_serializers.json_enums_input_output_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.JsonEnums" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.json_enums_input_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : json_enums_input_output) =
-    let input = Json_serializers.json_enums_input_output_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.JsonEnums" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.json_enums_input_output_of_yojson
-      ~error_deserializer
-end
-
-module JsonIntEnums = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
-
-  let error_deserializer tree path =
-    let handler a = a in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : json_int_enums_input_output) =
-    let input = Json_serializers.json_int_enums_input_output_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.JsonIntEnums" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.json_int_enums_input_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : json_int_enums_input_output) =
-    let input = Json_serializers.json_int_enums_input_output_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.JsonIntEnums"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.json_int_enums_input_output_of_yojson
-      ~error_deserializer
-end
-
 module JsonUnions = struct
   let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
 
@@ -415,5 +185,235 @@ module SparseNullsOperation = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"JsonProtocol.SparseNullsOperation" ~service ~context ~input
       ~output_deserializer:Json_deserializers.sparse_nulls_operation_input_output_of_yojson
+      ~error_deserializer
+end
+
+module JsonIntEnums = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
+  let error_deserializer tree path =
+    let handler a = a in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : json_int_enums_input_output) =
+    let input = Json_serializers.json_int_enums_input_output_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.JsonIntEnums" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.json_int_enums_input_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : json_int_enums_input_output) =
+    let input = Json_serializers.json_int_enums_input_output_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.JsonIntEnums"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.json_int_enums_input_output_of_yojson
+      ~error_deserializer
+end
+
+module JsonEnums = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
+  let error_deserializer tree path =
+    let handler a = a in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : json_enums_input_output) =
+    let input = Json_serializers.json_enums_input_output_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.JsonEnums" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.json_enums_input_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : json_enums_input_output) =
+    let input = Json_serializers.json_enums_input_output_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.JsonEnums" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.json_enums_input_output_of_yojson
+      ~error_deserializer
+end
+
+module HostWithPathOperation = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
+  let error_deserializer tree path =
+    let handler a = a in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.HostWithPathOperation" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"JsonProtocol.HostWithPathOperation" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module GreetingWithErrors = struct
+  let error_to_string = function
+    | `ComplexError _ -> "aws.protocoltests.json#ComplexError"
+    | `FooError _ -> "aws.protocoltests.json#FooError"
+    | `InvalidGreeting _ -> "aws.protocoltests.json#InvalidGreeting"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ComplexError" -> `ComplexError (Json_deserializers.complex_error_of_yojson tree path)
+      | _, "FooError" -> `FooError (Json_deserializers.foo_error_of_yojson tree path)
+      | _, "InvalidGreeting" ->
+          `InvalidGreeting (Json_deserializers.invalid_greeting_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.GreetingWithErrors" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.greeting_with_errors_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.GreetingWithErrors"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.greeting_with_errors_output_of_yojson
+      ~error_deserializer
+end
+
+module FractionalSeconds = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
+  let error_deserializer tree path =
+    let handler a = a in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.FractionalSeconds" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.fractional_seconds_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.FractionalSeconds"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.fractional_seconds_output_of_yojson
+      ~error_deserializer
+end
+
+module EndpointWithHostLabelOperation = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
+  let error_deserializer tree path =
+    let handler a = a in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : host_label_input) =
+    let input = Json_serializers.host_label_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.EndpointWithHostLabelOperation"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : host_label_input) =
+    let input = Json_serializers.host_label_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"JsonProtocol.EndpointWithHostLabelOperation" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module EndpointOperation = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
+  let error_deserializer tree path =
+    let handler a = a in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.EndpointOperation" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.EndpointOperation"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module EmptyOperation = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
+  let error_deserializer tree path =
+    let handler a = a in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.EmptyOperation" ~service ~context
+      ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.EmptyOperation"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module DatetimeOffsets = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
+  let error_deserializer tree path =
+    let handler a = a in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.DatetimeOffsets" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.datetime_offsets_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"JsonProtocol.DatetimeOffsets"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.datetime_offsets_output_of_yojson ~error_deserializer
+end
+
+module ContentTypeParameters = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
+  let error_deserializer tree path =
+    let handler a = a in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : content_type_parameters_input) =
+    let input = Json_serializers.content_type_parameters_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"JsonProtocol.ContentTypeParameters" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.content_type_parameters_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : content_type_parameters_input) =
+    let input = Json_serializers.content_type_parameters_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"JsonProtocol.ContentTypeParameters" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.content_type_parameters_output_of_yojson
       ~error_deserializer
 end

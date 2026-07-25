@@ -1800,6 +1800,46 @@ module ListLicenseManagerReportGenerators : sig
 end
 [@@ocaml.doc "Lists the report generators for your account.\n"]
 
+module ListLicenses : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AuthorizationException of authorization_exception
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `RateLimitExceededException of rate_limit_exceeded_exception
+    | `ServerInternalException of server_internal_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_licenses_request ->
+    ( list_licenses_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `AuthorizationException of authorization_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `RateLimitExceededException of rate_limit_exceeded_exception
+      | `ServerInternalException of server_internal_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_licenses_request ->
+    ( list_licenses_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `AuthorizationException of authorization_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `RateLimitExceededException of rate_limit_exceeded_exception
+      | `ServerInternalException of server_internal_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists the licenses for your account.\n"]
+
 module ListLicenseSpecificationsForResource : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1873,46 +1913,6 @@ module ListLicenseVersions : sig
     result
 end
 [@@ocaml.doc "Lists all versions of the specified license.\n"]
-
-module ListLicenses : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `AuthorizationException of authorization_exception
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `RateLimitExceededException of rate_limit_exceeded_exception
-    | `ServerInternalException of server_internal_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_licenses_request ->
-    ( list_licenses_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `AuthorizationException of authorization_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `RateLimitExceededException of rate_limit_exceeded_exception
-      | `ServerInternalException of server_internal_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_licenses_request ->
-    ( list_licenses_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `AuthorizationException of authorization_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `RateLimitExceededException of rate_limit_exceeded_exception
-      | `ServerInternalException of server_internal_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists the licenses for your account.\n"]
 
 module ListReceivedGrants : sig
   val error_to_string :

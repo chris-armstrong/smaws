@@ -1030,6 +1030,37 @@ end
   \          }\n\
   \  "]
 
+module ListStateMachines : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidToken of invalid_token ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_state_machines_input ->
+    ( list_state_machines_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidToken of invalid_token ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_state_machines_input ->
+    ( list_state_machines_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidToken of invalid_token ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the existing state machines.\n\n\
+  \ If [nextToken] is returned, there are more results available. The value of [nextToken] is a \
+   unique pagination token for each page. Make the call again using the returned token to retrieve \
+   the next page. Keep all other arguments unchanged. Each pagination token expires after 24 \
+   hours. Using an expired pagination token will return an {i HTTP 400 InvalidToken} error.\n\
+  \ \n\
+  \   This operation is eventually consistent. The results are best effort and may not reflect \
+   very recent updates and changes.\n\
+  \   \n\
+  \    "]
+
 module ListStateMachineVersions : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1081,37 +1112,6 @@ end
   \               }\n\
   \          }\n\
   \  "]
-
-module ListStateMachines : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidToken of invalid_token ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_state_machines_input ->
-    ( list_state_machines_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidToken of invalid_token ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_state_machines_input ->
-    ( list_state_machines_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidToken of invalid_token ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the existing state machines.\n\n\
-  \ If [nextToken] is returned, there are more results available. The value of [nextToken] is a \
-   unique pagination token for each page. Make the call again using the returned token to retrieve \
-   the next page. Keep all other arguments unchanged. Each pagination token expires after 24 \
-   hours. Using an expired pagination token will return an {i HTTP 400 InvalidToken} error.\n\
-  \ \n\
-  \   This operation is eventually consistent. The results are best effort and may not reflect \
-   very recent updates and changes.\n\
-  \   \n\
-  \    "]
 
 module ListTagsForResource : sig
   val error_to_string :

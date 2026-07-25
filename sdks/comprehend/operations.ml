@@ -1,324 +1,6 @@
 open Types
 open Service_metadata
 
-module BatchDetectDominantLanguage = struct
-  let error_to_string = function
-    | `BatchSizeLimitExceededException _ ->
-        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
-    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
-    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "BatchSizeLimitExceededException" ->
-          `BatchSizeLimitExceededException
-            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "TextSizeLimitExceededException" ->
-          `TextSizeLimitExceededException
-            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_detect_dominant_language_request) =
-    let input = Json_serializers.batch_detect_dominant_language_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Comprehend_20171127.BatchDetectDominantLanguage" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_dominant_language_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_detect_dominant_language_request) =
-    let input = Json_serializers.batch_detect_dominant_language_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Comprehend_20171127.BatchDetectDominantLanguage" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_dominant_language_response_of_yojson
-      ~error_deserializer
-end
-
-module BatchDetectEntities = struct
-  let error_to_string = function
-    | `BatchSizeLimitExceededException _ ->
-        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
-    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
-    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
-    | `UnsupportedLanguageException _ -> "com.amazonaws.comprehend#UnsupportedLanguageException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "BatchSizeLimitExceededException" ->
-          `BatchSizeLimitExceededException
-            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "TextSizeLimitExceededException" ->
-          `TextSizeLimitExceededException
-            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "UnsupportedLanguageException" ->
-          `UnsupportedLanguageException
-            (Json_deserializers.unsupported_language_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_detect_entities_request) =
-    let input = Json_serializers.batch_detect_entities_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Comprehend_20171127.BatchDetectEntities"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_entities_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_detect_entities_request) =
-    let input = Json_serializers.batch_detect_entities_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Comprehend_20171127.BatchDetectEntities" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_entities_response_of_yojson
-      ~error_deserializer
-end
-
-module BatchDetectKeyPhrases = struct
-  let error_to_string = function
-    | `BatchSizeLimitExceededException _ ->
-        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
-    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
-    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
-    | `UnsupportedLanguageException _ -> "com.amazonaws.comprehend#UnsupportedLanguageException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "BatchSizeLimitExceededException" ->
-          `BatchSizeLimitExceededException
-            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "TextSizeLimitExceededException" ->
-          `TextSizeLimitExceededException
-            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "UnsupportedLanguageException" ->
-          `UnsupportedLanguageException
-            (Json_deserializers.unsupported_language_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_detect_key_phrases_request) =
-    let input = Json_serializers.batch_detect_key_phrases_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Comprehend_20171127.BatchDetectKeyPhrases"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_key_phrases_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_detect_key_phrases_request) =
-    let input = Json_serializers.batch_detect_key_phrases_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Comprehend_20171127.BatchDetectKeyPhrases" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_key_phrases_response_of_yojson
-      ~error_deserializer
-end
-
-module BatchDetectSentiment = struct
-  let error_to_string = function
-    | `BatchSizeLimitExceededException _ ->
-        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
-    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
-    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
-    | `UnsupportedLanguageException _ -> "com.amazonaws.comprehend#UnsupportedLanguageException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "BatchSizeLimitExceededException" ->
-          `BatchSizeLimitExceededException
-            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "TextSizeLimitExceededException" ->
-          `TextSizeLimitExceededException
-            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "UnsupportedLanguageException" ->
-          `UnsupportedLanguageException
-            (Json_deserializers.unsupported_language_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_detect_sentiment_request) =
-    let input = Json_serializers.batch_detect_sentiment_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Comprehend_20171127.BatchDetectSentiment"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_sentiment_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_detect_sentiment_request) =
-    let input = Json_serializers.batch_detect_sentiment_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Comprehend_20171127.BatchDetectSentiment" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_sentiment_response_of_yojson
-      ~error_deserializer
-end
-
-module BatchDetectSyntax = struct
-  let error_to_string = function
-    | `BatchSizeLimitExceededException _ ->
-        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
-    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
-    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
-    | `UnsupportedLanguageException _ -> "com.amazonaws.comprehend#UnsupportedLanguageException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "BatchSizeLimitExceededException" ->
-          `BatchSizeLimitExceededException
-            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "TextSizeLimitExceededException" ->
-          `TextSizeLimitExceededException
-            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "UnsupportedLanguageException" ->
-          `UnsupportedLanguageException
-            (Json_deserializers.unsupported_language_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_detect_syntax_request) =
-    let input = Json_serializers.batch_detect_syntax_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Comprehend_20171127.BatchDetectSyntax" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.batch_detect_syntax_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_detect_syntax_request) =
-    let input = Json_serializers.batch_detect_syntax_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Comprehend_20171127.BatchDetectSyntax" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_syntax_response_of_yojson
-      ~error_deserializer
-end
-
-module BatchDetectTargetedSentiment = struct
-  let error_to_string = function
-    | `BatchSizeLimitExceededException _ ->
-        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
-    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
-    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
-    | `UnsupportedLanguageException _ -> "com.amazonaws.comprehend#UnsupportedLanguageException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "BatchSizeLimitExceededException" ->
-          `BatchSizeLimitExceededException
-            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "TextSizeLimitExceededException" ->
-          `TextSizeLimitExceededException
-            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
-      | _, "UnsupportedLanguageException" ->
-          `UnsupportedLanguageException
-            (Json_deserializers.unsupported_language_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_detect_targeted_sentiment_request) =
-    let input = Json_serializers.batch_detect_targeted_sentiment_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Comprehend_20171127.BatchDetectTargetedSentiment" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_targeted_sentiment_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_detect_targeted_sentiment_request) =
-    let input = Json_serializers.batch_detect_targeted_sentiment_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Comprehend_20171127.BatchDetectTargetedSentiment" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_detect_targeted_sentiment_response_of_yojson
-      ~error_deserializer
-end
-
-module ClassifyDocument = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
-    | `ResourceUnavailableException _ -> "com.amazonaws.comprehend#ResourceUnavailableException"
-    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "ResourceUnavailableException" ->
-          `ResourceUnavailableException
-            (Json_deserializers.resource_unavailable_exception_of_yojson tree path)
-      | _, "TextSizeLimitExceededException" ->
-          `TextSizeLimitExceededException
-            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : classify_document_request) =
-    let input = Json_serializers.classify_document_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Comprehend_20171127.ClassifyDocument" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.classify_document_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : classify_document_request) =
-    let input = Json_serializers.classify_document_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Comprehend_20171127.ClassifyDocument" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.classify_document_response_of_yojson
-      ~error_deserializer
-end
-
 module ContainsPiiEntities = struct
   let error_to_string = function
     | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
@@ -2010,44 +1692,6 @@ module ListDocumentClassificationJobs = struct
       ~error_deserializer
 end
 
-module ListDocumentClassifierSummaries = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
-    | `TooManyRequestsException _ -> "com.amazonaws.comprehend#TooManyRequestsException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "TooManyRequestsException" ->
-          `TooManyRequestsException
-            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_document_classifier_summaries_request) =
-    let input = Json_serializers.list_document_classifier_summaries_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Comprehend_20171127.ListDocumentClassifierSummaries" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_document_classifier_summaries_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_document_classifier_summaries_request) =
-    let input = Json_serializers.list_document_classifier_summaries_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Comprehend_20171127.ListDocumentClassifierSummaries" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_document_classifier_summaries_response_of_yojson
-      ~error_deserializer
-end
-
 module ListDocumentClassifiers = struct
   let error_to_string = function
     | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
@@ -2086,6 +1730,44 @@ module ListDocumentClassifiers = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Comprehend_20171127.ListDocumentClassifiers" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_document_classifiers_response_of_yojson
+      ~error_deserializer
+end
+
+module ListDocumentClassifierSummaries = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
+    | `TooManyRequestsException _ -> "com.amazonaws.comprehend#TooManyRequestsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "TooManyRequestsException" ->
+          `TooManyRequestsException
+            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_document_classifier_summaries_request) =
+    let input = Json_serializers.list_document_classifier_summaries_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Comprehend_20171127.ListDocumentClassifierSummaries" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_document_classifier_summaries_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_document_classifier_summaries_request) =
+    let input = Json_serializers.list_document_classifier_summaries_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Comprehend_20171127.ListDocumentClassifierSummaries" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_document_classifier_summaries_response_of_yojson
       ~error_deserializer
 end
 
@@ -2209,44 +1891,6 @@ module ListEntitiesDetectionJobs = struct
       ~error_deserializer
 end
 
-module ListEntityRecognizerSummaries = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
-    | `TooManyRequestsException _ -> "com.amazonaws.comprehend#TooManyRequestsException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "TooManyRequestsException" ->
-          `TooManyRequestsException
-            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_entity_recognizer_summaries_request) =
-    let input = Json_serializers.list_entity_recognizer_summaries_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Comprehend_20171127.ListEntityRecognizerSummaries" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_entity_recognizer_summaries_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_entity_recognizer_summaries_request) =
-    let input = Json_serializers.list_entity_recognizer_summaries_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Comprehend_20171127.ListEntityRecognizerSummaries" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_entity_recognizer_summaries_response_of_yojson
-      ~error_deserializer
-end
-
 module ListEntityRecognizers = struct
   let error_to_string = function
     | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
@@ -2285,6 +1929,44 @@ module ListEntityRecognizers = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Comprehend_20171127.ListEntityRecognizers" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_entity_recognizers_response_of_yojson
+      ~error_deserializer
+end
+
+module ListEntityRecognizerSummaries = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
+    | `TooManyRequestsException _ -> "com.amazonaws.comprehend#TooManyRequestsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "TooManyRequestsException" ->
+          `TooManyRequestsException
+            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_entity_recognizer_summaries_request) =
+    let input = Json_serializers.list_entity_recognizer_summaries_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Comprehend_20171127.ListEntityRecognizerSummaries" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_entity_recognizer_summaries_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_entity_recognizer_summaries_request) =
+    let input = Json_serializers.list_entity_recognizer_summaries_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Comprehend_20171127.ListEntityRecognizerSummaries" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_entity_recognizer_summaries_response_of_yojson
       ~error_deserializer
 end
 
@@ -3721,4 +3403,322 @@ module UpdateFlywheel = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Comprehend_20171127.UpdateFlywheel" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_flywheel_response_of_yojson ~error_deserializer
+end
+
+module ClassifyDocument = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
+    | `ResourceUnavailableException _ -> "com.amazonaws.comprehend#ResourceUnavailableException"
+    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "ResourceUnavailableException" ->
+          `ResourceUnavailableException
+            (Json_deserializers.resource_unavailable_exception_of_yojson tree path)
+      | _, "TextSizeLimitExceededException" ->
+          `TextSizeLimitExceededException
+            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : classify_document_request) =
+    let input = Json_serializers.classify_document_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Comprehend_20171127.ClassifyDocument" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.classify_document_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : classify_document_request) =
+    let input = Json_serializers.classify_document_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Comprehend_20171127.ClassifyDocument" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.classify_document_response_of_yojson
+      ~error_deserializer
+end
+
+module BatchDetectTargetedSentiment = struct
+  let error_to_string = function
+    | `BatchSizeLimitExceededException _ ->
+        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
+    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
+    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
+    | `UnsupportedLanguageException _ -> "com.amazonaws.comprehend#UnsupportedLanguageException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "BatchSizeLimitExceededException" ->
+          `BatchSizeLimitExceededException
+            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "TextSizeLimitExceededException" ->
+          `TextSizeLimitExceededException
+            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "UnsupportedLanguageException" ->
+          `UnsupportedLanguageException
+            (Json_deserializers.unsupported_language_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_detect_targeted_sentiment_request) =
+    let input = Json_serializers.batch_detect_targeted_sentiment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Comprehend_20171127.BatchDetectTargetedSentiment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_targeted_sentiment_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_detect_targeted_sentiment_request) =
+    let input = Json_serializers.batch_detect_targeted_sentiment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Comprehend_20171127.BatchDetectTargetedSentiment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_targeted_sentiment_response_of_yojson
+      ~error_deserializer
+end
+
+module BatchDetectSyntax = struct
+  let error_to_string = function
+    | `BatchSizeLimitExceededException _ ->
+        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
+    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
+    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
+    | `UnsupportedLanguageException _ -> "com.amazonaws.comprehend#UnsupportedLanguageException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "BatchSizeLimitExceededException" ->
+          `BatchSizeLimitExceededException
+            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "TextSizeLimitExceededException" ->
+          `TextSizeLimitExceededException
+            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "UnsupportedLanguageException" ->
+          `UnsupportedLanguageException
+            (Json_deserializers.unsupported_language_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_detect_syntax_request) =
+    let input = Json_serializers.batch_detect_syntax_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Comprehend_20171127.BatchDetectSyntax" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.batch_detect_syntax_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_detect_syntax_request) =
+    let input = Json_serializers.batch_detect_syntax_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Comprehend_20171127.BatchDetectSyntax" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_syntax_response_of_yojson
+      ~error_deserializer
+end
+
+module BatchDetectSentiment = struct
+  let error_to_string = function
+    | `BatchSizeLimitExceededException _ ->
+        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
+    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
+    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
+    | `UnsupportedLanguageException _ -> "com.amazonaws.comprehend#UnsupportedLanguageException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "BatchSizeLimitExceededException" ->
+          `BatchSizeLimitExceededException
+            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "TextSizeLimitExceededException" ->
+          `TextSizeLimitExceededException
+            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "UnsupportedLanguageException" ->
+          `UnsupportedLanguageException
+            (Json_deserializers.unsupported_language_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_detect_sentiment_request) =
+    let input = Json_serializers.batch_detect_sentiment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Comprehend_20171127.BatchDetectSentiment"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_sentiment_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_detect_sentiment_request) =
+    let input = Json_serializers.batch_detect_sentiment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Comprehend_20171127.BatchDetectSentiment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_sentiment_response_of_yojson
+      ~error_deserializer
+end
+
+module BatchDetectKeyPhrases = struct
+  let error_to_string = function
+    | `BatchSizeLimitExceededException _ ->
+        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
+    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
+    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
+    | `UnsupportedLanguageException _ -> "com.amazonaws.comprehend#UnsupportedLanguageException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "BatchSizeLimitExceededException" ->
+          `BatchSizeLimitExceededException
+            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "TextSizeLimitExceededException" ->
+          `TextSizeLimitExceededException
+            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "UnsupportedLanguageException" ->
+          `UnsupportedLanguageException
+            (Json_deserializers.unsupported_language_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_detect_key_phrases_request) =
+    let input = Json_serializers.batch_detect_key_phrases_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Comprehend_20171127.BatchDetectKeyPhrases"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_key_phrases_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_detect_key_phrases_request) =
+    let input = Json_serializers.batch_detect_key_phrases_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Comprehend_20171127.BatchDetectKeyPhrases" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_key_phrases_response_of_yojson
+      ~error_deserializer
+end
+
+module BatchDetectEntities = struct
+  let error_to_string = function
+    | `BatchSizeLimitExceededException _ ->
+        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
+    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
+    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
+    | `UnsupportedLanguageException _ -> "com.amazonaws.comprehend#UnsupportedLanguageException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "BatchSizeLimitExceededException" ->
+          `BatchSizeLimitExceededException
+            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "TextSizeLimitExceededException" ->
+          `TextSizeLimitExceededException
+            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "UnsupportedLanguageException" ->
+          `UnsupportedLanguageException
+            (Json_deserializers.unsupported_language_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_detect_entities_request) =
+    let input = Json_serializers.batch_detect_entities_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Comprehend_20171127.BatchDetectEntities"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_entities_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_detect_entities_request) =
+    let input = Json_serializers.batch_detect_entities_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Comprehend_20171127.BatchDetectEntities" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_entities_response_of_yojson
+      ~error_deserializer
+end
+
+module BatchDetectDominantLanguage = struct
+  let error_to_string = function
+    | `BatchSizeLimitExceededException _ ->
+        "com.amazonaws.comprehend#BatchSizeLimitExceededException"
+    | `InternalServerException _ -> "com.amazonaws.comprehend#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.comprehend#InvalidRequestException"
+    | `TextSizeLimitExceededException _ -> "com.amazonaws.comprehend#TextSizeLimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "BatchSizeLimitExceededException" ->
+          `BatchSizeLimitExceededException
+            (Json_deserializers.batch_size_limit_exceeded_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "TextSizeLimitExceededException" ->
+          `TextSizeLimitExceededException
+            (Json_deserializers.text_size_limit_exceeded_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_detect_dominant_language_request) =
+    let input = Json_serializers.batch_detect_dominant_language_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Comprehend_20171127.BatchDetectDominantLanguage" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_dominant_language_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_detect_dominant_language_request) =
+    let input = Json_serializers.batch_detect_dominant_language_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Comprehend_20171127.BatchDetectDominantLanguage" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_detect_dominant_language_response_of_yojson
+      ~error_deserializer
 end

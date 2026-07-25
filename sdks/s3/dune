@@ -1,0 +1,62 @@
+(rule
+ (deps
+  (:gen ../../bin/AwsGenerator.exe)
+  (:input
+   ../../api-models-aws/models/s3/service/2006-03-01/s3-2006-03-01.json)
+  (:ocf %{bin:ocamlformat}))
+ (targets
+  builders.ml
+  builders.mli
+  xml_serializers.ml
+  xml_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli
+  operations.ml
+  Smaws_Client_S3.ml
+  Smaws_Client_S3.mli)
+ (mode promote)
+ (action
+  (progn
+   (run
+    %{gen}
+    -input
+    %{input}
+    -output
+    .
+    -targets
+    builders
+    types
+    service_metadata
+    serializers
+    deserializers
+    operations
+    module)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    xml_serializers.ml
+    xml_deserializers.ml
+    service_metadata.ml
+    service_metadata.mli
+    types.ml
+    types.mli
+    operations.ml
+    Smaws_Client_S3.ml
+    Smaws_Client_S3.mli))))
+
+(library
+ (name Smaws_Client_S3)
+ (public_name smaws-clients.s3)
+ (modules
+  Smaws_Client_S3
+  types
+  service_metadata
+  xml_serializers
+  xml_deserializers
+  operations
+  builders)
+ (libraries smaws-lib))

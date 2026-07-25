@@ -1209,7 +1209,7 @@ module Operations = struct
   let extract_xml_namespace (service : Shape.serviceShapeDetails) =
     Option.value ~default:""
       (Option.bind service.traits ~f:(fun ts ->
-           List.find_map ts ~f:(function Trait.ApiXmlNamespaceTrait ns -> Some ns | _ -> None)))
+           List.find_map ts ~f:(function Trait.ApiXmlNamespaceTrait ns -> Some ns.uri | _ -> None)))
 
   let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~alias_context
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)

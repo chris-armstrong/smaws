@@ -1758,6 +1758,49 @@ module ListAccessControlConfigurations = struct
       ~error_deserializer
 end
 
+module ListDataSources = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.kendra#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.kendra#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kendra#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.kendra#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.kendra#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_data_sources_request) =
+    let input = Json_serializers.list_data_sources_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.ListDataSources"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_data_sources_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_data_sources_request) =
+    let input = Json_serializers.list_data_sources_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ListDataSources" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_data_sources_response_of_yojson
+      ~error_deserializer
+end
+
 module ListDataSourceSyncJobs = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.kendra#AccessDeniedException"
@@ -1801,49 +1844,6 @@ module ListDataSourceSyncJobs = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.ListDataSourceSyncJobs" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_data_source_sync_jobs_response_of_yojson
-      ~error_deserializer
-end
-
-module ListDataSources = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.kendra#AccessDeniedException"
-    | `InternalServerException _ -> "com.amazonaws.kendra#InternalServerException"
-    | `ResourceNotFoundException _ -> "com.amazonaws.kendra#ResourceNotFoundException"
-    | `ThrottlingException _ -> "com.amazonaws.kendra#ThrottlingException"
-    | `ValidationException _ -> "com.amazonaws.kendra#ValidationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _, "ThrottlingException" ->
-          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
-      | _, "ValidationException" ->
-          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_data_sources_request) =
-    let input = Json_serializers.list_data_sources_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.ListDataSources"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_data_sources_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_data_sources_request) =
-    let input = Json_serializers.list_data_sources_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSKendraFrontendService.ListDataSources" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_data_sources_response_of_yojson
       ~error_deserializer
 end
 

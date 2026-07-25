@@ -8,244 +8,505 @@ module Types = Types
 
 (** {1:builders Builders} *)
 
-val make_vpc_peering_connection_status :
-  ?message:non_zero_and_max_string ->
-  ?code:non_zero_and_max_string ->
-  unit ->
-  vpc_peering_connection_status
+val make_accept_match_output : unit -> unit
 
-val make_vpc_peering_connection :
-  ?game_lift_vpc_id:non_zero_and_max_string ->
-  ?peer_vpc_id:non_zero_and_max_string ->
-  ?status:vpc_peering_connection_status ->
-  ?vpc_peering_connection_id:non_zero_and_max_string ->
-  ?ip_v4_cidr_block:non_zero_and_max_string ->
-  ?fleet_arn:fleet_arn ->
+val make_accept_match_input :
+  ticket_id:matchmaking_id_string_model ->
+  player_ids:player_ids_for_accept_match ->
+  acceptance_type:acceptance_type ->
+  unit ->
+  accept_match_input
+
+val make_routing_strategy :
+  ?type_:routing_strategy_type ->
   ?fleet_id:fleet_id ->
+  ?message:free_text ->
   unit ->
-  vpc_peering_connection
+  routing_strategy
 
-val make_vpc_peering_authorization :
-  ?expiration_time:timestamp ->
+val make_alias :
+  ?alias_id:alias_id ->
+  ?name:non_blank_and_length_constraint_string ->
+  ?alias_arn:alias_arn ->
+  ?description:free_text ->
+  ?routing_strategy:routing_strategy ->
   ?creation_time:timestamp ->
-  ?peer_vpc_id:non_zero_and_max_string ->
-  ?peer_vpc_aws_account_id:non_zero_and_max_string ->
-  ?game_lift_aws_account_id:non_zero_and_max_string ->
+  ?last_updated_time:timestamp ->
   unit ->
-  vpc_peering_authorization
+  alias
 
-val make_validate_matchmaking_rule_set_output :
-  ?valid:boolean_model -> unit -> validate_matchmaking_rule_set_output
+val make_anywhere_configuration :
+  cost:non_negative_limited_length_double -> unit -> anywhere_configuration
 
-val make_validate_matchmaking_rule_set_input :
-  rule_set_body:rule_set_body -> unit -> validate_matchmaking_rule_set_input
+val make_attribute_value :
+  ?s:player_attribute_string ->
+  ?n:double_object ->
+  ?s_l:player_attribute_string_list ->
+  ?sd_m:player_attribute_string_double_map ->
+  unit ->
+  attribute_value
+
+val make_aws_credentials :
+  ?access_key_id:non_empty_string ->
+  ?secret_access_key:non_empty_string ->
+  ?session_token:non_empty_string ->
+  unit ->
+  aws_credentials
+
+val make_build :
+  ?build_id:build_id ->
+  ?build_arn:build_arn ->
+  ?name:free_text ->
+  ?version:free_text ->
+  ?status:build_status ->
+  ?size_on_disk:whole_number_long ->
+  ?operating_system:operating_system ->
+  ?creation_time:timestamp ->
+  ?server_sdk_version:server_sdk_version ->
+  unit ->
+  build
+
+val make_certificate_configuration :
+  certificate_type:certificate_type -> unit -> certificate_configuration
+
+val make_claim_filter_option :
+  ?instance_statuses:filter_instance_statuses -> unit -> claim_filter_option
+
+val make_game_server :
+  ?game_server_group_name:game_server_group_name ->
+  ?game_server_group_arn:game_server_group_arn ->
+  ?game_server_id:game_server_id ->
+  ?instance_id:game_server_instance_id ->
+  ?connection_info:game_server_connection_info ->
+  ?game_server_data:game_server_data ->
+  ?claim_status:game_server_claim_status ->
+  ?utilization_status:game_server_utilization_status ->
+  ?registration_time:timestamp ->
+  ?last_claim_time:timestamp ->
+  ?last_health_check_time:timestamp ->
+  unit ->
+  game_server
+
+val make_claim_game_server_output : ?game_server:game_server -> unit -> claim_game_server_output
+
+val make_claim_game_server_input :
+  ?game_server_id:game_server_id ->
+  ?game_server_data:game_server_data ->
+  ?filter_option:claim_filter_option ->
+  game_server_group_name:game_server_group_name_or_arn ->
+  unit ->
+  claim_game_server_input
+
+val make_container_attribute :
+  ?container_name:non_zero_and128_max_ascii_string ->
+  ?container_runtime_id:non_empty_string ->
+  unit ->
+  container_attribute
+
+val make_compute :
+  ?fleet_id:fleet_id ->
+  ?fleet_arn:fleet_arn ->
+  ?compute_name:compute_name ->
+  ?compute_arn:compute_arn ->
+  ?ip_address:ip_address ->
+  ?dns_name:dns_name ->
+  ?compute_status:compute_status ->
+  ?location:location_string_model ->
+  ?creation_time:timestamp ->
+  ?operating_system:operating_system ->
+  ?type_:ec2_instance_type ->
+  ?game_lift_service_sdk_endpoint:game_lift_service_sdk_endpoint_output ->
+  ?game_lift_agent_endpoint:game_lift_agent_endpoint_output ->
+  ?instance_id:instance_id ->
+  ?container_attributes:container_attributes ->
+  ?game_server_container_group_definition_arn:container_group_definition_name_or_arn ->
+  unit ->
+  compute
+
+val make_connection_port_range :
+  from_port:port_number -> to_port:port_number -> unit -> connection_port_range
+
+val make_container_dependency :
+  container_name:non_zero_and128_max_ascii_string ->
+  condition:container_dependency_condition ->
+  unit ->
+  container_dependency
+
+val make_container_environment :
+  name:non_zero_and255_max_string ->
+  value:non_zero_and255_max_string ->
+  unit ->
+  container_environment
+
+val make_container_fleet_location_attributes :
+  ?location:location_string_model ->
+  ?status:container_fleet_location_status ->
+  ?player_gateway_status:player_gateway_status ->
+  unit ->
+  container_fleet_location_attributes
+
+val make_log_configuration :
+  ?log_destination:log_destination ->
+  ?s3_bucket_name:non_empty_string ->
+  ?log_group_arn:log_group_arn_string_model ->
+  unit ->
+  log_configuration
+
+val make_deployment_details : ?latest_deployment_id:deployment_id -> unit -> deployment_details
+
+val make_game_session_creation_limit_policy :
+  ?new_game_sessions_per_creator:whole_number ->
+  ?policy_period_in_minutes:whole_number ->
+  unit ->
+  game_session_creation_limit_policy
+
+val make_ip_permission :
+  from_port:port_number ->
+  to_port:port_number ->
+  ip_range:ip_range ->
+  protocol:ip_protocol ->
+  unit ->
+  ip_permission
+
+val make_container_fleet :
+  ?fleet_id:fleet_id ->
+  ?fleet_arn:fleet_arn ->
+  ?fleet_role_arn:iam_role_arn ->
+  ?game_server_container_group_definition_name:container_group_definition_name ->
+  ?game_server_container_group_definition_arn:container_group_definition_arn ->
+  ?per_instance_container_group_definition_name:container_group_definition_name ->
+  ?per_instance_container_group_definition_arn:container_group_definition_arn ->
+  ?instance_connection_port_range:connection_port_range ->
+  ?instance_inbound_permissions:ip_permissions_list ->
+  ?game_server_container_groups_per_instance:game_server_container_groups_per_instance ->
+  ?maximum_game_server_container_groups_per_instance:
+    maximum_game_server_container_groups_per_instance ->
+  ?instance_type:non_zero_and_max_string ->
+  ?billing_type:container_fleet_billing_type ->
+  ?description:non_zero_and_max_string ->
+  ?creation_time:timestamp ->
+  ?metric_groups:metric_group_list ->
+  ?new_game_session_protection_policy:protection_policy ->
+  ?game_session_creation_limit_policy:game_session_creation_limit_policy ->
+  ?status:container_fleet_status ->
+  ?deployment_details:deployment_details ->
+  ?log_configuration:log_configuration ->
+  ?location_attributes:container_fleet_location_attributes_list ->
+  ?player_gateway_mode:player_gateway_mode ->
+  unit ->
+  container_fleet
+
+val make_linux_capabilities : ?include_:linux_capability_list -> unit -> linux_capabilities
+
+val make_container_port_range :
+  from_port:port_number ->
+  to_port:port_number ->
+  protocol:ip_protocol ->
+  unit ->
+  container_port_range
+
+val make_container_port_configuration :
+  container_port_ranges:container_port_range_list -> unit -> container_port_configuration
+
+val make_container_health_check :
+  ?interval:container_health_check_interval ->
+  ?retries:container_health_check_retries ->
+  ?start_period:container_health_check_start_period ->
+  ?timeout:container_health_check_timeout ->
+  command:container_command_string_list ->
+  unit ->
+  container_health_check
+
+val make_container_mount_point :
+  ?container_path:container_path_string ->
+  ?access_level:container_mount_point_access_level ->
+  instance_path:instance_path_string ->
+  unit ->
+  container_mount_point
+
+val make_support_container_definition :
+  ?container_name:non_zero_and128_max_ascii_string ->
+  ?depends_on:container_dependency_list ->
+  ?mount_points:container_mount_point_list ->
+  ?environment_override:container_environment_list ->
+  ?essential:boolean_model ->
+  ?health_check:container_health_check ->
+  ?image_uri:image_uri_string ->
+  ?memory_hard_limit_mebibytes:container_memory_limit ->
+  ?port_configuration:container_port_configuration ->
+  ?resolved_image_digest:sha256 ->
+  ?vcpu:container_vcpu ->
+  ?linux_capabilities:linux_capabilities ->
+  unit ->
+  support_container_definition
+
+val make_game_server_container_definition :
+  ?container_name:non_zero_and128_max_ascii_string ->
+  ?depends_on:container_dependency_list ->
+  ?mount_points:container_mount_point_list ->
+  ?environment_override:container_environment_list ->
+  ?image_uri:image_uri_string ->
+  ?port_configuration:container_port_configuration ->
+  ?resolved_image_digest:sha256 ->
+  ?server_sdk_version:server_sdk_version ->
+  ?linux_capabilities:linux_capabilities ->
+  unit ->
+  game_server_container_definition
+
+val make_container_group_definition :
+  ?container_group_definition_arn:container_group_definition_arn ->
+  ?creation_time:timestamp ->
+  ?operating_system:container_operating_system ->
+  ?container_group_type:container_group_type ->
+  ?total_memory_limit_mebibytes:container_total_memory_limit ->
+  ?total_vcpu_limit:container_total_vcpu_limit ->
+  ?game_server_container_definition:game_server_container_definition ->
+  ?support_container_definitions:support_container_definition_list ->
+  ?version_number:positive_integer ->
+  ?version_description:non_zero_and_max_string ->
+  ?status:container_group_definition_status ->
+  ?status_reason:non_zero_and_max_string ->
+  name:container_group_definition_name ->
+  unit ->
+  container_group_definition
+
+val make_container_port_mapping :
+  ?container_port:port_number ->
+  ?connection_port:port_number ->
+  ?protocol:ip_protocol ->
+  unit ->
+  container_port_mapping
+
+val make_container_group_port_mapping :
+  ?container_name:non_zero_and128_max_ascii_string ->
+  ?container_runtime_id:non_empty_string ->
+  ?container_port_mappings:container_port_mapping_list ->
+  unit ->
+  container_group_port_mapping
+
+val make_container_identifier :
+  ?container_name:non_zero_and128_max_ascii_string ->
+  ?container_runtime_id:non_empty_string ->
+  unit ->
+  container_identifier
+
+val make_create_alias_output : ?alias:alias -> unit -> create_alias_output
+val make_tag : key:tag_key -> value:tag_value -> unit -> tag
+
+val make_create_alias_input :
+  ?description:non_zero_and_max_string ->
+  ?tags:tag_list ->
+  name:non_blank_and_length_constraint_string ->
+  routing_strategy:routing_strategy ->
+  unit ->
+  create_alias_input
 
 val make_s3_location :
-  ?object_version:non_empty_string ->
-  ?role_arn:non_empty_string ->
-  ?key:non_empty_string ->
   ?bucket:non_empty_string ->
+  ?key:non_empty_string ->
+  ?role_arn:non_empty_string ->
+  ?object_version:non_empty_string ->
   unit ->
   s3_location
 
-val make_script :
-  ?node_js_version:node_js_version ->
+val make_create_build_output :
+  ?build:build ->
+  ?upload_credentials:aws_credentials ->
   ?storage_location:s3_location ->
+  unit ->
+  create_build_output
+
+val make_create_build_input :
+  ?name:non_zero_and_max_string ->
+  ?version:non_zero_and_max_string ->
+  ?storage_location:s3_location ->
+  ?operating_system:operating_system ->
+  ?tags:tag_list ->
+  ?server_sdk_version:server_sdk_version ->
+  unit ->
+  create_build_input
+
+val make_create_container_fleet_output :
+  ?container_fleet:container_fleet -> unit -> create_container_fleet_output
+
+val make_location_configuration : location:location_string_model -> unit -> location_configuration
+
+val make_create_container_fleet_input :
+  ?description:non_zero_and_max_string ->
+  ?game_server_container_group_definition_name:container_group_definition_name_or_arn ->
+  ?per_instance_container_group_definition_name:container_group_definition_name_or_arn ->
+  ?instance_connection_port_range:connection_port_range ->
+  ?instance_inbound_permissions:ip_permissions_list ->
+  ?game_server_container_groups_per_instance:game_server_container_groups_per_instance ->
+  ?instance_type:non_zero_and_max_string ->
+  ?billing_type:container_fleet_billing_type ->
+  ?locations:location_configuration_list ->
+  ?metric_groups:metric_group_list ->
+  ?new_game_session_protection_policy:protection_policy ->
+  ?game_session_creation_limit_policy:game_session_creation_limit_policy ->
+  ?log_configuration:log_configuration ->
+  ?tags:tag_list ->
+  ?player_gateway_mode:player_gateway_mode ->
+  fleet_role_arn:iam_role_arn ->
+  unit ->
+  create_container_fleet_input
+
+val make_create_container_group_definition_output :
+  ?container_group_definition:container_group_definition ->
+  unit ->
+  create_container_group_definition_output
+
+val make_support_container_definition_input :
+  ?depends_on:container_dependency_list ->
+  ?mount_points:container_mount_point_list ->
+  ?environment_override:container_environment_list ->
+  ?essential:boolean_model ->
+  ?health_check:container_health_check ->
+  ?memory_hard_limit_mebibytes:container_memory_limit ->
+  ?port_configuration:container_port_configuration ->
+  ?vcpu:container_vcpu ->
+  ?linux_capabilities:linux_capabilities ->
+  container_name:non_zero_and128_max_ascii_string ->
+  image_uri:image_uri_string ->
+  unit ->
+  support_container_definition_input
+
+val make_game_server_container_definition_input :
+  ?depends_on:container_dependency_list ->
+  ?mount_points:container_mount_point_list ->
+  ?environment_override:container_environment_list ->
+  ?linux_capabilities:linux_capabilities ->
+  container_name:non_zero_and128_max_ascii_string ->
+  image_uri:image_uri_string ->
+  port_configuration:container_port_configuration ->
+  server_sdk_version:server_sdk_version ->
+  unit ->
+  game_server_container_definition_input
+
+val make_create_container_group_definition_input :
+  ?container_group_type:container_group_type ->
+  ?game_server_container_definition:game_server_container_definition_input ->
+  ?support_container_definitions:support_container_definition_input_list ->
+  ?version_description:non_zero_and_max_string ->
+  ?tags:tag_list ->
+  name:container_group_definition_name ->
+  total_memory_limit_mebibytes:container_total_memory_limit ->
+  total_vcpu_limit:container_total_vcpu_limit ->
+  operating_system:container_operating_system ->
+  unit ->
+  create_container_group_definition_input
+
+val make_location_state :
+  ?location:location_string_model ->
+  ?status:fleet_status ->
+  ?player_gateway_status:player_gateway_status ->
+  unit ->
+  location_state
+
+val make_player_gateway_configuration :
+  ?game_server_ip_protocol_supported:game_server_ip_protocol_supported ->
+  unit ->
+  player_gateway_configuration
+
+val make_resource_creation_limit_policy :
+  ?new_game_sessions_per_creator:whole_number ->
+  ?policy_period_in_minutes:whole_number ->
+  unit ->
+  resource_creation_limit_policy
+
+val make_fleet_attributes :
+  ?fleet_id:fleet_id ->
+  ?fleet_arn:fleet_arn ->
+  ?fleet_type:fleet_type ->
+  ?instance_type:ec2_instance_type ->
+  ?description:non_zero_and_max_string ->
+  ?name:non_zero_and_max_string ->
   ?creation_time:timestamp ->
-  ?size_on_disk:whole_number_long ->
-  ?version:non_zero_and_max_string ->
-  ?name:non_zero_and_max_string ->
-  ?script_arn:script_arn ->
+  ?termination_time:timestamp ->
+  ?status:fleet_status ->
+  ?build_id:build_id ->
+  ?build_arn:build_arn ->
   ?script_id:script_id ->
+  ?script_arn:script_arn ->
+  ?server_launch_path:launch_path_string_model ->
+  ?server_launch_parameters:launch_parameters_string_model ->
+  ?log_paths:string_list ->
+  ?new_game_session_protection_policy:protection_policy ->
+  ?operating_system:operating_system ->
+  ?resource_creation_limit_policy:resource_creation_limit_policy ->
+  ?metric_groups:metric_group_list ->
+  ?stopped_actions:fleet_action_list ->
+  ?instance_role_arn:non_empty_string ->
+  ?certificate_configuration:certificate_configuration ->
+  ?compute_type:compute_type ->
+  ?anywhere_configuration:anywhere_configuration ->
+  ?instance_role_credentials_provider:instance_role_credentials_provider ->
+  ?player_gateway_mode:player_gateway_mode ->
+  ?player_gateway_configuration:player_gateway_configuration ->
   unit ->
-  script
+  fleet_attributes
 
-val make_update_script_output : ?script:script -> unit -> update_script_output
-
-val make_update_script_input :
-  ?zip_file:zip_blob ->
-  ?storage_location:s3_location ->
-  ?version:non_zero_and_max_string ->
-  ?name:non_zero_and_max_string ->
-  script_id:script_id_or_arn ->
+val make_create_fleet_output :
+  ?fleet_attributes:fleet_attributes ->
+  ?location_states:location_state_list ->
   unit ->
-  update_script_input
+  create_fleet_output
 
 val make_server_process :
   ?parameters:launch_parameters_string_model ->
-  concurrent_executions:positive_integer ->
   launch_path:launch_path_string_model ->
+  concurrent_executions:positive_integer ->
   unit ->
   server_process
 
 val make_runtime_configuration :
-  ?game_session_activation_timeout_seconds:game_session_activation_timeout_seconds ->
-  ?max_concurrent_game_session_activations:max_concurrent_game_session_activations ->
   ?server_processes:server_process_list ->
+  ?max_concurrent_game_session_activations:max_concurrent_game_session_activations ->
+  ?game_session_activation_timeout_seconds:game_session_activation_timeout_seconds ->
   unit ->
   runtime_configuration
 
-val make_update_runtime_configuration_output :
-  ?runtime_configuration:runtime_configuration -> unit -> update_runtime_configuration_output
-
-val make_update_runtime_configuration_input :
-  runtime_configuration:runtime_configuration ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  update_runtime_configuration_input
-
-val make_game_property : value:game_property_value -> key:game_property_key -> unit -> game_property
-
-val make_matchmaking_configuration :
-  ?flex_match_mode:flex_match_mode ->
-  ?backfill_mode:backfill_mode ->
-  ?game_session_data:game_session_data ->
-  ?game_properties:game_property_list ->
-  ?creation_time:timestamp ->
-  ?custom_event_data:custom_event_data ->
-  ?additional_player_count:whole_number ->
-  ?notification_target:sns_arn_string_model ->
-  ?rule_set_arn:matchmaking_rule_set_arn ->
-  ?rule_set_name:matchmaking_id_string_model ->
-  ?acceptance_required:boolean_model ->
-  ?acceptance_timeout_seconds:matchmaking_acceptance_timeout_integer ->
-  ?request_timeout_seconds:matchmaking_request_timeout_integer ->
-  ?game_session_queue_arns:queue_arns_list ->
+val make_create_fleet_input :
   ?description:non_zero_and_max_string ->
-  ?configuration_arn:matchmaking_configuration_arn ->
-  ?name:matchmaking_id_string_model ->
+  ?build_id:build_id_or_arn ->
+  ?script_id:script_id_or_arn ->
+  ?server_launch_path:launch_path_string_model ->
+  ?server_launch_parameters:launch_parameters_string_model ->
+  ?log_paths:string_list ->
+  ?ec2_instance_type:ec2_instance_type ->
+  ?ec2_inbound_permissions:ip_permissions_list ->
+  ?new_game_session_protection_policy:protection_policy ->
+  ?runtime_configuration:runtime_configuration ->
+  ?resource_creation_limit_policy:resource_creation_limit_policy ->
+  ?metric_groups:metric_group_list ->
+  ?peer_vpc_aws_account_id:non_zero_and_max_string ->
+  ?peer_vpc_id:non_zero_and_max_string ->
+  ?fleet_type:fleet_type ->
+  ?instance_role_arn:non_empty_string ->
+  ?certificate_configuration:certificate_configuration ->
+  ?locations:location_configuration_list ->
+  ?tags:tag_list ->
+  ?compute_type:compute_type ->
+  ?anywhere_configuration:anywhere_configuration ->
+  ?instance_role_credentials_provider:instance_role_credentials_provider ->
+  ?player_gateway_mode:player_gateway_mode ->
+  ?player_gateway_configuration:player_gateway_configuration ->
+  name:non_zero_and_max_string ->
   unit ->
-  matchmaking_configuration
+  create_fleet_input
 
-val make_update_matchmaking_configuration_output :
-  ?configuration:matchmaking_configuration -> unit -> update_matchmaking_configuration_output
-
-val make_update_matchmaking_configuration_input :
-  ?flex_match_mode:flex_match_mode ->
-  ?backfill_mode:backfill_mode ->
-  ?game_session_data:game_session_data ->
-  ?game_properties:game_property_list ->
-  ?custom_event_data:custom_event_data ->
-  ?additional_player_count:whole_number ->
-  ?notification_target:sns_arn_string_model ->
-  ?rule_set_name:matchmaking_rule_set_name ->
-  ?acceptance_required:boolean_model ->
-  ?acceptance_timeout_seconds:matchmaking_acceptance_timeout_integer ->
-  ?request_timeout_seconds:matchmaking_request_timeout_integer ->
-  ?game_session_queue_arns:queue_arns_list ->
-  ?description:non_zero_and_max_string ->
-  name:matchmaking_configuration_name ->
-  unit ->
-  update_matchmaking_configuration_input
-
-val make_player_latency_policy :
-  ?policy_duration_seconds:whole_number ->
-  ?maximum_individual_player_latency_milliseconds:whole_number ->
-  unit ->
-  player_latency_policy
-
-val make_game_session_queue_destination :
-  ?destination_arn:arn_string_model -> unit -> game_session_queue_destination
-
-val make_filter_configuration : ?allowed_locations:location_list -> unit -> filter_configuration
-
-val make_priority_configuration :
-  ?location_order:location_list ->
-  ?priority_order:priority_type_list ->
-  unit ->
-  priority_configuration
-
-val make_game_session_queue :
-  ?notification_target:queue_sns_arn_string_model ->
-  ?custom_event_data:queue_custom_event_data ->
-  ?priority_configuration:priority_configuration ->
-  ?filter_configuration:filter_configuration ->
-  ?destinations:game_session_queue_destination_list ->
-  ?player_latency_policies:player_latency_policy_list ->
-  ?timeout_in_seconds:whole_number ->
-  ?game_session_queue_arn:game_session_queue_arn ->
-  ?name:game_session_queue_name ->
-  unit ->
-  game_session_queue
-
-val make_update_game_session_queue_output :
-  ?game_session_queue:game_session_queue -> unit -> update_game_session_queue_output
-
-val make_update_game_session_queue_input :
-  ?notification_target:queue_sns_arn_string_model ->
-  ?custom_event_data:queue_custom_event_data ->
-  ?priority_configuration:priority_configuration ->
-  ?filter_configuration:filter_configuration ->
-  ?destinations:game_session_queue_destination_list ->
-  ?player_latency_policies:player_latency_policy_list ->
-  ?timeout_in_seconds:whole_number ->
-  name:game_session_queue_name_or_arn ->
-  unit ->
-  update_game_session_queue_input
-
-val make_game_session :
-  ?player_gateway_status:player_gateway_status ->
-  ?compute_name:compute_name ->
-  ?location:location_string_model ->
-  ?matchmaker_data:matchmaker_data ->
-  ?game_session_data:large_game_session_data ->
-  ?creator_id:non_zero_and_max_string ->
-  ?player_session_creation_policy:player_session_creation_policy ->
-  ?port:port_number ->
-  ?dns_name:dns_name ->
-  ?ip_address:ip_address ->
-  ?game_properties:game_property_list ->
-  ?status_reason:game_session_status_reason ->
-  ?status:game_session_status ->
-  ?maximum_player_session_count:whole_number ->
-  ?current_player_session_count:whole_number ->
-  ?termination_time:timestamp ->
-  ?creation_time:timestamp ->
+val make_create_fleet_locations_output :
+  ?fleet_id:fleet_id_or_arn ->
   ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
-  ?name:non_zero_and_max_string ->
-  ?game_session_id:non_zero_and_max_string ->
+  ?location_states:location_state_list ->
   unit ->
-  game_session
+  create_fleet_locations_output
 
-val make_update_game_session_output :
-  ?game_session:game_session -> unit -> update_game_session_output
-
-val make_update_game_session_input :
-  ?game_properties:game_property_list ->
-  ?protection_policy:protection_policy ->
-  ?player_session_creation_policy:player_session_creation_policy ->
-  ?name:non_zero_and_max_string ->
-  ?maximum_player_session_count:whole_number ->
-  game_session_id:arn_string_model ->
+val make_create_fleet_locations_input :
+  fleet_id:fleet_id_or_arn ->
+  locations:location_configuration_list ->
   unit ->
-  update_game_session_input
-
-val make_game_server :
-  ?last_health_check_time:timestamp ->
-  ?last_claim_time:timestamp ->
-  ?registration_time:timestamp ->
-  ?utilization_status:game_server_utilization_status ->
-  ?claim_status:game_server_claim_status ->
-  ?game_server_data:game_server_data ->
-  ?connection_info:game_server_connection_info ->
-  ?instance_id:game_server_instance_id ->
-  ?game_server_id:game_server_id ->
-  ?game_server_group_arn:game_server_group_arn ->
-  ?game_server_group_name:game_server_group_name ->
-  unit ->
-  game_server
-
-val make_update_game_server_output : ?game_server:game_server -> unit -> update_game_server_output
-
-val make_update_game_server_input :
-  ?health_check:game_server_health_check ->
-  ?utilization_status:game_server_utilization_status ->
-  ?game_server_data:game_server_data ->
-  game_server_id:game_server_id ->
-  game_server_group_name:game_server_group_name_or_arn ->
-  unit ->
-  update_game_server_input
+  create_fleet_locations_input
 
 val make_instance_definition :
   ?weighted_capacity:weighted_capacity ->
@@ -254,1013 +515,26 @@ val make_instance_definition :
   instance_definition
 
 val make_game_server_group :
-  ?last_updated_time:timestamp ->
-  ?creation_time:timestamp ->
-  ?suspended_actions:game_server_group_actions ->
-  ?status_reason:non_zero_and_max_string ->
-  ?status:game_server_group_status ->
-  ?auto_scaling_group_arn:auto_scaling_group_arn ->
-  ?game_server_protection_policy:game_server_protection_policy ->
-  ?balancing_strategy:balancing_strategy ->
-  ?instance_definitions:instance_definitions ->
-  ?role_arn:iam_role_arn ->
-  ?game_server_group_arn:game_server_group_arn ->
   ?game_server_group_name:game_server_group_name ->
+  ?game_server_group_arn:game_server_group_arn ->
+  ?role_arn:iam_role_arn ->
+  ?instance_definitions:instance_definitions ->
+  ?balancing_strategy:balancing_strategy ->
+  ?game_server_protection_policy:game_server_protection_policy ->
+  ?auto_scaling_group_arn:auto_scaling_group_arn ->
+  ?status:game_server_group_status ->
+  ?status_reason:non_zero_and_max_string ->
+  ?suspended_actions:game_server_group_actions ->
+  ?creation_time:timestamp ->
+  ?last_updated_time:timestamp ->
   unit ->
   game_server_group
 
-val make_update_game_server_group_output :
-  ?game_server_group:game_server_group -> unit -> update_game_server_group_output
-
-val make_update_game_server_group_input :
-  ?balancing_strategy:balancing_strategy ->
-  ?game_server_protection_policy:game_server_protection_policy ->
-  ?instance_definitions:instance_definitions ->
-  ?role_arn:iam_role_arn ->
-  game_server_group_name:game_server_group_name_or_arn ->
-  unit ->
-  update_game_server_group_input
-
-val make_update_fleet_port_settings_output :
-  ?fleet_arn:fleet_arn -> ?fleet_id:fleet_id -> unit -> update_fleet_port_settings_output
-
-val make_ip_permission :
-  protocol:ip_protocol ->
-  ip_range:ip_range ->
-  to_port:port_number ->
-  from_port:port_number ->
-  unit ->
-  ip_permission
-
-val make_update_fleet_port_settings_input :
-  ?inbound_permission_revocations:ip_permissions_list ->
-  ?inbound_permission_authorizations:ip_permissions_list ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  update_fleet_port_settings_input
-
-val make_managed_capacity_configuration :
-  ?scale_in_after_inactivity_minutes:scale_in_after_inactivity_minutes ->
-  ?zero_capacity_strategy:zero_capacity_strategy ->
-  unit ->
-  managed_capacity_configuration
-
-val make_update_fleet_capacity_output :
-  ?managed_capacity_configuration:managed_capacity_configuration ->
-  ?location:location_string_model ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
-  unit ->
-  update_fleet_capacity_output
-
-val make_update_fleet_capacity_input :
-  ?managed_capacity_configuration:managed_capacity_configuration ->
-  ?location:location_string_model ->
-  ?max_size:whole_number ->
-  ?min_size:whole_number ->
-  ?desired_instances:whole_number ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  update_fleet_capacity_input
-
-val make_update_fleet_attributes_output :
-  ?fleet_arn:fleet_arn -> ?fleet_id:fleet_id -> unit -> update_fleet_attributes_output
-
-val make_resource_creation_limit_policy :
-  ?policy_period_in_minutes:whole_number ->
-  ?new_game_sessions_per_creator:whole_number ->
-  unit ->
-  resource_creation_limit_policy
-
-val make_anywhere_configuration :
-  cost:non_negative_limited_length_double -> unit -> anywhere_configuration
-
-val make_update_fleet_attributes_input :
-  ?anywhere_configuration:anywhere_configuration ->
-  ?metric_groups:metric_group_list ->
-  ?resource_creation_limit_policy:resource_creation_limit_policy ->
-  ?new_game_session_protection_policy:protection_policy ->
-  ?description:non_zero_and_max_string ->
-  ?name:non_zero_and_max_string ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  update_fleet_attributes_input
-
-val make_container_dependency :
-  condition:container_dependency_condition ->
-  container_name:non_zero_and128_max_ascii_string ->
-  unit ->
-  container_dependency
-
-val make_container_mount_point :
-  ?access_level:container_mount_point_access_level ->
-  ?container_path:container_path_string ->
-  instance_path:instance_path_string ->
-  unit ->
-  container_mount_point
-
-val make_container_environment :
-  value:non_zero_and255_max_string ->
-  name:non_zero_and255_max_string ->
-  unit ->
-  container_environment
-
-val make_container_port_range :
-  protocol:ip_protocol ->
-  to_port:port_number ->
-  from_port:port_number ->
-  unit ->
-  container_port_range
-
-val make_container_port_configuration :
-  container_port_ranges:container_port_range_list -> unit -> container_port_configuration
-
-val make_linux_capabilities : ?include_:linux_capability_list -> unit -> linux_capabilities
-
-val make_game_server_container_definition :
-  ?linux_capabilities:linux_capabilities ->
-  ?server_sdk_version:server_sdk_version ->
-  ?resolved_image_digest:sha256 ->
-  ?port_configuration:container_port_configuration ->
-  ?image_uri:image_uri_string ->
-  ?environment_override:container_environment_list ->
-  ?mount_points:container_mount_point_list ->
-  ?depends_on:container_dependency_list ->
-  ?container_name:non_zero_and128_max_ascii_string ->
-  unit ->
-  game_server_container_definition
-
-val make_container_health_check :
-  ?timeout:container_health_check_timeout ->
-  ?start_period:container_health_check_start_period ->
-  ?retries:container_health_check_retries ->
-  ?interval:container_health_check_interval ->
-  command:container_command_string_list ->
-  unit ->
-  container_health_check
-
-val make_support_container_definition :
-  ?linux_capabilities:linux_capabilities ->
-  ?vcpu:container_vcpu ->
-  ?resolved_image_digest:sha256 ->
-  ?port_configuration:container_port_configuration ->
-  ?memory_hard_limit_mebibytes:container_memory_limit ->
-  ?image_uri:image_uri_string ->
-  ?health_check:container_health_check ->
-  ?essential:boolean_model ->
-  ?environment_override:container_environment_list ->
-  ?mount_points:container_mount_point_list ->
-  ?depends_on:container_dependency_list ->
-  ?container_name:non_zero_and128_max_ascii_string ->
-  unit ->
-  support_container_definition
-
-val make_container_group_definition :
-  ?status_reason:non_zero_and_max_string ->
-  ?status:container_group_definition_status ->
-  ?version_description:non_zero_and_max_string ->
-  ?version_number:positive_integer ->
-  ?support_container_definitions:support_container_definition_list ->
-  ?game_server_container_definition:game_server_container_definition ->
-  ?total_vcpu_limit:container_total_vcpu_limit ->
-  ?total_memory_limit_mebibytes:container_total_memory_limit ->
-  ?container_group_type:container_group_type ->
-  ?operating_system:container_operating_system ->
-  ?creation_time:timestamp ->
-  ?container_group_definition_arn:container_group_definition_arn ->
-  name:container_group_definition_name ->
-  unit ->
-  container_group_definition
-
-val make_update_container_group_definition_output :
-  ?container_group_definition:container_group_definition ->
-  unit ->
-  update_container_group_definition_output
-
-val make_game_server_container_definition_input :
-  ?linux_capabilities:linux_capabilities ->
-  ?environment_override:container_environment_list ->
-  ?mount_points:container_mount_point_list ->
-  ?depends_on:container_dependency_list ->
-  server_sdk_version:server_sdk_version ->
-  port_configuration:container_port_configuration ->
-  image_uri:image_uri_string ->
-  container_name:non_zero_and128_max_ascii_string ->
-  unit ->
-  game_server_container_definition_input
-
-val make_support_container_definition_input :
-  ?linux_capabilities:linux_capabilities ->
-  ?vcpu:container_vcpu ->
-  ?port_configuration:container_port_configuration ->
-  ?memory_hard_limit_mebibytes:container_memory_limit ->
-  ?health_check:container_health_check ->
-  ?essential:boolean_model ->
-  ?environment_override:container_environment_list ->
-  ?mount_points:container_mount_point_list ->
-  ?depends_on:container_dependency_list ->
-  image_uri:image_uri_string ->
-  container_name:non_zero_and128_max_ascii_string ->
-  unit ->
-  support_container_definition_input
-
-val make_update_container_group_definition_input :
-  ?operating_system:container_operating_system ->
-  ?source_version_number:positive_integer ->
-  ?version_description:non_zero_and_max_string ->
-  ?total_vcpu_limit:container_total_vcpu_limit ->
-  ?total_memory_limit_mebibytes:container_total_memory_limit ->
-  ?support_container_definitions:support_container_definition_input_list ->
-  ?game_server_container_definition:game_server_container_definition_input ->
-  name:container_group_definition_name_or_arn ->
-  unit ->
-  update_container_group_definition_input
-
-val make_connection_port_range :
-  to_port:port_number -> from_port:port_number -> unit -> connection_port_range
-
-val make_game_session_creation_limit_policy :
-  ?policy_period_in_minutes:whole_number ->
-  ?new_game_sessions_per_creator:whole_number ->
-  unit ->
-  game_session_creation_limit_policy
-
-val make_deployment_details : ?latest_deployment_id:deployment_id -> unit -> deployment_details
-
-val make_log_configuration :
-  ?log_group_arn:log_group_arn_string_model ->
-  ?s3_bucket_name:non_empty_string ->
-  ?log_destination:log_destination ->
-  unit ->
-  log_configuration
-
-val make_container_fleet_location_attributes :
-  ?player_gateway_status:player_gateway_status ->
-  ?status:container_fleet_location_status ->
-  ?location:location_string_model ->
-  unit ->
-  container_fleet_location_attributes
-
-val make_container_fleet :
-  ?player_gateway_mode:player_gateway_mode ->
-  ?location_attributes:container_fleet_location_attributes_list ->
-  ?log_configuration:log_configuration ->
-  ?deployment_details:deployment_details ->
-  ?status:container_fleet_status ->
-  ?game_session_creation_limit_policy:game_session_creation_limit_policy ->
-  ?new_game_session_protection_policy:protection_policy ->
-  ?metric_groups:metric_group_list ->
-  ?creation_time:timestamp ->
-  ?description:non_zero_and_max_string ->
-  ?billing_type:container_fleet_billing_type ->
-  ?instance_type:non_zero_and_max_string ->
-  ?maximum_game_server_container_groups_per_instance:
-    maximum_game_server_container_groups_per_instance ->
-  ?game_server_container_groups_per_instance:game_server_container_groups_per_instance ->
-  ?instance_inbound_permissions:ip_permissions_list ->
-  ?instance_connection_port_range:connection_port_range ->
-  ?per_instance_container_group_definition_arn:container_group_definition_arn ->
-  ?per_instance_container_group_definition_name:container_group_definition_name ->
-  ?game_server_container_group_definition_arn:container_group_definition_arn ->
-  ?game_server_container_group_definition_name:container_group_definition_name ->
-  ?fleet_role_arn:iam_role_arn ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
-  unit ->
-  container_fleet
-
-val make_update_container_fleet_output :
-  ?container_fleet:container_fleet -> unit -> update_container_fleet_output
-
-val make_deployment_configuration :
-  ?impairment_strategy:deployment_impairment_strategy ->
-  ?minimum_healthy_percentage:minimum_healthy_percentage ->
-  ?protection_strategy:deployment_protection_strategy ->
-  unit ->
-  deployment_configuration
-
-val make_update_container_fleet_input :
-  ?remove_attributes:container_fleet_remove_attribute_list ->
-  ?log_configuration:log_configuration ->
-  ?game_session_creation_limit_policy:game_session_creation_limit_policy ->
-  ?new_game_session_protection_policy:protection_policy ->
-  ?metric_groups:metric_group_list ->
-  ?description:non_zero_and_max_string ->
-  ?deployment_configuration:deployment_configuration ->
-  ?instance_inbound_permission_revocations:ip_permissions_list ->
-  ?instance_inbound_permission_authorizations:ip_permissions_list ->
-  ?instance_connection_port_range:connection_port_range ->
-  ?game_server_container_groups_per_instance:game_server_container_groups_per_instance ->
-  ?per_instance_container_group_definition_name:container_group_definition_name_or_arn ->
-  ?game_server_container_group_definition_name:container_group_definition_name_or_arn ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  update_container_fleet_input
-
-val make_build :
-  ?server_sdk_version:server_sdk_version ->
-  ?creation_time:timestamp ->
-  ?operating_system:operating_system ->
-  ?size_on_disk:whole_number_long ->
-  ?status:build_status ->
-  ?version:free_text ->
-  ?name:free_text ->
-  ?build_arn:build_arn ->
-  ?build_id:build_id ->
-  unit ->
-  build
-
-val make_update_build_output : ?build:build -> unit -> update_build_output
-
-val make_update_build_input :
-  ?version:non_zero_and_max_string ->
-  ?name:non_zero_and_max_string ->
-  build_id:build_id_or_arn ->
-  unit ->
-  update_build_input
-
-val make_routing_strategy :
-  ?message:free_text ->
-  ?fleet_id:fleet_id ->
-  ?type_:routing_strategy_type ->
-  unit ->
-  routing_strategy
-
-val make_alias :
-  ?last_updated_time:timestamp ->
-  ?creation_time:timestamp ->
-  ?routing_strategy:routing_strategy ->
-  ?description:free_text ->
-  ?alias_arn:alias_arn ->
-  ?name:non_blank_and_length_constraint_string ->
-  ?alias_id:alias_id ->
-  unit ->
-  alias
-
-val make_update_alias_output : ?alias:alias -> unit -> update_alias_output
-
-val make_update_alias_input :
-  ?routing_strategy:routing_strategy ->
-  ?description:non_zero_and_max_string ->
-  ?name:non_blank_and_length_constraint_string ->
-  alias_id:alias_id_or_arn ->
-  unit ->
-  update_alias_input
-
-val make_untag_resource_response : unit -> unit
-
-val make_untag_resource_request :
-  tag_keys:tag_key_list -> resource_ar_n:amazon_resource_name -> unit -> untag_resource_request
-
-val make_udp_endpoint :
-  ?port:positive_integer -> ?domain:non_zero_and_max_string -> unit -> udp_endpoint
-
-val make_terminate_game_session_output :
-  ?game_session:game_session -> unit -> terminate_game_session_output
-
-val make_terminate_game_session_input :
-  termination_mode:termination_mode ->
-  game_session_id:arn_string_model ->
-  unit ->
-  terminate_game_session_input
+val make_create_game_server_group_output :
+  ?game_server_group:game_server_group -> unit -> create_game_server_group_output
 
 val make_target_tracking_configuration :
   target_value:non_negative_double -> unit -> target_tracking_configuration
-
-val make_target_configuration : target_value:double -> unit -> target_configuration
-val make_tag_resource_response : unit -> unit
-val make_tag : value:tag_value -> key:tag_key -> unit -> tag
-
-val make_tag_resource_request :
-  tags:tag_list -> resource_ar_n:amazon_resource_name -> unit -> tag_resource_request
-
-val make_suspend_game_server_group_output :
-  ?game_server_group:game_server_group -> unit -> suspend_game_server_group_output
-
-val make_suspend_game_server_group_input :
-  suspend_actions:game_server_group_actions ->
-  game_server_group_name:game_server_group_name_or_arn ->
-  unit ->
-  suspend_game_server_group_input
-
-val make_stop_matchmaking_output : unit -> unit
-
-val make_stop_matchmaking_input :
-  ticket_id:matchmaking_id_string_model -> unit -> stop_matchmaking_input
-
-val make_player_latency :
-  ?latency_in_milliseconds:float_ ->
-  ?region_identifier:non_zero_and_max_string ->
-  ?player_id:player_id ->
-  unit ->
-  player_latency
-
-val make_placed_player_session :
-  ?player_session_id:player_session_id -> ?player_id:player_id -> unit -> placed_player_session
-
-val make_priority_configuration_override :
-  ?placement_fallback_strategy:placement_fallback_strategy ->
-  location_order:location_order_override_list ->
-  unit ->
-  priority_configuration_override
-
-val make_game_session_placement :
-  ?player_gateway_status:player_gateway_status ->
-  ?priority_configuration_override:priority_configuration_override ->
-  ?matchmaker_data:matchmaker_data ->
-  ?game_session_data:large_game_session_data ->
-  ?placed_player_sessions:placed_player_session_list ->
-  ?port:port_number ->
-  ?dns_name:dns_name ->
-  ?ip_address:ip_address ->
-  ?end_time:timestamp ->
-  ?start_time:timestamp ->
-  ?player_latencies:player_latency_list ->
-  ?game_session_region:non_zero_and_max_string ->
-  ?game_session_arn:non_zero_and_max_string ->
-  ?game_session_id:non_zero_and_max_string ->
-  ?game_session_name:non_zero_and_max_string ->
-  ?maximum_player_session_count:whole_number ->
-  ?game_properties:game_property_list ->
-  ?status:game_session_placement_state ->
-  ?game_session_queue_name:game_session_queue_name ->
-  ?placement_id:id_string_model ->
-  unit ->
-  game_session_placement
-
-val make_stop_game_session_placement_output :
-  ?game_session_placement:game_session_placement -> unit -> stop_game_session_placement_output
-
-val make_stop_game_session_placement_input :
-  placement_id:id_string_model -> unit -> stop_game_session_placement_input
-
-val make_stop_fleet_actions_output :
-  ?fleet_arn:fleet_arn -> ?fleet_id:fleet_id -> unit -> stop_fleet_actions_output
-
-val make_stop_fleet_actions_input :
-  ?location:location_string_model ->
-  actions:fleet_action_list ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  stop_fleet_actions_input
-
-val make_attribute_value :
-  ?sd_m:player_attribute_string_double_map ->
-  ?s_l:player_attribute_string_list ->
-  ?n:double_object ->
-  ?s:player_attribute_string ->
-  unit ->
-  attribute_value
-
-val make_player :
-  ?latency_in_ms:latency_map ->
-  ?team:non_zero_and_max_string ->
-  ?player_attributes:player_attribute_map ->
-  ?player_id:player_id ->
-  unit ->
-  player
-
-val make_matched_player_session :
-  ?player_session_id:player_session_id -> ?player_id:player_id -> unit -> matched_player_session
-
-val make_game_session_connection_info :
-  ?player_gateway_status:player_gateway_status ->
-  ?matched_player_sessions:matched_player_session_list ->
-  ?port:positive_integer ->
-  ?dns_name:dns_name ->
-  ?ip_address:ip_address ->
-  ?game_session_arn:arn_string_model ->
-  unit ->
-  game_session_connection_info
-
-val make_matchmaking_ticket :
-  ?estimated_wait_time:whole_number ->
-  ?game_session_connection_info:game_session_connection_info ->
-  ?players:player_list ->
-  ?end_time:timestamp ->
-  ?start_time:timestamp ->
-  ?status_message:string_model ->
-  ?status_reason:string_model ->
-  ?status:matchmaking_configuration_status ->
-  ?configuration_arn:matchmaking_configuration_arn ->
-  ?configuration_name:matchmaking_id_string_model ->
-  ?ticket_id:matchmaking_id_string_model ->
-  unit ->
-  matchmaking_ticket
-
-val make_start_matchmaking_output :
-  ?matchmaking_ticket:matchmaking_ticket -> unit -> start_matchmaking_output
-
-val make_start_matchmaking_input :
-  ?ticket_id:matchmaking_id_string_model ->
-  players:player_list ->
-  configuration_name:matchmaking_configuration_name ->
-  unit ->
-  start_matchmaking_input
-
-val make_start_match_backfill_output :
-  ?matchmaking_ticket:matchmaking_ticket -> unit -> start_match_backfill_output
-
-val make_start_match_backfill_input :
-  ?game_session_arn:arn_string_model ->
-  ?ticket_id:matchmaking_id_string_model ->
-  players:player_list ->
-  configuration_name:matchmaking_configuration_name ->
-  unit ->
-  start_match_backfill_input
-
-val make_start_game_session_placement_output :
-  ?game_session_placement:game_session_placement -> unit -> start_game_session_placement_output
-
-val make_desired_player_session :
-  ?player_data:player_data -> ?player_id:player_id -> unit -> desired_player_session
-
-val make_start_game_session_placement_input :
-  ?priority_configuration_override:priority_configuration_override ->
-  ?game_session_data:large_game_session_data ->
-  ?desired_player_sessions:desired_player_session_list ->
-  ?player_latencies:player_latency_list ->
-  ?game_session_name:non_zero_and_max_string ->
-  ?game_properties:game_property_list ->
-  maximum_player_session_count:whole_number ->
-  game_session_queue_name:game_session_queue_name_or_arn ->
-  placement_id:id_string_model ->
-  unit ->
-  start_game_session_placement_input
-
-val make_start_fleet_actions_output :
-  ?fleet_arn:fleet_arn -> ?fleet_id:fleet_id -> unit -> start_fleet_actions_output
-
-val make_start_fleet_actions_input :
-  ?location:location_string_model ->
-  actions:fleet_action_list ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  start_fleet_actions_input
-
-val make_search_game_sessions_output :
-  ?next_token:non_zero_and_max_string ->
-  ?game_sessions:game_session_list ->
-  unit ->
-  search_game_sessions_output
-
-val make_search_game_sessions_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?sort_expression:non_zero_and_max_string ->
-  ?filter_expression:non_zero_and_max_string ->
-  ?location:location_string_model ->
-  ?alias_id:alias_id_or_arn ->
-  ?fleet_id:fleet_id_or_arn ->
-  unit ->
-  search_game_sessions_input
-
-val make_scaling_policy :
-  ?location:location_string_model ->
-  ?update_status:location_update_status ->
-  ?target_configuration:target_configuration ->
-  ?policy_type:policy_type ->
-  ?metric_name:metric_name ->
-  ?evaluation_periods:positive_integer ->
-  ?threshold:double ->
-  ?comparison_operator:comparison_operator_type ->
-  ?scaling_adjustment_type:scaling_adjustment_type ->
-  ?scaling_adjustment:integer ->
-  ?status:scaling_status_type ->
-  ?name:non_zero_and_max_string ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
-  unit ->
-  scaling_policy
-
-val make_resume_game_server_group_output :
-  ?game_server_group:game_server_group -> unit -> resume_game_server_group_output
-
-val make_resume_game_server_group_input :
-  resume_actions:game_server_group_actions ->
-  game_server_group_name:game_server_group_name_or_arn ->
-  unit ->
-  resume_game_server_group_input
-
-val make_resolve_alias_output :
-  ?fleet_arn:fleet_arn -> ?fleet_id:fleet_id -> unit -> resolve_alias_output
-
-val make_resolve_alias_input : alias_id:alias_id_or_arn -> unit -> resolve_alias_input
-
-val make_aws_credentials :
-  ?session_token:non_empty_string ->
-  ?secret_access_key:non_empty_string ->
-  ?access_key_id:non_empty_string ->
-  unit ->
-  aws_credentials
-
-val make_request_upload_credentials_output :
-  ?storage_location:s3_location ->
-  ?upload_credentials:aws_credentials ->
-  unit ->
-  request_upload_credentials_output
-
-val make_request_upload_credentials_input :
-  build_id:build_id_or_arn -> unit -> request_upload_credentials_input
-
-val make_register_game_server_output :
-  ?game_server:game_server -> unit -> register_game_server_output
-
-val make_register_game_server_input :
-  ?game_server_data:game_server_data ->
-  ?connection_info:game_server_connection_info ->
-  instance_id:game_server_instance_id ->
-  game_server_id:game_server_id ->
-  game_server_group_name:game_server_group_name_or_arn ->
-  unit ->
-  register_game_server_input
-
-val make_container_attribute :
-  ?container_runtime_id:non_empty_string ->
-  ?container_name:non_zero_and128_max_ascii_string ->
-  unit ->
-  container_attribute
-
-val make_compute :
-  ?game_server_container_group_definition_arn:container_group_definition_name_or_arn ->
-  ?container_attributes:container_attributes ->
-  ?instance_id:instance_id ->
-  ?game_lift_agent_endpoint:game_lift_agent_endpoint_output ->
-  ?game_lift_service_sdk_endpoint:game_lift_service_sdk_endpoint_output ->
-  ?type_:ec2_instance_type ->
-  ?operating_system:operating_system ->
-  ?creation_time:timestamp ->
-  ?location:location_string_model ->
-  ?compute_status:compute_status ->
-  ?dns_name:dns_name ->
-  ?ip_address:ip_address ->
-  ?compute_arn:compute_arn ->
-  ?compute_name:compute_name ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
-  unit ->
-  compute
-
-val make_register_compute_output : ?compute:compute -> unit -> register_compute_output
-
-val make_register_compute_input :
-  ?location:location_string_model ->
-  ?ip_address:ip_address ->
-  ?dns_name:dns_name_input ->
-  ?certificate_path:non_zero_and_max_string ->
-  compute_name:compute_name ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  register_compute_input
-
-val make_put_scaling_policy_output :
-  ?name:non_zero_and_max_string -> unit -> put_scaling_policy_output
-
-val make_put_scaling_policy_input :
-  ?target_configuration:target_configuration ->
-  ?policy_type:policy_type ->
-  ?evaluation_periods:positive_integer ->
-  ?comparison_operator:comparison_operator_type ->
-  ?threshold:double ->
-  ?scaling_adjustment_type:scaling_adjustment_type ->
-  ?scaling_adjustment:integer ->
-  metric_name:metric_name ->
-  fleet_id:fleet_id_or_arn ->
-  name:non_zero_and_max_string ->
-  unit ->
-  put_scaling_policy_input
-
-val make_player_session :
-  ?player_data:player_data ->
-  ?port:port_number ->
-  ?dns_name:dns_name ->
-  ?ip_address:ip_address ->
-  ?status:player_session_status ->
-  ?termination_time:timestamp ->
-  ?creation_time:timestamp ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
-  ?game_session_id:non_zero_and_max_string ->
-  ?player_id:player_id ->
-  ?player_session_id:player_session_id ->
-  unit ->
-  player_session
-
-val make_player_gateway_configuration :
-  ?game_server_ip_protocol_supported:game_server_ip_protocol_supported ->
-  unit ->
-  player_gateway_configuration
-
-val make_player_connection_endpoint :
-  ?port:port_number -> ?ip_address:ip_address -> unit -> player_connection_endpoint
-
-val make_player_connection_detail :
-  ?expiration:timestamp ->
-  ?player_gateway_token:max_string ->
-  ?endpoints:player_connection_endpoint_list ->
-  ?player_id:player_id ->
-  unit ->
-  player_connection_detail
-
-val make_ping_beacon : ?udp_endpoint:udp_endpoint -> unit -> ping_beacon
-
-val make_matchmaking_rule_set :
-  ?creation_time:timestamp ->
-  ?rule_set_arn:matchmaking_rule_set_arn ->
-  ?rule_set_name:matchmaking_id_string_model ->
-  rule_set_body:rule_set_body ->
-  unit ->
-  matchmaking_rule_set
-
-val make_locational_deployment :
-  ?deployment_status:deployment_status -> unit -> locational_deployment
-
-val make_location_state :
-  ?player_gateway_status:player_gateway_status ->
-  ?status:fleet_status ->
-  ?location:location_string_model ->
-  unit ->
-  location_state
-
-val make_location_model :
-  ?ping_beacon:ping_beacon ->
-  ?location_arn:location_arn_model ->
-  ?location_name:location_string_model ->
-  unit ->
-  location_model
-
-val make_location_configuration : location:location_string_model -> unit -> location_configuration
-
-val make_location_attributes :
-  ?update_status:location_update_status ->
-  ?stopped_actions:fleet_action_list ->
-  ?location_state:location_state ->
-  unit ->
-  location_attributes
-
-val make_list_tags_for_resource_response : ?tags:tag_list -> unit -> list_tags_for_resource_response
-
-val make_list_tags_for_resource_request :
-  resource_ar_n:amazon_resource_name -> unit -> list_tags_for_resource_request
-
-val make_list_scripts_output :
-  ?next_token:non_empty_string -> ?scripts:script_list -> unit -> list_scripts_output
-
-val make_list_scripts_input :
-  ?next_token:non_empty_string -> ?limit:positive_integer -> unit -> list_scripts_input
-
-val make_list_locations_output :
-  ?next_token:non_zero_and_max_string ->
-  ?locations:location_model_list ->
-  unit ->
-  list_locations_output
-
-val make_list_locations_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:list_locations_limit ->
-  ?filters:location_filter_list ->
-  unit ->
-  list_locations_input
-
-val make_list_game_servers_output :
-  ?next_token:non_zero_and_max_string ->
-  ?game_servers:game_servers ->
-  unit ->
-  list_game_servers_output
-
-val make_list_game_servers_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?sort_order:sort_order ->
-  game_server_group_name:game_server_group_name_or_arn ->
-  unit ->
-  list_game_servers_input
-
-val make_list_game_server_groups_output :
-  ?next_token:non_zero_and_max_string ->
-  ?game_server_groups:game_server_groups ->
-  unit ->
-  list_game_server_groups_output
-
-val make_list_game_server_groups_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  unit ->
-  list_game_server_groups_input
-
-val make_list_fleets_output :
-  ?next_token:non_zero_and_max_string -> ?fleet_ids:fleet_id_list -> unit -> list_fleets_output
-
-val make_list_fleets_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?script_id:script_id_or_arn ->
-  ?build_id:build_id_or_arn ->
-  unit ->
-  list_fleets_input
-
-val make_fleet_deployment :
-  ?creation_time:timestamp ->
-  ?deployment_configuration:deployment_configuration ->
-  ?deployment_status:deployment_status ->
-  ?rollback_per_instance_binary_arn:fleet_binary_arn ->
-  ?per_instance_binary_arn:fleet_binary_arn ->
-  ?rollback_game_server_binary_arn:fleet_binary_arn ->
-  ?game_server_binary_arn:fleet_binary_arn ->
-  ?fleet_id:fleet_id ->
-  ?deployment_id:deployment_id ->
-  unit ->
-  fleet_deployment
-
-val make_list_fleet_deployments_output :
-  ?next_token:non_zero_and_max_string ->
-  ?fleet_deployments:fleet_deployments ->
-  unit ->
-  list_fleet_deployments_output
-
-val make_list_fleet_deployments_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?fleet_id:fleet_id_or_arn ->
-  unit ->
-  list_fleet_deployments_input
-
-val make_list_container_group_definitions_output :
-  ?next_token:non_zero_and_max_string ->
-  ?container_group_definitions:container_group_definition_list ->
-  unit ->
-  list_container_group_definitions_output
-
-val make_list_container_group_definitions_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:list_container_group_definitions_limit ->
-  ?container_group_type:container_group_type ->
-  unit ->
-  list_container_group_definitions_input
-
-val make_list_container_group_definition_versions_output :
-  ?next_token:non_zero_and_max_string ->
-  ?container_group_definitions:container_group_definition_list ->
-  unit ->
-  list_container_group_definition_versions_output
-
-val make_list_container_group_definition_versions_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:list_container_group_definition_versions_limit ->
-  name:container_group_definition_name_or_arn ->
-  unit ->
-  list_container_group_definition_versions_input
-
-val make_list_container_fleets_output :
-  ?next_token:non_zero_and_max_string ->
-  ?container_fleets:container_fleet_list ->
-  unit ->
-  list_container_fleets_output
-
-val make_list_container_fleets_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?container_group_definition_name:container_group_definition_name_or_arn ->
-  unit ->
-  list_container_fleets_input
-
-val make_list_compute_output :
-  ?next_token:non_zero_and_max_string -> ?compute_list:compute_list -> unit -> list_compute_output
-
-val make_list_compute_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?compute_status:list_compute_input_status ->
-  ?container_group_definition_name:container_group_definition_name_or_arn ->
-  ?location:location_string_model ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  list_compute_input
-
-val make_list_builds_output :
-  ?next_token:non_empty_string -> ?builds:build_list -> unit -> list_builds_output
-
-val make_list_builds_input :
-  ?next_token:non_empty_string ->
-  ?limit:positive_integer ->
-  ?status:build_status ->
-  unit ->
-  list_builds_input
-
-val make_list_aliases_output :
-  ?next_token:non_empty_string -> ?aliases:alias_list -> unit -> list_aliases_output
-
-val make_list_aliases_input :
-  ?next_token:non_empty_string ->
-  ?limit:positive_integer ->
-  ?name:non_empty_string ->
-  ?routing_strategy_type:routing_strategy_type ->
-  unit ->
-  list_aliases_input
-
-val make_launch_template_specification :
-  ?version:launch_template_version ->
-  ?launch_template_name:launch_template_name ->
-  ?launch_template_id:launch_template_id ->
-  unit ->
-  launch_template_specification
-
-val make_instance :
-  ?location:location_string_model ->
-  ?creation_time:timestamp ->
-  ?status:instance_status ->
-  ?type_:ec2_instance_type ->
-  ?operating_system:operating_system ->
-  ?dns_name:dns_name ->
-  ?ip_address:ip_address ->
-  ?instance_id:instance_id ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
-  unit ->
-  instance
-
-val make_instance_credentials :
-  ?secret:non_empty_string -> ?user_name:non_empty_string -> unit -> instance_credentials
-
-val make_instance_access :
-  ?credentials:instance_credentials ->
-  ?operating_system:operating_system ->
-  ?ip_address:ip_address ->
-  ?instance_id:instance_id ->
-  ?fleet_id:fleet_id ->
-  unit ->
-  instance_access
-
-val make_get_player_connection_details_output :
-  ?player_connection_details:player_connection_detail_list ->
-  ?game_session_id:arn_string_model ->
-  unit ->
-  get_player_connection_details_output
-
-val make_get_player_connection_details_input :
-  player_ids:player_id_list ->
-  game_session_id:arn_string_model ->
-  unit ->
-  get_player_connection_details_input
-
-val make_get_instance_access_output :
-  ?instance_access:instance_access -> unit -> get_instance_access_output
-
-val make_get_instance_access_input :
-  instance_id:instance_id -> fleet_id:fleet_id_or_arn -> unit -> get_instance_access_input
-
-val make_get_game_session_log_url_output :
-  ?pre_signed_url:non_zero_and_max_string -> unit -> get_game_session_log_url_output
-
-val make_get_game_session_log_url_input :
-  game_session_id:arn_string_model -> unit -> get_game_session_log_url_input
-
-val make_get_compute_auth_token_output :
-  ?expiration_timestamp:timestamp ->
-  ?auth_token:compute_auth_token ->
-  ?compute_arn:compute_arn ->
-  ?compute_name:compute_name_or_arn ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id_or_arn ->
-  unit ->
-  get_compute_auth_token_output
-
-val make_get_compute_auth_token_input :
-  compute_name:compute_name_or_arn ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  get_compute_auth_token_input
-
-val make_container_identifier :
-  ?container_runtime_id:non_empty_string ->
-  ?container_name:non_zero_and128_max_ascii_string ->
-  unit ->
-  container_identifier
-
-val make_get_compute_access_output :
-  ?container_identifiers:container_identifier_list ->
-  ?target:session_target ->
-  ?credentials:aws_credentials ->
-  ?compute_arn:compute_arn ->
-  ?compute_name:compute_name_or_arn ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id_or_arn ->
-  unit ->
-  get_compute_access_output
-
-val make_get_compute_access_input :
-  compute_name:compute_name_or_arn -> fleet_id:fleet_id_or_arn -> unit -> get_compute_access_input
-
-val make_game_session_detail :
-  ?protection_policy:protection_policy -> ?game_session:game_session -> unit -> game_session_detail
-
-val make_game_server_instance :
-  ?instance_status:game_server_instance_status ->
-  ?instance_id:game_server_instance_id ->
-  ?game_server_group_arn:game_server_group_arn ->
-  ?game_server_group_name:game_server_group_name ->
-  unit ->
-  game_server_instance
 
 val make_game_server_group_auto_scaling_policy :
   ?estimated_instance_warmup:positive_integer ->
@@ -1268,440 +542,397 @@ val make_game_server_group_auto_scaling_policy :
   unit ->
   game_server_group_auto_scaling_policy
 
-val make_game_server_container_group_counts :
-  ?terminatin_g:whole_number ->
-  ?idl_e:whole_number ->
-  ?activ_e:whole_number ->
-  ?pendin_g:whole_number ->
+val make_launch_template_specification :
+  ?launch_template_id:launch_template_id ->
+  ?launch_template_name:launch_template_name ->
+  ?version:launch_template_version ->
   unit ->
-  game_server_container_group_counts
+  launch_template_specification
 
-val make_describe_vpc_peering_connections_output :
-  ?vpc_peering_connections:vpc_peering_connection_list ->
+val make_create_game_server_group_input :
+  ?auto_scaling_policy:game_server_group_auto_scaling_policy ->
+  ?balancing_strategy:balancing_strategy ->
+  ?game_server_protection_policy:game_server_protection_policy ->
+  ?vpc_subnets:vpc_subnets ->
+  ?tags:tag_list ->
+  game_server_group_name:game_server_group_name ->
+  role_arn:iam_role_arn ->
+  min_size:whole_number ->
+  max_size:positive_integer ->
+  launch_template:launch_template_specification ->
+  instance_definitions:instance_definitions ->
   unit ->
-  describe_vpc_peering_connections_output
+  create_game_server_group_input
 
-val make_describe_vpc_peering_connections_input :
-  ?fleet_id:fleet_id -> unit -> describe_vpc_peering_connections_input
+val make_game_property : key:game_property_key -> value:game_property_value -> unit -> game_property
 
-val make_describe_vpc_peering_authorizations_output :
-  ?vpc_peering_authorizations:vpc_peering_authorization_list ->
-  unit ->
-  describe_vpc_peering_authorizations_output
-
-val make_describe_vpc_peering_authorizations_input : unit -> unit
-val make_describe_script_output : ?script:script -> unit -> describe_script_output
-val make_describe_script_input : script_id:script_id_or_arn -> unit -> describe_script_input
-
-val make_describe_scaling_policies_output :
-  ?next_token:non_zero_and_max_string ->
-  ?scaling_policies:scaling_policy_list ->
-  unit ->
-  describe_scaling_policies_output
-
-val make_describe_scaling_policies_input :
+val make_game_session :
+  ?game_session_id:non_zero_and_max_string ->
+  ?name:non_zero_and_max_string ->
+  ?fleet_id:fleet_id ->
+  ?fleet_arn:fleet_arn ->
+  ?creation_time:timestamp ->
+  ?termination_time:timestamp ->
+  ?current_player_session_count:whole_number ->
+  ?maximum_player_session_count:whole_number ->
+  ?status:game_session_status ->
+  ?status_reason:game_session_status_reason ->
+  ?game_properties:game_property_list ->
+  ?ip_address:ip_address ->
+  ?dns_name:dns_name ->
+  ?port:port_number ->
+  ?player_session_creation_policy:player_session_creation_policy ->
+  ?creator_id:non_zero_and_max_string ->
+  ?game_session_data:large_game_session_data ->
+  ?matchmaker_data:matchmaker_data ->
   ?location:location_string_model ->
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?status_filter:scaling_status_type ->
-  fleet_id:fleet_id_or_arn ->
+  ?compute_name:compute_name ->
+  ?player_gateway_status:player_gateway_status ->
   unit ->
-  describe_scaling_policies_input
+  game_session
 
-val make_describe_runtime_configuration_output :
-  ?runtime_configuration:runtime_configuration -> unit -> describe_runtime_configuration_output
+val make_create_game_session_output :
+  ?game_session:game_session -> unit -> create_game_session_output
 
-val make_describe_runtime_configuration_input :
-  fleet_id:fleet_id_or_arn -> unit -> describe_runtime_configuration_input
-
-val make_describe_player_sessions_output :
-  ?next_token:non_zero_and_max_string ->
-  ?player_sessions:player_session_list ->
+val make_create_game_session_input :
+  ?fleet_id:fleet_id_or_arn ->
+  ?alias_id:alias_id_or_arn ->
+  ?name:non_zero_and_max_string ->
+  ?game_properties:game_property_list ->
+  ?creator_id:non_zero_and_max_string ->
+  ?game_session_id:id_string_model ->
+  ?idempotency_token:id_string_model ->
+  ?game_session_data:large_game_session_data ->
+  ?location:location_string_model ->
+  maximum_player_session_count:whole_number ->
   unit ->
-  describe_player_sessions_output
+  create_game_session_input
 
-val make_describe_player_sessions_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?player_session_status_filter:non_zero_and_max_string ->
+val make_priority_configuration :
+  ?priority_order:priority_type_list ->
+  ?location_order:location_list ->
+  unit ->
+  priority_configuration
+
+val make_filter_configuration : ?allowed_locations:location_list -> unit -> filter_configuration
+
+val make_game_session_queue_destination :
+  ?destination_arn:arn_string_model -> unit -> game_session_queue_destination
+
+val make_player_latency_policy :
+  ?maximum_individual_player_latency_milliseconds:whole_number ->
+  ?policy_duration_seconds:whole_number ->
+  unit ->
+  player_latency_policy
+
+val make_game_session_queue :
+  ?name:game_session_queue_name ->
+  ?game_session_queue_arn:game_session_queue_arn ->
+  ?timeout_in_seconds:whole_number ->
+  ?player_latency_policies:player_latency_policy_list ->
+  ?destinations:game_session_queue_destination_list ->
+  ?filter_configuration:filter_configuration ->
+  ?priority_configuration:priority_configuration ->
+  ?custom_event_data:queue_custom_event_data ->
+  ?notification_target:queue_sns_arn_string_model ->
+  unit ->
+  game_session_queue
+
+val make_create_game_session_queue_output :
+  ?game_session_queue:game_session_queue -> unit -> create_game_session_queue_output
+
+val make_create_game_session_queue_input :
+  ?timeout_in_seconds:whole_number ->
+  ?player_latency_policies:player_latency_policy_list ->
+  ?destinations:game_session_queue_destination_list ->
+  ?filter_configuration:filter_configuration ->
+  ?priority_configuration:priority_configuration ->
+  ?custom_event_data:queue_custom_event_data ->
+  ?notification_target:queue_sns_arn_string_model ->
+  ?tags:tag_list ->
+  name:game_session_queue_name ->
+  unit ->
+  create_game_session_queue_input
+
+val make_udp_endpoint :
+  ?domain:non_zero_and_max_string -> ?port:positive_integer -> unit -> udp_endpoint
+
+val make_ping_beacon : ?udp_endpoint:udp_endpoint -> unit -> ping_beacon
+
+val make_location_model :
+  ?location_name:location_string_model ->
+  ?location_arn:location_arn_model ->
+  ?ping_beacon:ping_beacon ->
+  unit ->
+  location_model
+
+val make_create_location_output : ?location:location_model -> unit -> create_location_output
+
+val make_create_location_input :
+  ?tags:tag_list ->
+  location_name:custom_input_location_string_model ->
+  unit ->
+  create_location_input
+
+val make_matchmaking_configuration :
+  ?name:matchmaking_id_string_model ->
+  ?configuration_arn:matchmaking_configuration_arn ->
+  ?description:non_zero_and_max_string ->
+  ?game_session_queue_arns:queue_arns_list ->
+  ?request_timeout_seconds:matchmaking_request_timeout_integer ->
+  ?acceptance_timeout_seconds:matchmaking_acceptance_timeout_integer ->
+  ?acceptance_required:boolean_model ->
+  ?rule_set_name:matchmaking_id_string_model ->
+  ?rule_set_arn:matchmaking_rule_set_arn ->
+  ?notification_target:sns_arn_string_model ->
+  ?additional_player_count:whole_number ->
+  ?custom_event_data:custom_event_data ->
+  ?creation_time:timestamp ->
+  ?game_properties:game_property_list ->
+  ?game_session_data:game_session_data ->
+  ?backfill_mode:backfill_mode ->
+  ?flex_match_mode:flex_match_mode ->
+  unit ->
+  matchmaking_configuration
+
+val make_create_matchmaking_configuration_output :
+  ?configuration:matchmaking_configuration -> unit -> create_matchmaking_configuration_output
+
+val make_create_matchmaking_configuration_input :
+  ?description:non_zero_and_max_string ->
+  ?game_session_queue_arns:queue_arns_list ->
+  ?acceptance_timeout_seconds:matchmaking_acceptance_timeout_integer ->
+  ?notification_target:sns_arn_string_model ->
+  ?additional_player_count:whole_number ->
+  ?custom_event_data:custom_event_data ->
+  ?game_properties:game_property_list ->
+  ?game_session_data:game_session_data ->
+  ?backfill_mode:backfill_mode ->
+  ?flex_match_mode:flex_match_mode ->
+  ?tags:tag_list ->
+  name:matchmaking_id_string_model ->
+  request_timeout_seconds:matchmaking_request_timeout_integer ->
+  acceptance_required:boolean_model ->
+  rule_set_name:matchmaking_rule_set_name ->
+  unit ->
+  create_matchmaking_configuration_input
+
+val make_matchmaking_rule_set :
+  ?rule_set_name:matchmaking_id_string_model ->
+  ?rule_set_arn:matchmaking_rule_set_arn ->
+  ?creation_time:timestamp ->
+  rule_set_body:rule_set_body ->
+  unit ->
+  matchmaking_rule_set
+
+val make_create_matchmaking_rule_set_output :
+  rule_set:matchmaking_rule_set -> unit -> create_matchmaking_rule_set_output
+
+val make_create_matchmaking_rule_set_input :
+  ?tags:tag_list ->
+  name:matchmaking_id_string_model ->
+  rule_set_body:rule_set_body ->
+  unit ->
+  create_matchmaking_rule_set_input
+
+val make_player_session :
   ?player_session_id:player_session_id ->
   ?player_id:player_id ->
-  ?game_session_id:arn_string_model ->
-  unit ->
-  describe_player_sessions_input
-
-val make_describe_matchmaking_rule_sets_output :
-  ?next_token:non_zero_and_max_string ->
-  rule_sets:matchmaking_rule_set_list ->
-  unit ->
-  describe_matchmaking_rule_sets_output
-
-val make_describe_matchmaking_rule_sets_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:rule_set_limit ->
-  ?names:matchmaking_rule_set_name_list ->
-  unit ->
-  describe_matchmaking_rule_sets_input
-
-val make_describe_matchmaking_configurations_output :
-  ?next_token:non_zero_and_max_string ->
-  ?configurations:matchmaking_configuration_list ->
-  unit ->
-  describe_matchmaking_configurations_output
-
-val make_describe_matchmaking_configurations_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?rule_set_name:matchmaking_rule_set_name ->
-  ?names:matchmaking_configuration_name_list ->
-  unit ->
-  describe_matchmaking_configurations_input
-
-val make_describe_matchmaking_output :
-  ?ticket_list:matchmaking_ticket_list -> unit -> describe_matchmaking_output
-
-val make_describe_matchmaking_input :
-  ticket_ids:matchmaking_id_list -> unit -> describe_matchmaking_input
-
-val make_describe_instances_output :
-  ?next_token:non_zero_and_max_string ->
-  ?instances:instance_list ->
-  unit ->
-  describe_instances_output
-
-val make_describe_instances_input :
-  ?location:location_string_model ->
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?instance_id:instance_id ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_instances_input
-
-val make_describe_game_sessions_output :
-  ?next_token:non_zero_and_max_string ->
-  ?game_sessions:game_session_list ->
-  unit ->
-  describe_game_sessions_output
-
-val make_describe_game_sessions_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?status_filter:non_zero_and_max_string ->
-  ?location:location_string_model ->
-  ?alias_id:alias_id_or_arn ->
-  ?game_session_id:arn_string_model ->
-  ?fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_game_sessions_input
-
-val make_describe_game_session_queues_output :
-  ?next_token:non_zero_and_max_string ->
-  ?game_session_queues:game_session_queue_list ->
-  unit ->
-  describe_game_session_queues_output
-
-val make_describe_game_session_queues_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?names:game_session_queue_name_or_arn_list ->
-  unit ->
-  describe_game_session_queues_input
-
-val make_describe_game_session_placement_output :
-  ?game_session_placement:game_session_placement -> unit -> describe_game_session_placement_output
-
-val make_describe_game_session_placement_input :
-  placement_id:id_string_model -> unit -> describe_game_session_placement_input
-
-val make_describe_game_session_details_output :
-  ?next_token:non_zero_and_max_string ->
-  ?game_session_details:game_session_detail_list ->
-  unit ->
-  describe_game_session_details_output
-
-val make_describe_game_session_details_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?status_filter:non_zero_and_max_string ->
-  ?location:location_string_model ->
-  ?alias_id:alias_id_or_arn ->
-  ?game_session_id:arn_string_model ->
-  ?fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_game_session_details_input
-
-val make_describe_game_server_instances_output :
-  ?next_token:non_zero_and_max_string ->
-  ?game_server_instances:game_server_instances ->
-  unit ->
-  describe_game_server_instances_output
-
-val make_describe_game_server_instances_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?instance_ids:game_server_instance_ids ->
-  game_server_group_name:game_server_group_name_or_arn ->
-  unit ->
-  describe_game_server_instances_input
-
-val make_describe_game_server_group_output :
-  ?game_server_group:game_server_group -> unit -> describe_game_server_group_output
-
-val make_describe_game_server_group_input :
-  game_server_group_name:game_server_group_name_or_arn -> unit -> describe_game_server_group_input
-
-val make_describe_game_server_output :
-  ?game_server:game_server -> unit -> describe_game_server_output
-
-val make_describe_game_server_input :
-  game_server_id:game_server_id ->
-  game_server_group_name:game_server_group_name_or_arn ->
-  unit ->
-  describe_game_server_input
-
-val make_fleet_utilization :
-  ?location:location_string_model ->
-  ?maximum_player_session_count:whole_number ->
-  ?current_player_session_count:whole_number ->
-  ?active_game_session_count:whole_number ->
-  ?active_server_process_count:whole_number ->
-  ?fleet_arn:fleet_arn ->
+  ?game_session_id:non_zero_and_max_string ->
   ?fleet_id:fleet_id ->
-  unit ->
-  fleet_utilization
-
-val make_describe_fleet_utilization_output :
-  ?next_token:non_zero_and_max_string ->
-  ?fleet_utilization:fleet_utilization_list ->
-  unit ->
-  describe_fleet_utilization_output
-
-val make_describe_fleet_utilization_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?fleet_ids:fleet_id_or_arn_list ->
-  unit ->
-  describe_fleet_utilization_input
-
-val make_describe_fleet_port_settings_output :
-  ?location:location_string_model ->
-  ?update_status:location_update_status ->
-  ?inbound_permissions:ip_permissions_list ->
   ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
-  unit ->
-  describe_fleet_port_settings_output
-
-val make_describe_fleet_port_settings_input :
-  ?location:location_string_model ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_fleet_port_settings_input
-
-val make_describe_fleet_location_utilization_output :
-  ?fleet_utilization:fleet_utilization -> unit -> describe_fleet_location_utilization_output
-
-val make_describe_fleet_location_utilization_input :
-  location:location_string_model ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_fleet_location_utilization_input
-
-val make_ec2_instance_counts :
-  ?terminatin_g:whole_number ->
-  ?idl_e:whole_number ->
-  ?activ_e:whole_number ->
-  ?pendin_g:whole_number ->
-  ?maximu_m:whole_number ->
-  ?minimu_m:whole_number ->
-  ?desire_d:whole_number ->
-  unit ->
-  ec2_instance_counts
-
-val make_fleet_capacity :
-  ?managed_capacity_configuration:managed_capacity_configuration ->
-  ?game_server_container_group_counts:game_server_container_group_counts ->
-  ?location:location_string_model ->
-  ?instance_counts:ec2_instance_counts ->
-  ?instance_type:ec2_instance_type ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
-  unit ->
-  fleet_capacity
-
-val make_describe_fleet_location_capacity_output :
-  ?fleet_capacity:fleet_capacity -> unit -> describe_fleet_location_capacity_output
-
-val make_describe_fleet_location_capacity_input :
-  location:location_string_model ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_fleet_location_capacity_input
-
-val make_describe_fleet_location_attributes_output :
-  ?next_token:non_zero_and_max_string ->
-  ?location_attributes:location_attributes_list ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_fleet_location_attributes_output
-
-val make_describe_fleet_location_attributes_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?locations:location_list ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_fleet_location_attributes_input
-
-val make_event :
-  ?count:event_count ->
-  ?pre_signed_log_url:non_zero_and_max_string ->
-  ?event_time:timestamp ->
-  ?message:non_empty_string ->
-  ?event_code:event_code ->
-  ?resource_id:non_zero_and_max_string ->
-  ?event_id:non_zero_and_max_string ->
-  unit ->
-  event
-
-val make_describe_fleet_events_output :
-  ?next_token:non_zero_and_max_string -> ?events:event_list -> unit -> describe_fleet_events_output
-
-val make_describe_fleet_events_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?end_time:timestamp ->
-  ?start_time:timestamp ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_fleet_events_input
-
-val make_describe_fleet_deployment_output :
-  ?locational_deployments:locational_deployments ->
-  ?fleet_deployment:fleet_deployment ->
-  unit ->
-  describe_fleet_deployment_output
-
-val make_describe_fleet_deployment_input :
-  ?deployment_id:deployment_id ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_fleet_deployment_input
-
-val make_describe_fleet_capacity_output :
-  ?next_token:non_zero_and_max_string ->
-  ?fleet_capacity:fleet_capacity_list ->
-  unit ->
-  describe_fleet_capacity_output
-
-val make_describe_fleet_capacity_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?fleet_ids:fleet_id_or_arn_list ->
-  unit ->
-  describe_fleet_capacity_input
-
-val make_certificate_configuration :
-  certificate_type:certificate_type -> unit -> certificate_configuration
-
-val make_fleet_attributes :
-  ?player_gateway_configuration:player_gateway_configuration ->
-  ?player_gateway_mode:player_gateway_mode ->
-  ?instance_role_credentials_provider:instance_role_credentials_provider ->
-  ?anywhere_configuration:anywhere_configuration ->
-  ?compute_type:compute_type ->
-  ?certificate_configuration:certificate_configuration ->
-  ?instance_role_arn:non_empty_string ->
-  ?stopped_actions:fleet_action_list ->
-  ?metric_groups:metric_group_list ->
-  ?resource_creation_limit_policy:resource_creation_limit_policy ->
-  ?operating_system:operating_system ->
-  ?new_game_session_protection_policy:protection_policy ->
-  ?log_paths:string_list ->
-  ?server_launch_parameters:launch_parameters_string_model ->
-  ?server_launch_path:launch_path_string_model ->
-  ?script_arn:script_arn ->
-  ?script_id:script_id ->
-  ?build_arn:build_arn ->
-  ?build_id:build_id ->
-  ?status:fleet_status ->
-  ?termination_time:timestamp ->
   ?creation_time:timestamp ->
+  ?termination_time:timestamp ->
+  ?status:player_session_status ->
+  ?ip_address:ip_address ->
+  ?dns_name:dns_name ->
+  ?port:port_number ->
+  ?player_data:player_data ->
+  unit ->
+  player_session
+
+val make_create_player_session_output :
+  ?player_session:player_session -> unit -> create_player_session_output
+
+val make_create_player_session_input :
+  ?player_data:player_data ->
+  game_session_id:arn_string_model ->
+  player_id:player_id ->
+  unit ->
+  create_player_session_input
+
+val make_create_player_sessions_output :
+  ?player_sessions:player_session_list -> unit -> create_player_sessions_output
+
+val make_create_player_sessions_input :
+  ?player_data_map:player_data_map ->
+  game_session_id:arn_string_model ->
+  player_ids:player_id_list ->
+  unit ->
+  create_player_sessions_input
+
+val make_script :
+  ?script_id:script_id ->
+  ?script_arn:script_arn ->
   ?name:non_zero_and_max_string ->
-  ?description:non_zero_and_max_string ->
-  ?instance_type:ec2_instance_type ->
-  ?fleet_type:fleet_type ->
+  ?version:non_zero_and_max_string ->
+  ?size_on_disk:whole_number_long ->
+  ?creation_time:timestamp ->
+  ?storage_location:s3_location ->
+  ?node_js_version:node_js_version ->
+  unit ->
+  script
+
+val make_create_script_output : ?script:script -> unit -> create_script_output
+
+val make_create_script_input :
+  ?name:non_zero_and_max_string ->
+  ?version:non_zero_and_max_string ->
+  ?storage_location:s3_location ->
+  ?zip_file:zip_blob ->
+  ?tags:tag_list ->
+  ?node_js_version:node_js_version ->
+  unit ->
+  create_script_input
+
+val make_vpc_peering_authorization :
+  ?game_lift_aws_account_id:non_zero_and_max_string ->
+  ?peer_vpc_aws_account_id:non_zero_and_max_string ->
+  ?peer_vpc_id:non_zero_and_max_string ->
+  ?creation_time:timestamp ->
+  ?expiration_time:timestamp ->
+  unit ->
+  vpc_peering_authorization
+
+val make_create_vpc_peering_authorization_output :
+  ?vpc_peering_authorization:vpc_peering_authorization ->
+  unit ->
+  create_vpc_peering_authorization_output
+
+val make_create_vpc_peering_authorization_input :
+  game_lift_aws_account_id:non_zero_and_max_string ->
+  peer_vpc_id:non_zero_and_max_string ->
+  unit ->
+  create_vpc_peering_authorization_input
+
+val make_create_vpc_peering_connection_output : unit -> unit
+
+val make_create_vpc_peering_connection_input :
+  fleet_id:fleet_id ->
+  peer_vpc_aws_account_id:non_zero_and_max_string ->
+  peer_vpc_id:non_zero_and_max_string ->
+  unit ->
+  create_vpc_peering_connection_input
+
+val make_delete_alias_input : alias_id:alias_id_or_arn -> unit -> delete_alias_input
+val make_delete_build_input : build_id:build_id_or_arn -> unit -> delete_build_input
+val make_delete_container_fleet_output : unit -> unit
+
+val make_delete_container_fleet_input :
+  fleet_id:fleet_id_or_arn -> unit -> delete_container_fleet_input
+
+val make_delete_container_group_definition_output : unit -> unit
+
+val make_delete_container_group_definition_input :
+  ?version_number:positive_integer ->
+  ?version_count_to_retain:whole_number ->
+  name:container_group_definition_name_or_arn ->
+  unit ->
+  delete_container_group_definition_input
+
+val make_delete_fleet_input : fleet_id:fleet_id_or_arn -> unit -> delete_fleet_input
+
+val make_delete_fleet_locations_output :
+  ?fleet_id:fleet_id_or_arn ->
   ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
+  ?location_states:location_state_list ->
   unit ->
-  fleet_attributes
+  delete_fleet_locations_output
 
-val make_describe_fleet_attributes_output :
-  ?next_token:non_zero_and_max_string ->
-  ?fleet_attributes:fleet_attributes_list ->
+val make_delete_fleet_locations_input :
+  fleet_id:fleet_id_or_arn -> locations:location_list -> unit -> delete_fleet_locations_input
+
+val make_delete_game_server_group_output :
+  ?game_server_group:game_server_group -> unit -> delete_game_server_group_output
+
+val make_delete_game_server_group_input :
+  ?delete_option:game_server_group_delete_option ->
+  game_server_group_name:game_server_group_name_or_arn ->
   unit ->
-  describe_fleet_attributes_output
+  delete_game_server_group_input
 
-val make_describe_fleet_attributes_input :
-  ?next_token:non_zero_and_max_string ->
-  ?limit:positive_integer ->
-  ?fleet_ids:fleet_id_or_arn_list ->
+val make_delete_game_session_queue_output : unit -> unit
+
+val make_delete_game_session_queue_input :
+  name:game_session_queue_name_or_arn -> unit -> delete_game_session_queue_input
+
+val make_delete_location_output : unit -> unit
+
+val make_delete_location_input :
+  location_name:custom_location_name_or_arn_model -> unit -> delete_location_input
+
+val make_delete_matchmaking_configuration_output : unit -> unit
+
+val make_delete_matchmaking_configuration_input :
+  name:matchmaking_configuration_name -> unit -> delete_matchmaking_configuration_input
+
+val make_delete_matchmaking_rule_set_output : unit -> unit
+
+val make_delete_matchmaking_rule_set_input :
+  name:matchmaking_rule_set_name -> unit -> delete_matchmaking_rule_set_input
+
+val make_delete_scaling_policy_input :
+  name:non_zero_and_max_string -> fleet_id:fleet_id_or_arn -> unit -> delete_scaling_policy_input
+
+val make_delete_script_input : script_id:script_id_or_arn -> unit -> delete_script_input
+val make_delete_vpc_peering_authorization_output : unit -> unit
+
+val make_delete_vpc_peering_authorization_input :
+  game_lift_aws_account_id:non_zero_and_max_string ->
+  peer_vpc_id:non_zero_and_max_string ->
   unit ->
-  describe_fleet_attributes_input
+  delete_vpc_peering_authorization_input
 
-val make_ec2_instance_limit :
-  ?location:location_string_model ->
-  ?instance_limit:whole_number ->
-  ?current_instances:whole_number ->
-  ?ec2_instance_type:ec2_instance_type ->
+val make_delete_vpc_peering_connection_output : unit -> unit
+
+val make_delete_vpc_peering_connection_input :
+  fleet_id:fleet_id ->
+  vpc_peering_connection_id:non_zero_and_max_string ->
   unit ->
-  ec2_instance_limit
+  delete_vpc_peering_connection_input
 
-val make_describe_ec2_instance_limits_output :
-  ?ec2_instance_limits:ec2_instance_limit_list -> unit -> describe_ec2_instance_limits_output
-
-val make_describe_ec2_instance_limits_input :
-  ?location:location_string_model ->
-  ?ec2_instance_type:ec2_instance_type ->
+val make_deployment_configuration :
+  ?protection_strategy:deployment_protection_strategy ->
+  ?minimum_healthy_percentage:minimum_healthy_percentage ->
+  ?impairment_strategy:deployment_impairment_strategy ->
   unit ->
-  describe_ec2_instance_limits_input
+  deployment_configuration
 
-val make_container_port_mapping :
-  ?protocol:ip_protocol ->
-  ?connection_port:port_number ->
-  ?container_port:port_number ->
-  unit ->
-  container_port_mapping
+val make_deregister_compute_output : unit -> unit
 
-val make_container_group_port_mapping :
-  ?container_port_mappings:container_port_mapping_list ->
-  ?container_runtime_id:non_empty_string ->
-  ?container_name:non_zero_and128_max_ascii_string ->
-  unit ->
-  container_group_port_mapping
+val make_deregister_compute_input :
+  fleet_id:fleet_id_or_arn -> compute_name:compute_name_or_arn -> unit -> deregister_compute_input
 
-val make_describe_container_group_port_mappings_output :
-  ?container_group_port_mappings:container_group_port_mapping_list ->
-  ?instance_id:instance_id ->
-  ?compute_name:compute_name ->
-  ?container_group_type:container_group_type ->
-  ?container_group_definition_arn:container_group_definition_arn ->
-  ?location:location_string_model ->
-  ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id ->
+val make_deregister_game_server_input :
+  game_server_group_name:game_server_group_name_or_arn ->
+  game_server_id:game_server_id ->
   unit ->
-  describe_container_group_port_mappings_output
+  deregister_game_server_input
 
-val make_describe_container_group_port_mappings_input :
-  ?container_name:non_zero_and128_max_ascii_string ->
-  ?instance_id:instance_id ->
-  ?compute_name:compute_name_or_arn ->
-  container_group_type:container_group_type ->
-  fleet_id:fleet_id_or_arn ->
-  unit ->
-  describe_container_group_port_mappings_input
+val make_describe_alias_output : ?alias:alias -> unit -> describe_alias_output
+val make_describe_alias_input : alias_id:alias_id_or_arn -> unit -> describe_alias_input
+val make_describe_build_output : ?build:build -> unit -> describe_build_output
+val make_describe_build_input : build_id:build_id_or_arn -> unit -> describe_build_input
+val make_describe_compute_output : ?compute:compute -> unit -> describe_compute_output
+
+val make_describe_compute_input :
+  fleet_id:fleet_id_or_arn -> compute_name:compute_name_or_arn -> unit -> describe_compute_input
+
+val make_describe_container_fleet_output :
+  ?container_fleet:container_fleet -> unit -> describe_container_fleet_output
+
+val make_describe_container_fleet_input :
+  fleet_id:fleet_id_or_arn -> unit -> describe_container_fleet_input
 
 val make_describe_container_group_definition_output :
   ?container_group_definition:container_group_definition ->
@@ -1714,5019 +945,1161 @@ val make_describe_container_group_definition_input :
   unit ->
   describe_container_group_definition_input
 
-val make_describe_container_fleet_output :
-  ?container_fleet:container_fleet -> unit -> describe_container_fleet_output
-
-val make_describe_container_fleet_input :
-  fleet_id:fleet_id_or_arn -> unit -> describe_container_fleet_input
-
-val make_describe_compute_output : ?compute:compute -> unit -> describe_compute_output
-
-val make_describe_compute_input :
-  compute_name:compute_name_or_arn -> fleet_id:fleet_id_or_arn -> unit -> describe_compute_input
-
-val make_describe_build_output : ?build:build -> unit -> describe_build_output
-val make_describe_build_input : build_id:build_id_or_arn -> unit -> describe_build_input
-val make_describe_alias_output : ?alias:alias -> unit -> describe_alias_output
-val make_describe_alias_input : alias_id:alias_id_or_arn -> unit -> describe_alias_input
-
-val make_deregister_game_server_input :
-  game_server_id:game_server_id ->
-  game_server_group_name:game_server_group_name_or_arn ->
-  unit ->
-  deregister_game_server_input
-
-val make_deregister_compute_output : unit -> unit
-
-val make_deregister_compute_input :
-  compute_name:compute_name_or_arn -> fleet_id:fleet_id_or_arn -> unit -> deregister_compute_input
-
-val make_delete_vpc_peering_connection_output : unit -> unit
-
-val make_delete_vpc_peering_connection_input :
-  vpc_peering_connection_id:non_zero_and_max_string ->
-  fleet_id:fleet_id ->
-  unit ->
-  delete_vpc_peering_connection_input
-
-val make_delete_vpc_peering_authorization_output : unit -> unit
-
-val make_delete_vpc_peering_authorization_input :
-  peer_vpc_id:non_zero_and_max_string ->
-  game_lift_aws_account_id:non_zero_and_max_string ->
-  unit ->
-  delete_vpc_peering_authorization_input
-
-val make_delete_script_input : script_id:script_id_or_arn -> unit -> delete_script_input
-
-val make_delete_scaling_policy_input :
-  fleet_id:fleet_id_or_arn -> name:non_zero_and_max_string -> unit -> delete_scaling_policy_input
-
-val make_delete_matchmaking_rule_set_output : unit -> unit
-
-val make_delete_matchmaking_rule_set_input :
-  name:matchmaking_rule_set_name -> unit -> delete_matchmaking_rule_set_input
-
-val make_delete_matchmaking_configuration_output : unit -> unit
-
-val make_delete_matchmaking_configuration_input :
-  name:matchmaking_configuration_name -> unit -> delete_matchmaking_configuration_input
-
-val make_delete_location_output : unit -> unit
-
-val make_delete_location_input :
-  location_name:custom_location_name_or_arn_model -> unit -> delete_location_input
-
-val make_delete_game_session_queue_output : unit -> unit
-
-val make_delete_game_session_queue_input :
-  name:game_session_queue_name_or_arn -> unit -> delete_game_session_queue_input
-
-val make_delete_game_server_group_output :
-  ?game_server_group:game_server_group -> unit -> delete_game_server_group_output
-
-val make_delete_game_server_group_input :
-  ?delete_option:game_server_group_delete_option ->
-  game_server_group_name:game_server_group_name_or_arn ->
-  unit ->
-  delete_game_server_group_input
-
-val make_delete_fleet_locations_output :
-  ?location_states:location_state_list ->
+val make_describe_container_group_port_mappings_output :
+  ?fleet_id:fleet_id ->
   ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id_or_arn ->
-  unit ->
-  delete_fleet_locations_output
-
-val make_delete_fleet_locations_input :
-  locations:location_list -> fleet_id:fleet_id_or_arn -> unit -> delete_fleet_locations_input
-
-val make_delete_fleet_input : fleet_id:fleet_id_or_arn -> unit -> delete_fleet_input
-val make_delete_container_group_definition_output : unit -> unit
-
-val make_delete_container_group_definition_input :
-  ?version_count_to_retain:whole_number ->
-  ?version_number:positive_integer ->
-  name:container_group_definition_name_or_arn ->
-  unit ->
-  delete_container_group_definition_input
-
-val make_delete_container_fleet_output : unit -> unit
-
-val make_delete_container_fleet_input :
-  fleet_id:fleet_id_or_arn -> unit -> delete_container_fleet_input
-
-val make_delete_build_input : build_id:build_id_or_arn -> unit -> delete_build_input
-val make_delete_alias_input : alias_id:alias_id_or_arn -> unit -> delete_alias_input
-val make_create_vpc_peering_connection_output : unit -> unit
-
-val make_create_vpc_peering_connection_input :
-  peer_vpc_id:non_zero_and_max_string ->
-  peer_vpc_aws_account_id:non_zero_and_max_string ->
-  fleet_id:fleet_id ->
-  unit ->
-  create_vpc_peering_connection_input
-
-val make_create_vpc_peering_authorization_output :
-  ?vpc_peering_authorization:vpc_peering_authorization ->
-  unit ->
-  create_vpc_peering_authorization_output
-
-val make_create_vpc_peering_authorization_input :
-  peer_vpc_id:non_zero_and_max_string ->
-  game_lift_aws_account_id:non_zero_and_max_string ->
-  unit ->
-  create_vpc_peering_authorization_input
-
-val make_create_script_output : ?script:script -> unit -> create_script_output
-
-val make_create_script_input :
-  ?node_js_version:node_js_version ->
-  ?tags:tag_list ->
-  ?zip_file:zip_blob ->
-  ?storage_location:s3_location ->
-  ?version:non_zero_and_max_string ->
-  ?name:non_zero_and_max_string ->
-  unit ->
-  create_script_input
-
-val make_create_player_sessions_output :
-  ?player_sessions:player_session_list -> unit -> create_player_sessions_output
-
-val make_create_player_sessions_input :
-  ?player_data_map:player_data_map ->
-  player_ids:player_id_list ->
-  game_session_id:arn_string_model ->
-  unit ->
-  create_player_sessions_input
-
-val make_create_player_session_output :
-  ?player_session:player_session -> unit -> create_player_session_output
-
-val make_create_player_session_input :
-  ?player_data:player_data ->
-  player_id:player_id ->
-  game_session_id:arn_string_model ->
-  unit ->
-  create_player_session_input
-
-val make_create_matchmaking_rule_set_output :
-  rule_set:matchmaking_rule_set -> unit -> create_matchmaking_rule_set_output
-
-val make_create_matchmaking_rule_set_input :
-  ?tags:tag_list ->
-  rule_set_body:rule_set_body ->
-  name:matchmaking_id_string_model ->
-  unit ->
-  create_matchmaking_rule_set_input
-
-val make_create_matchmaking_configuration_output :
-  ?configuration:matchmaking_configuration -> unit -> create_matchmaking_configuration_output
-
-val make_create_matchmaking_configuration_input :
-  ?tags:tag_list ->
-  ?flex_match_mode:flex_match_mode ->
-  ?backfill_mode:backfill_mode ->
-  ?game_session_data:game_session_data ->
-  ?game_properties:game_property_list ->
-  ?custom_event_data:custom_event_data ->
-  ?additional_player_count:whole_number ->
-  ?notification_target:sns_arn_string_model ->
-  ?acceptance_timeout_seconds:matchmaking_acceptance_timeout_integer ->
-  ?game_session_queue_arns:queue_arns_list ->
-  ?description:non_zero_and_max_string ->
-  rule_set_name:matchmaking_rule_set_name ->
-  acceptance_required:boolean_model ->
-  request_timeout_seconds:matchmaking_request_timeout_integer ->
-  name:matchmaking_id_string_model ->
-  unit ->
-  create_matchmaking_configuration_input
-
-val make_create_location_output : ?location:location_model -> unit -> create_location_output
-
-val make_create_location_input :
-  ?tags:tag_list ->
-  location_name:custom_input_location_string_model ->
-  unit ->
-  create_location_input
-
-val make_create_game_session_queue_output :
-  ?game_session_queue:game_session_queue -> unit -> create_game_session_queue_output
-
-val make_create_game_session_queue_input :
-  ?tags:tag_list ->
-  ?notification_target:queue_sns_arn_string_model ->
-  ?custom_event_data:queue_custom_event_data ->
-  ?priority_configuration:priority_configuration ->
-  ?filter_configuration:filter_configuration ->
-  ?destinations:game_session_queue_destination_list ->
-  ?player_latency_policies:player_latency_policy_list ->
-  ?timeout_in_seconds:whole_number ->
-  name:game_session_queue_name ->
-  unit ->
-  create_game_session_queue_input
-
-val make_create_game_session_output :
-  ?game_session:game_session -> unit -> create_game_session_output
-
-val make_create_game_session_input :
   ?location:location_string_model ->
-  ?game_session_data:large_game_session_data ->
-  ?idempotency_token:id_string_model ->
-  ?game_session_id:id_string_model ->
-  ?creator_id:non_zero_and_max_string ->
-  ?game_properties:game_property_list ->
-  ?name:non_zero_and_max_string ->
-  ?alias_id:alias_id_or_arn ->
-  ?fleet_id:fleet_id_or_arn ->
-  maximum_player_session_count:whole_number ->
+  ?container_group_definition_arn:container_group_definition_arn ->
+  ?container_group_type:container_group_type ->
+  ?compute_name:compute_name ->
+  ?instance_id:instance_id ->
+  ?container_group_port_mappings:container_group_port_mapping_list ->
   unit ->
-  create_game_session_input
+  describe_container_group_port_mappings_output
 
-val make_create_game_server_group_output :
-  ?game_server_group:game_server_group -> unit -> create_game_server_group_output
-
-val make_create_game_server_group_input :
-  ?tags:tag_list ->
-  ?vpc_subnets:vpc_subnets ->
-  ?game_server_protection_policy:game_server_protection_policy ->
-  ?balancing_strategy:balancing_strategy ->
-  ?auto_scaling_policy:game_server_group_auto_scaling_policy ->
-  instance_definitions:instance_definitions ->
-  launch_template:launch_template_specification ->
-  max_size:positive_integer ->
-  min_size:whole_number ->
-  role_arn:iam_role_arn ->
-  game_server_group_name:game_server_group_name ->
+val make_describe_container_group_port_mappings_input :
+  ?compute_name:compute_name_or_arn ->
+  ?instance_id:instance_id ->
+  ?container_name:non_zero_and128_max_ascii_string ->
+  fleet_id:fleet_id_or_arn ->
+  container_group_type:container_group_type ->
   unit ->
-  create_game_server_group_input
+  describe_container_group_port_mappings_input
 
-val make_create_fleet_locations_output :
-  ?location_states:location_state_list ->
+val make_ec2_instance_limit :
+  ?ec2_instance_type:ec2_instance_type ->
+  ?current_instances:whole_number ->
+  ?instance_limit:whole_number ->
+  ?location:location_string_model ->
+  unit ->
+  ec2_instance_limit
+
+val make_describe_ec2_instance_limits_output :
+  ?ec2_instance_limits:ec2_instance_limit_list -> unit -> describe_ec2_instance_limits_output
+
+val make_describe_ec2_instance_limits_input :
+  ?ec2_instance_type:ec2_instance_type ->
+  ?location:location_string_model ->
+  unit ->
+  describe_ec2_instance_limits_input
+
+val make_describe_fleet_attributes_output :
+  ?fleet_attributes:fleet_attributes_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_fleet_attributes_output
+
+val make_describe_fleet_attributes_input :
+  ?fleet_ids:fleet_id_or_arn_list ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_fleet_attributes_input
+
+val make_managed_capacity_configuration :
+  ?zero_capacity_strategy:zero_capacity_strategy ->
+  ?scale_in_after_inactivity_minutes:scale_in_after_inactivity_minutes ->
+  unit ->
+  managed_capacity_configuration
+
+val make_game_server_container_group_counts :
+  ?pendin_g:whole_number ->
+  ?activ_e:whole_number ->
+  ?idl_e:whole_number ->
+  ?terminatin_g:whole_number ->
+  unit ->
+  game_server_container_group_counts
+
+val make_ec2_instance_counts :
+  ?desire_d:whole_number ->
+  ?minimu_m:whole_number ->
+  ?maximu_m:whole_number ->
+  ?pendin_g:whole_number ->
+  ?activ_e:whole_number ->
+  ?idl_e:whole_number ->
+  ?terminatin_g:whole_number ->
+  unit ->
+  ec2_instance_counts
+
+val make_fleet_capacity :
+  ?fleet_id:fleet_id ->
   ?fleet_arn:fleet_arn ->
-  ?fleet_id:fleet_id_or_arn ->
+  ?instance_type:ec2_instance_type ->
+  ?instance_counts:ec2_instance_counts ->
+  ?location:location_string_model ->
+  ?game_server_container_group_counts:game_server_container_group_counts ->
+  ?managed_capacity_configuration:managed_capacity_configuration ->
   unit ->
-  create_fleet_locations_output
+  fleet_capacity
 
-val make_create_fleet_locations_input :
-  locations:location_configuration_list ->
+val make_describe_fleet_capacity_output :
+  ?fleet_capacity:fleet_capacity_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_fleet_capacity_output
+
+val make_describe_fleet_capacity_input :
+  ?fleet_ids:fleet_id_or_arn_list ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_fleet_capacity_input
+
+val make_locational_deployment :
+  ?deployment_status:deployment_status -> unit -> locational_deployment
+
+val make_fleet_deployment :
+  ?deployment_id:deployment_id ->
+  ?fleet_id:fleet_id ->
+  ?game_server_binary_arn:fleet_binary_arn ->
+  ?rollback_game_server_binary_arn:fleet_binary_arn ->
+  ?per_instance_binary_arn:fleet_binary_arn ->
+  ?rollback_per_instance_binary_arn:fleet_binary_arn ->
+  ?deployment_status:deployment_status ->
+  ?deployment_configuration:deployment_configuration ->
+  ?creation_time:timestamp ->
+  unit ->
+  fleet_deployment
+
+val make_describe_fleet_deployment_output :
+  ?fleet_deployment:fleet_deployment ->
+  ?locational_deployments:locational_deployments ->
+  unit ->
+  describe_fleet_deployment_output
+
+val make_describe_fleet_deployment_input :
+  ?deployment_id:deployment_id ->
   fleet_id:fleet_id_or_arn ->
   unit ->
-  create_fleet_locations_input
+  describe_fleet_deployment_input
 
-val make_create_fleet_output :
-  ?location_states:location_state_list ->
-  ?fleet_attributes:fleet_attributes ->
+val make_event :
+  ?event_id:non_zero_and_max_string ->
+  ?resource_id:non_zero_and_max_string ->
+  ?event_code:event_code ->
+  ?message:non_empty_string ->
+  ?event_time:timestamp ->
+  ?pre_signed_log_url:non_zero_and_max_string ->
+  ?count:event_count ->
   unit ->
-  create_fleet_output
+  event
 
-val make_create_fleet_input :
-  ?player_gateway_configuration:player_gateway_configuration ->
-  ?player_gateway_mode:player_gateway_mode ->
-  ?instance_role_credentials_provider:instance_role_credentials_provider ->
-  ?anywhere_configuration:anywhere_configuration ->
-  ?compute_type:compute_type ->
-  ?tags:tag_list ->
-  ?locations:location_configuration_list ->
-  ?certificate_configuration:certificate_configuration ->
-  ?instance_role_arn:non_empty_string ->
-  ?fleet_type:fleet_type ->
-  ?peer_vpc_id:non_zero_and_max_string ->
-  ?peer_vpc_aws_account_id:non_zero_and_max_string ->
-  ?metric_groups:metric_group_list ->
-  ?resource_creation_limit_policy:resource_creation_limit_policy ->
-  ?runtime_configuration:runtime_configuration ->
-  ?new_game_session_protection_policy:protection_policy ->
-  ?ec2_inbound_permissions:ip_permissions_list ->
-  ?ec2_instance_type:ec2_instance_type ->
-  ?log_paths:string_list ->
-  ?server_launch_parameters:launch_parameters_string_model ->
-  ?server_launch_path:launch_path_string_model ->
-  ?script_id:script_id_or_arn ->
-  ?build_id:build_id_or_arn ->
-  ?description:non_zero_and_max_string ->
-  name:non_zero_and_max_string ->
+val make_describe_fleet_events_output :
+  ?events:event_list -> ?next_token:non_zero_and_max_string -> unit -> describe_fleet_events_output
+
+val make_describe_fleet_events_input :
+  ?start_time:timestamp ->
+  ?end_time:timestamp ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  fleet_id:fleet_id_or_arn ->
   unit ->
-  create_fleet_input
+  describe_fleet_events_input
 
-val make_create_container_group_definition_output :
-  ?container_group_definition:container_group_definition ->
+val make_location_attributes :
+  ?location_state:location_state ->
+  ?stopped_actions:fleet_action_list ->
+  ?update_status:location_update_status ->
   unit ->
-  create_container_group_definition_output
+  location_attributes
 
-val make_create_container_group_definition_input :
-  ?tags:tag_list ->
-  ?version_description:non_zero_and_max_string ->
-  ?support_container_definitions:support_container_definition_input_list ->
-  ?game_server_container_definition:game_server_container_definition_input ->
-  ?container_group_type:container_group_type ->
-  operating_system:container_operating_system ->
-  total_vcpu_limit:container_total_vcpu_limit ->
-  total_memory_limit_mebibytes:container_total_memory_limit ->
-  name:container_group_definition_name ->
+val make_describe_fleet_location_attributes_output :
+  ?fleet_id:fleet_id_or_arn ->
+  ?fleet_arn:fleet_arn ->
+  ?location_attributes:location_attributes_list ->
+  ?next_token:non_zero_and_max_string ->
   unit ->
-  create_container_group_definition_input
+  describe_fleet_location_attributes_output
 
-val make_create_container_fleet_output :
-  ?container_fleet:container_fleet -> unit -> create_container_fleet_output
-
-val make_create_container_fleet_input :
-  ?player_gateway_mode:player_gateway_mode ->
-  ?tags:tag_list ->
-  ?log_configuration:log_configuration ->
-  ?game_session_creation_limit_policy:game_session_creation_limit_policy ->
-  ?new_game_session_protection_policy:protection_policy ->
-  ?metric_groups:metric_group_list ->
-  ?locations:location_configuration_list ->
-  ?billing_type:container_fleet_billing_type ->
-  ?instance_type:non_zero_and_max_string ->
-  ?game_server_container_groups_per_instance:game_server_container_groups_per_instance ->
-  ?instance_inbound_permissions:ip_permissions_list ->
-  ?instance_connection_port_range:connection_port_range ->
-  ?per_instance_container_group_definition_name:container_group_definition_name_or_arn ->
-  ?game_server_container_group_definition_name:container_group_definition_name_or_arn ->
-  ?description:non_zero_and_max_string ->
-  fleet_role_arn:iam_role_arn ->
+val make_describe_fleet_location_attributes_input :
+  ?locations:location_list ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  fleet_id:fleet_id_or_arn ->
   unit ->
-  create_container_fleet_input
+  describe_fleet_location_attributes_input
 
-val make_create_build_output :
-  ?storage_location:s3_location ->
-  ?upload_credentials:aws_credentials ->
-  ?build:build ->
+val make_describe_fleet_location_capacity_output :
+  ?fleet_capacity:fleet_capacity -> unit -> describe_fleet_location_capacity_output
+
+val make_describe_fleet_location_capacity_input :
+  fleet_id:fleet_id_or_arn ->
+  location:location_string_model ->
   unit ->
-  create_build_output
+  describe_fleet_location_capacity_input
 
-val make_create_build_input :
-  ?server_sdk_version:server_sdk_version ->
-  ?tags:tag_list ->
-  ?operating_system:operating_system ->
-  ?storage_location:s3_location ->
-  ?version:non_zero_and_max_string ->
-  ?name:non_zero_and_max_string ->
+val make_fleet_utilization :
+  ?fleet_id:fleet_id ->
+  ?fleet_arn:fleet_arn ->
+  ?active_server_process_count:whole_number ->
+  ?active_game_session_count:whole_number ->
+  ?current_player_session_count:whole_number ->
+  ?maximum_player_session_count:whole_number ->
+  ?location:location_string_model ->
   unit ->
-  create_build_input
+  fleet_utilization
 
-val make_create_alias_output : ?alias:alias -> unit -> create_alias_output
+val make_describe_fleet_location_utilization_output :
+  ?fleet_utilization:fleet_utilization -> unit -> describe_fleet_location_utilization_output
 
-val make_create_alias_input :
-  ?tags:tag_list ->
-  ?description:non_zero_and_max_string ->
-  routing_strategy:routing_strategy ->
-  name:non_blank_and_length_constraint_string ->
+val make_describe_fleet_location_utilization_input :
+  fleet_id:fleet_id_or_arn ->
+  location:location_string_model ->
   unit ->
-  create_alias_input
+  describe_fleet_location_utilization_input
 
-val make_claim_game_server_output : ?game_server:game_server -> unit -> claim_game_server_output
+val make_describe_fleet_port_settings_output :
+  ?fleet_id:fleet_id ->
+  ?fleet_arn:fleet_arn ->
+  ?inbound_permissions:ip_permissions_list ->
+  ?update_status:location_update_status ->
+  ?location:location_string_model ->
+  unit ->
+  describe_fleet_port_settings_output
 
-val make_claim_filter_option :
-  ?instance_statuses:filter_instance_statuses -> unit -> claim_filter_option
+val make_describe_fleet_port_settings_input :
+  ?location:location_string_model ->
+  fleet_id:fleet_id_or_arn ->
+  unit ->
+  describe_fleet_port_settings_input
 
-val make_claim_game_server_input :
-  ?filter_option:claim_filter_option ->
-  ?game_server_data:game_server_data ->
-  ?game_server_id:game_server_id ->
+val make_describe_fleet_utilization_output :
+  ?fleet_utilization:fleet_utilization_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_fleet_utilization_output
+
+val make_describe_fleet_utilization_input :
+  ?fleet_ids:fleet_id_or_arn_list ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_fleet_utilization_input
+
+val make_describe_game_server_output :
+  ?game_server:game_server -> unit -> describe_game_server_output
+
+val make_describe_game_server_input :
+  game_server_group_name:game_server_group_name_or_arn ->
+  game_server_id:game_server_id ->
+  unit ->
+  describe_game_server_input
+
+val make_describe_game_server_group_output :
+  ?game_server_group:game_server_group -> unit -> describe_game_server_group_output
+
+val make_describe_game_server_group_input :
+  game_server_group_name:game_server_group_name_or_arn -> unit -> describe_game_server_group_input
+
+val make_game_server_instance :
+  ?game_server_group_name:game_server_group_name ->
+  ?game_server_group_arn:game_server_group_arn ->
+  ?instance_id:game_server_instance_id ->
+  ?instance_status:game_server_instance_status ->
+  unit ->
+  game_server_instance
+
+val make_describe_game_server_instances_output :
+  ?game_server_instances:game_server_instances ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_game_server_instances_output
+
+val make_describe_game_server_instances_input :
+  ?instance_ids:game_server_instance_ids ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
   game_server_group_name:game_server_group_name_or_arn ->
   unit ->
-  claim_game_server_input
+  describe_game_server_instances_input
 
-val make_accept_match_output : unit -> unit
+val make_game_session_detail :
+  ?game_session:game_session -> ?protection_policy:protection_policy -> unit -> game_session_detail
 
-val make_accept_match_input :
-  acceptance_type:acceptance_type ->
-  player_ids:player_ids_for_accept_match ->
-  ticket_id:matchmaking_id_string_model ->
+val make_describe_game_session_details_output :
+  ?game_session_details:game_session_detail_list ->
+  ?next_token:non_zero_and_max_string ->
   unit ->
-  accept_match_input
+  describe_game_session_details_output
+
+val make_describe_game_session_details_input :
+  ?fleet_id:fleet_id_or_arn ->
+  ?game_session_id:arn_string_model ->
+  ?alias_id:alias_id_or_arn ->
+  ?location:location_string_model ->
+  ?status_filter:non_zero_and_max_string ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_game_session_details_input
+
+val make_priority_configuration_override :
+  ?placement_fallback_strategy:placement_fallback_strategy ->
+  location_order:location_order_override_list ->
+  unit ->
+  priority_configuration_override
+
+val make_placed_player_session :
+  ?player_id:player_id -> ?player_session_id:player_session_id -> unit -> placed_player_session
+
+val make_player_latency :
+  ?player_id:player_id ->
+  ?region_identifier:non_zero_and_max_string ->
+  ?latency_in_milliseconds:float_ ->
+  unit ->
+  player_latency
+
+val make_game_session_placement :
+  ?placement_id:id_string_model ->
+  ?game_session_queue_name:game_session_queue_name ->
+  ?status:game_session_placement_state ->
+  ?game_properties:game_property_list ->
+  ?maximum_player_session_count:whole_number ->
+  ?game_session_name:non_zero_and_max_string ->
+  ?game_session_id:non_zero_and_max_string ->
+  ?game_session_arn:non_zero_and_max_string ->
+  ?game_session_region:non_zero_and_max_string ->
+  ?player_latencies:player_latency_list ->
+  ?start_time:timestamp ->
+  ?end_time:timestamp ->
+  ?ip_address:ip_address ->
+  ?dns_name:dns_name ->
+  ?port:port_number ->
+  ?placed_player_sessions:placed_player_session_list ->
+  ?game_session_data:large_game_session_data ->
+  ?matchmaker_data:matchmaker_data ->
+  ?priority_configuration_override:priority_configuration_override ->
+  ?player_gateway_status:player_gateway_status ->
+  unit ->
+  game_session_placement
+
+val make_describe_game_session_placement_output :
+  ?game_session_placement:game_session_placement -> unit -> describe_game_session_placement_output
+
+val make_describe_game_session_placement_input :
+  placement_id:id_string_model -> unit -> describe_game_session_placement_input
+
+val make_describe_game_session_queues_output :
+  ?game_session_queues:game_session_queue_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_game_session_queues_output
+
+val make_describe_game_session_queues_input :
+  ?names:game_session_queue_name_or_arn_list ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_game_session_queues_input
+
+val make_describe_game_sessions_output :
+  ?game_sessions:game_session_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_game_sessions_output
+
+val make_describe_game_sessions_input :
+  ?fleet_id:fleet_id_or_arn ->
+  ?game_session_id:arn_string_model ->
+  ?alias_id:alias_id_or_arn ->
+  ?location:location_string_model ->
+  ?status_filter:non_zero_and_max_string ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_game_sessions_input
+
+val make_instance :
+  ?fleet_id:fleet_id ->
+  ?fleet_arn:fleet_arn ->
+  ?instance_id:instance_id ->
+  ?ip_address:ip_address ->
+  ?dns_name:dns_name ->
+  ?operating_system:operating_system ->
+  ?type_:ec2_instance_type ->
+  ?status:instance_status ->
+  ?creation_time:timestamp ->
+  ?location:location_string_model ->
+  unit ->
+  instance
+
+val make_describe_instances_output :
+  ?instances:instance_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_instances_output
+
+val make_describe_instances_input :
+  ?instance_id:instance_id ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  ?location:location_string_model ->
+  fleet_id:fleet_id_or_arn ->
+  unit ->
+  describe_instances_input
+
+val make_matched_player_session :
+  ?player_id:player_id -> ?player_session_id:player_session_id -> unit -> matched_player_session
+
+val make_game_session_connection_info :
+  ?game_session_arn:arn_string_model ->
+  ?ip_address:ip_address ->
+  ?dns_name:dns_name ->
+  ?port:positive_integer ->
+  ?matched_player_sessions:matched_player_session_list ->
+  ?player_gateway_status:player_gateway_status ->
+  unit ->
+  game_session_connection_info
+
+val make_player :
+  ?player_id:player_id ->
+  ?player_attributes:player_attribute_map ->
+  ?team:non_zero_and_max_string ->
+  ?latency_in_ms:latency_map ->
+  unit ->
+  player
+
+val make_matchmaking_ticket :
+  ?ticket_id:matchmaking_id_string_model ->
+  ?configuration_name:matchmaking_id_string_model ->
+  ?configuration_arn:matchmaking_configuration_arn ->
+  ?status:matchmaking_configuration_status ->
+  ?status_reason:string_model ->
+  ?status_message:string_model ->
+  ?start_time:timestamp ->
+  ?end_time:timestamp ->
+  ?players:player_list ->
+  ?game_session_connection_info:game_session_connection_info ->
+  ?estimated_wait_time:whole_number ->
+  unit ->
+  matchmaking_ticket
+
+val make_describe_matchmaking_output :
+  ?ticket_list:matchmaking_ticket_list -> unit -> describe_matchmaking_output
+
+val make_describe_matchmaking_input :
+  ticket_ids:matchmaking_id_list -> unit -> describe_matchmaking_input
+
+val make_describe_matchmaking_configurations_output :
+  ?configurations:matchmaking_configuration_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_matchmaking_configurations_output
+
+val make_describe_matchmaking_configurations_input :
+  ?names:matchmaking_configuration_name_list ->
+  ?rule_set_name:matchmaking_rule_set_name ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_matchmaking_configurations_input
+
+val make_describe_matchmaking_rule_sets_output :
+  ?next_token:non_zero_and_max_string ->
+  rule_sets:matchmaking_rule_set_list ->
+  unit ->
+  describe_matchmaking_rule_sets_output
+
+val make_describe_matchmaking_rule_sets_input :
+  ?names:matchmaking_rule_set_name_list ->
+  ?limit:rule_set_limit ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_matchmaking_rule_sets_input
+
+val make_describe_player_sessions_output :
+  ?player_sessions:player_session_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_player_sessions_output
+
+val make_describe_player_sessions_input :
+  ?game_session_id:arn_string_model ->
+  ?player_id:player_id ->
+  ?player_session_id:player_session_id ->
+  ?player_session_status_filter:non_zero_and_max_string ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_player_sessions_input
+
+val make_describe_runtime_configuration_output :
+  ?runtime_configuration:runtime_configuration -> unit -> describe_runtime_configuration_output
+
+val make_describe_runtime_configuration_input :
+  fleet_id:fleet_id_or_arn -> unit -> describe_runtime_configuration_input
+
+val make_target_configuration : target_value:double -> unit -> target_configuration
+
+val make_scaling_policy :
+  ?fleet_id:fleet_id ->
+  ?fleet_arn:fleet_arn ->
+  ?name:non_zero_and_max_string ->
+  ?status:scaling_status_type ->
+  ?scaling_adjustment:integer ->
+  ?scaling_adjustment_type:scaling_adjustment_type ->
+  ?comparison_operator:comparison_operator_type ->
+  ?threshold:double ->
+  ?evaluation_periods:positive_integer ->
+  ?metric_name:metric_name ->
+  ?policy_type:policy_type ->
+  ?target_configuration:target_configuration ->
+  ?update_status:location_update_status ->
+  ?location:location_string_model ->
+  unit ->
+  scaling_policy
+
+val make_describe_scaling_policies_output :
+  ?scaling_policies:scaling_policy_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  describe_scaling_policies_output
+
+val make_describe_scaling_policies_input :
+  ?status_filter:scaling_status_type ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  ?location:location_string_model ->
+  fleet_id:fleet_id_or_arn ->
+  unit ->
+  describe_scaling_policies_input
+
+val make_describe_script_output : ?script:script -> unit -> describe_script_output
+val make_describe_script_input : script_id:script_id_or_arn -> unit -> describe_script_input
+
+val make_describe_vpc_peering_authorizations_output :
+  ?vpc_peering_authorizations:vpc_peering_authorization_list ->
+  unit ->
+  describe_vpc_peering_authorizations_output
+
+val make_describe_vpc_peering_authorizations_input : unit -> unit
+
+val make_vpc_peering_connection_status :
+  ?code:non_zero_and_max_string ->
+  ?message:non_zero_and_max_string ->
+  unit ->
+  vpc_peering_connection_status
+
+val make_vpc_peering_connection :
+  ?fleet_id:fleet_id ->
+  ?fleet_arn:fleet_arn ->
+  ?ip_v4_cidr_block:non_zero_and_max_string ->
+  ?vpc_peering_connection_id:non_zero_and_max_string ->
+  ?status:vpc_peering_connection_status ->
+  ?peer_vpc_id:non_zero_and_max_string ->
+  ?game_lift_vpc_id:non_zero_and_max_string ->
+  unit ->
+  vpc_peering_connection
+
+val make_describe_vpc_peering_connections_output :
+  ?vpc_peering_connections:vpc_peering_connection_list ->
+  unit ->
+  describe_vpc_peering_connections_output
+
+val make_describe_vpc_peering_connections_input :
+  ?fleet_id:fleet_id -> unit -> describe_vpc_peering_connections_input
+
+val make_desired_player_session :
+  ?player_id:player_id -> ?player_data:player_data -> unit -> desired_player_session
+
+val make_validate_matchmaking_rule_set_output :
+  ?valid:boolean_model -> unit -> validate_matchmaking_rule_set_output
+
+val make_validate_matchmaking_rule_set_input :
+  rule_set_body:rule_set_body -> unit -> validate_matchmaking_rule_set_input
+
+val make_update_script_output : ?script:script -> unit -> update_script_output
+
+val make_update_script_input :
+  ?name:non_zero_and_max_string ->
+  ?version:non_zero_and_max_string ->
+  ?storage_location:s3_location ->
+  ?zip_file:zip_blob ->
+  script_id:script_id_or_arn ->
+  unit ->
+  update_script_input
+
+val make_update_runtime_configuration_output :
+  ?runtime_configuration:runtime_configuration -> unit -> update_runtime_configuration_output
+
+val make_update_runtime_configuration_input :
+  fleet_id:fleet_id_or_arn ->
+  runtime_configuration:runtime_configuration ->
+  unit ->
+  update_runtime_configuration_input
+
+val make_update_matchmaking_configuration_output :
+  ?configuration:matchmaking_configuration -> unit -> update_matchmaking_configuration_output
+
+val make_update_matchmaking_configuration_input :
+  ?description:non_zero_and_max_string ->
+  ?game_session_queue_arns:queue_arns_list ->
+  ?request_timeout_seconds:matchmaking_request_timeout_integer ->
+  ?acceptance_timeout_seconds:matchmaking_acceptance_timeout_integer ->
+  ?acceptance_required:boolean_model ->
+  ?rule_set_name:matchmaking_rule_set_name ->
+  ?notification_target:sns_arn_string_model ->
+  ?additional_player_count:whole_number ->
+  ?custom_event_data:custom_event_data ->
+  ?game_properties:game_property_list ->
+  ?game_session_data:game_session_data ->
+  ?backfill_mode:backfill_mode ->
+  ?flex_match_mode:flex_match_mode ->
+  name:matchmaking_configuration_name ->
+  unit ->
+  update_matchmaking_configuration_input
+
+val make_update_game_session_queue_output :
+  ?game_session_queue:game_session_queue -> unit -> update_game_session_queue_output
+
+val make_update_game_session_queue_input :
+  ?timeout_in_seconds:whole_number ->
+  ?player_latency_policies:player_latency_policy_list ->
+  ?destinations:game_session_queue_destination_list ->
+  ?filter_configuration:filter_configuration ->
+  ?priority_configuration:priority_configuration ->
+  ?custom_event_data:queue_custom_event_data ->
+  ?notification_target:queue_sns_arn_string_model ->
+  name:game_session_queue_name_or_arn ->
+  unit ->
+  update_game_session_queue_input
+
+val make_update_game_session_output :
+  ?game_session:game_session -> unit -> update_game_session_output
+
+val make_update_game_session_input :
+  ?maximum_player_session_count:whole_number ->
+  ?name:non_zero_and_max_string ->
+  ?player_session_creation_policy:player_session_creation_policy ->
+  ?protection_policy:protection_policy ->
+  ?game_properties:game_property_list ->
+  game_session_id:arn_string_model ->
+  unit ->
+  update_game_session_input
+
+val make_update_game_server_group_output :
+  ?game_server_group:game_server_group -> unit -> update_game_server_group_output
+
+val make_update_game_server_group_input :
+  ?role_arn:iam_role_arn ->
+  ?instance_definitions:instance_definitions ->
+  ?game_server_protection_policy:game_server_protection_policy ->
+  ?balancing_strategy:balancing_strategy ->
+  game_server_group_name:game_server_group_name_or_arn ->
+  unit ->
+  update_game_server_group_input
+
+val make_update_game_server_output : ?game_server:game_server -> unit -> update_game_server_output
+
+val make_update_game_server_input :
+  ?game_server_data:game_server_data ->
+  ?utilization_status:game_server_utilization_status ->
+  ?health_check:game_server_health_check ->
+  game_server_group_name:game_server_group_name_or_arn ->
+  game_server_id:game_server_id ->
+  unit ->
+  update_game_server_input
+
+val make_update_fleet_port_settings_output :
+  ?fleet_id:fleet_id -> ?fleet_arn:fleet_arn -> unit -> update_fleet_port_settings_output
+
+val make_update_fleet_port_settings_input :
+  ?inbound_permission_authorizations:ip_permissions_list ->
+  ?inbound_permission_revocations:ip_permissions_list ->
+  fleet_id:fleet_id_or_arn ->
+  unit ->
+  update_fleet_port_settings_input
+
+val make_update_fleet_capacity_output :
+  ?fleet_id:fleet_id ->
+  ?fleet_arn:fleet_arn ->
+  ?location:location_string_model ->
+  ?managed_capacity_configuration:managed_capacity_configuration ->
+  unit ->
+  update_fleet_capacity_output
+
+val make_update_fleet_capacity_input :
+  ?desired_instances:whole_number ->
+  ?min_size:whole_number ->
+  ?max_size:whole_number ->
+  ?location:location_string_model ->
+  ?managed_capacity_configuration:managed_capacity_configuration ->
+  fleet_id:fleet_id_or_arn ->
+  unit ->
+  update_fleet_capacity_input
+
+val make_update_fleet_attributes_output :
+  ?fleet_id:fleet_id -> ?fleet_arn:fleet_arn -> unit -> update_fleet_attributes_output
+
+val make_update_fleet_attributes_input :
+  ?name:non_zero_and_max_string ->
+  ?description:non_zero_and_max_string ->
+  ?new_game_session_protection_policy:protection_policy ->
+  ?resource_creation_limit_policy:resource_creation_limit_policy ->
+  ?metric_groups:metric_group_list ->
+  ?anywhere_configuration:anywhere_configuration ->
+  fleet_id:fleet_id_or_arn ->
+  unit ->
+  update_fleet_attributes_input
+
+val make_update_container_group_definition_output :
+  ?container_group_definition:container_group_definition ->
+  unit ->
+  update_container_group_definition_output
+
+val make_update_container_group_definition_input :
+  ?game_server_container_definition:game_server_container_definition_input ->
+  ?support_container_definitions:support_container_definition_input_list ->
+  ?total_memory_limit_mebibytes:container_total_memory_limit ->
+  ?total_vcpu_limit:container_total_vcpu_limit ->
+  ?version_description:non_zero_and_max_string ->
+  ?source_version_number:positive_integer ->
+  ?operating_system:container_operating_system ->
+  name:container_group_definition_name_or_arn ->
+  unit ->
+  update_container_group_definition_input
+
+val make_update_container_fleet_output :
+  ?container_fleet:container_fleet -> unit -> update_container_fleet_output
+
+val make_update_container_fleet_input :
+  ?game_server_container_group_definition_name:container_group_definition_name_or_arn ->
+  ?per_instance_container_group_definition_name:container_group_definition_name_or_arn ->
+  ?game_server_container_groups_per_instance:game_server_container_groups_per_instance ->
+  ?instance_connection_port_range:connection_port_range ->
+  ?instance_inbound_permission_authorizations:ip_permissions_list ->
+  ?instance_inbound_permission_revocations:ip_permissions_list ->
+  ?deployment_configuration:deployment_configuration ->
+  ?description:non_zero_and_max_string ->
+  ?metric_groups:metric_group_list ->
+  ?new_game_session_protection_policy:protection_policy ->
+  ?game_session_creation_limit_policy:game_session_creation_limit_policy ->
+  ?log_configuration:log_configuration ->
+  ?remove_attributes:container_fleet_remove_attribute_list ->
+  fleet_id:fleet_id_or_arn ->
+  unit ->
+  update_container_fleet_input
+
+val make_update_build_output : ?build:build -> unit -> update_build_output
+
+val make_update_build_input :
+  ?name:non_zero_and_max_string ->
+  ?version:non_zero_and_max_string ->
+  build_id:build_id_or_arn ->
+  unit ->
+  update_build_input
+
+val make_update_alias_output : ?alias:alias -> unit -> update_alias_output
+
+val make_update_alias_input :
+  ?name:non_blank_and_length_constraint_string ->
+  ?description:non_zero_and_max_string ->
+  ?routing_strategy:routing_strategy ->
+  alias_id:alias_id_or_arn ->
+  unit ->
+  update_alias_input
+
+val make_untag_resource_response : unit -> unit
+
+val make_untag_resource_request :
+  resource_ar_n:amazon_resource_name -> tag_keys:tag_key_list -> unit -> untag_resource_request
+
+val make_terminate_game_session_output :
+  ?game_session:game_session -> unit -> terminate_game_session_output
+
+val make_terminate_game_session_input :
+  game_session_id:arn_string_model ->
+  termination_mode:termination_mode ->
+  unit ->
+  terminate_game_session_input
+
+val make_tag_resource_response : unit -> unit
+
+val make_tag_resource_request :
+  resource_ar_n:amazon_resource_name -> tags:tag_list -> unit -> tag_resource_request
+
+val make_suspend_game_server_group_output :
+  ?game_server_group:game_server_group -> unit -> suspend_game_server_group_output
+
+val make_suspend_game_server_group_input :
+  game_server_group_name:game_server_group_name_or_arn ->
+  suspend_actions:game_server_group_actions ->
+  unit ->
+  suspend_game_server_group_input
+
+val make_stop_matchmaking_output : unit -> unit
+
+val make_stop_matchmaking_input :
+  ticket_id:matchmaking_id_string_model -> unit -> stop_matchmaking_input
+
+val make_stop_game_session_placement_output :
+  ?game_session_placement:game_session_placement -> unit -> stop_game_session_placement_output
+
+val make_stop_game_session_placement_input :
+  placement_id:id_string_model -> unit -> stop_game_session_placement_input
+
+val make_stop_fleet_actions_output :
+  ?fleet_id:fleet_id -> ?fleet_arn:fleet_arn -> unit -> stop_fleet_actions_output
+
+val make_stop_fleet_actions_input :
+  ?location:location_string_model ->
+  fleet_id:fleet_id_or_arn ->
+  actions:fleet_action_list ->
+  unit ->
+  stop_fleet_actions_input
+
+val make_start_matchmaking_output :
+  ?matchmaking_ticket:matchmaking_ticket -> unit -> start_matchmaking_output
+
+val make_start_matchmaking_input :
+  ?ticket_id:matchmaking_id_string_model ->
+  configuration_name:matchmaking_configuration_name ->
+  players:player_list ->
+  unit ->
+  start_matchmaking_input
+
+val make_start_match_backfill_output :
+  ?matchmaking_ticket:matchmaking_ticket -> unit -> start_match_backfill_output
+
+val make_start_match_backfill_input :
+  ?ticket_id:matchmaking_id_string_model ->
+  ?game_session_arn:arn_string_model ->
+  configuration_name:matchmaking_configuration_name ->
+  players:player_list ->
+  unit ->
+  start_match_backfill_input
+
+val make_start_game_session_placement_output :
+  ?game_session_placement:game_session_placement -> unit -> start_game_session_placement_output
+
+val make_start_game_session_placement_input :
+  ?game_properties:game_property_list ->
+  ?game_session_name:non_zero_and_max_string ->
+  ?player_latencies:player_latency_list ->
+  ?desired_player_sessions:desired_player_session_list ->
+  ?game_session_data:large_game_session_data ->
+  ?priority_configuration_override:priority_configuration_override ->
+  placement_id:id_string_model ->
+  game_session_queue_name:game_session_queue_name_or_arn ->
+  maximum_player_session_count:whole_number ->
+  unit ->
+  start_game_session_placement_input
+
+val make_start_fleet_actions_output :
+  ?fleet_id:fleet_id -> ?fleet_arn:fleet_arn -> unit -> start_fleet_actions_output
+
+val make_start_fleet_actions_input :
+  ?location:location_string_model ->
+  fleet_id:fleet_id_or_arn ->
+  actions:fleet_action_list ->
+  unit ->
+  start_fleet_actions_input
+
+val make_search_game_sessions_output :
+  ?game_sessions:game_session_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  search_game_sessions_output
+
+val make_search_game_sessions_input :
+  ?fleet_id:fleet_id_or_arn ->
+  ?alias_id:alias_id_or_arn ->
+  ?location:location_string_model ->
+  ?filter_expression:non_zero_and_max_string ->
+  ?sort_expression:non_zero_and_max_string ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  search_game_sessions_input
+
+val make_resume_game_server_group_output :
+  ?game_server_group:game_server_group -> unit -> resume_game_server_group_output
+
+val make_resume_game_server_group_input :
+  game_server_group_name:game_server_group_name_or_arn ->
+  resume_actions:game_server_group_actions ->
+  unit ->
+  resume_game_server_group_input
+
+val make_resolve_alias_output :
+  ?fleet_id:fleet_id -> ?fleet_arn:fleet_arn -> unit -> resolve_alias_output
+
+val make_resolve_alias_input : alias_id:alias_id_or_arn -> unit -> resolve_alias_input
+
+val make_request_upload_credentials_output :
+  ?upload_credentials:aws_credentials ->
+  ?storage_location:s3_location ->
+  unit ->
+  request_upload_credentials_output
+
+val make_request_upload_credentials_input :
+  build_id:build_id_or_arn -> unit -> request_upload_credentials_input
+
+val make_register_game_server_output :
+  ?game_server:game_server -> unit -> register_game_server_output
+
+val make_register_game_server_input :
+  ?connection_info:game_server_connection_info ->
+  ?game_server_data:game_server_data ->
+  game_server_group_name:game_server_group_name_or_arn ->
+  game_server_id:game_server_id ->
+  instance_id:game_server_instance_id ->
+  unit ->
+  register_game_server_input
+
+val make_register_compute_output : ?compute:compute -> unit -> register_compute_output
+
+val make_register_compute_input :
+  ?certificate_path:non_zero_and_max_string ->
+  ?dns_name:dns_name_input ->
+  ?ip_address:ip_address ->
+  ?location:location_string_model ->
+  fleet_id:fleet_id_or_arn ->
+  compute_name:compute_name ->
+  unit ->
+  register_compute_input
+
+val make_put_scaling_policy_output :
+  ?name:non_zero_and_max_string -> unit -> put_scaling_policy_output
+
+val make_put_scaling_policy_input :
+  ?scaling_adjustment:integer ->
+  ?scaling_adjustment_type:scaling_adjustment_type ->
+  ?threshold:double ->
+  ?comparison_operator:comparison_operator_type ->
+  ?evaluation_periods:positive_integer ->
+  ?policy_type:policy_type ->
+  ?target_configuration:target_configuration ->
+  name:non_zero_and_max_string ->
+  fleet_id:fleet_id_or_arn ->
+  metric_name:metric_name ->
+  unit ->
+  put_scaling_policy_input
+
+val make_list_tags_for_resource_response : ?tags:tag_list -> unit -> list_tags_for_resource_response
+
+val make_list_tags_for_resource_request :
+  resource_ar_n:amazon_resource_name -> unit -> list_tags_for_resource_request
+
+val make_list_scripts_output :
+  ?scripts:script_list -> ?next_token:non_empty_string -> unit -> list_scripts_output
+
+val make_list_scripts_input :
+  ?limit:positive_integer -> ?next_token:non_empty_string -> unit -> list_scripts_input
+
+val make_list_locations_output :
+  ?locations:location_model_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_locations_output
+
+val make_list_locations_input :
+  ?filters:location_filter_list ->
+  ?limit:list_locations_limit ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_locations_input
+
+val make_list_game_servers_output :
+  ?game_servers:game_servers ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_game_servers_output
+
+val make_list_game_servers_input :
+  ?sort_order:sort_order ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  game_server_group_name:game_server_group_name_or_arn ->
+  unit ->
+  list_game_servers_input
+
+val make_list_game_server_groups_output :
+  ?game_server_groups:game_server_groups ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_game_server_groups_output
+
+val make_list_game_server_groups_input :
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_game_server_groups_input
+
+val make_list_fleets_output :
+  ?fleet_ids:fleet_id_list -> ?next_token:non_zero_and_max_string -> unit -> list_fleets_output
+
+val make_list_fleets_input :
+  ?build_id:build_id_or_arn ->
+  ?script_id:script_id_or_arn ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_fleets_input
+
+val make_list_fleet_deployments_output :
+  ?fleet_deployments:fleet_deployments ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_fleet_deployments_output
+
+val make_list_fleet_deployments_input :
+  ?fleet_id:fleet_id_or_arn ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_fleet_deployments_input
+
+val make_list_container_group_definition_versions_output :
+  ?container_group_definitions:container_group_definition_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_container_group_definition_versions_output
+
+val make_list_container_group_definition_versions_input :
+  ?limit:list_container_group_definition_versions_limit ->
+  ?next_token:non_zero_and_max_string ->
+  name:container_group_definition_name_or_arn ->
+  unit ->
+  list_container_group_definition_versions_input
+
+val make_list_container_group_definitions_output :
+  ?container_group_definitions:container_group_definition_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_container_group_definitions_output
+
+val make_list_container_group_definitions_input :
+  ?container_group_type:container_group_type ->
+  ?limit:list_container_group_definitions_limit ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_container_group_definitions_input
+
+val make_list_container_fleets_output :
+  ?container_fleets:container_fleet_list ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_container_fleets_output
+
+val make_list_container_fleets_input :
+  ?container_group_definition_name:container_group_definition_name_or_arn ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  unit ->
+  list_container_fleets_input
+
+val make_list_compute_output :
+  ?compute_list:compute_list -> ?next_token:non_zero_and_max_string -> unit -> list_compute_output
+
+val make_list_compute_input :
+  ?location:location_string_model ->
+  ?container_group_definition_name:container_group_definition_name_or_arn ->
+  ?compute_status:list_compute_input_status ->
+  ?limit:positive_integer ->
+  ?next_token:non_zero_and_max_string ->
+  fleet_id:fleet_id_or_arn ->
+  unit ->
+  list_compute_input
+
+val make_list_builds_output :
+  ?builds:build_list -> ?next_token:non_empty_string -> unit -> list_builds_output
+
+val make_list_builds_input :
+  ?status:build_status ->
+  ?limit:positive_integer ->
+  ?next_token:non_empty_string ->
+  unit ->
+  list_builds_input
+
+val make_list_aliases_output :
+  ?aliases:alias_list -> ?next_token:non_empty_string -> unit -> list_aliases_output
+
+val make_list_aliases_input :
+  ?routing_strategy_type:routing_strategy_type ->
+  ?name:non_empty_string ->
+  ?limit:positive_integer ->
+  ?next_token:non_empty_string ->
+  unit ->
+  list_aliases_input
+
+val make_player_connection_endpoint :
+  ?ip_address:ip_address -> ?port:port_number -> unit -> player_connection_endpoint
+
+val make_player_connection_detail :
+  ?player_id:player_id ->
+  ?endpoints:player_connection_endpoint_list ->
+  ?player_gateway_token:max_string ->
+  ?expiration:timestamp ->
+  unit ->
+  player_connection_detail
+
+val make_get_player_connection_details_output :
+  ?game_session_id:arn_string_model ->
+  ?player_connection_details:player_connection_detail_list ->
+  unit ->
+  get_player_connection_details_output
+
+val make_get_player_connection_details_input :
+  game_session_id:arn_string_model ->
+  player_ids:player_id_list ->
+  unit ->
+  get_player_connection_details_input
+
+val make_instance_credentials :
+  ?user_name:non_empty_string -> ?secret:non_empty_string -> unit -> instance_credentials
+
+val make_instance_access :
+  ?fleet_id:fleet_id ->
+  ?instance_id:instance_id ->
+  ?ip_address:ip_address ->
+  ?operating_system:operating_system ->
+  ?credentials:instance_credentials ->
+  unit ->
+  instance_access
+
+val make_get_instance_access_output :
+  ?instance_access:instance_access -> unit -> get_instance_access_output
+
+val make_get_instance_access_input :
+  fleet_id:fleet_id_or_arn -> instance_id:instance_id -> unit -> get_instance_access_input
+
+val make_get_game_session_log_url_output :
+  ?pre_signed_url:non_zero_and_max_string -> unit -> get_game_session_log_url_output
+
+val make_get_game_session_log_url_input :
+  game_session_id:arn_string_model -> unit -> get_game_session_log_url_input
+
+val make_get_compute_auth_token_output :
+  ?fleet_id:fleet_id_or_arn ->
+  ?fleet_arn:fleet_arn ->
+  ?compute_name:compute_name_or_arn ->
+  ?compute_arn:compute_arn ->
+  ?auth_token:compute_auth_token ->
+  ?expiration_timestamp:timestamp ->
+  unit ->
+  get_compute_auth_token_output
+
+val make_get_compute_auth_token_input :
+  fleet_id:fleet_id_or_arn ->
+  compute_name:compute_name_or_arn ->
+  unit ->
+  get_compute_auth_token_input
+
+val make_get_compute_access_output :
+  ?fleet_id:fleet_id_or_arn ->
+  ?fleet_arn:fleet_arn ->
+  ?compute_name:compute_name_or_arn ->
+  ?compute_arn:compute_arn ->
+  ?credentials:aws_credentials ->
+  ?target:session_target ->
+  ?container_identifiers:container_identifier_list ->
+  unit ->
+  get_compute_access_output
+
+val make_get_compute_access_input :
+  fleet_id:fleet_id_or_arn -> compute_name:compute_name_or_arn -> unit -> get_compute_access_input
 (** {1:operations Operations} *)
-
-module AcceptMatch : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    accept_match_input ->
-    ( accept_match_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    accept_match_input ->
-    ( accept_match_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Registers a player's acceptance or rejection of a proposed FlexMatch match. A matchmaking \
-   configuration may require player acceptance; if so, then matches built with that configuration \
-   cannot be completed unless all players accept the proposed match within a specified time limit. \n\
-  \ \n\
-  \  When FlexMatch builds a match, all the matchmaking tickets involved in the proposed match are \
-   placed into status [REQUIRES_ACCEPTANCE]. This is a trigger for your game to get acceptance \
-   from all players in each ticket. Calls to this action are only valid for tickets that are in \
-   this status; calls for tickets not in this status result in an error.\n\
-  \  \n\
-  \   To register acceptance, specify the ticket ID, one or more players, and an acceptance \
-   response. When all players have accepted, Amazon GameLift Servers advances the matchmaking \
-   tickets to status [PLACING], and attempts to create a new game session for the match. \n\
-  \   \n\
-  \    If any player rejects the match, or if acceptances are not received before a specified \
-   timeout, the proposed match is dropped. Each matchmaking ticket in the failed match is handled \
-   as follows: \n\
-  \    \n\
-  \     {ul\n\
-  \           {-  If the ticket has one or more players who rejected the match or failed to \
-   respond, the ticket status is set [CANCELLED] and processing is terminated.\n\
-  \               \n\
-  \                }\n\
-  \           {-  If all players in the ticket accepted the match, the ticket status is returned \
-   to [SEARCHING] to find a new match. \n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \    {b Learn more} \n\
-  \   \n\
-  \     {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-client.html} Add \
-   FlexMatch to a game client} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-events.html} \
-   FlexMatch events} (reference)\n\
-  \     "]
-
-module ClaimGameServer : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `OutOfCapacityException of out_of_capacity_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    claim_game_server_input ->
-    ( claim_game_server_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `OutOfCapacityException of out_of_capacity_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    claim_game_server_input ->
-    ( claim_game_server_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `OutOfCapacityException of out_of_capacity_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
-  \ Locates an available game server and temporarily reserves it to host gameplay and players. \
-   This operation is called from a game client or client service (such as a matchmaker) to request \
-   hosting resources for a new game session. In response, Amazon GameLift Servers FleetIQ locates \
-   an available game server, places it in [CLAIMED] status for 60 seconds, and returns connection \
-   information that players can use to connect to the game server. \n\
-  \ \n\
-  \  To claim a game server, identify a game server group. You can also specify a game server ID, \
-   although this approach bypasses Amazon GameLift Servers FleetIQ placement optimization. \
-   Optionally, include game data to pass to the game server at the start of a game session, such \
-   as a game map or player information. Add filter options to further restrict how a game server \
-   is chosen, such as only allowing game servers on [ACTIVE] instances to be claimed.\n\
-  \  \n\
-  \   When a game server is successfully claimed, connection information is returned. A claimed \
-   game server's utilization status remains [AVAILABLE] while the claim status is set to [CLAIMED] \
-   for up to 60 seconds. This time period gives the game server time to update its status to \
-   [UTILIZED] after players join. If the game server's status is not updated within 60 seconds, \
-   the game server reverts to unclaimed status and is available to be claimed by another request. \
-   The claim time period is a fixed value and is not configurable.\n\
-  \   \n\
-  \    If you try to claim a specific game server, this request will fail in the following cases:\n\
-  \    \n\
-  \     {ul\n\
-  \           {-  If the game server utilization status is [UTILIZED].\n\
-  \               \n\
-  \                }\n\
-  \           {-  If the game server claim status is [CLAIMED].\n\
-  \               \n\
-  \                }\n\
-  \           {-  If the game server is running on an instance in [DRAINING] status and the \
-   provided filter option does not allow placing on [DRAINING] instances.\n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \    {b Learn more} \n\
-  \   \n\
-  \     {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon GameLift \
-   Servers FleetIQ Guide} \n\
-  \    "]
-
-module CreateAlias : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_alias_input ->
-    ( create_alias_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_alias_input ->
-    ( create_alias_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Creates an alias for a fleet. In most situations, you can use an alias ID in place of a fleet \
-   ID. An alias provides a level of abstraction for a fleet that is useful when redirecting player \
-   traffic from one fleet to another, such as when updating your game build. \n\
-  \ \n\
-  \  Amazon GameLift Servers supports two types of routing strategies for aliases: simple and \
-   terminal. A simple alias points to an active fleet. A terminal alias is used to display \
-   messaging or link to a URL instead of routing players to an active fleet. For example, you \
-   might use a terminal alias when a game version is no longer supported and you want to direct \
-   players to an upgrade site. \n\
-  \  \n\
-  \   To create a fleet alias, specify an alias name, routing strategy, and optional description. \
-   Each simple alias can point to only one fleet, but a fleet can have multiple aliases. If \
-   successful, a new alias record is returned, including an alias ID and an ARN. You can reassign \
-   an alias to another fleet by calling [UpdateAlias].\n\
-  \   \n\
-  \     {b Related actions} \n\
-  \    \n\
-  \      \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \     "]
-
-module CreateBuild : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_build_input ->
-    ( create_build_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_build_input ->
-    ( create_build_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere\n\n\
-  \ Creates a new Amazon GameLift Servers build resource for your game server binary files. \
-   Combine game server binaries into a zip file for use with Amazon GameLift Servers. \n\
-  \ \n\
-  \   When setting up a new game build for Amazon GameLift Servers, we recommend using the CLI \
-   command {b  \
-   {{:https://docs.aws.amazon.com/cli/latest/reference/gamelift/upload-build.html}upload-build} }. \
-   This helper command combines two tasks: (1) it uploads your build files from a file directory \
-   to an Amazon GameLift Servers Amazon S3 location, and (2) it creates a new build resource.\n\
-  \   \n\
-  \     You can use the [CreateBuild] operation in the following scenarios:\n\
-  \     \n\
-  \      {ul\n\
-  \            {-  Create a new game build with build files that are in an Amazon S3 location \
-   under an Amazon Web Services account that you control. To use this option, you give Amazon \
-   GameLift Servers access to the Amazon S3 bucket. With permissions in place, specify a build \
-   name, operating system, and the Amazon S3 storage location of your game build.\n\
-  \                \n\
-  \                 }\n\
-  \            {-  Upload your build files to a Amazon GameLift Servers Amazon S3 location. To use \
-   this option, specify a build name and operating system. This operation creates a new build \
-   resource and also returns an Amazon S3 location with temporary access credentials. Use the \
-   credentials to manually upload your build files to the specified Amazon S3 location. For more \
-   information, see \
-   {{:https://docs.aws.amazon.com/AmazonS3/latest/dev/UploadingObjects.html}Uploading Objects} in \
-   the {i Amazon S3 Developer Guide}. After you upload build files to the Amazon GameLift Servers \
-   Amazon S3 location, you can't update them. \n\
-  \                \n\
-  \                 }\n\
-  \            }\n\
-  \   If successful, this operation creates a new build resource with a unique build ID and places \
-   it in [INITIALIZED] status. A build must be in [READY] status before you can create fleets with \
-   it.\n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-intro.html}Uploading \
-   Your Game} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-cli-uploading.html#gamelift-build-cli-uploading-create-build} \
-   Create a Build with Files in Amazon S3} \n\
-  \      \n\
-  \        \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \       "]
-
-module CreateContainerFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_container_fleet_input ->
-    ( create_container_fleet_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_container_fleet_input ->
-    ( create_container_fleet_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Container\n\n\
-  \ Creates a managed fleet of Amazon Elastic Compute Cloud (Amazon EC2) instances to host your \
-   containerized game servers. Use this operation to define how to deploy a container architecture \
-   onto each fleet instance and configure fleet settings. You can create a container fleet in any \
-   Amazon Web Services Regions that Amazon GameLift Servers supports for multi-location fleets. A \
-   container fleet can be deployed to a single location or multiple locations. Container fleets \
-   are deployed with Amazon Linux 2023 as the instance operating system.\n\
-  \ \n\
-  \  Define the fleet's container architecture using container group definitions. Each fleet can \
-   have one of the following container group types:\n\
-  \  \n\
-  \   {ul\n\
-  \         {-  The game server container group runs your game server build and dependent \
-   software. Amazon GameLift Servers deploys one or more replicas of this container group to each \
-   fleet instance. The number of replicas depends on the computing capabilities of the fleet \
-   instance in use. \n\
-  \             \n\
-  \              }\n\
-  \         {-  An optional per-instance container group might be used to run other software that \
-   only needs to run once per instance, such as background services, logging, or test processes. \
-   One per-instance container group is deployed to each fleet instance. \n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   Each container group can include the definition for one or more containers. A container \
-   definition specifies a container image that is stored in an Amazon Elastic Container Registry \
-   (Amazon ECR) public or private repository.\n\
-  \   \n\
-  \     {b Request options} \n\
-  \    \n\
-  \     Use this operation to make the following types of requests. Most fleet settings have \
-   default values, so you can create a working fleet with a minimal configuration and default \
-   values, which you can customize later.\n\
-  \     \n\
-  \      {ul\n\
-  \            {-  Create a fleet with no container groups. You can configure a container fleet \
-   and then add container group definitions later. In this scenario, no fleet instances are \
-   deployed, and the fleet can't host game sessions until you add a game server container group \
-   definition. Provide the following required parameter values:\n\
-  \                \n\
-  \                 {ul\n\
-  \                       {-   [FleetRoleArn] \n\
-  \                           \n\
-  \                            }\n\
-  \                       \n\
-  \             }\n\
-  \              }\n\
-  \            {-  Create a fleet with a game server container group. Provide the following \
-   required parameter values:\n\
-  \                \n\
-  \                 {ul\n\
-  \                       {-   [FleetRoleArn] \n\
-  \                           \n\
-  \                            }\n\
-  \                       {-   [GameServerContainerGroupDefinitionName] \n\
-  \                           \n\
-  \                            }\n\
-  \                       \n\
-  \             }\n\
-  \              }\n\
-  \            {-  Create a fleet with a game server container group and a per-instance container \
-   group. Provide the following required parameter values:\n\
-  \                \n\
-  \                 {ul\n\
-  \                       {-   [FleetRoleArn] \n\
-  \                           \n\
-  \                            }\n\
-  \                       {-   [GameServerContainerGroupDefinitionName] \n\
-  \                           \n\
-  \                            }\n\
-  \                       {-   [PerInstanceContainerGroupDefinitionName] \n\
-  \                           \n\
-  \                            }\n\
-  \                       \n\
-  \             }\n\
-  \              }\n\
-  \            }\n\
-  \    {b Results} \n\
-  \   \n\
-  \    If successful, this operation creates a new container fleet resource, places it in \
-   [PENDING] status, and initiates the \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-all.html#fleets-creation-workflow}fleet \
-   creation workflow}. For fleets with container groups, this workflow starts a fleet deployment \
-   and transitions the status to [ACTIVE]. Fleets without a container group are placed in \
-   [CREATED] status.\n\
-  \    \n\
-  \     You can update most of the properties of a fleet, including container group definitions, \
-   and deploy the update across all fleet instances. Use \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateContainerFleet.html}UpdateContainerFleet} \
-   to deploy a new game server version update across the container fleet. \n\
-  \     \n\
-  \       A managed fleet's runtime environment depends on the Amazon Machine Image (AMI) version \
-   it uses. When a new fleet is created, Amazon GameLift Servers assigns the latest available AMI \
-   version to the fleet, and all compute instances in that fleet are deployed with that version. \
-   To update the AMI version, you must create a new fleet. As a best practice, we recommend \
-   replacing your managed fleets every 30 days to maintain a secure and up-to-date runtime \
-   environment for your hosted game servers. For guidance, see \
-   {{:https://docs.aws.amazon.com/gameliftservers/latest/developerguide/security-best-practices.html} \
-   Security best practices for Amazon GameLift Servers}.\n\
-  \       \n\
-  \        "]
-
-module CreateContainerGroupDefinition : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_container_group_definition_input ->
-    ( create_container_group_definition_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_container_group_definition_input ->
-    ( create_container_group_definition_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Container\n\n\
-  \ Creates a [ContainerGroupDefinition] that describes a set of containers for hosting your game \
-   server with Amazon GameLift Servers managed containers hosting. An Amazon GameLift Servers \
-   container group is similar to a container task or pod. Use container group definitions when you \
-   create a container fleet with \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateContainerFleet.html}CreateContainerFleet}. \n\
-  \ \n\
-  \  A container group definition determines how Amazon GameLift Servers deploys your containers \
-   to each instance in a container fleet. You can maintain multiple versions of a container group \
-   definition.\n\
-  \  \n\
-  \   There are two types of container groups:\n\
-  \   \n\
-  \    {ul\n\
-  \          {-  A {b game server container group} has the containers that run your game server \
-   application and supporting software. A game server container group can have these container \
-   types:\n\
-  \              \n\
-  \               {ul\n\
-  \                     {-  Game server container. This container runs your game server. You can \
-   define one game server container in a game server container group.\n\
-  \                         \n\
-  \                          }\n\
-  \                     {-  Support container. This container runs software in parallel with your \
-   game server. You can define up to 8 support containers in a game server group.\n\
-  \                         \n\
-  \                          }\n\
-  \                     \n\
-  \           }\n\
-  \            When building a game server container group definition, you can choose to bundle \
-   your game server executable and all dependent software into a single game server container. \
-   Alternatively, you can separate the software into one game server container and one or more \
-   support containers.\n\
-  \            \n\
-  \             On a container fleet instance, a game server container group can be deployed \
-   multiple times (depending on the compute resources of the instance). This means that all \
-   containers in the container group are replicated together.\n\
-  \             \n\
-  \              }\n\
-  \          {-  A {b per-instance container group} has containers for processes that aren't \
-   replicated on a container fleet instance. This might include background services, logging, test \
-   processes, or processes that need to persist independently of the game server container group. \
-   When building a per-instance container group, you can define up to 10 support containers.\n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \    This operation requires Identity and Access Management (IAM) permissions to access \
-   container images in Amazon ECR repositories. See \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-iam-policy-examples.html} \
-   IAM permissions for Amazon GameLift Servers} for help setting the appropriate permissions.\n\
-  \    \n\
-  \       {b Request options} \n\
-  \      \n\
-  \       Use this operation to make the following types of requests. You can specify values for \
-   the minimum required parameters and customize optional values later.\n\
-  \       \n\
-  \        {ul\n\
-  \              {-  Create a game server container group definition. Provide the following \
-   required parameter values:\n\
-  \                  \n\
-  \                   {ul\n\
-  \                         {-   [Name] \n\
-  \                             \n\
-  \                              }\n\
-  \                         {-   [ContainerGroupType] ([GAME_SERVER])\n\
-  \                             \n\
-  \                              }\n\
-  \                         {-   [OperatingSystem] \n\
-  \                             \n\
-  \                              }\n\
-  \                         {-   [TotalMemoryLimitMebibytes] \n\
-  \                             \n\
-  \                              }\n\
-  \                         {-   [TotalVcpuLimit] \n\
-  \                             \n\
-  \                              }\n\
-  \                         {-  At least one [GameServerContainerDefinition] \n\
-  \                             \n\
-  \                              {ul\n\
-  \                                    {-   [ContainerName] \n\
-  \                                        \n\
-  \                                         }\n\
-  \                                    {-   [ImageUrl] \n\
-  \                                        \n\
-  \                                         }\n\
-  \                                    {-   [PortConfiguration] \n\
-  \                                        \n\
-  \                                         }\n\
-  \                                    {-   [ServerSdkVersion] \n\
-  \                                        \n\
-  \                                         }\n\
-  \                                    \n\
-  \                          }\n\
-  \                           }\n\
-  \                         \n\
-  \               }\n\
-  \                }\n\
-  \              {-  Create a per-instance container group definition. Provide the following \
-   required parameter values:\n\
-  \                  \n\
-  \                   {ul\n\
-  \                         {-   [Name] \n\
-  \                             \n\
-  \                              }\n\
-  \                         {-   [ContainerGroupType] ([PER_INSTANCE])\n\
-  \                             \n\
-  \                              }\n\
-  \                         {-   [OperatingSystem] \n\
-  \                             \n\
-  \                              }\n\
-  \                         {-   [TotalMemoryLimitMebibytes] \n\
-  \                             \n\
-  \                              }\n\
-  \                         {-   [TotalVcpuLimit] \n\
-  \                             \n\
-  \                              }\n\
-  \                         {-  At least one [SupportContainerDefinition] \n\
-  \                             \n\
-  \                              {ul\n\
-  \                                    {-   [ContainerName] \n\
-  \                                        \n\
-  \                                         }\n\
-  \                                    {-   [ImageUrl] \n\
-  \                                        \n\
-  \                                         }\n\
-  \                                    \n\
-  \                          }\n\
-  \                           }\n\
-  \                         \n\
-  \               }\n\
-  \                }\n\
-  \              }\n\
-  \    {b Results} \n\
-  \   \n\
-  \    If successful, this request creates a [ContainerGroupDefinition] resource and assigns a \
-   unique ARN value. You can update most properties of a container group definition by calling \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateContainerGroupDefinition.html}UpdateContainerGroupDefinition}, \
-   and optionally save the update as a new version.\n\
-  \    "]
-
-module CreateFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `NotReadyException of not_ready_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_fleet_input ->
-    ( create_fleet_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `NotReadyException of not_ready_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_fleet_input ->
-    ( create_fleet_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `NotReadyException of not_ready_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Creates a fleet of compute resources to host your game servers. Use this operation to set up a \
-   fleet for the following compute types: \n\
-  \ \n\
-  \   {b Managed EC2 fleet} \n\
-  \  \n\
-  \   An EC2 fleet is a set of Amazon Elastic Compute Cloud (Amazon EC2) instances. Your game \
-   server build is deployed to each fleet instance. Amazon GameLift Servers manages the fleet's \
-   instances and controls the lifecycle of game server processes, which host game sessions for \
-   players. EC2 fleets can have instances in multiple locations. Each instance in the fleet is \
-   designated a [Compute].\n\
-  \   \n\
-  \    To create an EC2 fleet, provide these required parameters:\n\
-  \    \n\
-  \     {ul\n\
-  \           {-  Either [BuildId] or [ScriptId] \n\
-  \               \n\
-  \                }\n\
-  \           {-   [ComputeType] set to [EC2] (the default value)\n\
-  \               \n\
-  \                }\n\
-  \           {-   [EC2InboundPermissions] \n\
-  \               \n\
-  \                }\n\
-  \           {-   [EC2InstanceType] \n\
-  \               \n\
-  \                }\n\
-  \           {-   [FleetType] \n\
-  \               \n\
-  \                }\n\
-  \           {-   [Name] \n\
-  \               \n\
-  \                }\n\
-  \           {-   [RuntimeConfiguration] with at least one [ServerProcesses] configuration\n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \   If successful, this operation creates a new fleet resource and places it in [NEW] status \
-   while Amazon GameLift Servers initiates the \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-all.html#fleets-creation-workflow}fleet \
-   creation workflow}. To debug your fleet, fetch logs, view performance metrics or other actions \
-   on the fleet, create a development fleet with port 22/3389 open. As a best practice, we \
-   recommend opening ports for remote access only when you need them and closing them when you're \
-   finished. \n\
-  \   \n\
-  \    When the fleet status is ACTIVE, you can adjust capacity settings and turn autoscaling \
-   on/off for each location.\n\
-  \    \n\
-  \      A managed fleet's runtime environment depends on the Amazon Machine Image (AMI) version \
-   it uses. When a new fleet is created, Amazon GameLift Servers assigns the latest available AMI \
-   version to the fleet, and all compute instances in that fleet are deployed with that version. \
-   To update the AMI version, you must create a new fleet. As a best practice, we recommend \
-   replacing your managed fleets every 30 days to maintain a secure and up-to-date runtime \
-   environment for your hosted game servers. For guidance, see \
-   {{:https://docs.aws.amazon.com/gameliftservers/latest/developerguide/security-best-practices.html} \
-   Security best practices for Amazon GameLift Servers}.\n\
-  \      \n\
-  \         {b Anywhere fleet} \n\
-  \        \n\
-  \         An Anywhere fleet represents compute resources that are not owned or managed by Amazon \
-   GameLift Servers. You might create an Anywhere fleet with your local machine for testing, or \
-   use one to host game servers with on-premises hardware or other game hosting solutions. \n\
-  \         \n\
-  \          To create an Anywhere fleet, provide these required parameters:\n\
-  \          \n\
-  \           {ul\n\
-  \                 {-   [ComputeType] set to [ANYWHERE] \n\
-  \                     \n\
-  \                      }\n\
-  \                 {-   [Locations] specifying a custom location\n\
-  \                     \n\
-  \                      }\n\
-  \                 {-   [Name] \n\
-  \                     \n\
-  \                      }\n\
-  \                 }\n\
-  \   If successful, this operation creates a new fleet resource and places it in [ACTIVE] status. \
-   You can register computes with a fleet in [ACTIVE] status. \n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
-   up fleets} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-debug.html#fleets-creating-debug-creation}Debug \
-   fleet creation issues} \n\
-  \      \n\
-  \        \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Multi-location \
-   fleets} \n\
-  \       "]
-
-module CreateFleetLocations : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidFleetStatusException of invalid_fleet_status_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `NotReadyException of not_ready_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_fleet_locations_input ->
-    ( create_fleet_locations_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidFleetStatusException of invalid_fleet_status_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `NotReadyException of not_ready_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_fleet_locations_input ->
-    ( create_fleet_locations_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidFleetStatusException of invalid_fleet_status_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `NotReadyException of not_ready_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Container\n\n\
-  \ Adds remote locations to an EC2 and begins populating the new locations with instances. The \
-   new instances conform to the fleet's instance type, auto-scaling, and other configuration \
-   settings.\n\
-  \ \n\
-  \   You can't add remote locations to a fleet that resides in an Amazon Web Services Region that \
-   doesn't support multiple locations. Fleets created prior to March 2021 can't support multiple \
-   locations.\n\
-  \   \n\
-  \     To add fleet locations, specify the fleet to be updated and provide a list of one or more \
-   locations. \n\
-  \     \n\
-  \      If successful, this operation returns the list of added locations with their status set \
-   to [NEW]. Amazon GameLift Servers initiates the process of starting an instance in each added \
-   location. You can track the status of each new location by monitoring location creation events \
-   using \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetEvents.html}DescribeFleetEvents}.\n\
-  \      \n\
-  \        {b Learn more} \n\
-  \       \n\
-  \         \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting up \
-   fleets} \n\
-  \        \n\
-  \          \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-editing.html#fleets-update-locations}Update \
-   fleet locations} \n\
-  \         \n\
-  \           {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-regions.html} \
-   Amazon GameLift Servers service locations} for managed hosting.\n\
-  \          "]
-
-module CreateGameServerGroup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_game_server_group_input ->
-    ( create_game_server_group_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_game_server_group_input ->
-    ( create_game_server_group_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
-  \ Creates a Amazon GameLift Servers FleetIQ game server group for managing game hosting on a \
-   collection of Amazon Elastic Compute Cloud instances for game hosting. This operation creates \
-   the game server group, creates an Auto Scaling group in your Amazon Web Services account, and \
-   establishes a link between the two groups. You can view the status of your game server groups \
-   in the Amazon GameLift Servers console. Game server group metrics and events are emitted to \
-   Amazon CloudWatch.\n\
-  \ \n\
-  \  Before creating a new game server group, you must have the following: \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  An Amazon Elastic Compute Cloud launch template that specifies how to launch \
-   Amazon Elastic Compute Cloud instances with your game server build. For more information, see \
-   {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html} Launching an \
-   Instance from a Launch Template} in the {i Amazon Elastic Compute Cloud User Guide}. \n\
-  \             \n\
-  \              }\n\
-  \         {-  An IAM role that extends limited access to your Amazon Web Services account to \
-   allow Amazon GameLift Servers FleetIQ to create and interact with the Auto Scaling group. For \
-   more information, see \
-   {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-iam-permissions-roles.html}Create \
-   IAM roles for cross-service interaction} in the {i Amazon GameLift Servers FleetIQ Developer \
-   Guide}.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   To create a new game server group, specify a unique group name, IAM role and Amazon Elastic \
-   Compute Cloud launch template, and provide a list of instance types that can be used in the \
-   group. You must also set initial maximum and minimum limits on the group's instance count. You \
-   can optionally set an Auto Scaling policy with target tracking based on a Amazon GameLift \
-   Servers FleetIQ metric.\n\
-  \   \n\
-  \    Once the game server group and corresponding Auto Scaling group are created, you have full \
-   access to change the Auto Scaling group's configuration as needed. Several properties that are \
-   set when creating a game server group, including maximum/minimum size and auto-scaling policy \
-   settings, must be updated directly in the Auto Scaling group. Keep in mind that some Auto \
-   Scaling group properties are periodically updated by Amazon GameLift Servers FleetIQ as part of \
-   its balancing activities to optimize for availability and cost.\n\
-  \    \n\
-  \      {b Learn more} \n\
-  \     \n\
-  \       {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon \
-   GameLift Servers FleetIQ Guide} \n\
-  \      "]
-
-module CreateGameSession : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `FleetCapacityExceededException of fleet_capacity_exceeded_exception
-    | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidFleetStatusException of invalid_fleet_status_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_game_session_input ->
-    ( create_game_session_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `FleetCapacityExceededException of fleet_capacity_exceeded_exception
-      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidFleetStatusException of invalid_fleet_status_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_game_session_input ->
-    ( create_game_session_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `FleetCapacityExceededException of fleet_capacity_exceeded_exception
-      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidFleetStatusException of invalid_fleet_status_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Creates a multiplayer game session for players in a specific fleet location. This operation \
-   prompts an available server process to start a game session and retrieves connection \
-   information for the new game session. As an alternative, consider using the Amazon GameLift \
-   Servers game session placement feature with \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_StartGameSessionPlacement.html}StartGameSessionPlacement}, \
-   which uses the FleetIQ algorithm and queues to optimize the placement process.\n\
-  \ \n\
-  \  When creating a game session, you specify exactly where you want to place it and provide a \
-   set of game session configuration settings. The target fleet must be in [ACTIVE] status. \n\
-  \  \n\
-  \   You can use this operation in the following ways: \n\
-  \   \n\
-  \    {ul\n\
-  \          {-  To create a game session on an instance in a fleet's home Region, provide a fleet \
-   or alias ID along with your game session configuration. \n\
-  \              \n\
-  \               }\n\
-  \          {-  To create a game session on an instance in a fleet's remote location, provide a \
-   fleet or alias ID and a location name, along with your game session configuration. \n\
-  \              \n\
-  \               }\n\
-  \          {-  To create a game session on an instance in an Anywhere fleet, specify the fleet's \
-   custom location.\n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \   If successful, Amazon GameLift Servers initiates a workflow to start a new game session and \
-   returns a [GameSession] object containing the game session configuration and status. When the \
-   game session status is [ACTIVE], it is updated with connection information and you can create \
-   player sessions for the game session. By default, newly created game sessions are open to new \
-   players. You can restrict new player access by using \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateGameSession.html}UpdateGameSession} \
-   to change the game session's player session creation policy.\n\
-  \   \n\
-  \    Amazon GameLift Servers retains logs for active for 14 days. To access the logs, call \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_GetGameSessionLogUrl.html}GetGameSessionLogUrl} \
-   to download the log files.\n\
-  \    \n\
-  \      {i Available in Amazon GameLift Servers Local.} \n\
-  \     \n\
-  \       {b Learn more} \n\
-  \      \n\
-  \        \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession}Start \
-   a game session} \n\
-  \       \n\
-  \         \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \        "]
-
-module CreateGameSessionQueue : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_game_session_queue_input ->
-    ( create_game_session_queue_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_game_session_queue_input ->
-    ( create_game_session_queue_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Creates a placement queue that processes requests for new game sessions. A queue uses FleetIQ \
-   algorithms to locate the best available placement locations for a new game session, and then \
-   prompts the game server process to start a new game session.\n\
-  \ \n\
-  \  A game session queue is configured with a set of destinations (Amazon GameLift Servers fleets \
-   or aliases) that determine where the queue can place new game sessions. These destinations can \
-   span multiple Amazon Web Services Regions, can use different instance types, and can include \
-   both Spot and On-Demand fleets. If the queue includes multi-location fleets, the queue can \
-   place game sessions in any of a fleet's remote locations.\n\
-  \  \n\
-  \   You can configure a queue to determine how it selects the best available placement for a new \
-   game session. Queues can prioritize placement decisions based on a combination of location, \
-   hosting cost, and player latency. You can set up the queue to use the default prioritization or \
-   provide alternate instructions using [PriorityConfiguration].\n\
-  \   \n\
-  \     {b Request options} \n\
-  \    \n\
-  \     Use this operation to make these common types of requests. \n\
-  \     \n\
-  \      {ul\n\
-  \            {-  Create a queue with the minimum required parameters.\n\
-  \                \n\
-  \                 {ul\n\
-  \                       {-   [Name] \n\
-  \                           \n\
-  \                            }\n\
-  \                       {-   [Destinations] (This parameter isn't required, but a queue can't \
-   make placements without at least one destination.)\n\
-  \                           \n\
-  \                            }\n\
-  \                       \n\
-  \             }\n\
-  \              }\n\
-  \            {-  Create a queue with placement notification. Queues that have high placement \
-   activity must use a notification system, such as with Amazon Simple Notification Service \
-   (Amazon SNS) or Amazon CloudWatch.\n\
-  \                \n\
-  \                 {ul\n\
-  \                       {-  Required parameters [Name] and [Destinations] \n\
-  \                           \n\
-  \                            }\n\
-  \                       {-   [NotificationTarget] \n\
-  \                           \n\
-  \                            }\n\
-  \                       \n\
-  \             }\n\
-  \              }\n\
-  \            {-  Create a queue with custom prioritization settings. These custom settings \
-   replace the default prioritization configuration for a queue.\n\
-  \                \n\
-  \                 {ul\n\
-  \                       {-  Required parameters [Name] and [Destinations] \n\
-  \                           \n\
-  \                            }\n\
-  \                       {-   [PriorityConfiguration] \n\
-  \                           \n\
-  \                            }\n\
-  \                       \n\
-  \             }\n\
-  \              }\n\
-  \            {-  Create a queue with special rules for processing player latency data.\n\
-  \                \n\
-  \                 {ul\n\
-  \                       {-  Required parameters [Name] and [Destinations] \n\
-  \                           \n\
-  \                            }\n\
-  \                       {-   [PlayerLatencyPolicies] \n\
-  \                           \n\
-  \                            }\n\
-  \                       \n\
-  \             }\n\
-  \              }\n\
-  \            }\n\
-  \    {b Results} \n\
-  \   \n\
-  \    If successful, this operation returns a new [GameSessionQueue] object with an assigned \
-   queue ARN. Use the queue's name or ARN when submitting new game session requests with \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_StartGameSessionPlacement.html}StartGameSessionPlacement} \
-   or \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_StartMatchmaking.html}StartMatchmaking}. \n\
-  \    \n\
-  \      {b Learn more} \n\
-  \     \n\
-  \       {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/queues-design.html} Design \
-   a game session queue} \n\
-  \      \n\
-  \        {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/queues-creating.html} \
-   Create a game session queue} \n\
-  \       \n\
-  \         {b Related actions} \n\
-  \        \n\
-  \          \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateGameSessionQueue.html}CreateGameSessionQueue} \
-   | \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeGameSessionQueues.html}DescribeGameSessionQueues} \
-   | \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateGameSessionQueue.html}UpdateGameSessionQueue} \
-   | \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DeleteGameSessionQueue.html}DeleteGameSessionQueue} \
-   | \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \         "]
-
-module CreateLocation : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_input ->
-    ( create_location_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_input ->
-    ( create_location_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Anywhere\n\n\
-  \ Creates a custom location for use in an Anywhere fleet.\n\
-  \ "]
-
-module CreateMatchmakingConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_matchmaking_configuration_input ->
-    ( create_matchmaking_configuration_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_matchmaking_configuration_input ->
-    ( create_matchmaking_configuration_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Defines a new matchmaking configuration for use with FlexMatch. Whether your are using \
-   FlexMatch with Amazon GameLift Servers hosting or as a standalone matchmaking service, the \
-   matchmaking configuration sets out rules for matching players and forming teams. If you're also \
-   using Amazon GameLift Servers hosting, it defines how to start game sessions for each match. \
-   Your matchmaking system can use multiple configurations to handle different game scenarios. All \
-   matchmaking requests identify the matchmaking configuration to use and provide player \
-   attributes consistent with that configuration. \n\
-  \ \n\
-  \  To create a matchmaking configuration, you must provide the following: configuration name and \
-   FlexMatch mode (with or without Amazon GameLift Servers hosting); a rule set that specifies how \
-   to evaluate players and find acceptable matches; whether player acceptance is required; and the \
-   maximum time allowed for a matchmaking attempt. When using FlexMatch with Amazon GameLift \
-   Servers hosting, you also need to identify the game session queue to use when starting a game \
-   session for the match.\n\
-  \  \n\
-  \   In addition, you must set up an Amazon Simple Notification Service topic to receive \
-   matchmaking notifications. Provide the topic ARN in the matchmaking configuration.\n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-configuration.html} \
-   Design a FlexMatch matchmaker} \n\
-  \     \n\
-  \       {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-notification.html} \
-   Set up FlexMatch event notification} \n\
-  \      "]
-
-module CreateMatchmakingRuleSet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_matchmaking_rule_set_input ->
-    ( create_matchmaking_rule_set_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_matchmaking_rule_set_input ->
-    ( create_matchmaking_rule_set_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Creates a new rule set for FlexMatch matchmaking. A rule set describes the type of match to \
-   create, such as the number and size of teams. It also sets the parameters for acceptable player \
-   matches, such as minimum skill level or character type.\n\
-  \ \n\
-  \  To create a matchmaking rule set, provide unique rule set name and the rule set body in JSON \
-   format. Rule sets must be defined in the same Region as the matchmaking configuration they are \
-   used with.\n\
-  \  \n\
-  \   Since matchmaking rule sets cannot be edited, it is a good idea to check the rule set syntax \
-   using \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_ValidateMatchmakingRuleSet.html}ValidateMatchmakingRuleSet} \
-   before creating a new rule set.\n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \     {ul\n\
-  \           {-   \
-   {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-rulesets.html}Build a rule \
-   set} \n\
-  \               \n\
-  \                }\n\
-  \           {-   \
-   {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-configuration.html}Design a \
-   matchmaker} \n\
-  \               \n\
-  \                }\n\
-  \           {-   \
-   {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-intro.html}Matchmaking with \
-   FlexMatch} \n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \  "]
-
-module CreatePlayerSession : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `GameSessionFullException of game_session_full_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidGameSessionStatusException of invalid_game_session_status_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_player_session_input ->
-    ( create_player_session_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GameSessionFullException of game_session_full_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidGameSessionStatusException of invalid_game_session_status_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_player_session_input ->
-    ( create_player_session_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GameSessionFullException of game_session_full_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidGameSessionStatusException of invalid_game_session_status_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Reserves an open player slot in a game session for a player. New player sessions can be \
-   created in any game session with an open slot that is in [ACTIVE] status and has a player \
-   creation policy of [ACCEPT_ALL]. You can add a group of players to a game session with \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreatePlayerSessions.html}CreatePlayerSessions} \
-   . \n\
-  \ \n\
-  \  To create a player session, specify a game session ID, player ID, and optionally a set of \
-   player data. \n\
-  \  \n\
-  \   If successful, a slot is reserved in the game session for the player and a new \
-   [PlayerSessions] object is returned with a player session ID. The player references the player \
-   session ID when sending a connection request to the game session, and the game server can use \
-   it to validate the player reservation with the Amazon GameLift Servers service. Player sessions \
-   cannot be updated. \n\
-  \   \n\
-  \    The maximum number of players per game session is 200. It is not adjustable. \n\
-  \    \n\
-  \      {b Related actions} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \      "]
-
-module CreatePlayerSessions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `GameSessionFullException of game_session_full_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidGameSessionStatusException of invalid_game_session_status_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_player_sessions_input ->
-    ( create_player_sessions_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GameSessionFullException of game_session_full_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidGameSessionStatusException of invalid_game_session_status_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_player_sessions_input ->
-    ( create_player_sessions_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GameSessionFullException of game_session_full_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidGameSessionStatusException of invalid_game_session_status_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Reserves open slots in a game session for a group of players. New player sessions can be \
-   created in any game session with an open slot that is in [ACTIVE] status and has a player \
-   creation policy of [ACCEPT_ALL]. To add a single player to a game session, use \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreatePlayerSession.html}CreatePlayerSession} \n\
-  \ \n\
-  \  To create player sessions, specify a game session ID and a list of player IDs. Optionally, \
-   provide a set of player data for each player ID. \n\
-  \  \n\
-  \   If successful, a slot is reserved in the game session for each player, and new \
-   [PlayerSession] objects are returned with player session IDs. Each player references their \
-   player session ID when sending a connection request to the game session, and the game server \
-   can use it to validate the player reservation with the Amazon GameLift Servers service. Player \
-   sessions cannot be updated.\n\
-  \   \n\
-  \    The maximum number of players per game session is 200. It is not adjustable. \n\
-  \    \n\
-  \      {b Related actions} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \      "]
-
-module CreateScript : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_script_input ->
-    ( create_script_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_script_input ->
-    ( create_script_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere\n\n\
-  \ Creates a new script record for your Amazon GameLift Servers Realtime script. Realtime scripts \
-   are JavaScript that provide configuration settings and optional custom game logic for your \
-   game. The script is deployed when you create a Amazon GameLift Servers Realtime fleet to host \
-   your game sessions. Script logic is executed during an active game session. \n\
-  \ \n\
-  \  To create a new script record, specify a script name and provide the script file(s). The \
-   script files and all dependencies must be zipped into a single file. You can pull the zip file \
-   from either of these locations: \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  A locally available directory. Use the {i ZipFile} parameter for this option.\n\
-  \             \n\
-  \              }\n\
-  \         {-  An Amazon Simple Storage Service (Amazon S3) bucket under your Amazon Web Services \
-   account. Use the {i StorageLocation} parameter for this option. You'll need to have an Identity \
-   Access Management (IAM) role that allows the Amazon GameLift Servers service to access your S3 \
-   bucket. \n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   If the call is successful, a new script record is created with a unique script ID. If the \
-   script file is provided as a local file, the file is uploaded to an Amazon GameLift \
-   Servers-owned S3 bucket and the script record's storage location reflects this location. If the \
-   script file is provided as an S3 bucket, Amazon GameLift Servers accesses the file at this \
-   storage location as needed for deployment.\n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-intro.html}Amazon \
-   GameLift Servers Amazon GameLift Servers Realtime} \n\
-  \     \n\
-  \       {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/setting-up-role.html}Set \
-   Up a Role for Amazon GameLift Servers Access} \n\
-  \      \n\
-  \        {b Related actions} \n\
-  \       \n\
-  \         \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \        "]
-
-module CreateVpcPeeringAuthorization : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_vpc_peering_authorization_input ->
-    ( create_vpc_peering_authorization_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_vpc_peering_authorization_input ->
-    ( create_vpc_peering_authorization_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Requests authorization to create or delete a peer connection between the VPC for your Amazon \
-   GameLift Servers fleet and a virtual private cloud (VPC) in your Amazon Web Services account. \
-   VPC peering enables the game servers on your fleet to communicate directly with other Amazon \
-   Web Services resources. After you've received authorization, use \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateVpcPeeringConnection.html}CreateVpcPeeringConnection} \
-   to establish the peering connection. For more information, see \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/vpc-peering.html}VPC Peering with \
-   Amazon GameLift Servers Fleets}.\n\
-  \ \n\
-  \  You can peer with VPCs that are owned by any Amazon Web Services account you have access to, \
-   including the account that you use to manage your Amazon GameLift Servers fleets. You cannot \
-   peer with VPCs that are in different Regions.\n\
-  \  \n\
-  \   To request authorization to create a connection, call this operation from the Amazon Web \
-   Services account with the VPC that you want to peer to your Amazon GameLift Servers fleet. For \
-   example, to enable your game servers to retrieve data from a DynamoDB table, use the account \
-   that manages that DynamoDB resource. Identify the following values: (1) The ID of the VPC that \
-   you want to peer with, and (2) the ID of the Amazon Web Services account that you use to manage \
-   Amazon GameLift Servers. If successful, VPC peering is authorized for the specified VPC. \n\
-  \   \n\
-  \    To request authorization to delete a connection, call this operation from the Amazon Web \
-   Services account with the VPC that is peered with your Amazon GameLift Servers fleet. Identify \
-   the following values: (1) VPC ID that you want to delete the peering connection for, and (2) ID \
-   of the Amazon Web Services account that you use to manage Amazon GameLift Servers. \n\
-  \    \n\
-  \     The authorization remains valid for 24 hours unless it is canceled. You must create or \
-   delete the peering connection while the authorization is valid. \n\
-  \     \n\
-  \       Amazon GameLift Servers uses the caller's credentials to update peer-VPC resources. The \
-   IAM user that calls this operation must have the following Amazon EC2 permissions enabled:\n\
-  \       \n\
-  \        {ul\n\
-  \              {-   [ec2:AcceptVpcPeeringConnection] \n\
-  \                  \n\
-  \                   }\n\
-  \              {-   [ec2:AuthorizeSecurityGroupEgress] \n\
-  \                  \n\
-  \                   }\n\
-  \              {-   [ec2:AuthorizeSecurityGroupIngress] \n\
-  \                  \n\
-  \                   }\n\
-  \              {-   [ec2:CreateRoute] \n\
-  \                  \n\
-  \                   }\n\
-  \              {-   [ec2:DescribeRouteTables] \n\
-  \                  \n\
-  \                   }\n\
-  \              {-   [ec2:DescribeSecurityGroups] \n\
-  \                  \n\
-  \                   }\n\
-  \              }\n\
-  \     {b Related actions} \n\
-  \    \n\
-  \      \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \     "]
-
-module CreateVpcPeeringConnection : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_vpc_peering_connection_input ->
-    ( create_vpc_peering_connection_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_vpc_peering_connection_input ->
-    ( create_vpc_peering_connection_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Establishes a VPC peering connection between a virtual private cloud (VPC) in an Amazon Web \
-   Services account with the VPC for your Amazon GameLift Servers fleet. VPC peering enables the \
-   game servers on your fleet to communicate directly with other Amazon Web Services resources. \
-   You can peer with VPCs in any Amazon Web Services account that you have access to, including \
-   the account that you use to manage your Amazon GameLift Servers fleets. You cannot peer with \
-   VPCs that are in different Regions. For more information, see \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/vpc-peering.html}VPC Peering with \
-   Amazon GameLift Servers Fleets}.\n\
-  \ \n\
-  \  Before calling this operation to establish the peering connection, you first need to use \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateVpcPeeringAuthorization.html}CreateVpcPeeringAuthorization} \
-   and identify the VPC you want to peer with. Once the authorization for the specified VPC is \
-   issued, you have 24 hours to establish the connection. These two operations handle all tasks \
-   necessary to peer the two VPCs, including acceptance, updating routing tables, etc. \n\
-  \  \n\
-  \   To establish the connection, call this operation from the Amazon Web Services account that \
-   is used to manage the Amazon GameLift Servers fleets. Identify the following values: (1) The ID \
-   of the fleet you want to be enable a VPC peering connection for; (2) The Amazon Web Services \
-   account with the VPC that you want to peer with; and (3) The ID of the VPC you want to peer \
-   with. This operation is asynchronous. If successful, a connection request is created. You can \
-   use continuous polling to track the request's status using \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeVpcPeeringConnections.html}DescribeVpcPeeringConnections} \
-   , or by monitoring fleet events for success or failure using \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetEvents.html}DescribeFleetEvents} \
-   . \n\
-  \   \n\
-  \     Amazon GameLift Servers uses the caller's credentials to update peer-VPC resources. The \
-   IAM user that calls this operation must have the following Amazon EC2 permissions enabled:\n\
-  \     \n\
-  \      {ul\n\
-  \            {-   [ec2:AcceptVpcPeeringConnection] \n\
-  \                \n\
-  \                 }\n\
-  \            {-   [ec2:AuthorizeSecurityGroupEgress] \n\
-  \                \n\
-  \                 }\n\
-  \            {-   [ec2:AuthorizeSecurityGroupIngress] \n\
-  \                \n\
-  \                 }\n\
-  \            {-   [ec2:CreateRoute] \n\
-  \                \n\
-  \                 }\n\
-  \            {-   [ec2:DescribeRouteTables] \n\
-  \                \n\
-  \                 }\n\
-  \            {-   [ec2:DescribeSecurityGroups] \n\
-  \                \n\
-  \                 }\n\
-  \            }\n\
-  \     {b Related actions} \n\
-  \    \n\
-  \      \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \     "]
-
-module DeleteAlias : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_alias_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_alias_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Deletes an alias. This operation removes all record of the alias. Game clients attempting to \
-   access a server process using the deleted alias receive an error. To delete an alias, specify \
-   the alias ID to be deleted.\n\
-  \ \n\
-  \   {b Related actions} \n\
-  \  \n\
-  \    \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \   "]
-
-module DeleteBuild : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_build_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_build_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Deletes a build. This operation permanently deletes the build resource and any uploaded build \
-   files. Deleting a build does not affect the status of any active fleets using the build, but \
-   you can no longer create new fleets with the deleted build.\n\
-  \ \n\
-  \  To delete a build, specify the build ID. \n\
-  \  \n\
-  \    {b Learn more} \n\
-  \   \n\
-  \     {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-intro.html} \
-   Upload a Custom Server Build} \n\
-  \    \n\
-  \      \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \     "]
-
-module DeleteContainerFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_container_fleet_input ->
-    ( delete_container_fleet_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_container_fleet_input ->
-    ( delete_container_fleet_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Container\n\n\
-  \ Deletes all resources and information related to a container fleet and shuts down currently \
-   running fleet instances, including those in remote locations. The container fleet must be in \
-   [ACTIVE] status to be deleted.\n\
-  \ \n\
-  \  To delete a fleet, specify the fleet ID to be terminated. During the deletion process, the \
-   fleet status is changed to [DELETING]. \n\
-  \  \n\
-  \    {b Learn more} \n\
-  \   \n\
-  \     {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting up \
-   Amazon GameLift Servers Fleets} \n\
-  \    "]
-
-module DeleteContainerGroupDefinition : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_container_group_definition_input ->
-    ( delete_container_group_definition_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_container_group_definition_input ->
-    ( delete_container_group_definition_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Container\n\n\
-  \  {b Request options:} \n\
-  \ \n\
-  \  Deletes a container group definition. \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  Delete an entire container group definition, including all versions. Specify the \
-   container group definition name, or use an ARN value without the version number.\n\
-  \             \n\
-  \              }\n\
-  \         {-  Delete a particular version. Specify the container group definition name and a \
-   version number, or use an ARN value that includes the version number.\n\
-  \             \n\
-  \              }\n\
-  \         {-  Keep the newest versions and delete all older versions. Specify the container \
-   group definition name and the number of versions to retain. For example, set \
-   [VersionCountToRetain] to 5 to delete all but the five most recent versions.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \    {b Result} \n\
-  \   \n\
-  \    If successful, Amazon GameLift Servers removes the container group definition versions that \
-   you request deletion for. This request will fail for any requested versions if the following is \
-   true: \n\
-  \    \n\
-  \     {ul\n\
-  \           {-  If the version is being used in an active fleet\n\
-  \               \n\
-  \                }\n\
-  \           {-  If the version is being deployed to a fleet in a deployment that's currently in \
-   progress.\n\
-  \               \n\
-  \                }\n\
-  \           {-  If the version is designated as a rollback definition in a fleet deployment \
-   that's currently in progress.\n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \    {b Learn more} \n\
-  \   \n\
-  \    {ul\n\
-  \          {-   \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/containers-create-groups.html}Manage \
-   a container group definition} \n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \  "]
-
-module DeleteFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidFleetStatusException of invalid_fleet_status_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_fleet_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidFleetStatusException of invalid_fleet_status_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_fleet_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidFleetStatusException of invalid_fleet_status_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Deletes all resources and information related to a fleet and shuts down any currently running \
-   fleet instances, including those in remote locations.\n\
-  \ \n\
-  \   If the fleet being deleted has a VPC peering connection, you first need to get a valid \
-   authorization (good for 24 hours) by calling \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateVpcPeeringAuthorization.html}CreateVpcPeeringAuthorization}. \
-   You don't need to explicitly delete the VPC peering connection.\n\
-  \   \n\
-  \     To delete a fleet, specify the fleet ID to be terminated. During the deletion process, the \
-   fleet status is changed to [DELETING]. When completed, the status switches to [TERMINATED] and \
-   the fleet event [FLEET_DELETED] is emitted.\n\
-  \     \n\
-  \       {b Learn more} \n\
-  \      \n\
-  \        {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
-   up Amazon GameLift Servers Fleets} \n\
-  \       "]
-
-module DeleteFleetLocations : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_fleet_locations_input ->
-    ( delete_fleet_locations_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_fleet_locations_input ->
-    ( delete_fleet_locations_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Container\n\n\
-  \ Removes locations from a multi-location fleet. When deleting a location, all game server \
-   process and all instances that are still active in the location are shut down. \n\
-  \ \n\
-  \  To delete fleet locations, identify the fleet ID and provide a list of the locations to be \
-   deleted. \n\
-  \  \n\
-  \   If successful, GameLift sets the location status to [DELETING], and begins to shut down \
-   existing server processes and terminate instances in each location being deleted. When \
-   completed, the location status changes to [TERMINATED].\n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
-   up Amazon GameLift Servers fleets} \n\
-  \     "]
-
-module DeleteGameServerGroup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_game_server_group_input ->
-    ( delete_game_server_group_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_game_server_group_input ->
-    ( delete_game_server_group_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
-  \ Terminates a game server group and permanently deletes the game server group record. You have \
-   several options for how these resources are impacted when deleting the game server group. \
-   Depending on the type of delete operation selected, this operation might affect these resources:\n\
-  \ \n\
-  \  {ul\n\
-  \        {-  The game server group\n\
-  \            \n\
-  \             }\n\
-  \        {-  The corresponding Auto Scaling group\n\
-  \            \n\
-  \             }\n\
-  \        {-  All game servers that are currently running in the group\n\
-  \            \n\
-  \             }\n\
-  \        }\n\
-  \   To delete a game server group, identify the game server group to delete and specify the type \
-   of delete operation to initiate. Game server groups can only be deleted if they are in [ACTIVE] \
-   or [ERROR] status.\n\
-  \   \n\
-  \    If the delete request is successful, a series of operations are kicked off. The game server \
-   group status is changed to [DELETE_SCHEDULED], which prevents new game servers from being \
-   registered and stops automatic scaling activity. Once all game servers in the game server group \
-   are deregistered, Amazon GameLift Servers FleetIQ can begin deleting resources. If any of the \
-   delete operations fail, the game server group is placed in [ERROR] status.\n\
-  \    \n\
-  \     Amazon GameLift Servers FleetIQ emits delete events to Amazon CloudWatch.\n\
-  \     \n\
-  \       {b Learn more} \n\
-  \      \n\
-  \        {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon \
-   GameLift Servers FleetIQ Guide} \n\
-  \       "]
-
-module DeleteGameSessionQueue : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_game_session_queue_input ->
-    ( delete_game_session_queue_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_game_session_queue_input ->
-    ( delete_game_session_queue_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Deletes a game session queue. Once a queue is successfully deleted, unfulfilled \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_StartGameSessionPlacement.html}StartGameSessionPlacement} \
-   requests that reference the queue will fail. To delete a queue, specify the queue name.\n\
-  \ "]
-
-module DeleteLocation : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_location_input ->
-    ( delete_location_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_location_input ->
-    ( delete_location_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Anywhere\n\n\
-  \ Deletes a custom location.\n\
-  \ \n\
-  \  Before deleting a custom location, review any fleets currently using the custom location and \
-   deregister the location if it is in use. For more information, see \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DeregisterCompute.html}DeregisterCompute}.\n\
-  \  "]
-
-module DeleteMatchmakingConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_matchmaking_configuration_input ->
-    ( delete_matchmaking_configuration_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_matchmaking_configuration_input ->
-    ( delete_matchmaking_configuration_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Permanently removes a FlexMatch matchmaking configuration. To delete, specify the \
-   configuration name. A matchmaking configuration cannot be deleted if it is being used in any \
-   active matchmaking tickets.\n\
-  \ "]
-
-module DeleteMatchmakingRuleSet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_matchmaking_rule_set_input ->
-    ( delete_matchmaking_rule_set_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_matchmaking_rule_set_input ->
-    ( delete_matchmaking_rule_set_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Deletes an existing matchmaking rule set. To delete the rule set, provide the rule set name. \
-   Rule sets cannot be deleted if they are currently being used by a matchmaking configuration. \n\
-  \ \n\
-  \   {b Learn more} \n\
-  \  \n\
-  \   {ul\n\
-  \         {-   \
-   {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-rulesets.html}Build a rule \
-   set} \n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \  "]
-
-module DeleteScalingPolicy : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_scaling_policy_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_scaling_policy_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Deletes a fleet scaling policy. Once deleted, the policy is no longer in force and Amazon \
-   GameLift Servers removes all record of it. To delete a scaling policy, specify both the scaling \
-   policy name and the fleet ID it is associated with.\n\
-  \ \n\
-  \  To temporarily suspend scaling policies, use \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_StopFleetActions.html}StopFleetActions}. \
-   This operation suspends all policies for the fleet.\n\
-  \  "]
-
-module DeleteScript : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TaggingFailedException of tagging_failed_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_script_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_script_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TaggingFailedException of tagging_failed_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Deletes a Realtime script. This operation permanently deletes the script record. If script \
-   files were uploaded, they are also deleted (files stored in an S3 bucket are not deleted). \n\
-  \ \n\
-  \  To delete a script, specify the script ID. Before deleting a script, be sure to terminate all \
-   fleets that are deployed with the script being deleted. Fleet instances periodically check for \
-   script updates, and if the script record no longer exists, the instance will go into an error \
-   state and be unable to host game sessions.\n\
-  \  \n\
-  \    {b Learn more} \n\
-  \   \n\
-  \     {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-intro.html}Amazon \
-   GameLift Servers Amazon GameLift Servers Realtime} \n\
-  \    \n\
-  \      {b Related actions} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \      "]
-
-module DeleteVpcPeeringAuthorization : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_vpc_peering_authorization_input ->
-    ( delete_vpc_peering_authorization_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_vpc_peering_authorization_input ->
-    ( delete_vpc_peering_authorization_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Cancels a pending VPC peering authorization for the specified VPC. If you need to delete an \
-   existing VPC peering connection, use \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DeleteVpcPeeringConnection.html}DeleteVpcPeeringConnection}.\n\
-  \ \n\
-  \   {b Related actions} \n\
-  \  \n\
-  \    \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \   "]
-
-module DeleteVpcPeeringConnection : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_vpc_peering_connection_input ->
-    ( delete_vpc_peering_connection_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_vpc_peering_connection_input ->
-    ( delete_vpc_peering_connection_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Removes a VPC peering connection. To delete the connection, you must have a valid \
-   authorization for the VPC peering connection that you want to delete.. \n\
-  \ \n\
-  \  Once a valid authorization exists, call this operation from the Amazon Web Services account \
-   that is used to manage the Amazon GameLift Servers fleets. Identify the connection to delete by \
-   the connection ID and fleet ID. If successful, the connection is removed. \n\
-  \  \n\
-  \    {b Related actions} \n\
-  \   \n\
-  \     \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \    "]
-
-module DeregisterCompute : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    deregister_compute_input ->
-    ( deregister_compute_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    deregister_compute_input ->
-    ( deregister_compute_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Anywhere\n\n\
-  \ Removes a compute resource from an Anywhere fleet. Deregistered computes can no longer host \
-   game sessions through Amazon GameLift Servers. Use this operation with an Anywhere fleet that \
-   doesn't use the Amazon GameLift Servers Agent For Anywhere fleets with the Agent, the Agent \
-   handles all compute registry tasks for you. \n\
-  \ \n\
-  \  To deregister a compute, call this operation from the compute that's being deregistered and \
-   specify the compute name and the fleet ID. \n\
-  \  "]
-
-module DeregisterGameServer : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    deregister_game_server_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    deregister_game_server_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
-  \ Removes the game server from a game server group. As a result of this operation, the \
-   deregistered game server can no longer be claimed and will not be returned in a list of active \
-   game servers. \n\
-  \ \n\
-  \  To deregister a game server, specify the game server group and game server ID. If successful, \
-   this operation emits a CloudWatch event with termination timestamp and reason.\n\
-  \  \n\
-  \    {b Learn more} \n\
-  \   \n\
-  \     {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon GameLift \
-   Servers FleetIQ Guide} \n\
-  \    "]
-
-module DescribeAlias : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_alias_input ->
-    ( describe_alias_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_alias_input ->
-    ( describe_alias_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves properties for an alias. This operation returns all alias metadata and settings. To \
-   get an alias's target fleet ID only, use [ResolveAlias]. \n\
-  \ \n\
-  \  To get alias properties, specify the alias ID. If successful, the requested alias record is \
-   returned.\n\
-  \  \n\
-  \    {b Related actions} \n\
-  \   \n\
-  \     \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \    "]
-
-module DescribeBuild : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_build_input ->
-    ( describe_build_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_build_input ->
-    ( describe_build_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Retrieves properties for a custom game build. To request a build resource, specify a build ID. \
-   If successful, an object containing the build properties is returned.\n\
-  \ \n\
-  \   {b Learn more} \n\
-  \  \n\
-  \    {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-intro.html} \
-   Upload a Custom Server Build} \n\
-  \   \n\
-  \     \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \    "]
-
-module DescribeCompute : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_compute_input ->
-    ( describe_compute_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_compute_input ->
-    ( describe_compute_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves properties for a specific compute resource in an Amazon GameLift Servers fleet. You \
-   can list all computes in a fleet by calling \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_ListCompute.html}ListCompute}. \n\
-  \ \n\
-  \   {b Request options} \n\
-  \  \n\
-  \   Provide the fleet ID and compute name. The compute name varies depending on the type of fleet.\n\
-  \   \n\
-  \    {ul\n\
-  \          {-  For a compute in a managed EC2 fleet, provide an instance ID. Each instance in \
-   the fleet is a compute.\n\
-  \              \n\
-  \               }\n\
-  \          {-  For a compute in a managed container fleet, provide a compute name. In a \
-   container fleet, each game server container group on a fleet instance is assigned a compute \
-   name.\n\
-  \              \n\
-  \               }\n\
-  \          {-  For a compute in an Anywhere fleet, provide a registered compute name. Anywhere \
-   fleet computes are created when you register a hosting resource with the fleet.\n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \    {b Results} \n\
-  \   \n\
-  \    If successful, this operation returns details for the requested compute resource. Depending \
-   on the fleet's compute type, the result includes the following information: \n\
-  \    \n\
-  \     {ul\n\
-  \           {-  For a managed EC2 fleet, this operation returns information about the EC2 \
-   instance.\n\
-  \               \n\
-  \                }\n\
-  \           {-  For an Anywhere fleet, this operation returns information about the registered \
-   compute.\n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \  "]
-
-module DescribeContainerFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_container_fleet_input ->
-    ( describe_container_fleet_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_container_fleet_input ->
-    ( describe_container_fleet_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Container\n\n\
-  \ Retrieves the properties for a container fleet. When requesting attributes for multiple \
-   fleets, use the pagination parameters to retrieve results as a set of sequential pages. \n\
-  \ \n\
-  \   {b Request options} \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  Get container fleet properties for a single fleet. Provide either the fleet ID or \
-   ARN value. \n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \    {b Results} \n\
-  \   \n\
-  \    If successful, a [ContainerFleet] object is returned. This object includes the fleet \
-   properties, including information about the most recent deployment.\n\
-  \    \n\
-  \      Some API operations limit the number of fleet IDs that allowed in one request. If a \
-   request exceeds this limit, the request fails and the error message contains the maximum \
-   allowed number.\n\
-  \      \n\
-  \       "]
-
-module DescribeContainerGroupDefinition : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_container_group_definition_input ->
-    ( describe_container_group_definition_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_container_group_definition_input ->
-    ( describe_container_group_definition_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Container\n\n\
-  \ Retrieves the properties of a container group definition, including all container definitions \
-   in the group. \n\
-  \ \n\
-  \   {b Request options:} \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  Retrieve the latest version of a container group definition. Specify the container \
-   group definition name only, or use an ARN value without a version number.\n\
-  \             \n\
-  \              }\n\
-  \         {-  Retrieve a particular version. Specify the container group definition name and a \
-   version number, or use an ARN value that includes the version number.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \    {b Results:} \n\
-  \   \n\
-  \    If successful, this operation returns the complete properties of a container group \
-   definition version.\n\
-  \    \n\
-  \      {b Learn more} \n\
-  \     \n\
-  \      {ul\n\
-  \            {-   \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/containers-create-groups.html}Manage \
-   a container group definition} \n\
-  \                \n\
-  \                 }\n\
-  \            }\n\
-  \  "]
-
-module DescribeContainerGroupPortMappings : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_container_group_port_mappings_input ->
-    ( describe_container_group_port_mappings_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_container_group_port_mappings_input ->
-    ( describe_container_group_port_mappings_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Container\n\n\
-  \ Retrieves the port mappings for a container group running on a container fleet. Port mappings \
-   show how container ports are mapped to connection ports on the fleet instance. Use this \
-   operation to find the connection port for a specific container on a fleet instance.\n\
-  \ \n\
-  \   {b Request options} \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  Get port mappings for a game server container group. Provide the fleet ID, set \
-   [ContainerGroupType] to [GAME_SERVER], and specify the [ComputeName] for the game server \
-   container group.\n\
-  \             \n\
-  \              }\n\
-  \         {-  Get port mappings for a per-instance container group. Provide the fleet ID, set \
-   [ContainerGroupType] to [PER_INSTANCE], and specify the [InstanceId] for the instance.\n\
-  \             \n\
-  \              }\n\
-  \         {-  Optionally filter results to a single container by providing a [ContainerName].\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \    {b Results} \n\
-  \   \n\
-  \    This operation returns the fleet ID, fleet ARN, location, container group definition ARN, \
-   container group type, compute name (for game server container groups), instance ID, and a list \
-   of [ContainerGroupPortMapping] objects. Each object contains the container name, runtime ID, \
-   and a list of port mappings that show how container ports map to connection ports on the \
-   instance.\n\
-  \    \n\
-  \      {b Learn more} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/containers-remote-access.html}Connect \
-   to containers} \n\
-  \      \n\
-  \        \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/containers-create-groups.html}Create \
-   a container group definition} \n\
-  \       "]
-
-module DescribeEC2InstanceLimits : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_ec2_instance_limits_input ->
-    ( describe_ec2_instance_limits_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_ec2_instance_limits_input ->
-    ( describe_ec2_instance_limits_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Retrieves the instance limits and current utilization for an Amazon Web Services Region or \
-   location. Instance limits control the number of instances, per instance type, per location, \
-   that your Amazon Web Services account can use. Learn more at \
-   {{:http://aws.amazon.com/ec2/instance-types/}Amazon EC2 Instance Types}. The information \
-   returned includes the maximum number of instances allowed and your account's current usage \
-   across all fleets. This information can affect your ability to scale your Amazon GameLift \
-   Servers fleets. You can request a limit increase for your account by using the {b Service \
-   limits} page in the Amazon GameLift Servers console.\n\
-  \ \n\
-  \  Instance limits differ based on whether the instances are deployed in a fleet's home Region \
-   or in a remote location. For remote locations, limits also differ based on the combination of \
-   home Region and remote location. All requests must specify an Amazon Web Services Region \
-   (either explicitly or as your default settings). To get the limit for a remote location, you \
-   must also specify the location. To learn more about how Amazon GameLift Servers handles \
-   locations, see \
-   {{:https://docs.aws.amazon.com/gameliftservers/latest/developerguide/gamelift-regions.html}Amazon \
-   GameLift Servers service locations}. For example, the following requests all return different \
-   results: \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  Request specifies the Region [ap-northeast-1] with no location. The result is \
-   limits and usage data on all of the fleets that reside in [ap-northeast-1], for all instance \
-   types that are deployed in [ap-northeast-1]. \n\
-  \             \n\
-  \              }\n\
-  \         {-  Request specifies the Region [ap-northeast-1] with location [us-west-2]. The \
-   result is limits and usage data on all of the fleets that reside in [ap-northeast-1], for all \
-   instance types that are deployed in [us-west-2].\n\
-  \             \n\
-  \              }\n\
-  \         {-  Request specifies the Region [us-east-1] with location [ap-northeast-1]. The \
-   result is limits and usage data on all of the fleets that reside in [us-east-1], for all \
-   instance types that are deployed in [ap-northeast-1]. These limits do not affect fleets in any \
-   other Regions that deploy instances to [ap-northeast-1].\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   This operation can be used in the following ways:\n\
-  \   \n\
-  \    {ul\n\
-  \          {-  To get limit and usage data for all instance types that are deployed in an Amazon \
-   Web Services Region by fleets that reside in the same Region: Specify the Region only. \
-   Optionally, specify a single instance type to retrieve information for.\n\
-  \              \n\
-  \               }\n\
-  \          {-  To get limit and usage data for all instance types that are deployed to a remote \
-   location by fleets that reside in different Amazon Web Services Region: Provide both the Amazon \
-   Web Services Region and the remote location. Optionally, specify a single instance type to \
-   retrieve information for.\n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \   If successful, an [EC2InstanceLimits] object is returned with limits and usage data for each \
-   requested instance type.\n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
-   up Amazon GameLift Servers fleets} \n\
-  \     "]
-
-module DescribeFleetAttributes : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_attributes_input ->
-    ( describe_fleet_attributes_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_attributes_input ->
-    ( describe_fleet_attributes_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere\n\n\
-  \ Retrieves core fleet-wide properties for fleets in an Amazon Web Services Region. Properties \
-   include the computing hardware and deployment configuration for instances in the fleet.\n\
-  \ \n\
-  \  You can use this operation in the following ways: \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  To get attributes for specific fleets, provide a list of fleet IDs or fleet ARNs.\n\
-  \             \n\
-  \              }\n\
-  \         {-  To get attributes for all fleets, do not provide a fleet identifier.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   When requesting attributes for multiple fleets, use the pagination parameters to retrieve \
-   results as a set of sequential pages. \n\
-  \   \n\
-  \    If successful, a [FleetAttributes] object is returned for each fleet requested, unless the \
-   fleet identifier is not found. \n\
-  \    \n\
-  \      Some API operations limit the number of fleet IDs that allowed in one request. If a \
-   request exceeds this limit, the request fails and the error message contains the maximum \
-   allowed number.\n\
-  \      \n\
-  \         {b Learn more} \n\
-  \        \n\
-  \          \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting up \
-   Amazon GameLift Servers fleets} \n\
-  \         "]
-
-module DescribeFleetCapacity : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_capacity_input ->
-    ( describe_fleet_capacity_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_capacity_input ->
-    ( describe_fleet_capacity_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Container\n\n\
-  \ Retrieves the resource capacity settings for one or more fleets. For a container fleet, this \
-   operation also returns counts for game server container groups.\n\
-  \ \n\
-  \  With multi-location fleets, this operation retrieves data for the fleet's home Region only. \
-   To retrieve capacity for remote locations, see \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetLocationCapacity.html}https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetLocationCapacity.html}.\n\
-  \  \n\
-  \   This operation can be used in the following ways: \n\
-  \   \n\
-  \    {ul\n\
-  \          {-  To get capacity data for one or more specific fleets, provide a list of fleet IDs \
-   or fleet ARNs. \n\
-  \              \n\
-  \               }\n\
-  \          {-  To get capacity data for all fleets, do not provide a fleet identifier. \n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \   When requesting multiple fleets, use the pagination parameters to retrieve results as a set \
-   of sequential pages. \n\
-  \   \n\
-  \    If successful, a [FleetCapacity] object is returned for each requested fleet ID. Each \
-   [FleetCapacity] object includes a [Location] property, which is set to the fleet's home Region. \
-   Capacity values are returned only for fleets that currently exist.\n\
-  \    \n\
-  \      Some API operations may limit the number of fleet IDs that are allowed in one request. If \
-   a request exceeds this limit, the request fails and the error message includes the maximum \
-   allowed.\n\
-  \      \n\
-  \         {b Learn more} \n\
-  \        \n\
-  \          \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting up \
-   Amazon GameLift Servers fleets} \n\
-  \         \n\
-  \           \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/monitoring-cloudwatch.html#gamelift-metrics-fleet}GameLift \
-   metrics for fleets} \n\
-  \          "]
-
-module DescribeFleetDeployment : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_deployment_input ->
-    ( describe_fleet_deployment_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_deployment_input ->
-    ( describe_fleet_deployment_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Container\n\n\
-  \ Retrieves information about a managed container fleet deployment. \n\
-  \ \n\
-  \   {b Request options} \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  Get information about the latest deployment for a specific fleet. Provide the \
-   fleet ID or ARN.\n\
-  \             \n\
-  \              }\n\
-  \         {-   Get information about a specific deployment. Provide the fleet ID or ARN and the \
-   deployment ID.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \    {b Results} \n\
-  \   \n\
-  \    If successful, a [FleetDeployment] object is returned.\n\
-  \    "]
-
-module DescribeFleetEvents : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_events_input ->
-    ( describe_fleet_events_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_events_input ->
-    ( describe_fleet_events_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves entries from a fleet's event log. Fleet events are initiated by changes in status, \
-   such as during fleet creation and termination, changes in capacity, etc. If a fleet has \
-   multiple locations, events are also initiated by changes to status and capacity in remote \
-   locations.\n\
-  \ \n\
-  \  You can specify a time range to limit the result set. Use the pagination parameters to \
-   retrieve results as a set of sequential pages. \n\
-  \  \n\
-  \   If successful, a collection of event log entries matching the request are returned.\n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
-   up Amazon GameLift Servers fleets} \n\
-  \     "]
-
-module DescribeFleetLocationAttributes : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_location_attributes_input ->
-    ( describe_fleet_location_attributes_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_location_attributes_input ->
-    ( describe_fleet_location_attributes_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Container\n\n\
-  \ Retrieves information on a fleet's remote locations, including life-cycle status and any \
-   suspended fleet activity. \n\
-  \ \n\
-  \  This operation can be used in the following ways: \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  To get data for specific locations, provide a fleet identifier and a list of \
-   locations. Location data is returned in the order that it is requested. \n\
-  \             \n\
-  \              }\n\
-  \         {-  To get data for all locations, provide a fleet identifier only. Location data is \
-   returned in no particular order. \n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   When requesting attributes for multiple locations, use the pagination parameters to retrieve \
-   results as a set of sequential pages. \n\
-  \   \n\
-  \    If successful, a [LocationAttributes] object is returned for each requested location. If \
-   the fleet does not have a requested location, no information is returned. \n\
-  \    \n\
-  \      {b Learn more} \n\
-  \     \n\
-  \       {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
-   up Amazon GameLift Servers fleets} \n\
-  \      \n\
-  \        {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-regions.html} \
-   Amazon GameLift Servers service locations} for managed hosting\n\
-  \       "]
-
-module DescribeFleetLocationCapacity : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_location_capacity_input ->
-    ( describe_fleet_location_capacity_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_location_capacity_input ->
-    ( describe_fleet_location_capacity_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Container\n\n\
-  \ Retrieves the resource capacity settings for a fleet location. The data returned includes the \
-   current capacity (number of EC2 instances) and some scaling settings for the requested fleet \
-   location. For a managed container fleet, this operation also returns counts for game server \
-   container groups.\n\
-  \ \n\
-  \  Use this operation to retrieve capacity information for a fleet's remote location or home \
-   Region (you can also retrieve home Region capacity by calling [DescribeFleetCapacity]).\n\
-  \  \n\
-  \   To retrieve capacity data, identify a fleet and location. \n\
-  \   \n\
-  \    If successful, a [FleetCapacity] object is returned for the requested fleet location. \n\
-  \    \n\
-  \      {b Learn more} \n\
-  \     \n\
-  \       {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
-   up Amazon GameLift Servers fleets} \n\
-  \      \n\
-  \        {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-regions.html} \
-   Amazon GameLift Servers service locations} for managed hosting\n\
-  \       \n\
-  \         \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/monitoring-cloudwatch.html#gamelift-metrics-fleet}GameLift \
-   metrics for fleets} \n\
-  \        "]
-
-module DescribeFleetLocationUtilization : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_location_utilization_input ->
-    ( describe_fleet_location_utilization_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_location_utilization_input ->
-    ( describe_fleet_location_utilization_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves current usage data for a fleet location. Utilization data provides a snapshot of \
-   current game hosting activity at the requested location. Use this operation to retrieve \
-   utilization information for a fleet's remote location or home Region (you can also retrieve \
-   home Region utilization by calling [DescribeFleetUtilization]).\n\
-  \ \n\
-  \  To retrieve utilization data, identify a fleet and location. \n\
-  \  \n\
-  \   If successful, a [FleetUtilization] object is returned for the requested fleet location. \n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
-   up Amazon GameLift Servers fleets} \n\
-  \     \n\
-  \       {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-regions.html} \
-   Amazon GameLift Servers service locations} for managed hosting\n\
-  \      \n\
-  \        \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/monitoring-cloudwatch.html#gamelift-metrics-fleet}GameLift \
-   metrics for fleets} \n\
-  \       "]
-
-module DescribeFleetPortSettings : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_port_settings_input ->
-    ( describe_fleet_port_settings_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_port_settings_input ->
-    ( describe_fleet_port_settings_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Container\n\n\
-  \ Retrieves a fleet's inbound connection permissions. Connection permissions specify IP \
-   addresses and port settings that incoming traffic can use to access server processes in the \
-   fleet. Game server processes that are running in the fleet must use a port that falls within \
-   this range. \n\
-  \ \n\
-  \  Use this operation in the following ways: \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  To retrieve the port settings for a fleet, identify the fleet's unique identifier. \n\
-  \             \n\
-  \              }\n\
-  \         {-  To check the status of recent updates to a fleet remote location, specify the \
-   fleet ID and a location. Port setting updates can take time to propagate across all locations. \n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   If successful, a set of [IpPermission] objects is returned for the requested fleet ID. When \
-   specifying a location, this operation returns a pending status. If the requested fleet has been \
-   deleted, the result set is empty.\n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
-   up Amazon GameLift Servers fleets} \n\
-  \     "]
-
-module DescribeFleetUtilization : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_utilization_input ->
-    ( describe_fleet_utilization_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_fleet_utilization_input ->
-    ( describe_fleet_utilization_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Container\n\n\
-  \ Retrieves utilization statistics for one or more fleets. Utilization data provides a snapshot \
-   of how the fleet's hosting resources are currently being used. For fleets with remote \
-   locations, this operation retrieves data for the fleet's home Region only. See \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetLocationUtilization.html}DescribeFleetLocationUtilization} \
-   to get utilization statistics for a fleet's remote locations.\n\
-  \ \n\
-  \  This operation can be used in the following ways: \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  To get utilization data for one or more specific fleets, provide a list of fleet \
-   IDs or fleet ARNs. \n\
-  \             \n\
-  \              }\n\
-  \         {-  To get utilization data for all fleets, do not provide a fleet identifier. \n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   When requesting multiple fleets, use the pagination parameters to retrieve results as a set \
-   of sequential pages. \n\
-  \   \n\
-  \    If successful, a \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_FleetUtilization.html}FleetUtilization} \
-   object is returned for each requested fleet ID, unless the fleet identifier is not found. Each \
-   fleet utilization object includes a [Location] property, which is set to the fleet's home \
-   Region. \n\
-  \    \n\
-  \      Some API operations may limit the number of fleet IDs allowed in one request. If a \
-   request exceeds this limit, the request fails and the error message includes the maximum \
-   allowed.\n\
-  \      \n\
-  \         {b Learn more} \n\
-  \        \n\
-  \          \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting up \
-   Amazon GameLift Servers Fleets} \n\
-  \         \n\
-  \           \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/monitoring-cloudwatch.html#gamelift-metrics-fleet}GameLift \
-   Metrics for Fleets} \n\
-  \          "]
-
-module DescribeGameServer : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_server_input ->
-    ( describe_game_server_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_server_input ->
-    ( describe_game_server_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
-  \ Retrieves information for a registered game server. Information includes game server status, \
-   health check info, and the instance that the game server is running on. \n\
-  \ \n\
-  \  To retrieve game server information, specify the game server ID. If successful, the requested \
-   game server object is returned. \n\
-  \  \n\
-  \    {b Learn more} \n\
-  \   \n\
-  \     {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon GameLift \
-   Servers FleetIQ Guide} \n\
-  \    "]
-
-module DescribeGameServerGroup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_server_group_input ->
-    ( describe_game_server_group_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_server_group_input ->
-    ( describe_game_server_group_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
-  \ Retrieves information on a game server group. This operation returns only properties related \
-   to Amazon GameLift Servers FleetIQ. To view or update properties for the corresponding Auto \
-   Scaling group, such as launch template, auto scaling policies, and maximum/minimum group size, \
-   access the Auto Scaling group directly.\n\
-  \ \n\
-  \  To get attributes for a game server group, provide a group name or ARN value. If successful, \
-   a [GameServerGroup] object is returned.\n\
-  \  \n\
-  \    {b Learn more} \n\
-  \   \n\
-  \     {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon GameLift \
-   Servers FleetIQ Guide} \n\
-  \    "]
-
-module DescribeGameServerInstances : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_server_instances_input ->
-    ( describe_game_server_instances_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_server_instances_input ->
-    ( describe_game_server_instances_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
-  \ Retrieves status information about the Amazon EC2 instances associated with a Amazon GameLift \
-   Servers FleetIQ game server group. Use this operation to detect when instances are active or \
-   not available to host new game servers.\n\
-  \ \n\
-  \  To request status for all instances in the game server group, provide a game server group ID \
-   only. To request status for specific instances, provide the game server group ID and one or \
-   more instance IDs. Use the pagination parameters to retrieve results in sequential segments. If \
-   successful, a collection of [GameServerInstance] objects is returned. \n\
-  \  \n\
-  \   This operation is not designed to be called with every game server claim request; this \
-   practice can cause you to exceed your API limit, which results in errors. Instead, as a best \
-   practice, cache the results and refresh your cache no more than once every 10 seconds.\n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon \
-   GameLift Servers FleetIQ Guide} \n\
-  \     "]
-
-module DescribeGameSessionDetails : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_session_details_input ->
-    ( describe_game_session_details_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_session_details_input ->
-    ( describe_game_session_details_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves additional game session properties, including the game session protection policy in \
-   force, a set of one or more game sessions in a specific fleet location. You can optionally \
-   filter the results by current game session status.\n\
-  \ \n\
-  \  This operation can be used in the following ways: \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  To retrieve details for all game sessions that are currently running on all \
-   locations in a fleet, provide a fleet or alias ID, with an optional status filter. This \
-   approach returns details from the fleet's home Region and all remote locations.\n\
-  \             \n\
-  \              }\n\
-  \         {-  To retrieve details for all game sessions that are currently running on a specific \
-   fleet location, provide a fleet or alias ID and a location name, with optional status filter. \
-   The location can be the fleet's home Region or any remote location.\n\
-  \             \n\
-  \              }\n\
-  \         {-  To retrieve details for a specific game session, provide the game session ID. This \
-   approach looks for the game session ID in all fleets that reside in the Amazon Web Services \
-   Region defined in the request.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   Use the pagination parameters to retrieve results as a set of sequential pages. \n\
-  \   \n\
-  \    If successful, a [GameSessionDetail] object is returned for each game session that matches \
-   the request.\n\
-  \    \n\
-  \      {b Learn more} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-client-api.html#gamelift-sdk-client-api-find}Find \
-   a game session} \n\
-  \      \n\
-  \        \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \       "]
-
-module DescribeGameSessionPlacement : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_session_placement_input ->
-    ( describe_game_session_placement_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_session_placement_input ->
-    ( describe_game_session_placement_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves information, including current status, about a game session placement request. \n\
-  \ \n\
-  \  To get game session placement details, specify the placement ID.\n\
-  \  \n\
-  \   This operation is not designed to be continually called to track game session status. This \
-   practice can cause you to exceed your API limit, which results in errors. Instead, you must \
-   configure an Amazon Simple Notification Service (SNS) topic to receive notifications from \
-   FlexMatch or queues. Continuously polling with [DescribeGameSessionPlacement] should only be \
-   used for games in development with low game session usage. For a reference implementation of \
-   event-based game session placement tracking, see \
-   {{:https://github.com/amazon-gamelift/amazon-gamelift-toolkit/tree/main/event-based-session-placement} \
-   Event-based game session placement guidance} in the Amazon GameLift Toolkit.\n\
-  \   "]
-
-module DescribeGameSessionQueues : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_session_queues_input ->
-    ( describe_game_session_queues_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_session_queues_input ->
-    ( describe_game_session_queues_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves the properties for one or more game session queues. When requesting multiple queues, \
-   use the pagination parameters to retrieve results as a set of sequential pages. When specifying \
-   a list of queues, objects are returned only for queues that currently exist in the Region.\n\
-  \ \n\
-  \   {b Learn more} \n\
-  \  \n\
-  \    {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/queues-console.html} View \
-   Your Queues} \n\
-  \   "]
-
-module DescribeGameSessions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_sessions_input ->
-    ( describe_game_sessions_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_game_sessions_input ->
-    ( describe_game_sessions_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves a set of one or more game sessions in a specific fleet location. You can optionally \
-   filter the results by current game session status.\n\
-  \ \n\
-  \  This operation can be used in the following ways: \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  To retrieve all game sessions that are currently running on all locations in a \
-   fleet, provide a fleet or alias ID, with an optional status filter. This approach returns all \
-   game sessions in the fleet's home Region and all remote locations.\n\
-  \             \n\
-  \              }\n\
-  \         {-  To retrieve all game sessions that are currently running on a specific fleet \
-   location, provide a fleet or alias ID and a location name, with optional status filter. The \
-   location can be the fleet's home Region or any remote location.\n\
-  \             \n\
-  \              }\n\
-  \         {-  To retrieve a specific game session, provide the game session ID. This approach \
-   looks for the game session ID in all fleets that reside in the Amazon Web Services Region \
-   defined in the request.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   Use the pagination parameters to retrieve results as a set of sequential pages. \n\
-  \   \n\
-  \    If successful, a [GameSession] object is returned for each game session that matches the \
-   request.\n\
-  \    \n\
-  \     This operation is not designed to be continually called to track game session status. This \
-   practice can cause you to exceed your API limit, which results in errors. Instead, you must \
-   configure an Amazon Simple Notification Service (SNS) topic to receive notifications from \
-   FlexMatch or queues. Continuously polling with [DescribeGameSessions] should only be used for \
-   games in development with low game session usage. \n\
-  \     \n\
-  \       {i Available in Amazon GameLift Servers Local.} \n\
-  \      \n\
-  \        {b Learn more} \n\
-  \       \n\
-  \         \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-client-api.html#gamelift-sdk-client-api-find}Find \
-   a game session} \n\
-  \        \n\
-  \          \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \         "]
-
-module DescribeInstances : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_instances_input ->
-    ( describe_instances_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_instances_input ->
-    ( describe_instances_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:}EC2, Container\n\n\
-  \ Retrieves information about the EC2 instances in an Amazon GameLift Servers managed fleet, \
-   including instance ID, connection data, and status. You can use this operation with a \
-   multi-location fleet to get location-specific instance information. As an alternative, use the \
-   operations \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_ListCompute}https://docs.aws.amazon.com/gamelift/latest/apireference/API_ListCompute} \
-   and \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeCompute}https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeCompute} \
-   to retrieve information for compute resources, including EC2 and Anywhere fleets.\n\
-  \ \n\
-  \  You can call this operation in the following ways:\n\
-  \  \n\
-  \   {ul\n\
-  \         {-  To get information on all instances in a fleet's home Region, specify the fleet ID.\n\
-  \             \n\
-  \              }\n\
-  \         {-  To get information on all instances in a fleet's remote location, specify the \
-   fleet ID and location name.\n\
-  \             \n\
-  \              }\n\
-  \         {-  To get information on a specific instance in a fleet, specify the fleet ID and \
-   instance ID.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   Use the pagination parameters to retrieve results as a set of sequential pages. \n\
-  \   \n\
-  \    If successful, this operation returns [Instance] objects for each requested instance, \
-   listed in no particular order. If you call this operation for an Anywhere fleet, you receive an \
-   InvalidRequestException.\n\
-  \    \n\
-  \      {b Learn more} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-remote-access.html}Remotely \
-   connect to fleet instances} \n\
-  \      \n\
-  \        \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-debug.html}Debug \
-   fleet issues} \n\
-  \       \n\
-  \         {b Related actions} \n\
-  \        \n\
-  \          \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \         "]
-
-module DescribeMatchmaking : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_matchmaking_input ->
-    ( describe_matchmaking_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_matchmaking_input ->
-    ( describe_matchmaking_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves one or more matchmaking tickets. Use this operation to retrieve ticket information, \
-   including--after a successful match is made--connection information for the resulting new game \
-   session. \n\
-  \ \n\
-  \  To request matchmaking tickets, provide a list of up to 10 ticket IDs. If the request is \
-   successful, a ticket object is returned for each requested ID that currently exists.\n\
-  \  \n\
-  \   This operation is not designed to be continually called to track matchmaking ticket status. \
-   This practice can cause you to exceed your API limit, which results in errors. Instead, as a \
-   best practice, set up an Amazon Simple Notification Service to receive notifications, and \
-   provide the topic ARN in the matchmaking configuration.\n\
-  \   \n\
-  \    \n\
-  \    \n\
-  \      {b Learn more} \n\
-  \     \n\
-  \       {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-client.html} Add \
-   FlexMatch to a game client} \n\
-  \      \n\
-  \        {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-notification.html} \
-   Set Up FlexMatch event notification} \n\
-  \       "]
-
-module DescribeMatchmakingConfigurations : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_matchmaking_configurations_input ->
-    ( describe_matchmaking_configurations_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_matchmaking_configurations_input ->
-    ( describe_matchmaking_configurations_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves the details of FlexMatch matchmaking configurations. \n\
-  \ \n\
-  \  This operation offers the following options: (1) retrieve all matchmaking configurations, (2) \
-   retrieve configurations for a specified list, or (3) retrieve all configurations that use a \
-   specified rule set name. When requesting multiple items, use the pagination parameters to \
-   retrieve results as a set of sequential pages. \n\
-  \  \n\
-  \   If successful, a configuration is returned for each requested name. When specifying a list \
-   of names, only configurations that currently exist are returned. \n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/matchmaker-build.html} \
-   Setting up FlexMatch matchmakers} \n\
-  \     "]
-
-module DescribeMatchmakingRuleSets : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_matchmaking_rule_sets_input ->
-    ( describe_matchmaking_rule_sets_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_matchmaking_rule_sets_input ->
-    ( describe_matchmaking_rule_sets_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves the details for FlexMatch matchmaking rule sets. You can request all existing rule \
-   sets for the Region, or provide a list of one or more rule set names. When requesting multiple \
-   items, use the pagination parameters to retrieve results as a set of sequential pages. If \
-   successful, a rule set is returned for each requested name. \n\
-  \ \n\
-  \   {b Learn more} \n\
-  \  \n\
-  \   {ul\n\
-  \         {-   \
-   {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-rulesets.html}Build a rule \
-   set} \n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \  "]
-
-module DescribePlayerSessions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_player_sessions_input ->
-    ( describe_player_sessions_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_player_sessions_input ->
-    ( describe_player_sessions_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
-  \ Retrieves properties for one or more player sessions. \n\
-  \ \n\
-  \  This action can be used in the following ways: \n\
-  \  \n\
-  \   {ul\n\
-  \         {-  To retrieve a specific player session, provide the player session ID only.\n\
-  \             \n\
-  \              }\n\
-  \         {-  To retrieve all player sessions in a game session, provide the game session ID only.\n\
-  \             \n\
-  \              }\n\
-  \         {-  To retrieve all player sessions for a specific player, provide a player ID only.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \   To request player sessions, specify either a player session ID, game session ID, or player \
-   ID. You can filter this request by player session status. If you provide a specific \
-   [PlayerSessionId] or [PlayerId], Amazon GameLift Servers ignores the filter criteria. Use the \
-   pagination parameters to retrieve results as a set of sequential pages. \n\
-  \   \n\
-  \    If successful, a [PlayerSession] object is returned for each session that matches the \
-   request.\n\
-  \    \n\
-  \      {b Related actions} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \      "]
-
-module DescribeRuntimeConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_runtime_configuration_input ->
-    ( describe_runtime_configuration_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_runtime_configuration_input ->
-    ( describe_runtime_configuration_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Retrieves a fleet's runtime configuration settings. The runtime configuration determines which \
-   server processes run, and how, on computes in the fleet. For managed EC2 fleets, the runtime \
-   configuration describes server processes that run on each fleet instance. You can update a \
-   fleet's runtime configuration at any time using \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateRuntimeConfiguration.html}UpdateRuntimeConfiguration}.\n\
-  \ \n\
-  \  To get the current runtime configuration for a fleet, provide the fleet ID. \n\
-  \  \n\
-  \   If successful, a [RuntimeConfiguration] object is returned for the requested fleet. If the \
-   requested fleet has been deleted, the result set is empty.\n\
-  \   \n\
-  \     {b Learn more} \n\
-  \    \n\
-  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
-   up Amazon GameLift Servers fleets} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-multiprocess.html}Running \
-   multiple processes on a fleet} \n\
-  \      "]
-
-module DescribeScalingPolicies : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_scaling_policies_input ->
-    ( describe_scaling_policies_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_scaling_policies_input ->
-    ( describe_scaling_policies_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Retrieves all scaling policies applied to a fleet.\n\
-  \ \n\
-  \  To get a fleet's scaling policies, specify the fleet ID. You can filter this request by \
-   policy status, such as to retrieve only active scaling policies. Use the pagination parameters \
-   to retrieve results as a set of sequential pages. If successful, set of [ScalingPolicy] objects \
-   is returned for the fleet.\n\
-  \  \n\
-  \   A fleet may have all of its scaling policies suspended. This operation does not affect the \
-   status of the scaling policies, which remains ACTIVE.\n\
-  \   "]
-
-module DescribeScript : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_script_input ->
-    ( describe_script_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_script_input ->
-    ( describe_script_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Retrieves properties for a Realtime script. \n\
-  \ \n\
-  \  To request a script record, specify the script ID. If successful, an object containing the \
-   script properties is returned.\n\
-  \  \n\
-  \    {b Learn more} \n\
-  \   \n\
-  \     {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-intro.html}Amazon \
-   GameLift Servers Amazon GameLift Servers Realtime} \n\
-  \    \n\
-  \      {b Related actions} \n\
-  \     \n\
-  \       \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \      "]
-
-module DescribeVpcPeeringAuthorizations : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_vpc_peering_authorizations_input ->
-    ( describe_vpc_peering_authorizations_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_vpc_peering_authorizations_input ->
-    ( describe_vpc_peering_authorizations_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Retrieves valid VPC peering authorizations that are pending for the Amazon Web Services \
-   account. This operation returns all VPC peering authorizations and requests for peering. This \
-   includes those initiated and received by this account. \n\
-  \ \n\
-  \   {b Related actions} \n\
-  \  \n\
-  \    \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \   "]
-
-module DescribeVpcPeeringConnections : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `NotFoundException of not_found_exception
-    | `UnauthorizedException of unauthorized_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_vpc_peering_connections_input ->
-    ( describe_vpc_peering_connections_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_vpc_peering_connections_input ->
-    ( describe_vpc_peering_connections_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `NotFoundException of not_found_exception
-      | `UnauthorizedException of unauthorized_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} EC2\n\n\
-  \ Retrieves information on VPC peering connections. Use this operation to get peering \
-   information for all fleets or for one specific fleet ID. \n\
-  \ \n\
-  \  To retrieve connection information, call this operation from the Amazon Web Services account \
-   that is used to manage the Amazon GameLift Servers fleets. Specify a fleet ID or leave the \
-   parameter empty to retrieve all connection records. If successful, the retrieved information \
-   includes both active and pending connections. Active connections identify the IpV4 CIDR block \
-   that the VPC uses to connect. \n\
-  \  \n\
-  \    {b Related actions} \n\
-  \   \n\
-  \     \
-   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
-   APIs by task} \n\
-  \    "]
 
 module GetComputeAccess : sig
   val error_to_string :
@@ -7292,6 +2665,67 @@ end
   \      \n\
   \       "]
 
+module ListContainerGroupDefinitions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_container_group_definitions_input ->
+    ( list_container_group_definitions_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_container_group_definitions_input ->
+    ( list_container_group_definitions_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Container\n\n\
+  \ Retrieves container group definitions for the Amazon Web Services account and Amazon Web \
+   Services Region. Use the pagination parameters to retrieve results in a set of sequential pages.\n\
+  \ \n\
+  \  This operation returns only the latest version of each definition. To retrieve all versions \
+   of a container group definition, use \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_ListContainerGroupDefinitionVersions.html}ListContainerGroupDefinitionVersions}.\n\
+  \  \n\
+  \    {b Request options:} \n\
+  \   \n\
+  \    {ul\n\
+  \          {-  Retrieve the most recent versions of all container group definitions. \n\
+  \              \n\
+  \               }\n\
+  \          {-  Retrieve the most recent versions of all container group definitions, filtered by \
+   type. Specify the container group type to filter on. \n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \    {b Results:} \n\
+  \   \n\
+  \    If successful, this operation returns the complete properties of a set of container group \
+   definition versions that match the request.\n\
+  \    \n\
+  \      This operation returns the list of container group definitions in no particular order. \n\
+  \      \n\
+  \       "]
+
 module ListContainerGroupDefinitionVersions : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -7358,67 +2792,6 @@ end
   \                    }\n\
   \               }\n\
   \  "]
-
-module ListContainerGroupDefinitions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `UnauthorizedException of unauthorized_exception
-    | `UnsupportedRegionException of unsupported_region_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_container_group_definitions_input ->
-    ( list_container_group_definitions_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_container_group_definitions_input ->
-    ( list_container_group_definitions_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `UnauthorizedException of unauthorized_exception
-      | `UnsupportedRegionException of unsupported_region_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " {b This API works with the following fleet types:} Container\n\n\
-  \ Retrieves container group definitions for the Amazon Web Services account and Amazon Web \
-   Services Region. Use the pagination parameters to retrieve results in a set of sequential pages.\n\
-  \ \n\
-  \  This operation returns only the latest version of each definition. To retrieve all versions \
-   of a container group definition, use \
-   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_ListContainerGroupDefinitionVersions.html}ListContainerGroupDefinitionVersions}.\n\
-  \  \n\
-  \    {b Request options:} \n\
-  \   \n\
-  \    {ul\n\
-  \          {-  Retrieve the most recent versions of all container group definitions. \n\
-  \              \n\
-  \               }\n\
-  \          {-  Retrieve the most recent versions of all container group definitions, filtered by \
-   type. Specify the container group type to filter on. \n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \    {b Results:} \n\
-  \   \n\
-  \    If successful, this operation returns the complete properties of a set of container group \
-   definition versions that match the request.\n\
-  \    \n\
-  \      This operation returns the list of container group definitions in no particular order. \n\
-  \      \n\
-  \       "]
 
 module ListFleetDeployments : sig
   val error_to_string :
@@ -9979,7 +5352,6 @@ end
    APIs by task} \n\
   \        "]
 
-(** {1:Serialization and Deserialization} *)
 module ValidateMatchmakingRuleSet : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -10025,6 +5397,4635 @@ end
   \              }\n\
   \         }\n\
   \  "]
+
+module DescribeVpcPeeringConnections : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_vpc_peering_connections_input ->
+    ( describe_vpc_peering_connections_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_vpc_peering_connections_input ->
+    ( describe_vpc_peering_connections_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Retrieves information on VPC peering connections. Use this operation to get peering \
+   information for all fleets or for one specific fleet ID. \n\
+  \ \n\
+  \  To retrieve connection information, call this operation from the Amazon Web Services account \
+   that is used to manage the Amazon GameLift Servers fleets. Specify a fleet ID or leave the \
+   parameter empty to retrieve all connection records. If successful, the retrieved information \
+   includes both active and pending connections. Active connections identify the IpV4 CIDR block \
+   that the VPC uses to connect. \n\
+  \  \n\
+  \    {b Related actions} \n\
+  \   \n\
+  \     \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \    "]
+
+module DescribeVpcPeeringAuthorizations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_vpc_peering_authorizations_input ->
+    ( describe_vpc_peering_authorizations_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_vpc_peering_authorizations_input ->
+    ( describe_vpc_peering_authorizations_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Retrieves valid VPC peering authorizations that are pending for the Amazon Web Services \
+   account. This operation returns all VPC peering authorizations and requests for peering. This \
+   includes those initiated and received by this account. \n\
+  \ \n\
+  \   {b Related actions} \n\
+  \  \n\
+  \    \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \   "]
+
+module DescribeScript : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_script_input ->
+    ( describe_script_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_script_input ->
+    ( describe_script_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Retrieves properties for a Realtime script. \n\
+  \ \n\
+  \  To request a script record, specify the script ID. If successful, an object containing the \
+   script properties is returned.\n\
+  \  \n\
+  \    {b Learn more} \n\
+  \   \n\
+  \     {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-intro.html}Amazon \
+   GameLift Servers Amazon GameLift Servers Realtime} \n\
+  \    \n\
+  \      {b Related actions} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \      "]
+
+module DescribeScalingPolicies : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_scaling_policies_input ->
+    ( describe_scaling_policies_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_scaling_policies_input ->
+    ( describe_scaling_policies_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Retrieves all scaling policies applied to a fleet.\n\
+  \ \n\
+  \  To get a fleet's scaling policies, specify the fleet ID. You can filter this request by \
+   policy status, such as to retrieve only active scaling policies. Use the pagination parameters \
+   to retrieve results as a set of sequential pages. If successful, set of [ScalingPolicy] objects \
+   is returned for the fleet.\n\
+  \  \n\
+  \   A fleet may have all of its scaling policies suspended. This operation does not affect the \
+   status of the scaling policies, which remains ACTIVE.\n\
+  \   "]
+
+module DescribeRuntimeConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_runtime_configuration_input ->
+    ( describe_runtime_configuration_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_runtime_configuration_input ->
+    ( describe_runtime_configuration_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Retrieves a fleet's runtime configuration settings. The runtime configuration determines which \
+   server processes run, and how, on computes in the fleet. For managed EC2 fleets, the runtime \
+   configuration describes server processes that run on each fleet instance. You can update a \
+   fleet's runtime configuration at any time using \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateRuntimeConfiguration.html}UpdateRuntimeConfiguration}.\n\
+  \ \n\
+  \  To get the current runtime configuration for a fleet, provide the fleet ID. \n\
+  \  \n\
+  \   If successful, a [RuntimeConfiguration] object is returned for the requested fleet. If the \
+   requested fleet has been deleted, the result set is empty.\n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
+   up Amazon GameLift Servers fleets} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-multiprocess.html}Running \
+   multiple processes on a fleet} \n\
+  \      "]
+
+module DescribePlayerSessions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_player_sessions_input ->
+    ( describe_player_sessions_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_player_sessions_input ->
+    ( describe_player_sessions_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves properties for one or more player sessions. \n\
+  \ \n\
+  \  This action can be used in the following ways: \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  To retrieve a specific player session, provide the player session ID only.\n\
+  \             \n\
+  \              }\n\
+  \         {-  To retrieve all player sessions in a game session, provide the game session ID only.\n\
+  \             \n\
+  \              }\n\
+  \         {-  To retrieve all player sessions for a specific player, provide a player ID only.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   To request player sessions, specify either a player session ID, game session ID, or player \
+   ID. You can filter this request by player session status. If you provide a specific \
+   [PlayerSessionId] or [PlayerId], Amazon GameLift Servers ignores the filter criteria. Use the \
+   pagination parameters to retrieve results as a set of sequential pages. \n\
+  \   \n\
+  \    If successful, a [PlayerSession] object is returned for each session that matches the \
+   request.\n\
+  \    \n\
+  \      {b Related actions} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \      "]
+
+module DescribeMatchmakingRuleSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_matchmaking_rule_sets_input ->
+    ( describe_matchmaking_rule_sets_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_matchmaking_rule_sets_input ->
+    ( describe_matchmaking_rule_sets_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves the details for FlexMatch matchmaking rule sets. You can request all existing rule \
+   sets for the Region, or provide a list of one or more rule set names. When requesting multiple \
+   items, use the pagination parameters to retrieve results as a set of sequential pages. If \
+   successful, a rule set is returned for each requested name. \n\
+  \ \n\
+  \   {b Learn more} \n\
+  \  \n\
+  \   {ul\n\
+  \         {-   \
+   {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-rulesets.html}Build a rule \
+   set} \n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \  "]
+
+module DescribeMatchmakingConfigurations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_matchmaking_configurations_input ->
+    ( describe_matchmaking_configurations_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_matchmaking_configurations_input ->
+    ( describe_matchmaking_configurations_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves the details of FlexMatch matchmaking configurations. \n\
+  \ \n\
+  \  This operation offers the following options: (1) retrieve all matchmaking configurations, (2) \
+   retrieve configurations for a specified list, or (3) retrieve all configurations that use a \
+   specified rule set name. When requesting multiple items, use the pagination parameters to \
+   retrieve results as a set of sequential pages. \n\
+  \  \n\
+  \   If successful, a configuration is returned for each requested name. When specifying a list \
+   of names, only configurations that currently exist are returned. \n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/matchmaker-build.html} \
+   Setting up FlexMatch matchmakers} \n\
+  \     "]
+
+module DescribeMatchmaking : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_matchmaking_input ->
+    ( describe_matchmaking_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_matchmaking_input ->
+    ( describe_matchmaking_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves one or more matchmaking tickets. Use this operation to retrieve ticket information, \
+   including--after a successful match is made--connection information for the resulting new game \
+   session. \n\
+  \ \n\
+  \  To request matchmaking tickets, provide a list of up to 10 ticket IDs. If the request is \
+   successful, a ticket object is returned for each requested ID that currently exists.\n\
+  \  \n\
+  \   This operation is not designed to be continually called to track matchmaking ticket status. \
+   This practice can cause you to exceed your API limit, which results in errors. Instead, as a \
+   best practice, set up an Amazon Simple Notification Service to receive notifications, and \
+   provide the topic ARN in the matchmaking configuration.\n\
+  \   \n\
+  \    \n\
+  \    \n\
+  \      {b Learn more} \n\
+  \     \n\
+  \       {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-client.html} Add \
+   FlexMatch to a game client} \n\
+  \      \n\
+  \        {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-notification.html} \
+   Set Up FlexMatch event notification} \n\
+  \       "]
+
+module DescribeInstances : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_instances_input ->
+    ( describe_instances_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_instances_input ->
+    ( describe_instances_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:}EC2, Container\n\n\
+  \ Retrieves information about the EC2 instances in an Amazon GameLift Servers managed fleet, \
+   including instance ID, connection data, and status. You can use this operation with a \
+   multi-location fleet to get location-specific instance information. As an alternative, use the \
+   operations \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_ListCompute}https://docs.aws.amazon.com/gamelift/latest/apireference/API_ListCompute} \
+   and \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeCompute}https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeCompute} \
+   to retrieve information for compute resources, including EC2 and Anywhere fleets.\n\
+  \ \n\
+  \  You can call this operation in the following ways:\n\
+  \  \n\
+  \   {ul\n\
+  \         {-  To get information on all instances in a fleet's home Region, specify the fleet ID.\n\
+  \             \n\
+  \              }\n\
+  \         {-  To get information on all instances in a fleet's remote location, specify the \
+   fleet ID and location name.\n\
+  \             \n\
+  \              }\n\
+  \         {-  To get information on a specific instance in a fleet, specify the fleet ID and \
+   instance ID.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   Use the pagination parameters to retrieve results as a set of sequential pages. \n\
+  \   \n\
+  \    If successful, this operation returns [Instance] objects for each requested instance, \
+   listed in no particular order. If you call this operation for an Anywhere fleet, you receive an \
+   InvalidRequestException.\n\
+  \    \n\
+  \      {b Learn more} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-remote-access.html}Remotely \
+   connect to fleet instances} \n\
+  \      \n\
+  \        \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-debug.html}Debug \
+   fleet issues} \n\
+  \       \n\
+  \         {b Related actions} \n\
+  \        \n\
+  \          \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \         "]
+
+module DescribeGameSessions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_sessions_input ->
+    ( describe_game_sessions_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_sessions_input ->
+    ( describe_game_sessions_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves a set of one or more game sessions in a specific fleet location. You can optionally \
+   filter the results by current game session status.\n\
+  \ \n\
+  \  This operation can be used in the following ways: \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  To retrieve all game sessions that are currently running on all locations in a \
+   fleet, provide a fleet or alias ID, with an optional status filter. This approach returns all \
+   game sessions in the fleet's home Region and all remote locations.\n\
+  \             \n\
+  \              }\n\
+  \         {-  To retrieve all game sessions that are currently running on a specific fleet \
+   location, provide a fleet or alias ID and a location name, with optional status filter. The \
+   location can be the fleet's home Region or any remote location.\n\
+  \             \n\
+  \              }\n\
+  \         {-  To retrieve a specific game session, provide the game session ID. This approach \
+   looks for the game session ID in all fleets that reside in the Amazon Web Services Region \
+   defined in the request.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   Use the pagination parameters to retrieve results as a set of sequential pages. \n\
+  \   \n\
+  \    If successful, a [GameSession] object is returned for each game session that matches the \
+   request.\n\
+  \    \n\
+  \     This operation is not designed to be continually called to track game session status. This \
+   practice can cause you to exceed your API limit, which results in errors. Instead, you must \
+   configure an Amazon Simple Notification Service (SNS) topic to receive notifications from \
+   FlexMatch or queues. Continuously polling with [DescribeGameSessions] should only be used for \
+   games in development with low game session usage. \n\
+  \     \n\
+  \       {i Available in Amazon GameLift Servers Local.} \n\
+  \      \n\
+  \        {b Learn more} \n\
+  \       \n\
+  \         \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-client-api.html#gamelift-sdk-client-api-find}Find \
+   a game session} \n\
+  \        \n\
+  \          \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \         "]
+
+module DescribeGameSessionQueues : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_session_queues_input ->
+    ( describe_game_session_queues_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_session_queues_input ->
+    ( describe_game_session_queues_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves the properties for one or more game session queues. When requesting multiple queues, \
+   use the pagination parameters to retrieve results as a set of sequential pages. When specifying \
+   a list of queues, objects are returned only for queues that currently exist in the Region.\n\
+  \ \n\
+  \   {b Learn more} \n\
+  \  \n\
+  \    {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/queues-console.html} View \
+   Your Queues} \n\
+  \   "]
+
+module DescribeGameSessionPlacement : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_session_placement_input ->
+    ( describe_game_session_placement_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_session_placement_input ->
+    ( describe_game_session_placement_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves information, including current status, about a game session placement request. \n\
+  \ \n\
+  \  To get game session placement details, specify the placement ID.\n\
+  \  \n\
+  \   This operation is not designed to be continually called to track game session status. This \
+   practice can cause you to exceed your API limit, which results in errors. Instead, you must \
+   configure an Amazon Simple Notification Service (SNS) topic to receive notifications from \
+   FlexMatch or queues. Continuously polling with [DescribeGameSessionPlacement] should only be \
+   used for games in development with low game session usage. For a reference implementation of \
+   event-based game session placement tracking, see \
+   {{:https://github.com/amazon-gamelift/amazon-gamelift-toolkit/tree/main/event-based-session-placement} \
+   Event-based game session placement guidance} in the Amazon GameLift Toolkit.\n\
+  \   "]
+
+module DescribeGameSessionDetails : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_session_details_input ->
+    ( describe_game_session_details_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_session_details_input ->
+    ( describe_game_session_details_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves additional game session properties, including the game session protection policy in \
+   force, a set of one or more game sessions in a specific fleet location. You can optionally \
+   filter the results by current game session status.\n\
+  \ \n\
+  \  This operation can be used in the following ways: \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  To retrieve details for all game sessions that are currently running on all \
+   locations in a fleet, provide a fleet or alias ID, with an optional status filter. This \
+   approach returns details from the fleet's home Region and all remote locations.\n\
+  \             \n\
+  \              }\n\
+  \         {-  To retrieve details for all game sessions that are currently running on a specific \
+   fleet location, provide a fleet or alias ID and a location name, with optional status filter. \
+   The location can be the fleet's home Region or any remote location.\n\
+  \             \n\
+  \              }\n\
+  \         {-  To retrieve details for a specific game session, provide the game session ID. This \
+   approach looks for the game session ID in all fleets that reside in the Amazon Web Services \
+   Region defined in the request.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   Use the pagination parameters to retrieve results as a set of sequential pages. \n\
+  \   \n\
+  \    If successful, a [GameSessionDetail] object is returned for each game session that matches \
+   the request.\n\
+  \    \n\
+  \      {b Learn more} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-client-api.html#gamelift-sdk-client-api-find}Find \
+   a game session} \n\
+  \      \n\
+  \        \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \       "]
+
+module DescribeGameServerInstances : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_server_instances_input ->
+    ( describe_game_server_instances_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_server_instances_input ->
+    ( describe_game_server_instances_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
+  \ Retrieves status information about the Amazon EC2 instances associated with a Amazon GameLift \
+   Servers FleetIQ game server group. Use this operation to detect when instances are active or \
+   not available to host new game servers.\n\
+  \ \n\
+  \  To request status for all instances in the game server group, provide a game server group ID \
+   only. To request status for specific instances, provide the game server group ID and one or \
+   more instance IDs. Use the pagination parameters to retrieve results in sequential segments. If \
+   successful, a collection of [GameServerInstance] objects is returned. \n\
+  \  \n\
+  \   This operation is not designed to be called with every game server claim request; this \
+   practice can cause you to exceed your API limit, which results in errors. Instead, as a best \
+   practice, cache the results and refresh your cache no more than once every 10 seconds.\n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon \
+   GameLift Servers FleetIQ Guide} \n\
+  \     "]
+
+module DescribeGameServerGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_server_group_input ->
+    ( describe_game_server_group_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_server_group_input ->
+    ( describe_game_server_group_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
+  \ Retrieves information on a game server group. This operation returns only properties related \
+   to Amazon GameLift Servers FleetIQ. To view or update properties for the corresponding Auto \
+   Scaling group, such as launch template, auto scaling policies, and maximum/minimum group size, \
+   access the Auto Scaling group directly.\n\
+  \ \n\
+  \  To get attributes for a game server group, provide a group name or ARN value. If successful, \
+   a [GameServerGroup] object is returned.\n\
+  \  \n\
+  \    {b Learn more} \n\
+  \   \n\
+  \     {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon GameLift \
+   Servers FleetIQ Guide} \n\
+  \    "]
+
+module DescribeGameServer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_server_input ->
+    ( describe_game_server_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_game_server_input ->
+    ( describe_game_server_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
+  \ Retrieves information for a registered game server. Information includes game server status, \
+   health check info, and the instance that the game server is running on. \n\
+  \ \n\
+  \  To retrieve game server information, specify the game server ID. If successful, the requested \
+   game server object is returned. \n\
+  \  \n\
+  \    {b Learn more} \n\
+  \   \n\
+  \     {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon GameLift \
+   Servers FleetIQ Guide} \n\
+  \    "]
+
+module DescribeFleetUtilization : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_utilization_input ->
+    ( describe_fleet_utilization_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_utilization_input ->
+    ( describe_fleet_utilization_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Container\n\n\
+  \ Retrieves utilization statistics for one or more fleets. Utilization data provides a snapshot \
+   of how the fleet's hosting resources are currently being used. For fleets with remote \
+   locations, this operation retrieves data for the fleet's home Region only. See \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetLocationUtilization.html}DescribeFleetLocationUtilization} \
+   to get utilization statistics for a fleet's remote locations.\n\
+  \ \n\
+  \  This operation can be used in the following ways: \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  To get utilization data for one or more specific fleets, provide a list of fleet \
+   IDs or fleet ARNs. \n\
+  \             \n\
+  \              }\n\
+  \         {-  To get utilization data for all fleets, do not provide a fleet identifier. \n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   When requesting multiple fleets, use the pagination parameters to retrieve results as a set \
+   of sequential pages. \n\
+  \   \n\
+  \    If successful, a \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_FleetUtilization.html}FleetUtilization} \
+   object is returned for each requested fleet ID, unless the fleet identifier is not found. Each \
+   fleet utilization object includes a [Location] property, which is set to the fleet's home \
+   Region. \n\
+  \    \n\
+  \      Some API operations may limit the number of fleet IDs allowed in one request. If a \
+   request exceeds this limit, the request fails and the error message includes the maximum \
+   allowed.\n\
+  \      \n\
+  \         {b Learn more} \n\
+  \        \n\
+  \          \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting up \
+   Amazon GameLift Servers Fleets} \n\
+  \         \n\
+  \           \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/monitoring-cloudwatch.html#gamelift-metrics-fleet}GameLift \
+   Metrics for Fleets} \n\
+  \          "]
+
+module DescribeFleetPortSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_port_settings_input ->
+    ( describe_fleet_port_settings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_port_settings_input ->
+    ( describe_fleet_port_settings_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Container\n\n\
+  \ Retrieves a fleet's inbound connection permissions. Connection permissions specify IP \
+   addresses and port settings that incoming traffic can use to access server processes in the \
+   fleet. Game server processes that are running in the fleet must use a port that falls within \
+   this range. \n\
+  \ \n\
+  \  Use this operation in the following ways: \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  To retrieve the port settings for a fleet, identify the fleet's unique identifier. \n\
+  \             \n\
+  \              }\n\
+  \         {-  To check the status of recent updates to a fleet remote location, specify the \
+   fleet ID and a location. Port setting updates can take time to propagate across all locations. \n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   If successful, a set of [IpPermission] objects is returned for the requested fleet ID. When \
+   specifying a location, this operation returns a pending status. If the requested fleet has been \
+   deleted, the result set is empty.\n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
+   up Amazon GameLift Servers fleets} \n\
+  \     "]
+
+module DescribeFleetLocationUtilization : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_location_utilization_input ->
+    ( describe_fleet_location_utilization_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_location_utilization_input ->
+    ( describe_fleet_location_utilization_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves current usage data for a fleet location. Utilization data provides a snapshot of \
+   current game hosting activity at the requested location. Use this operation to retrieve \
+   utilization information for a fleet's remote location or home Region (you can also retrieve \
+   home Region utilization by calling [DescribeFleetUtilization]).\n\
+  \ \n\
+  \  To retrieve utilization data, identify a fleet and location. \n\
+  \  \n\
+  \   If successful, a [FleetUtilization] object is returned for the requested fleet location. \n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
+   up Amazon GameLift Servers fleets} \n\
+  \     \n\
+  \       {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-regions.html} \
+   Amazon GameLift Servers service locations} for managed hosting\n\
+  \      \n\
+  \        \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/monitoring-cloudwatch.html#gamelift-metrics-fleet}GameLift \
+   metrics for fleets} \n\
+  \       "]
+
+module DescribeFleetLocationCapacity : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_location_capacity_input ->
+    ( describe_fleet_location_capacity_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_location_capacity_input ->
+    ( describe_fleet_location_capacity_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Container\n\n\
+  \ Retrieves the resource capacity settings for a fleet location. The data returned includes the \
+   current capacity (number of EC2 instances) and some scaling settings for the requested fleet \
+   location. For a managed container fleet, this operation also returns counts for game server \
+   container groups.\n\
+  \ \n\
+  \  Use this operation to retrieve capacity information for a fleet's remote location or home \
+   Region (you can also retrieve home Region capacity by calling [DescribeFleetCapacity]).\n\
+  \  \n\
+  \   To retrieve capacity data, identify a fleet and location. \n\
+  \   \n\
+  \    If successful, a [FleetCapacity] object is returned for the requested fleet location. \n\
+  \    \n\
+  \      {b Learn more} \n\
+  \     \n\
+  \       {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
+   up Amazon GameLift Servers fleets} \n\
+  \      \n\
+  \        {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-regions.html} \
+   Amazon GameLift Servers service locations} for managed hosting\n\
+  \       \n\
+  \         \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/monitoring-cloudwatch.html#gamelift-metrics-fleet}GameLift \
+   metrics for fleets} \n\
+  \        "]
+
+module DescribeFleetLocationAttributes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_location_attributes_input ->
+    ( describe_fleet_location_attributes_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_location_attributes_input ->
+    ( describe_fleet_location_attributes_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Container\n\n\
+  \ Retrieves information on a fleet's remote locations, including life-cycle status and any \
+   suspended fleet activity. \n\
+  \ \n\
+  \  This operation can be used in the following ways: \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  To get data for specific locations, provide a fleet identifier and a list of \
+   locations. Location data is returned in the order that it is requested. \n\
+  \             \n\
+  \              }\n\
+  \         {-  To get data for all locations, provide a fleet identifier only. Location data is \
+   returned in no particular order. \n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   When requesting attributes for multiple locations, use the pagination parameters to retrieve \
+   results as a set of sequential pages. \n\
+  \   \n\
+  \    If successful, a [LocationAttributes] object is returned for each requested location. If \
+   the fleet does not have a requested location, no information is returned. \n\
+  \    \n\
+  \      {b Learn more} \n\
+  \     \n\
+  \       {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
+   up Amazon GameLift Servers fleets} \n\
+  \      \n\
+  \        {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-regions.html} \
+   Amazon GameLift Servers service locations} for managed hosting\n\
+  \       "]
+
+module DescribeFleetEvents : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_events_input ->
+    ( describe_fleet_events_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_events_input ->
+    ( describe_fleet_events_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves entries from a fleet's event log. Fleet events are initiated by changes in status, \
+   such as during fleet creation and termination, changes in capacity, etc. If a fleet has \
+   multiple locations, events are also initiated by changes to status and capacity in remote \
+   locations.\n\
+  \ \n\
+  \  You can specify a time range to limit the result set. Use the pagination parameters to \
+   retrieve results as a set of sequential pages. \n\
+  \  \n\
+  \   If successful, a collection of event log entries matching the request are returned.\n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
+   up Amazon GameLift Servers fleets} \n\
+  \     "]
+
+module DescribeFleetDeployment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_deployment_input ->
+    ( describe_fleet_deployment_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_deployment_input ->
+    ( describe_fleet_deployment_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Container\n\n\
+  \ Retrieves information about a managed container fleet deployment. \n\
+  \ \n\
+  \   {b Request options} \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  Get information about the latest deployment for a specific fleet. Provide the \
+   fleet ID or ARN.\n\
+  \             \n\
+  \              }\n\
+  \         {-   Get information about a specific deployment. Provide the fleet ID or ARN and the \
+   deployment ID.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \    {b Results} \n\
+  \   \n\
+  \    If successful, a [FleetDeployment] object is returned.\n\
+  \    "]
+
+module DescribeFleetCapacity : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_capacity_input ->
+    ( describe_fleet_capacity_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_capacity_input ->
+    ( describe_fleet_capacity_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Container\n\n\
+  \ Retrieves the resource capacity settings for one or more fleets. For a container fleet, this \
+   operation also returns counts for game server container groups.\n\
+  \ \n\
+  \  With multi-location fleets, this operation retrieves data for the fleet's home Region only. \
+   To retrieve capacity for remote locations, see \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetLocationCapacity.html}https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetLocationCapacity.html}.\n\
+  \  \n\
+  \   This operation can be used in the following ways: \n\
+  \   \n\
+  \    {ul\n\
+  \          {-  To get capacity data for one or more specific fleets, provide a list of fleet IDs \
+   or fleet ARNs. \n\
+  \              \n\
+  \               }\n\
+  \          {-  To get capacity data for all fleets, do not provide a fleet identifier. \n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \   When requesting multiple fleets, use the pagination parameters to retrieve results as a set \
+   of sequential pages. \n\
+  \   \n\
+  \    If successful, a [FleetCapacity] object is returned for each requested fleet ID. Each \
+   [FleetCapacity] object includes a [Location] property, which is set to the fleet's home Region. \
+   Capacity values are returned only for fleets that currently exist.\n\
+  \    \n\
+  \      Some API operations may limit the number of fleet IDs that are allowed in one request. If \
+   a request exceeds this limit, the request fails and the error message includes the maximum \
+   allowed.\n\
+  \      \n\
+  \         {b Learn more} \n\
+  \        \n\
+  \          \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting up \
+   Amazon GameLift Servers fleets} \n\
+  \         \n\
+  \           \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/monitoring-cloudwatch.html#gamelift-metrics-fleet}GameLift \
+   metrics for fleets} \n\
+  \          "]
+
+module DescribeFleetAttributes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_attributes_input ->
+    ( describe_fleet_attributes_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_fleet_attributes_input ->
+    ( describe_fleet_attributes_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere\n\n\
+  \ Retrieves core fleet-wide properties for fleets in an Amazon Web Services Region. Properties \
+   include the computing hardware and deployment configuration for instances in the fleet.\n\
+  \ \n\
+  \  You can use this operation in the following ways: \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  To get attributes for specific fleets, provide a list of fleet IDs or fleet ARNs.\n\
+  \             \n\
+  \              }\n\
+  \         {-  To get attributes for all fleets, do not provide a fleet identifier.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   When requesting attributes for multiple fleets, use the pagination parameters to retrieve \
+   results as a set of sequential pages. \n\
+  \   \n\
+  \    If successful, a [FleetAttributes] object is returned for each fleet requested, unless the \
+   fleet identifier is not found. \n\
+  \    \n\
+  \      Some API operations limit the number of fleet IDs that allowed in one request. If a \
+   request exceeds this limit, the request fails and the error message contains the maximum \
+   allowed number.\n\
+  \      \n\
+  \         {b Learn more} \n\
+  \        \n\
+  \          \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting up \
+   Amazon GameLift Servers fleets} \n\
+  \         "]
+
+module DescribeEC2InstanceLimits : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_ec2_instance_limits_input ->
+    ( describe_ec2_instance_limits_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_ec2_instance_limits_input ->
+    ( describe_ec2_instance_limits_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Retrieves the instance limits and current utilization for an Amazon Web Services Region or \
+   location. Instance limits control the number of instances, per instance type, per location, \
+   that your Amazon Web Services account can use. Learn more at \
+   {{:http://aws.amazon.com/ec2/instance-types/}Amazon EC2 Instance Types}. The information \
+   returned includes the maximum number of instances allowed and your account's current usage \
+   across all fleets. This information can affect your ability to scale your Amazon GameLift \
+   Servers fleets. You can request a limit increase for your account by using the {b Service \
+   limits} page in the Amazon GameLift Servers console.\n\
+  \ \n\
+  \  Instance limits differ based on whether the instances are deployed in a fleet's home Region \
+   or in a remote location. For remote locations, limits also differ based on the combination of \
+   home Region and remote location. All requests must specify an Amazon Web Services Region \
+   (either explicitly or as your default settings). To get the limit for a remote location, you \
+   must also specify the location. To learn more about how Amazon GameLift Servers handles \
+   locations, see \
+   {{:https://docs.aws.amazon.com/gameliftservers/latest/developerguide/gamelift-regions.html}Amazon \
+   GameLift Servers service locations}. For example, the following requests all return different \
+   results: \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  Request specifies the Region [ap-northeast-1] with no location. The result is \
+   limits and usage data on all of the fleets that reside in [ap-northeast-1], for all instance \
+   types that are deployed in [ap-northeast-1]. \n\
+  \             \n\
+  \              }\n\
+  \         {-  Request specifies the Region [ap-northeast-1] with location [us-west-2]. The \
+   result is limits and usage data on all of the fleets that reside in [ap-northeast-1], for all \
+   instance types that are deployed in [us-west-2].\n\
+  \             \n\
+  \              }\n\
+  \         {-  Request specifies the Region [us-east-1] with location [ap-northeast-1]. The \
+   result is limits and usage data on all of the fleets that reside in [us-east-1], for all \
+   instance types that are deployed in [ap-northeast-1]. These limits do not affect fleets in any \
+   other Regions that deploy instances to [ap-northeast-1].\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   This operation can be used in the following ways:\n\
+  \   \n\
+  \    {ul\n\
+  \          {-  To get limit and usage data for all instance types that are deployed in an Amazon \
+   Web Services Region by fleets that reside in the same Region: Specify the Region only. \
+   Optionally, specify a single instance type to retrieve information for.\n\
+  \              \n\
+  \               }\n\
+  \          {-  To get limit and usage data for all instance types that are deployed to a remote \
+   location by fleets that reside in different Amazon Web Services Region: Provide both the Amazon \
+   Web Services Region and the remote location. Optionally, specify a single instance type to \
+   retrieve information for.\n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \   If successful, an [EC2InstanceLimits] object is returned with limits and usage data for each \
+   requested instance type.\n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
+   up Amazon GameLift Servers fleets} \n\
+  \     "]
+
+module DescribeContainerGroupPortMappings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_container_group_port_mappings_input ->
+    ( describe_container_group_port_mappings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_container_group_port_mappings_input ->
+    ( describe_container_group_port_mappings_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Container\n\n\
+  \ Retrieves the port mappings for a container group running on a container fleet. Port mappings \
+   show how container ports are mapped to connection ports on the fleet instance. Use this \
+   operation to find the connection port for a specific container on a fleet instance.\n\
+  \ \n\
+  \   {b Request options} \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  Get port mappings for a game server container group. Provide the fleet ID, set \
+   [ContainerGroupType] to [GAME_SERVER], and specify the [ComputeName] for the game server \
+   container group.\n\
+  \             \n\
+  \              }\n\
+  \         {-  Get port mappings for a per-instance container group. Provide the fleet ID, set \
+   [ContainerGroupType] to [PER_INSTANCE], and specify the [InstanceId] for the instance.\n\
+  \             \n\
+  \              }\n\
+  \         {-  Optionally filter results to a single container by providing a [ContainerName].\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \    {b Results} \n\
+  \   \n\
+  \    This operation returns the fleet ID, fleet ARN, location, container group definition ARN, \
+   container group type, compute name (for game server container groups), instance ID, and a list \
+   of [ContainerGroupPortMapping] objects. Each object contains the container name, runtime ID, \
+   and a list of port mappings that show how container ports map to connection ports on the \
+   instance.\n\
+  \    \n\
+  \      {b Learn more} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/containers-remote-access.html}Connect \
+   to containers} \n\
+  \      \n\
+  \        \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/containers-create-groups.html}Create \
+   a container group definition} \n\
+  \       "]
+
+module DescribeContainerGroupDefinition : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_container_group_definition_input ->
+    ( describe_container_group_definition_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_container_group_definition_input ->
+    ( describe_container_group_definition_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Container\n\n\
+  \ Retrieves the properties of a container group definition, including all container definitions \
+   in the group. \n\
+  \ \n\
+  \   {b Request options:} \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  Retrieve the latest version of a container group definition. Specify the container \
+   group definition name only, or use an ARN value without a version number.\n\
+  \             \n\
+  \              }\n\
+  \         {-  Retrieve a particular version. Specify the container group definition name and a \
+   version number, or use an ARN value that includes the version number.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \    {b Results:} \n\
+  \   \n\
+  \    If successful, this operation returns the complete properties of a container group \
+   definition version.\n\
+  \    \n\
+  \      {b Learn more} \n\
+  \     \n\
+  \      {ul\n\
+  \            {-   \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/containers-create-groups.html}Manage \
+   a container group definition} \n\
+  \                \n\
+  \                 }\n\
+  \            }\n\
+  \  "]
+
+module DescribeContainerFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_container_fleet_input ->
+    ( describe_container_fleet_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_container_fleet_input ->
+    ( describe_container_fleet_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Container\n\n\
+  \ Retrieves the properties for a container fleet. When requesting attributes for multiple \
+   fleets, use the pagination parameters to retrieve results as a set of sequential pages. \n\
+  \ \n\
+  \   {b Request options} \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  Get container fleet properties for a single fleet. Provide either the fleet ID or \
+   ARN value. \n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \    {b Results} \n\
+  \   \n\
+  \    If successful, a [ContainerFleet] object is returned. This object includes the fleet \
+   properties, including information about the most recent deployment.\n\
+  \    \n\
+  \      Some API operations limit the number of fleet IDs that allowed in one request. If a \
+   request exceeds this limit, the request fails and the error message contains the maximum \
+   allowed number.\n\
+  \      \n\
+  \       "]
+
+module DescribeCompute : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_compute_input ->
+    ( describe_compute_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_compute_input ->
+    ( describe_compute_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves properties for a specific compute resource in an Amazon GameLift Servers fleet. You \
+   can list all computes in a fleet by calling \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_ListCompute.html}ListCompute}. \n\
+  \ \n\
+  \   {b Request options} \n\
+  \  \n\
+  \   Provide the fleet ID and compute name. The compute name varies depending on the type of fleet.\n\
+  \   \n\
+  \    {ul\n\
+  \          {-  For a compute in a managed EC2 fleet, provide an instance ID. Each instance in \
+   the fleet is a compute.\n\
+  \              \n\
+  \               }\n\
+  \          {-  For a compute in a managed container fleet, provide a compute name. In a \
+   container fleet, each game server container group on a fleet instance is assigned a compute \
+   name.\n\
+  \              \n\
+  \               }\n\
+  \          {-  For a compute in an Anywhere fleet, provide a registered compute name. Anywhere \
+   fleet computes are created when you register a hosting resource with the fleet.\n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \    {b Results} \n\
+  \   \n\
+  \    If successful, this operation returns details for the requested compute resource. Depending \
+   on the fleet's compute type, the result includes the following information: \n\
+  \    \n\
+  \     {ul\n\
+  \           {-  For a managed EC2 fleet, this operation returns information about the EC2 \
+   instance.\n\
+  \               \n\
+  \                }\n\
+  \           {-  For an Anywhere fleet, this operation returns information about the registered \
+   compute.\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \  "]
+
+module DescribeBuild : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_build_input ->
+    ( describe_build_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_build_input ->
+    ( describe_build_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Retrieves properties for a custom game build. To request a build resource, specify a build ID. \
+   If successful, an object containing the build properties is returned.\n\
+  \ \n\
+  \   {b Learn more} \n\
+  \  \n\
+  \    {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-intro.html} \
+   Upload a Custom Server Build} \n\
+  \   \n\
+  \     \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \    "]
+
+module DescribeAlias : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_alias_input ->
+    ( describe_alias_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_alias_input ->
+    ( describe_alias_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Retrieves properties for an alias. This operation returns all alias metadata and settings. To \
+   get an alias's target fleet ID only, use [ResolveAlias]. \n\
+  \ \n\
+  \  To get alias properties, specify the alias ID. If successful, the requested alias record is \
+   returned.\n\
+  \  \n\
+  \    {b Related actions} \n\
+  \   \n\
+  \     \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \    "]
+
+module DeregisterGameServer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_game_server_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_game_server_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
+  \ Removes the game server from a game server group. As a result of this operation, the \
+   deregistered game server can no longer be claimed and will not be returned in a list of active \
+   game servers. \n\
+  \ \n\
+  \  To deregister a game server, specify the game server group and game server ID. If successful, \
+   this operation emits a CloudWatch event with termination timestamp and reason.\n\
+  \  \n\
+  \    {b Learn more} \n\
+  \   \n\
+  \     {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon GameLift \
+   Servers FleetIQ Guide} \n\
+  \    "]
+
+module DeregisterCompute : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_compute_input ->
+    ( deregister_compute_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_compute_input ->
+    ( deregister_compute_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Anywhere\n\n\
+  \ Removes a compute resource from an Anywhere fleet. Deregistered computes can no longer host \
+   game sessions through Amazon GameLift Servers. Use this operation with an Anywhere fleet that \
+   doesn't use the Amazon GameLift Servers Agent For Anywhere fleets with the Agent, the Agent \
+   handles all compute registry tasks for you. \n\
+  \ \n\
+  \  To deregister a compute, call this operation from the compute that's being deregistered and \
+   specify the compute name and the fleet ID. \n\
+  \  "]
+
+module DeleteVpcPeeringConnection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vpc_peering_connection_input ->
+    ( delete_vpc_peering_connection_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vpc_peering_connection_input ->
+    ( delete_vpc_peering_connection_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Removes a VPC peering connection. To delete the connection, you must have a valid \
+   authorization for the VPC peering connection that you want to delete.. \n\
+  \ \n\
+  \  Once a valid authorization exists, call this operation from the Amazon Web Services account \
+   that is used to manage the Amazon GameLift Servers fleets. Identify the connection to delete by \
+   the connection ID and fleet ID. If successful, the connection is removed. \n\
+  \  \n\
+  \    {b Related actions} \n\
+  \   \n\
+  \     \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \    "]
+
+module DeleteVpcPeeringAuthorization : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vpc_peering_authorization_input ->
+    ( delete_vpc_peering_authorization_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vpc_peering_authorization_input ->
+    ( delete_vpc_peering_authorization_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Cancels a pending VPC peering authorization for the specified VPC. If you need to delete an \
+   existing VPC peering connection, use \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DeleteVpcPeeringConnection.html}DeleteVpcPeeringConnection}.\n\
+  \ \n\
+  \   {b Related actions} \n\
+  \  \n\
+  \    \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \   "]
+
+module DeleteScript : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_script_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_script_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Deletes a Realtime script. This operation permanently deletes the script record. If script \
+   files were uploaded, they are also deleted (files stored in an S3 bucket are not deleted). \n\
+  \ \n\
+  \  To delete a script, specify the script ID. Before deleting a script, be sure to terminate all \
+   fleets that are deployed with the script being deleted. Fleet instances periodically check for \
+   script updates, and if the script record no longer exists, the instance will go into an error \
+   state and be unable to host game sessions.\n\
+  \  \n\
+  \    {b Learn more} \n\
+  \   \n\
+  \     {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-intro.html}Amazon \
+   GameLift Servers Amazon GameLift Servers Realtime} \n\
+  \    \n\
+  \      {b Related actions} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \      "]
+
+module DeleteScalingPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_scaling_policy_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_scaling_policy_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Deletes a fleet scaling policy. Once deleted, the policy is no longer in force and Amazon \
+   GameLift Servers removes all record of it. To delete a scaling policy, specify both the scaling \
+   policy name and the fleet ID it is associated with.\n\
+  \ \n\
+  \  To temporarily suspend scaling policies, use \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_StopFleetActions.html}StopFleetActions}. \
+   This operation suspends all policies for the fleet.\n\
+  \  "]
+
+module DeleteMatchmakingRuleSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_matchmaking_rule_set_input ->
+    ( delete_matchmaking_rule_set_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_matchmaking_rule_set_input ->
+    ( delete_matchmaking_rule_set_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Deletes an existing matchmaking rule set. To delete the rule set, provide the rule set name. \
+   Rule sets cannot be deleted if they are currently being used by a matchmaking configuration. \n\
+  \ \n\
+  \   {b Learn more} \n\
+  \  \n\
+  \   {ul\n\
+  \         {-   \
+   {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-rulesets.html}Build a rule \
+   set} \n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \  "]
+
+module DeleteMatchmakingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_matchmaking_configuration_input ->
+    ( delete_matchmaking_configuration_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_matchmaking_configuration_input ->
+    ( delete_matchmaking_configuration_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Permanently removes a FlexMatch matchmaking configuration. To delete, specify the \
+   configuration name. A matchmaking configuration cannot be deleted if it is being used in any \
+   active matchmaking tickets.\n\
+  \ "]
+
+module DeleteLocation : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_location_input ->
+    ( delete_location_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_location_input ->
+    ( delete_location_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Anywhere\n\n\
+  \ Deletes a custom location.\n\
+  \ \n\
+  \  Before deleting a custom location, review any fleets currently using the custom location and \
+   deregister the location if it is in use. For more information, see \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DeregisterCompute.html}DeregisterCompute}.\n\
+  \  "]
+
+module DeleteGameSessionQueue : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_game_session_queue_input ->
+    ( delete_game_session_queue_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_game_session_queue_input ->
+    ( delete_game_session_queue_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Deletes a game session queue. Once a queue is successfully deleted, unfulfilled \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_StartGameSessionPlacement.html}StartGameSessionPlacement} \
+   requests that reference the queue will fail. To delete a queue, specify the queue name.\n\
+  \ "]
+
+module DeleteGameServerGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_game_server_group_input ->
+    ( delete_game_server_group_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_game_server_group_input ->
+    ( delete_game_server_group_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
+  \ Terminates a game server group and permanently deletes the game server group record. You have \
+   several options for how these resources are impacted when deleting the game server group. \
+   Depending on the type of delete operation selected, this operation might affect these resources:\n\
+  \ \n\
+  \  {ul\n\
+  \        {-  The game server group\n\
+  \            \n\
+  \             }\n\
+  \        {-  The corresponding Auto Scaling group\n\
+  \            \n\
+  \             }\n\
+  \        {-  All game servers that are currently running in the group\n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \   To delete a game server group, identify the game server group to delete and specify the type \
+   of delete operation to initiate. Game server groups can only be deleted if they are in [ACTIVE] \
+   or [ERROR] status.\n\
+  \   \n\
+  \    If the delete request is successful, a series of operations are kicked off. The game server \
+   group status is changed to [DELETE_SCHEDULED], which prevents new game servers from being \
+   registered and stops automatic scaling activity. Once all game servers in the game server group \
+   are deregistered, Amazon GameLift Servers FleetIQ can begin deleting resources. If any of the \
+   delete operations fail, the game server group is placed in [ERROR] status.\n\
+  \    \n\
+  \     Amazon GameLift Servers FleetIQ emits delete events to Amazon CloudWatch.\n\
+  \     \n\
+  \       {b Learn more} \n\
+  \      \n\
+  \        {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon \
+   GameLift Servers FleetIQ Guide} \n\
+  \       "]
+
+module DeleteFleetLocations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_fleet_locations_input ->
+    ( delete_fleet_locations_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_fleet_locations_input ->
+    ( delete_fleet_locations_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Container\n\n\
+  \ Removes locations from a multi-location fleet. When deleting a location, all game server \
+   process and all instances that are still active in the location are shut down. \n\
+  \ \n\
+  \  To delete fleet locations, identify the fleet ID and provide a list of the locations to be \
+   deleted. \n\
+  \  \n\
+  \   If successful, GameLift sets the location status to [DELETING], and begins to shut down \
+   existing server processes and terminate instances in each location being deleted. When \
+   completed, the location status changes to [TERMINATED].\n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
+   up Amazon GameLift Servers fleets} \n\
+  \     "]
+
+module DeleteFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidFleetStatusException of invalid_fleet_status_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_fleet_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidFleetStatusException of invalid_fleet_status_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_fleet_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidFleetStatusException of invalid_fleet_status_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Deletes all resources and information related to a fleet and shuts down any currently running \
+   fleet instances, including those in remote locations.\n\
+  \ \n\
+  \   If the fleet being deleted has a VPC peering connection, you first need to get a valid \
+   authorization (good for 24 hours) by calling \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateVpcPeeringAuthorization.html}CreateVpcPeeringAuthorization}. \
+   You don't need to explicitly delete the VPC peering connection.\n\
+  \   \n\
+  \     To delete a fleet, specify the fleet ID to be terminated. During the deletion process, the \
+   fleet status is changed to [DELETING]. When completed, the status switches to [TERMINATED] and \
+   the fleet event [FLEET_DELETED] is emitted.\n\
+  \     \n\
+  \       {b Learn more} \n\
+  \      \n\
+  \        {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
+   up Amazon GameLift Servers Fleets} \n\
+  \       "]
+
+module DeleteContainerGroupDefinition : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_container_group_definition_input ->
+    ( delete_container_group_definition_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_container_group_definition_input ->
+    ( delete_container_group_definition_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Container\n\n\
+  \  {b Request options:} \n\
+  \ \n\
+  \  Deletes a container group definition. \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  Delete an entire container group definition, including all versions. Specify the \
+   container group definition name, or use an ARN value without the version number.\n\
+  \             \n\
+  \              }\n\
+  \         {-  Delete a particular version. Specify the container group definition name and a \
+   version number, or use an ARN value that includes the version number.\n\
+  \             \n\
+  \              }\n\
+  \         {-  Keep the newest versions and delete all older versions. Specify the container \
+   group definition name and the number of versions to retain. For example, set \
+   [VersionCountToRetain] to 5 to delete all but the five most recent versions.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \    {b Result} \n\
+  \   \n\
+  \    If successful, Amazon GameLift Servers removes the container group definition versions that \
+   you request deletion for. This request will fail for any requested versions if the following is \
+   true: \n\
+  \    \n\
+  \     {ul\n\
+  \           {-  If the version is being used in an active fleet\n\
+  \               \n\
+  \                }\n\
+  \           {-  If the version is being deployed to a fleet in a deployment that's currently in \
+   progress.\n\
+  \               \n\
+  \                }\n\
+  \           {-  If the version is designated as a rollback definition in a fleet deployment \
+   that's currently in progress.\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \    {b Learn more} \n\
+  \   \n\
+  \    {ul\n\
+  \          {-   \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/containers-create-groups.html}Manage \
+   a container group definition} \n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \  "]
+
+module DeleteContainerFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_container_fleet_input ->
+    ( delete_container_fleet_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_container_fleet_input ->
+    ( delete_container_fleet_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Container\n\n\
+  \ Deletes all resources and information related to a container fleet and shuts down currently \
+   running fleet instances, including those in remote locations. The container fleet must be in \
+   [ACTIVE] status to be deleted.\n\
+  \ \n\
+  \  To delete a fleet, specify the fleet ID to be terminated. During the deletion process, the \
+   fleet status is changed to [DELETING]. \n\
+  \  \n\
+  \    {b Learn more} \n\
+  \   \n\
+  \     {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting up \
+   Amazon GameLift Servers Fleets} \n\
+  \    "]
+
+module DeleteBuild : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_build_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_build_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Deletes a build. This operation permanently deletes the build resource and any uploaded build \
+   files. Deleting a build does not affect the status of any active fleets using the build, but \
+   you can no longer create new fleets with the deleted build.\n\
+  \ \n\
+  \  To delete a build, specify the build ID. \n\
+  \  \n\
+  \    {b Learn more} \n\
+  \   \n\
+  \     {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-intro.html} \
+   Upload a Custom Server Build} \n\
+  \    \n\
+  \      \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \     "]
+
+module DeleteAlias : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_alias_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_alias_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Deletes an alias. This operation removes all record of the alias. Game clients attempting to \
+   access a server process using the deleted alias receive an error. To delete an alias, specify \
+   the alias ID to be deleted.\n\
+  \ \n\
+  \   {b Related actions} \n\
+  \  \n\
+  \    \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \   "]
+
+module CreateVpcPeeringConnection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_vpc_peering_connection_input ->
+    ( create_vpc_peering_connection_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_vpc_peering_connection_input ->
+    ( create_vpc_peering_connection_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Establishes a VPC peering connection between a virtual private cloud (VPC) in an Amazon Web \
+   Services account with the VPC for your Amazon GameLift Servers fleet. VPC peering enables the \
+   game servers on your fleet to communicate directly with other Amazon Web Services resources. \
+   You can peer with VPCs in any Amazon Web Services account that you have access to, including \
+   the account that you use to manage your Amazon GameLift Servers fleets. You cannot peer with \
+   VPCs that are in different Regions. For more information, see \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/vpc-peering.html}VPC Peering with \
+   Amazon GameLift Servers Fleets}.\n\
+  \ \n\
+  \  Before calling this operation to establish the peering connection, you first need to use \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateVpcPeeringAuthorization.html}CreateVpcPeeringAuthorization} \
+   and identify the VPC you want to peer with. Once the authorization for the specified VPC is \
+   issued, you have 24 hours to establish the connection. These two operations handle all tasks \
+   necessary to peer the two VPCs, including acceptance, updating routing tables, etc. \n\
+  \  \n\
+  \   To establish the connection, call this operation from the Amazon Web Services account that \
+   is used to manage the Amazon GameLift Servers fleets. Identify the following values: (1) The ID \
+   of the fleet you want to be enable a VPC peering connection for; (2) The Amazon Web Services \
+   account with the VPC that you want to peer with; and (3) The ID of the VPC you want to peer \
+   with. This operation is asynchronous. If successful, a connection request is created. You can \
+   use continuous polling to track the request's status using \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeVpcPeeringConnections.html}DescribeVpcPeeringConnections} \
+   , or by monitoring fleet events for success or failure using \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetEvents.html}DescribeFleetEvents} \
+   . \n\
+  \   \n\
+  \     Amazon GameLift Servers uses the caller's credentials to update peer-VPC resources. The \
+   IAM user that calls this operation must have the following Amazon EC2 permissions enabled:\n\
+  \     \n\
+  \      {ul\n\
+  \            {-   [ec2:AcceptVpcPeeringConnection] \n\
+  \                \n\
+  \                 }\n\
+  \            {-   [ec2:AuthorizeSecurityGroupEgress] \n\
+  \                \n\
+  \                 }\n\
+  \            {-   [ec2:AuthorizeSecurityGroupIngress] \n\
+  \                \n\
+  \                 }\n\
+  \            {-   [ec2:CreateRoute] \n\
+  \                \n\
+  \                 }\n\
+  \            {-   [ec2:DescribeRouteTables] \n\
+  \                \n\
+  \                 }\n\
+  \            {-   [ec2:DescribeSecurityGroups] \n\
+  \                \n\
+  \                 }\n\
+  \            }\n\
+  \     {b Related actions} \n\
+  \    \n\
+  \      \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \     "]
+
+module CreateVpcPeeringAuthorization : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_vpc_peering_authorization_input ->
+    ( create_vpc_peering_authorization_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_vpc_peering_authorization_input ->
+    ( create_vpc_peering_authorization_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2\n\n\
+  \ Requests authorization to create or delete a peer connection between the VPC for your Amazon \
+   GameLift Servers fleet and a virtual private cloud (VPC) in your Amazon Web Services account. \
+   VPC peering enables the game servers on your fleet to communicate directly with other Amazon \
+   Web Services resources. After you've received authorization, use \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateVpcPeeringConnection.html}CreateVpcPeeringConnection} \
+   to establish the peering connection. For more information, see \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/vpc-peering.html}VPC Peering with \
+   Amazon GameLift Servers Fleets}.\n\
+  \ \n\
+  \  You can peer with VPCs that are owned by any Amazon Web Services account you have access to, \
+   including the account that you use to manage your Amazon GameLift Servers fleets. You cannot \
+   peer with VPCs that are in different Regions.\n\
+  \  \n\
+  \   To request authorization to create a connection, call this operation from the Amazon Web \
+   Services account with the VPC that you want to peer to your Amazon GameLift Servers fleet. For \
+   example, to enable your game servers to retrieve data from a DynamoDB table, use the account \
+   that manages that DynamoDB resource. Identify the following values: (1) The ID of the VPC that \
+   you want to peer with, and (2) the ID of the Amazon Web Services account that you use to manage \
+   Amazon GameLift Servers. If successful, VPC peering is authorized for the specified VPC. \n\
+  \   \n\
+  \    To request authorization to delete a connection, call this operation from the Amazon Web \
+   Services account with the VPC that is peered with your Amazon GameLift Servers fleet. Identify \
+   the following values: (1) VPC ID that you want to delete the peering connection for, and (2) ID \
+   of the Amazon Web Services account that you use to manage Amazon GameLift Servers. \n\
+  \    \n\
+  \     The authorization remains valid for 24 hours unless it is canceled. You must create or \
+   delete the peering connection while the authorization is valid. \n\
+  \     \n\
+  \       Amazon GameLift Servers uses the caller's credentials to update peer-VPC resources. The \
+   IAM user that calls this operation must have the following Amazon EC2 permissions enabled:\n\
+  \       \n\
+  \        {ul\n\
+  \              {-   [ec2:AcceptVpcPeeringConnection] \n\
+  \                  \n\
+  \                   }\n\
+  \              {-   [ec2:AuthorizeSecurityGroupEgress] \n\
+  \                  \n\
+  \                   }\n\
+  \              {-   [ec2:AuthorizeSecurityGroupIngress] \n\
+  \                  \n\
+  \                   }\n\
+  \              {-   [ec2:CreateRoute] \n\
+  \                  \n\
+  \                   }\n\
+  \              {-   [ec2:DescribeRouteTables] \n\
+  \                  \n\
+  \                   }\n\
+  \              {-   [ec2:DescribeSecurityGroups] \n\
+  \                  \n\
+  \                   }\n\
+  \              }\n\
+  \     {b Related actions} \n\
+  \    \n\
+  \      \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \     "]
+
+module CreateScript : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_script_input ->
+    ( create_script_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_script_input ->
+    ( create_script_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere\n\n\
+  \ Creates a new script record for your Amazon GameLift Servers Realtime script. Realtime scripts \
+   are JavaScript that provide configuration settings and optional custom game logic for your \
+   game. The script is deployed when you create a Amazon GameLift Servers Realtime fleet to host \
+   your game sessions. Script logic is executed during an active game session. \n\
+  \ \n\
+  \  To create a new script record, specify a script name and provide the script file(s). The \
+   script files and all dependencies must be zipped into a single file. You can pull the zip file \
+   from either of these locations: \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  A locally available directory. Use the {i ZipFile} parameter for this option.\n\
+  \             \n\
+  \              }\n\
+  \         {-  An Amazon Simple Storage Service (Amazon S3) bucket under your Amazon Web Services \
+   account. Use the {i StorageLocation} parameter for this option. You'll need to have an Identity \
+   Access Management (IAM) role that allows the Amazon GameLift Servers service to access your S3 \
+   bucket. \n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   If the call is successful, a new script record is created with a unique script ID. If the \
+   script file is provided as a local file, the file is uploaded to an Amazon GameLift \
+   Servers-owned S3 bucket and the script record's storage location reflects this location. If the \
+   script file is provided as an S3 bucket, Amazon GameLift Servers accesses the file at this \
+   storage location as needed for deployment.\n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/realtime-intro.html}Amazon \
+   GameLift Servers Amazon GameLift Servers Realtime} \n\
+  \     \n\
+  \       {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/setting-up-role.html}Set \
+   Up a Role for Amazon GameLift Servers Access} \n\
+  \      \n\
+  \        {b Related actions} \n\
+  \       \n\
+  \         \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \        "]
+
+module CreatePlayerSessions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GameSessionFullException of game_session_full_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidGameSessionStatusException of invalid_game_session_status_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_player_sessions_input ->
+    ( create_player_sessions_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GameSessionFullException of game_session_full_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidGameSessionStatusException of invalid_game_session_status_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_player_sessions_input ->
+    ( create_player_sessions_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GameSessionFullException of game_session_full_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidGameSessionStatusException of invalid_game_session_status_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Reserves open slots in a game session for a group of players. New player sessions can be \
+   created in any game session with an open slot that is in [ACTIVE] status and has a player \
+   creation policy of [ACCEPT_ALL]. To add a single player to a game session, use \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreatePlayerSession.html}CreatePlayerSession} \n\
+  \ \n\
+  \  To create player sessions, specify a game session ID and a list of player IDs. Optionally, \
+   provide a set of player data for each player ID. \n\
+  \  \n\
+  \   If successful, a slot is reserved in the game session for each player, and new \
+   [PlayerSession] objects are returned with player session IDs. Each player references their \
+   player session ID when sending a connection request to the game session, and the game server \
+   can use it to validate the player reservation with the Amazon GameLift Servers service. Player \
+   sessions cannot be updated.\n\
+  \   \n\
+  \    The maximum number of players per game session is 200. It is not adjustable. \n\
+  \    \n\
+  \      {b Related actions} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \      "]
+
+module CreatePlayerSession : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GameSessionFullException of game_session_full_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidGameSessionStatusException of invalid_game_session_status_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_player_session_input ->
+    ( create_player_session_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GameSessionFullException of game_session_full_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidGameSessionStatusException of invalid_game_session_status_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_player_session_input ->
+    ( create_player_session_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GameSessionFullException of game_session_full_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidGameSessionStatusException of invalid_game_session_status_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Reserves an open player slot in a game session for a player. New player sessions can be \
+   created in any game session with an open slot that is in [ACTIVE] status and has a player \
+   creation policy of [ACCEPT_ALL]. You can add a group of players to a game session with \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreatePlayerSessions.html}CreatePlayerSessions} \
+   . \n\
+  \ \n\
+  \  To create a player session, specify a game session ID, player ID, and optionally a set of \
+   player data. \n\
+  \  \n\
+  \   If successful, a slot is reserved in the game session for the player and a new \
+   [PlayerSessions] object is returned with a player session ID. The player references the player \
+   session ID when sending a connection request to the game session, and the game server can use \
+   it to validate the player reservation with the Amazon GameLift Servers service. Player sessions \
+   cannot be updated. \n\
+  \   \n\
+  \    The maximum number of players per game session is 200. It is not adjustable. \n\
+  \    \n\
+  \      {b Related actions} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \      "]
+
+module CreateMatchmakingRuleSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_matchmaking_rule_set_input ->
+    ( create_matchmaking_rule_set_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_matchmaking_rule_set_input ->
+    ( create_matchmaking_rule_set_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Creates a new rule set for FlexMatch matchmaking. A rule set describes the type of match to \
+   create, such as the number and size of teams. It also sets the parameters for acceptable player \
+   matches, such as minimum skill level or character type.\n\
+  \ \n\
+  \  To create a matchmaking rule set, provide unique rule set name and the rule set body in JSON \
+   format. Rule sets must be defined in the same Region as the matchmaking configuration they are \
+   used with.\n\
+  \  \n\
+  \   Since matchmaking rule sets cannot be edited, it is a good idea to check the rule set syntax \
+   using \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_ValidateMatchmakingRuleSet.html}ValidateMatchmakingRuleSet} \
+   before creating a new rule set.\n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \     {ul\n\
+  \           {-   \
+   {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-rulesets.html}Build a rule \
+   set} \n\
+  \               \n\
+  \                }\n\
+  \           {-   \
+   {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-configuration.html}Design a \
+   matchmaker} \n\
+  \               \n\
+  \                }\n\
+  \           {-   \
+   {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-intro.html}Matchmaking with \
+   FlexMatch} \n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \  "]
+
+module CreateMatchmakingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_matchmaking_configuration_input ->
+    ( create_matchmaking_configuration_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_matchmaking_configuration_input ->
+    ( create_matchmaking_configuration_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Defines a new matchmaking configuration for use with FlexMatch. Whether your are using \
+   FlexMatch with Amazon GameLift Servers hosting or as a standalone matchmaking service, the \
+   matchmaking configuration sets out rules for matching players and forming teams. If you're also \
+   using Amazon GameLift Servers hosting, it defines how to start game sessions for each match. \
+   Your matchmaking system can use multiple configurations to handle different game scenarios. All \
+   matchmaking requests identify the matchmaking configuration to use and provide player \
+   attributes consistent with that configuration. \n\
+  \ \n\
+  \  To create a matchmaking configuration, you must provide the following: configuration name and \
+   FlexMatch mode (with or without Amazon GameLift Servers hosting); a rule set that specifies how \
+   to evaluate players and find acceptable matches; whether player acceptance is required; and the \
+   maximum time allowed for a matchmaking attempt. When using FlexMatch with Amazon GameLift \
+   Servers hosting, you also need to identify the game session queue to use when starting a game \
+   session for the match.\n\
+  \  \n\
+  \   In addition, you must set up an Amazon Simple Notification Service topic to receive \
+   matchmaking notifications. Provide the topic ARN in the matchmaking configuration.\n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-configuration.html} \
+   Design a FlexMatch matchmaker} \n\
+  \     \n\
+  \       {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-notification.html} \
+   Set up FlexMatch event notification} \n\
+  \      "]
+
+module CreateLocation : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_input ->
+    ( create_location_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_input ->
+    ( create_location_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Anywhere\n\n\
+  \ Creates a custom location for use in an Anywhere fleet.\n\
+  \ "]
+
+module CreateGameSessionQueue : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_game_session_queue_input ->
+    ( create_game_session_queue_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_game_session_queue_input ->
+    ( create_game_session_queue_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Creates a placement queue that processes requests for new game sessions. A queue uses FleetIQ \
+   algorithms to locate the best available placement locations for a new game session, and then \
+   prompts the game server process to start a new game session.\n\
+  \ \n\
+  \  A game session queue is configured with a set of destinations (Amazon GameLift Servers fleets \
+   or aliases) that determine where the queue can place new game sessions. These destinations can \
+   span multiple Amazon Web Services Regions, can use different instance types, and can include \
+   both Spot and On-Demand fleets. If the queue includes multi-location fleets, the queue can \
+   place game sessions in any of a fleet's remote locations.\n\
+  \  \n\
+  \   You can configure a queue to determine how it selects the best available placement for a new \
+   game session. Queues can prioritize placement decisions based on a combination of location, \
+   hosting cost, and player latency. You can set up the queue to use the default prioritization or \
+   provide alternate instructions using [PriorityConfiguration].\n\
+  \   \n\
+  \     {b Request options} \n\
+  \    \n\
+  \     Use this operation to make these common types of requests. \n\
+  \     \n\
+  \      {ul\n\
+  \            {-  Create a queue with the minimum required parameters.\n\
+  \                \n\
+  \                 {ul\n\
+  \                       {-   [Name] \n\
+  \                           \n\
+  \                            }\n\
+  \                       {-   [Destinations] (This parameter isn't required, but a queue can't \
+   make placements without at least one destination.)\n\
+  \                           \n\
+  \                            }\n\
+  \                       \n\
+  \             }\n\
+  \              }\n\
+  \            {-  Create a queue with placement notification. Queues that have high placement \
+   activity must use a notification system, such as with Amazon Simple Notification Service \
+   (Amazon SNS) or Amazon CloudWatch.\n\
+  \                \n\
+  \                 {ul\n\
+  \                       {-  Required parameters [Name] and [Destinations] \n\
+  \                           \n\
+  \                            }\n\
+  \                       {-   [NotificationTarget] \n\
+  \                           \n\
+  \                            }\n\
+  \                       \n\
+  \             }\n\
+  \              }\n\
+  \            {-  Create a queue with custom prioritization settings. These custom settings \
+   replace the default prioritization configuration for a queue.\n\
+  \                \n\
+  \                 {ul\n\
+  \                       {-  Required parameters [Name] and [Destinations] \n\
+  \                           \n\
+  \                            }\n\
+  \                       {-   [PriorityConfiguration] \n\
+  \                           \n\
+  \                            }\n\
+  \                       \n\
+  \             }\n\
+  \              }\n\
+  \            {-  Create a queue with special rules for processing player latency data.\n\
+  \                \n\
+  \                 {ul\n\
+  \                       {-  Required parameters [Name] and [Destinations] \n\
+  \                           \n\
+  \                            }\n\
+  \                       {-   [PlayerLatencyPolicies] \n\
+  \                           \n\
+  \                            }\n\
+  \                       \n\
+  \             }\n\
+  \              }\n\
+  \            }\n\
+  \    {b Results} \n\
+  \   \n\
+  \    If successful, this operation returns a new [GameSessionQueue] object with an assigned \
+   queue ARN. Use the queue's name or ARN when submitting new game session requests with \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_StartGameSessionPlacement.html}StartGameSessionPlacement} \
+   or \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_StartMatchmaking.html}StartMatchmaking}. \n\
+  \    \n\
+  \      {b Learn more} \n\
+  \     \n\
+  \       {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/queues-design.html} Design \
+   a game session queue} \n\
+  \      \n\
+  \        {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/queues-creating.html} \
+   Create a game session queue} \n\
+  \       \n\
+  \         {b Related actions} \n\
+  \        \n\
+  \          \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateGameSessionQueue.html}CreateGameSessionQueue} \
+   | \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeGameSessionQueues.html}DescribeGameSessionQueues} \
+   | \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateGameSessionQueue.html}UpdateGameSessionQueue} \
+   | \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DeleteGameSessionQueue.html}DeleteGameSessionQueue} \
+   | \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \         "]
+
+module CreateGameSession : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `FleetCapacityExceededException of fleet_capacity_exceeded_exception
+    | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidFleetStatusException of invalid_fleet_status_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_game_session_input ->
+    ( create_game_session_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `FleetCapacityExceededException of fleet_capacity_exceeded_exception
+      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidFleetStatusException of invalid_fleet_status_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_game_session_input ->
+    ( create_game_session_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `FleetCapacityExceededException of fleet_capacity_exceeded_exception
+      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidFleetStatusException of invalid_fleet_status_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `TerminalRoutingStrategyException of terminal_routing_strategy_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Creates a multiplayer game session for players in a specific fleet location. This operation \
+   prompts an available server process to start a game session and retrieves connection \
+   information for the new game session. As an alternative, consider using the Amazon GameLift \
+   Servers game session placement feature with \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_StartGameSessionPlacement.html}StartGameSessionPlacement}, \
+   which uses the FleetIQ algorithm and queues to optimize the placement process.\n\
+  \ \n\
+  \  When creating a game session, you specify exactly where you want to place it and provide a \
+   set of game session configuration settings. The target fleet must be in [ACTIVE] status. \n\
+  \  \n\
+  \   You can use this operation in the following ways: \n\
+  \   \n\
+  \    {ul\n\
+  \          {-  To create a game session on an instance in a fleet's home Region, provide a fleet \
+   or alias ID along with your game session configuration. \n\
+  \              \n\
+  \               }\n\
+  \          {-  To create a game session on an instance in a fleet's remote location, provide a \
+   fleet or alias ID and a location name, along with your game session configuration. \n\
+  \              \n\
+  \               }\n\
+  \          {-  To create a game session on an instance in an Anywhere fleet, specify the fleet's \
+   custom location.\n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \   If successful, Amazon GameLift Servers initiates a workflow to start a new game session and \
+   returns a [GameSession] object containing the game session configuration and status. When the \
+   game session status is [ACTIVE], it is updated with connection information and you can create \
+   player sessions for the game session. By default, newly created game sessions are open to new \
+   players. You can restrict new player access by using \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateGameSession.html}UpdateGameSession} \
+   to change the game session's player session creation policy.\n\
+  \   \n\
+  \    Amazon GameLift Servers retains logs for active for 14 days. To access the logs, call \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_GetGameSessionLogUrl.html}GetGameSessionLogUrl} \
+   to download the log files.\n\
+  \    \n\
+  \      {i Available in Amazon GameLift Servers Local.} \n\
+  \     \n\
+  \       {b Learn more} \n\
+  \      \n\
+  \        \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession}Start \
+   a game session} \n\
+  \       \n\
+  \         \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \        "]
+
+module CreateGameServerGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_game_server_group_input ->
+    ( create_game_server_group_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_game_server_group_input ->
+    ( create_game_server_group_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
+  \ Creates a Amazon GameLift Servers FleetIQ game server group for managing game hosting on a \
+   collection of Amazon Elastic Compute Cloud instances for game hosting. This operation creates \
+   the game server group, creates an Auto Scaling group in your Amazon Web Services account, and \
+   establishes a link between the two groups. You can view the status of your game server groups \
+   in the Amazon GameLift Servers console. Game server group metrics and events are emitted to \
+   Amazon CloudWatch.\n\
+  \ \n\
+  \  Before creating a new game server group, you must have the following: \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  An Amazon Elastic Compute Cloud launch template that specifies how to launch \
+   Amazon Elastic Compute Cloud instances with your game server build. For more information, see \
+   {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html} Launching an \
+   Instance from a Launch Template} in the {i Amazon Elastic Compute Cloud User Guide}. \n\
+  \             \n\
+  \              }\n\
+  \         {-  An IAM role that extends limited access to your Amazon Web Services account to \
+   allow Amazon GameLift Servers FleetIQ to create and interact with the Auto Scaling group. For \
+   more information, see \
+   {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-iam-permissions-roles.html}Create \
+   IAM roles for cross-service interaction} in the {i Amazon GameLift Servers FleetIQ Developer \
+   Guide}.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   To create a new game server group, specify a unique group name, IAM role and Amazon Elastic \
+   Compute Cloud launch template, and provide a list of instance types that can be used in the \
+   group. You must also set initial maximum and minimum limits on the group's instance count. You \
+   can optionally set an Auto Scaling policy with target tracking based on a Amazon GameLift \
+   Servers FleetIQ metric.\n\
+  \   \n\
+  \    Once the game server group and corresponding Auto Scaling group are created, you have full \
+   access to change the Auto Scaling group's configuration as needed. Several properties that are \
+   set when creating a game server group, including maximum/minimum size and auto-scaling policy \
+   settings, must be updated directly in the Auto Scaling group. Keep in mind that some Auto \
+   Scaling group properties are periodically updated by Amazon GameLift Servers FleetIQ as part of \
+   its balancing activities to optimize for availability and cost.\n\
+  \    \n\
+  \      {b Learn more} \n\
+  \     \n\
+  \       {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon \
+   GameLift Servers FleetIQ Guide} \n\
+  \      "]
+
+module CreateFleetLocations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidFleetStatusException of invalid_fleet_status_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `NotReadyException of not_ready_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_fleet_locations_input ->
+    ( create_fleet_locations_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidFleetStatusException of invalid_fleet_status_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `NotReadyException of not_ready_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_fleet_locations_input ->
+    ( create_fleet_locations_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidFleetStatusException of invalid_fleet_status_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `NotReadyException of not_ready_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Container\n\n\
+  \ Adds remote locations to an EC2 and begins populating the new locations with instances. The \
+   new instances conform to the fleet's instance type, auto-scaling, and other configuration \
+   settings.\n\
+  \ \n\
+  \   You can't add remote locations to a fleet that resides in an Amazon Web Services Region that \
+   doesn't support multiple locations. Fleets created prior to March 2021 can't support multiple \
+   locations.\n\
+  \   \n\
+  \     To add fleet locations, specify the fleet to be updated and provide a list of one or more \
+   locations. \n\
+  \     \n\
+  \      If successful, this operation returns the list of added locations with their status set \
+   to [NEW]. Amazon GameLift Servers initiates the process of starting an instance in each added \
+   location. You can track the status of each new location by monitoring location creation events \
+   using \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetEvents.html}DescribeFleetEvents}.\n\
+  \      \n\
+  \        {b Learn more} \n\
+  \       \n\
+  \         \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting up \
+   fleets} \n\
+  \        \n\
+  \          \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-editing.html#fleets-update-locations}Update \
+   fleet locations} \n\
+  \         \n\
+  \           {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-regions.html} \
+   Amazon GameLift Servers service locations} for managed hosting.\n\
+  \          "]
+
+module CreateFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `NotReadyException of not_ready_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_fleet_input ->
+    ( create_fleet_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `NotReadyException of not_ready_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_fleet_input ->
+    ( create_fleet_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `NotReadyException of not_ready_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Creates a fleet of compute resources to host your game servers. Use this operation to set up a \
+   fleet for the following compute types: \n\
+  \ \n\
+  \   {b Managed EC2 fleet} \n\
+  \  \n\
+  \   An EC2 fleet is a set of Amazon Elastic Compute Cloud (Amazon EC2) instances. Your game \
+   server build is deployed to each fleet instance. Amazon GameLift Servers manages the fleet's \
+   instances and controls the lifecycle of game server processes, which host game sessions for \
+   players. EC2 fleets can have instances in multiple locations. Each instance in the fleet is \
+   designated a [Compute].\n\
+  \   \n\
+  \    To create an EC2 fleet, provide these required parameters:\n\
+  \    \n\
+  \     {ul\n\
+  \           {-  Either [BuildId] or [ScriptId] \n\
+  \               \n\
+  \                }\n\
+  \           {-   [ComputeType] set to [EC2] (the default value)\n\
+  \               \n\
+  \                }\n\
+  \           {-   [EC2InboundPermissions] \n\
+  \               \n\
+  \                }\n\
+  \           {-   [EC2InstanceType] \n\
+  \               \n\
+  \                }\n\
+  \           {-   [FleetType] \n\
+  \               \n\
+  \                }\n\
+  \           {-   [Name] \n\
+  \               \n\
+  \                }\n\
+  \           {-   [RuntimeConfiguration] with at least one [ServerProcesses] configuration\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \   If successful, this operation creates a new fleet resource and places it in [NEW] status \
+   while Amazon GameLift Servers initiates the \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-all.html#fleets-creation-workflow}fleet \
+   creation workflow}. To debug your fleet, fetch logs, view performance metrics or other actions \
+   on the fleet, create a development fleet with port 22/3389 open. As a best practice, we \
+   recommend opening ports for remote access only when you need them and closing them when you're \
+   finished. \n\
+  \   \n\
+  \    When the fleet status is ACTIVE, you can adjust capacity settings and turn autoscaling \
+   on/off for each location.\n\
+  \    \n\
+  \      A managed fleet's runtime environment depends on the Amazon Machine Image (AMI) version \
+   it uses. When a new fleet is created, Amazon GameLift Servers assigns the latest available AMI \
+   version to the fleet, and all compute instances in that fleet are deployed with that version. \
+   To update the AMI version, you must create a new fleet. As a best practice, we recommend \
+   replacing your managed fleets every 30 days to maintain a secure and up-to-date runtime \
+   environment for your hosted game servers. For guidance, see \
+   {{:https://docs.aws.amazon.com/gameliftservers/latest/developerguide/security-best-practices.html} \
+   Security best practices for Amazon GameLift Servers}.\n\
+  \      \n\
+  \         {b Anywhere fleet} \n\
+  \        \n\
+  \         An Anywhere fleet represents compute resources that are not owned or managed by Amazon \
+   GameLift Servers. You might create an Anywhere fleet with your local machine for testing, or \
+   use one to host game servers with on-premises hardware or other game hosting solutions. \n\
+  \         \n\
+  \          To create an Anywhere fleet, provide these required parameters:\n\
+  \          \n\
+  \           {ul\n\
+  \                 {-   [ComputeType] set to [ANYWHERE] \n\
+  \                     \n\
+  \                      }\n\
+  \                 {-   [Locations] specifying a custom location\n\
+  \                     \n\
+  \                      }\n\
+  \                 {-   [Name] \n\
+  \                     \n\
+  \                      }\n\
+  \                 }\n\
+  \   If successful, this operation creates a new fleet resource and places it in [ACTIVE] status. \
+   You can register computes with a fleet in [ACTIVE] status. \n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Setting \
+   up fleets} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-debug.html#fleets-creating-debug-creation}Debug \
+   fleet creation issues} \n\
+  \      \n\
+  \        \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html}Multi-location \
+   fleets} \n\
+  \       "]
+
+module CreateContainerGroupDefinition : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_container_group_definition_input ->
+    ( create_container_group_definition_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_container_group_definition_input ->
+    ( create_container_group_definition_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Container\n\n\
+  \ Creates a [ContainerGroupDefinition] that describes a set of containers for hosting your game \
+   server with Amazon GameLift Servers managed containers hosting. An Amazon GameLift Servers \
+   container group is similar to a container task or pod. Use container group definitions when you \
+   create a container fleet with \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateContainerFleet.html}CreateContainerFleet}. \n\
+  \ \n\
+  \  A container group definition determines how Amazon GameLift Servers deploys your containers \
+   to each instance in a container fleet. You can maintain multiple versions of a container group \
+   definition.\n\
+  \  \n\
+  \   There are two types of container groups:\n\
+  \   \n\
+  \    {ul\n\
+  \          {-  A {b game server container group} has the containers that run your game server \
+   application and supporting software. A game server container group can have these container \
+   types:\n\
+  \              \n\
+  \               {ul\n\
+  \                     {-  Game server container. This container runs your game server. You can \
+   define one game server container in a game server container group.\n\
+  \                         \n\
+  \                          }\n\
+  \                     {-  Support container. This container runs software in parallel with your \
+   game server. You can define up to 8 support containers in a game server group.\n\
+  \                         \n\
+  \                          }\n\
+  \                     \n\
+  \           }\n\
+  \            When building a game server container group definition, you can choose to bundle \
+   your game server executable and all dependent software into a single game server container. \
+   Alternatively, you can separate the software into one game server container and one or more \
+   support containers.\n\
+  \            \n\
+  \             On a container fleet instance, a game server container group can be deployed \
+   multiple times (depending on the compute resources of the instance). This means that all \
+   containers in the container group are replicated together.\n\
+  \             \n\
+  \              }\n\
+  \          {-  A {b per-instance container group} has containers for processes that aren't \
+   replicated on a container fleet instance. This might include background services, logging, test \
+   processes, or processes that need to persist independently of the game server container group. \
+   When building a per-instance container group, you can define up to 10 support containers.\n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \    This operation requires Identity and Access Management (IAM) permissions to access \
+   container images in Amazon ECR repositories. See \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-iam-policy-examples.html} \
+   IAM permissions for Amazon GameLift Servers} for help setting the appropriate permissions.\n\
+  \    \n\
+  \       {b Request options} \n\
+  \      \n\
+  \       Use this operation to make the following types of requests. You can specify values for \
+   the minimum required parameters and customize optional values later.\n\
+  \       \n\
+  \        {ul\n\
+  \              {-  Create a game server container group definition. Provide the following \
+   required parameter values:\n\
+  \                  \n\
+  \                   {ul\n\
+  \                         {-   [Name] \n\
+  \                             \n\
+  \                              }\n\
+  \                         {-   [ContainerGroupType] ([GAME_SERVER])\n\
+  \                             \n\
+  \                              }\n\
+  \                         {-   [OperatingSystem] \n\
+  \                             \n\
+  \                              }\n\
+  \                         {-   [TotalMemoryLimitMebibytes] \n\
+  \                             \n\
+  \                              }\n\
+  \                         {-   [TotalVcpuLimit] \n\
+  \                             \n\
+  \                              }\n\
+  \                         {-  At least one [GameServerContainerDefinition] \n\
+  \                             \n\
+  \                              {ul\n\
+  \                                    {-   [ContainerName] \n\
+  \                                        \n\
+  \                                         }\n\
+  \                                    {-   [ImageUrl] \n\
+  \                                        \n\
+  \                                         }\n\
+  \                                    {-   [PortConfiguration] \n\
+  \                                        \n\
+  \                                         }\n\
+  \                                    {-   [ServerSdkVersion] \n\
+  \                                        \n\
+  \                                         }\n\
+  \                                    \n\
+  \                          }\n\
+  \                           }\n\
+  \                         \n\
+  \               }\n\
+  \                }\n\
+  \              {-  Create a per-instance container group definition. Provide the following \
+   required parameter values:\n\
+  \                  \n\
+  \                   {ul\n\
+  \                         {-   [Name] \n\
+  \                             \n\
+  \                              }\n\
+  \                         {-   [ContainerGroupType] ([PER_INSTANCE])\n\
+  \                             \n\
+  \                              }\n\
+  \                         {-   [OperatingSystem] \n\
+  \                             \n\
+  \                              }\n\
+  \                         {-   [TotalMemoryLimitMebibytes] \n\
+  \                             \n\
+  \                              }\n\
+  \                         {-   [TotalVcpuLimit] \n\
+  \                             \n\
+  \                              }\n\
+  \                         {-  At least one [SupportContainerDefinition] \n\
+  \                             \n\
+  \                              {ul\n\
+  \                                    {-   [ContainerName] \n\
+  \                                        \n\
+  \                                         }\n\
+  \                                    {-   [ImageUrl] \n\
+  \                                        \n\
+  \                                         }\n\
+  \                                    \n\
+  \                          }\n\
+  \                           }\n\
+  \                         \n\
+  \               }\n\
+  \                }\n\
+  \              }\n\
+  \    {b Results} \n\
+  \   \n\
+  \    If successful, this request creates a [ContainerGroupDefinition] resource and assigns a \
+   unique ARN value. You can update most properties of a container group definition by calling \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateContainerGroupDefinition.html}UpdateContainerGroupDefinition}, \
+   and optionally save the update as a new version.\n\
+  \    "]
+
+module CreateContainerFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_container_fleet_input ->
+    ( create_container_fleet_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_container_fleet_input ->
+    ( create_container_fleet_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} Container\n\n\
+  \ Creates a managed fleet of Amazon Elastic Compute Cloud (Amazon EC2) instances to host your \
+   containerized game servers. Use this operation to define how to deploy a container architecture \
+   onto each fleet instance and configure fleet settings. You can create a container fleet in any \
+   Amazon Web Services Regions that Amazon GameLift Servers supports for multi-location fleets. A \
+   container fleet can be deployed to a single location or multiple locations. Container fleets \
+   are deployed with Amazon Linux 2023 as the instance operating system.\n\
+  \ \n\
+  \  Define the fleet's container architecture using container group definitions. Each fleet can \
+   have one of the following container group types:\n\
+  \  \n\
+  \   {ul\n\
+  \         {-  The game server container group runs your game server build and dependent \
+   software. Amazon GameLift Servers deploys one or more replicas of this container group to each \
+   fleet instance. The number of replicas depends on the computing capabilities of the fleet \
+   instance in use. \n\
+  \             \n\
+  \              }\n\
+  \         {-  An optional per-instance container group might be used to run other software that \
+   only needs to run once per instance, such as background services, logging, or test processes. \
+   One per-instance container group is deployed to each fleet instance. \n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   Each container group can include the definition for one or more containers. A container \
+   definition specifies a container image that is stored in an Amazon Elastic Container Registry \
+   (Amazon ECR) public or private repository.\n\
+  \   \n\
+  \     {b Request options} \n\
+  \    \n\
+  \     Use this operation to make the following types of requests. Most fleet settings have \
+   default values, so you can create a working fleet with a minimal configuration and default \
+   values, which you can customize later.\n\
+  \     \n\
+  \      {ul\n\
+  \            {-  Create a fleet with no container groups. You can configure a container fleet \
+   and then add container group definitions later. In this scenario, no fleet instances are \
+   deployed, and the fleet can't host game sessions until you add a game server container group \
+   definition. Provide the following required parameter values:\n\
+  \                \n\
+  \                 {ul\n\
+  \                       {-   [FleetRoleArn] \n\
+  \                           \n\
+  \                            }\n\
+  \                       \n\
+  \             }\n\
+  \              }\n\
+  \            {-  Create a fleet with a game server container group. Provide the following \
+   required parameter values:\n\
+  \                \n\
+  \                 {ul\n\
+  \                       {-   [FleetRoleArn] \n\
+  \                           \n\
+  \                            }\n\
+  \                       {-   [GameServerContainerGroupDefinitionName] \n\
+  \                           \n\
+  \                            }\n\
+  \                       \n\
+  \             }\n\
+  \              }\n\
+  \            {-  Create a fleet with a game server container group and a per-instance container \
+   group. Provide the following required parameter values:\n\
+  \                \n\
+  \                 {ul\n\
+  \                       {-   [FleetRoleArn] \n\
+  \                           \n\
+  \                            }\n\
+  \                       {-   [GameServerContainerGroupDefinitionName] \n\
+  \                           \n\
+  \                            }\n\
+  \                       {-   [PerInstanceContainerGroupDefinitionName] \n\
+  \                           \n\
+  \                            }\n\
+  \                       \n\
+  \             }\n\
+  \              }\n\
+  \            }\n\
+  \    {b Results} \n\
+  \   \n\
+  \    If successful, this operation creates a new container fleet resource, places it in \
+   [PENDING] status, and initiates the \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-all.html#fleets-creation-workflow}fleet \
+   creation workflow}. For fleets with container groups, this workflow starts a fleet deployment \
+   and transitions the status to [ACTIVE]. Fleets without a container group are placed in \
+   [CREATED] status.\n\
+  \    \n\
+  \     You can update most of the properties of a fleet, including container group definitions, \
+   and deploy the update across all fleet instances. Use \
+   {{:https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateContainerFleet.html}UpdateContainerFleet} \
+   to deploy a new game server version update across the container fleet. \n\
+  \     \n\
+  \       A managed fleet's runtime environment depends on the Amazon Machine Image (AMI) version \
+   it uses. When a new fleet is created, Amazon GameLift Servers assigns the latest available AMI \
+   version to the fleet, and all compute instances in that fleet are deployed with that version. \
+   To update the AMI version, you must create a new fleet. As a best practice, we recommend \
+   replacing your managed fleets every 30 days to maintain a secure and up-to-date runtime \
+   environment for your hosted game servers. For guidance, see \
+   {{:https://docs.aws.amazon.com/gameliftservers/latest/developerguide/security-best-practices.html} \
+   Security best practices for Amazon GameLift Servers}.\n\
+  \       \n\
+  \        "]
+
+module CreateBuild : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_build_input ->
+    ( create_build_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_build_input ->
+    ( create_build_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere\n\n\
+  \ Creates a new Amazon GameLift Servers build resource for your game server binary files. \
+   Combine game server binaries into a zip file for use with Amazon GameLift Servers. \n\
+  \ \n\
+  \   When setting up a new game build for Amazon GameLift Servers, we recommend using the CLI \
+   command {b  \
+   {{:https://docs.aws.amazon.com/cli/latest/reference/gamelift/upload-build.html}upload-build} }. \
+   This helper command combines two tasks: (1) it uploads your build files from a file directory \
+   to an Amazon GameLift Servers Amazon S3 location, and (2) it creates a new build resource.\n\
+  \   \n\
+  \     You can use the [CreateBuild] operation in the following scenarios:\n\
+  \     \n\
+  \      {ul\n\
+  \            {-  Create a new game build with build files that are in an Amazon S3 location \
+   under an Amazon Web Services account that you control. To use this option, you give Amazon \
+   GameLift Servers access to the Amazon S3 bucket. With permissions in place, specify a build \
+   name, operating system, and the Amazon S3 storage location of your game build.\n\
+  \                \n\
+  \                 }\n\
+  \            {-  Upload your build files to a Amazon GameLift Servers Amazon S3 location. To use \
+   this option, specify a build name and operating system. This operation creates a new build \
+   resource and also returns an Amazon S3 location with temporary access credentials. Use the \
+   credentials to manually upload your build files to the specified Amazon S3 location. For more \
+   information, see \
+   {{:https://docs.aws.amazon.com/AmazonS3/latest/dev/UploadingObjects.html}Uploading Objects} in \
+   the {i Amazon S3 Developer Guide}. After you upload build files to the Amazon GameLift Servers \
+   Amazon S3 location, you can't update them. \n\
+  \                \n\
+  \                 }\n\
+  \            }\n\
+  \   If successful, this operation creates a new build resource with a unique build ID and places \
+   it in [INITIALIZED] status. A build must be in [READY] status before you can create fleets with \
+   it.\n\
+  \   \n\
+  \     {b Learn more} \n\
+  \    \n\
+  \      \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-intro.html}Uploading \
+   Your Game} \n\
+  \     \n\
+  \       \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-cli-uploading.html#gamelift-build-cli-uploading-create-build} \
+   Create a Build with Files in Amazon S3} \n\
+  \      \n\
+  \        \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \       "]
+
+module CreateAlias : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TaggingFailedException of tagging_failed_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_alias_input ->
+    ( create_alias_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_alias_input ->
+    ( create_alias_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TaggingFailedException of tagging_failed_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Creates an alias for a fleet. In most situations, you can use an alias ID in place of a fleet \
+   ID. An alias provides a level of abstraction for a fleet that is useful when redirecting player \
+   traffic from one fleet to another, such as when updating your game build. \n\
+  \ \n\
+  \  Amazon GameLift Servers supports two types of routing strategies for aliases: simple and \
+   terminal. A simple alias points to an active fleet. A terminal alias is used to display \
+   messaging or link to a URL instead of routing players to an active fleet. For example, you \
+   might use a terminal alias when a game version is no longer supported and you want to direct \
+   players to an upgrade site. \n\
+  \  \n\
+  \   To create a fleet alias, specify an alias name, routing strategy, and optional description. \
+   Each simple alias can point to only one fleet, but a fleet can have multiple aliases. If \
+   successful, a new alias record is returned, including an alias ID and an ARN. You can reassign \
+   an alias to another fleet by calling [UpdateAlias].\n\
+  \   \n\
+  \     {b Related actions} \n\
+  \    \n\
+  \      \
+   {{:https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html#reference-awssdk-resources-fleets}All \
+   APIs by task} \n\
+  \     "]
+
+module ClaimGameServer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `OutOfCapacityException of out_of_capacity_exception
+    | `UnauthorizedException of unauthorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    claim_game_server_input ->
+    ( claim_game_server_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `OutOfCapacityException of out_of_capacity_exception
+      | `UnauthorizedException of unauthorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    claim_game_server_input ->
+    ( claim_game_server_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `OutOfCapacityException of out_of_capacity_exception
+      | `UnauthorizedException of unauthorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2 (FleetIQ)\n\n\
+  \ Locates an available game server and temporarily reserves it to host gameplay and players. \
+   This operation is called from a game client or client service (such as a matchmaker) to request \
+   hosting resources for a new game session. In response, Amazon GameLift Servers FleetIQ locates \
+   an available game server, places it in [CLAIMED] status for 60 seconds, and returns connection \
+   information that players can use to connect to the game server. \n\
+  \ \n\
+  \  To claim a game server, identify a game server group. You can also specify a game server ID, \
+   although this approach bypasses Amazon GameLift Servers FleetIQ placement optimization. \
+   Optionally, include game data to pass to the game server at the start of a game session, such \
+   as a game map or player information. Add filter options to further restrict how a game server \
+   is chosen, such as only allowing game servers on [ACTIVE] instances to be claimed.\n\
+  \  \n\
+  \   When a game server is successfully claimed, connection information is returned. A claimed \
+   game server's utilization status remains [AVAILABLE] while the claim status is set to [CLAIMED] \
+   for up to 60 seconds. This time period gives the game server time to update its status to \
+   [UTILIZED] after players join. If the game server's status is not updated within 60 seconds, \
+   the game server reverts to unclaimed status and is available to be claimed by another request. \
+   The claim time period is a fixed value and is not configurable.\n\
+  \   \n\
+  \    If you try to claim a specific game server, this request will fail in the following cases:\n\
+  \    \n\
+  \     {ul\n\
+  \           {-  If the game server utilization status is [UTILIZED].\n\
+  \               \n\
+  \                }\n\
+  \           {-  If the game server claim status is [CLAIMED].\n\
+  \               \n\
+  \                }\n\
+  \           {-  If the game server is running on an instance in [DRAINING] status and the \
+   provided filter option does not allow placing on [DRAINING] instances.\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \    {b Learn more} \n\
+  \   \n\
+  \     {{:https://docs.aws.amazon.com/gamelift/latest/fleetiqguide/gsg-intro.html}Amazon GameLift \
+   Servers FleetIQ Guide} \n\
+  \    "]
+
+(** {1:Serialization and Deserialization} *)
+module AcceptMatch : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `NotFoundException of not_found_exception
+    | `UnsupportedRegionException of unsupported_region_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    accept_match_input ->
+    ( accept_match_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnsupportedRegionException of unsupported_region_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    accept_match_input ->
+    ( accept_match_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `NotFoundException of not_found_exception
+      | `UnsupportedRegionException of unsupported_region_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " {b This API works with the following fleet types:} EC2, Anywhere, Container\n\n\
+  \ Registers a player's acceptance or rejection of a proposed FlexMatch match. A matchmaking \
+   configuration may require player acceptance; if so, then matches built with that configuration \
+   cannot be completed unless all players accept the proposed match within a specified time limit. \n\
+  \ \n\
+  \  When FlexMatch builds a match, all the matchmaking tickets involved in the proposed match are \
+   placed into status [REQUIRES_ACCEPTANCE]. This is a trigger for your game to get acceptance \
+   from all players in each ticket. Calls to this action are only valid for tickets that are in \
+   this status; calls for tickets not in this status result in an error.\n\
+  \  \n\
+  \   To register acceptance, specify the ticket ID, one or more players, and an acceptance \
+   response. When all players have accepted, Amazon GameLift Servers advances the matchmaking \
+   tickets to status [PLACING], and attempts to create a new game session for the match. \n\
+  \   \n\
+  \    If any player rejects the match, or if acceptances are not received before a specified \
+   timeout, the proposed match is dropped. Each matchmaking ticket in the failed match is handled \
+   as follows: \n\
+  \    \n\
+  \     {ul\n\
+  \           {-  If the ticket has one or more players who rejected the match or failed to \
+   respond, the ticket status is set [CANCELLED] and processing is terminated.\n\
+  \               \n\
+  \                }\n\
+  \           {-  If all players in the ticket accepted the match, the ticket status is returned \
+   to [SEARCHING] to find a new match. \n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \    {b Learn more} \n\
+  \   \n\
+  \     {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-client.html} Add \
+   FlexMatch to a game client} \n\
+  \    \n\
+  \      {{:https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-events.html} \
+   FlexMatch events} (reference)\n\
+  \     "]
 
 module Json_serializers = Json_serializers
 module Json_deserializers = Json_deserializers

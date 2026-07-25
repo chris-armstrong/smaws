@@ -1,114 +1,6 @@
 open Types
 open Service_metadata
 
-module ActivatePipeline = struct
-  let error_to_string = function
-    | `InternalServiceError _ -> "com.amazonaws.datapipeline#InternalServiceError"
-    | `InvalidRequestException _ -> "com.amazonaws.datapipeline#InvalidRequestException"
-    | `PipelineDeletedException _ -> "com.amazonaws.datapipeline#PipelineDeletedException"
-    | `PipelineNotFoundException _ -> "com.amazonaws.datapipeline#PipelineNotFoundException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServiceError" ->
-          `InternalServiceError (Json_deserializers.internal_service_error_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "PipelineDeletedException" ->
-          `PipelineDeletedException
-            (Json_deserializers.pipeline_deleted_exception_of_yojson tree path)
-      | _, "PipelineNotFoundException" ->
-          `PipelineNotFoundException
-            (Json_deserializers.pipeline_not_found_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : activate_pipeline_input) =
-    let input = Json_serializers.activate_pipeline_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DataPipeline.ActivatePipeline" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.activate_pipeline_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : activate_pipeline_input) =
-    let input = Json_serializers.activate_pipeline_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DataPipeline.ActivatePipeline"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.activate_pipeline_output_of_yojson ~error_deserializer
-end
-
-module AddTags = struct
-  let error_to_string = function
-    | `InternalServiceError _ -> "com.amazonaws.datapipeline#InternalServiceError"
-    | `InvalidRequestException _ -> "com.amazonaws.datapipeline#InvalidRequestException"
-    | `PipelineDeletedException _ -> "com.amazonaws.datapipeline#PipelineDeletedException"
-    | `PipelineNotFoundException _ -> "com.amazonaws.datapipeline#PipelineNotFoundException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServiceError" ->
-          `InternalServiceError (Json_deserializers.internal_service_error_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _, "PipelineDeletedException" ->
-          `PipelineDeletedException
-            (Json_deserializers.pipeline_deleted_exception_of_yojson tree path)
-      | _, "PipelineNotFoundException" ->
-          `PipelineNotFoundException
-            (Json_deserializers.pipeline_not_found_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_tags_input) =
-    let input = Json_serializers.add_tags_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DataPipeline.AddTags" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.add_tags_output_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_input) =
-    let input = Json_serializers.add_tags_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DataPipeline.AddTags" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.add_tags_output_of_yojson
-      ~error_deserializer
-end
-
-module CreatePipeline = struct
-  let error_to_string = function
-    | `InternalServiceError _ -> "com.amazonaws.datapipeline#InternalServiceError"
-    | `InvalidRequestException _ -> "com.amazonaws.datapipeline#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServiceError" ->
-          `InternalServiceError (Json_deserializers.internal_service_error_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_pipeline_input) =
-    let input = Json_serializers.create_pipeline_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DataPipeline.CreatePipeline" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.create_pipeline_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_pipeline_input) =
-    let input = Json_serializers.create_pipeline_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DataPipeline.CreatePipeline"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_pipeline_output_of_yojson ~error_deserializer
-end
-
 module DeactivatePipeline = struct
   let error_to_string = function
     | `InternalServiceError _ -> "com.amazonaws.datapipeline#InternalServiceError"
@@ -728,4 +620,112 @@ module ValidatePipelineDefinition = struct
       ~shape_name:"DataPipeline.ValidatePipelineDefinition" ~service ~context ~input
       ~output_deserializer:Json_deserializers.validate_pipeline_definition_output_of_yojson
       ~error_deserializer
+end
+
+module CreatePipeline = struct
+  let error_to_string = function
+    | `InternalServiceError _ -> "com.amazonaws.datapipeline#InternalServiceError"
+    | `InvalidRequestException _ -> "com.amazonaws.datapipeline#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServiceError" ->
+          `InternalServiceError (Json_deserializers.internal_service_error_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_pipeline_input) =
+    let input = Json_serializers.create_pipeline_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DataPipeline.CreatePipeline" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.create_pipeline_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_pipeline_input) =
+    let input = Json_serializers.create_pipeline_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DataPipeline.CreatePipeline"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_pipeline_output_of_yojson ~error_deserializer
+end
+
+module AddTags = struct
+  let error_to_string = function
+    | `InternalServiceError _ -> "com.amazonaws.datapipeline#InternalServiceError"
+    | `InvalidRequestException _ -> "com.amazonaws.datapipeline#InvalidRequestException"
+    | `PipelineDeletedException _ -> "com.amazonaws.datapipeline#PipelineDeletedException"
+    | `PipelineNotFoundException _ -> "com.amazonaws.datapipeline#PipelineNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServiceError" ->
+          `InternalServiceError (Json_deserializers.internal_service_error_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "PipelineDeletedException" ->
+          `PipelineDeletedException
+            (Json_deserializers.pipeline_deleted_exception_of_yojson tree path)
+      | _, "PipelineNotFoundException" ->
+          `PipelineNotFoundException
+            (Json_deserializers.pipeline_not_found_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_tags_input) =
+    let input = Json_serializers.add_tags_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DataPipeline.AddTags" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_tags_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_input) =
+    let input = Json_serializers.add_tags_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DataPipeline.AddTags" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.add_tags_output_of_yojson
+      ~error_deserializer
+end
+
+module ActivatePipeline = struct
+  let error_to_string = function
+    | `InternalServiceError _ -> "com.amazonaws.datapipeline#InternalServiceError"
+    | `InvalidRequestException _ -> "com.amazonaws.datapipeline#InvalidRequestException"
+    | `PipelineDeletedException _ -> "com.amazonaws.datapipeline#PipelineDeletedException"
+    | `PipelineNotFoundException _ -> "com.amazonaws.datapipeline#PipelineNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServiceError" ->
+          `InternalServiceError (Json_deserializers.internal_service_error_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _, "PipelineDeletedException" ->
+          `PipelineDeletedException
+            (Json_deserializers.pipeline_deleted_exception_of_yojson tree path)
+      | _, "PipelineNotFoundException" ->
+          `PipelineNotFoundException
+            (Json_deserializers.pipeline_not_found_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : activate_pipeline_input) =
+    let input = Json_serializers.activate_pipeline_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DataPipeline.ActivatePipeline" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.activate_pipeline_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : activate_pipeline_input) =
+    let input = Json_serializers.activate_pipeline_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DataPipeline.ActivatePipeline"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.activate_pipeline_output_of_yojson ~error_deserializer
 end

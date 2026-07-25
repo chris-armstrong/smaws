@@ -1,81 +1,5 @@
 open Types
 
-module AddPermission : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidAddress of invalid_address
-    | `InvalidSecurity of invalid_security
-    | `OverLimit of over_limit
-    | `QueueDoesNotExist of queue_does_not_exist
-    | `RequestThrottled of request_throttled
-    | `UnsupportedOperation of unsupported_operation ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_permission_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidAddress of invalid_address
-      | `InvalidSecurity of invalid_security
-      | `OverLimit of over_limit
-      | `QueueDoesNotExist of queue_does_not_exist
-      | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_permission_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidAddress of invalid_address
-      | `InvalidSecurity of invalid_security
-      | `OverLimit of over_limit
-      | `QueueDoesNotExist of queue_does_not_exist
-      | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds a permission to a queue for a specific \
-   {{:https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#P}principal}. This allows \
-   sharing access to the queue.\n\n\
-  \ When you create a queue, you have full control access rights for the queue. Only you, the \
-   owner of the queue, can grant or deny permissions to the queue. For more information about \
-   these permissions, see \
-   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-writing-an-sqs-policy.html#write-messages-to-shared-queue}Allow \
-   Developers to Write Messages to a Shared Queue} in the {i Amazon SQS Developer Guide}.\n\
-  \ \n\
-  \   {ul\n\
-  \         {-   [AddPermission] generates a policy for you. You can use \n\
-  \             {[\n\
-  \              [SetQueueAttributes] \n\
-  \             ]}\n\
-  \              to upload your policy. For more information, see \
-   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-creating-custom-policies.html}Using \
-   Custom Policies with the Amazon SQS Access Policy Language} in the {i Amazon SQS Developer \
-   Guide}.\n\
-  \             \n\
-  \              }\n\
-  \         {-  An Amazon SQS policy can have a maximum of seven actions per statement.\n\
-  \             \n\
-  \              }\n\
-  \         {-  To remove the ability to change queue permissions, you must deny permission to the \
-   [AddPermission], [RemovePermission], and [SetQueueAttributes] actions in your IAM policy.\n\
-  \             \n\
-  \              }\n\
-  \         {-  Amazon SQS [AddPermission] does not support adding a non-account principal.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \     Cross-account permissions don't apply to this action. For more information, see \
-   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name}Grant \
-   cross-account permissions to a role and a username} in the {i Amazon SQS Developer Guide}.\n\
-  \     \n\
-  \      "]
-
 module CancelMessageMoveTask : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -770,51 +694,6 @@ end
   \        }\n\
   \   "]
 
-module ListQueueTags : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidAddress of invalid_address
-    | `InvalidSecurity of invalid_security
-    | `QueueDoesNotExist of queue_does_not_exist
-    | `RequestThrottled of request_throttled
-    | `UnsupportedOperation of unsupported_operation ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_queue_tags_request ->
-    ( list_queue_tags_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidAddress of invalid_address
-      | `InvalidSecurity of invalid_security
-      | `QueueDoesNotExist of queue_does_not_exist
-      | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_queue_tags_request ->
-    ( list_queue_tags_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidAddress of invalid_address
-      | `InvalidSecurity of invalid_security
-      | `QueueDoesNotExist of queue_does_not_exist
-      | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "List all cost allocation tags added to the specified Amazon SQS queue. For an overview, see \
-   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-tags.html}Tagging \
-   Your Amazon SQS Queues} in the {i Amazon SQS Developer Guide}.\n\n\
-  \  Cross-account permissions don't apply to this action. For more information, see \
-   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name}Grant \
-   cross-account permissions to a role and a username} in the {i Amazon SQS Developer Guide}.\n\
-  \  \n\
-  \   "]
-
 module ListQueues : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -863,6 +742,51 @@ end
    cross-account permissions to a role and a username} in the {i Amazon SQS Developer Guide}.\n\
   \   \n\
   \    "]
+
+module ListQueueTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_queue_tags_request ->
+    ( list_queue_tags_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidAddress of invalid_address
+      | `InvalidSecurity of invalid_security
+      | `QueueDoesNotExist of queue_does_not_exist
+      | `RequestThrottled of request_throttled
+      | `UnsupportedOperation of unsupported_operation ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_queue_tags_request ->
+    ( list_queue_tags_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidAddress of invalid_address
+      | `InvalidSecurity of invalid_security
+      | `QueueDoesNotExist of queue_does_not_exist
+      | `RequestThrottled of request_throttled
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "List all cost allocation tags added to the specified Amazon SQS queue. For an overview, see \
+   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-tags.html}Tagging \
+   Your Amazon SQS Queues} in the {i Amazon SQS Developer Guide}.\n\n\
+  \  Cross-account permissions don't apply to this action. For more information, see \
+   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name}Grant \
+   cross-account permissions to a role and a username} in the {i Amazon SQS Developer Guide}.\n\
+  \  \n\
+  \   "]
 
 module PurgeQueue : sig
   val error_to_string :
@@ -1491,3 +1415,79 @@ end
    cross-account permissions to a role and a username} in the {i Amazon SQS Developer Guide}.\n\
   \  \n\
   \   "]
+
+module AddPermission : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `OverLimit of over_limit
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_permission_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidAddress of invalid_address
+      | `InvalidSecurity of invalid_security
+      | `OverLimit of over_limit
+      | `QueueDoesNotExist of queue_does_not_exist
+      | `RequestThrottled of request_throttled
+      | `UnsupportedOperation of unsupported_operation ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_permission_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidAddress of invalid_address
+      | `InvalidSecurity of invalid_security
+      | `OverLimit of over_limit
+      | `QueueDoesNotExist of queue_does_not_exist
+      | `RequestThrottled of request_throttled
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds a permission to a queue for a specific \
+   {{:https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#P}principal}. This allows \
+   sharing access to the queue.\n\n\
+  \ When you create a queue, you have full control access rights for the queue. Only you, the \
+   owner of the queue, can grant or deny permissions to the queue. For more information about \
+   these permissions, see \
+   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-writing-an-sqs-policy.html#write-messages-to-shared-queue}Allow \
+   Developers to Write Messages to a Shared Queue} in the {i Amazon SQS Developer Guide}.\n\
+  \ \n\
+  \   {ul\n\
+  \         {-   [AddPermission] generates a policy for you. You can use \n\
+  \             {[\n\
+  \              [SetQueueAttributes] \n\
+  \             ]}\n\
+  \              to upload your policy. For more information, see \
+   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-creating-custom-policies.html}Using \
+   Custom Policies with the Amazon SQS Access Policy Language} in the {i Amazon SQS Developer \
+   Guide}.\n\
+  \             \n\
+  \              }\n\
+  \         {-  An Amazon SQS policy can have a maximum of seven actions per statement.\n\
+  \             \n\
+  \              }\n\
+  \         {-  To remove the ability to change queue permissions, you must deny permission to the \
+   [AddPermission], [RemovePermission], and [SetQueueAttributes] actions in your IAM policy.\n\
+  \             \n\
+  \              }\n\
+  \         {-  Amazon SQS [AddPermission] does not support adding a non-account principal.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \     Cross-account permissions don't apply to this action. For more information, see \
+   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name}Grant \
+   cross-account permissions to a role and a username} in the {i Amazon SQS Developer Guide}.\n\
+  \     \n\
+  \      "]

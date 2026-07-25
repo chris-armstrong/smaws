@@ -9,13 +9,46 @@ module Types = Types
 (** {1:builders Builders} *)
 
 val make_validation_exception_field :
-  message:string_ -> name:string_ -> unit -> validation_exception_field
+  name:string_ -> message:string_ -> unit -> validation_exception_field
+
+val make_get_routing_control_state_response :
+  ?routing_control_name:routing_control_name ->
+  routing_control_arn:arn ->
+  routing_control_state:routing_control_state ->
+  unit ->
+  get_routing_control_state_response
+
+val make_get_routing_control_state_request :
+  routing_control_arn:arn -> unit -> get_routing_control_state_request
+
+val make_routing_control :
+  ?control_panel_arn:arn ->
+  ?control_panel_name:control_panel_name ->
+  ?routing_control_arn:arn ->
+  ?routing_control_name:routing_control_name ->
+  ?routing_control_state:routing_control_state ->
+  ?owner:owner ->
+  unit ->
+  routing_control
+
+val make_list_routing_controls_response :
+  ?next_token:page_token ->
+  routing_controls:routing_controls ->
+  unit ->
+  list_routing_controls_response
+
+val make_list_routing_controls_request :
+  ?control_panel_arn:arn ->
+  ?next_token:page_token ->
+  ?max_results:max_results ->
+  unit ->
+  list_routing_controls_request
 
 val make_update_routing_control_states_response : unit -> unit
 
 val make_update_routing_control_state_entry :
-  routing_control_state:routing_control_state ->
   routing_control_arn:arn ->
+  routing_control_state:routing_control_state ->
   unit ->
   update_routing_control_state_entry
 
@@ -29,192 +62,11 @@ val make_update_routing_control_state_response : unit -> unit
 
 val make_update_routing_control_state_request :
   ?safety_rules_to_override:arns ->
-  routing_control_state:routing_control_state ->
   routing_control_arn:arn ->
+  routing_control_state:routing_control_state ->
   unit ->
   update_routing_control_state_request
-
-val make_routing_control :
-  ?owner:owner ->
-  ?routing_control_state:routing_control_state ->
-  ?routing_control_name:routing_control_name ->
-  ?routing_control_arn:arn ->
-  ?control_panel_name:control_panel_name ->
-  ?control_panel_arn:arn ->
-  unit ->
-  routing_control
-
-val make_list_routing_controls_response :
-  ?next_token:page_token ->
-  routing_controls:routing_controls ->
-  unit ->
-  list_routing_controls_response
-
-val make_list_routing_controls_request :
-  ?max_results:max_results ->
-  ?next_token:page_token ->
-  ?control_panel_arn:arn ->
-  unit ->
-  list_routing_controls_request
-
-val make_get_routing_control_state_response :
-  ?routing_control_name:routing_control_name ->
-  routing_control_state:routing_control_state ->
-  routing_control_arn:arn ->
-  unit ->
-  get_routing_control_state_response
-
-val make_get_routing_control_state_request :
-  routing_control_arn:arn -> unit -> get_routing_control_state_request
 (** {1:operations Operations} *)
-
-module GetRoutingControlState : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_routing_control_state_request ->
-    ( get_routing_control_state_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_routing_control_state_request ->
-    ( get_routing_control_state_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Get the state for a routing control. A routing control is a simple on/off switch that you can \
-   use to route traffic to cells. When a routing control state is set to ON, traffic flows to a \
-   cell. When the state is set to OFF, traffic does not flow. \n\n\
-  \ Before you can create a routing control, you must first create a cluster, and then host the \
-   control in a control panel on the cluster. For more information, see \
-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html} Create \
-   routing control structures} in the Amazon Route 53 Application Recovery Controller Developer \
-   Guide. You access one of the endpoints for the cluster to get or update the routing control \
-   state to redirect traffic for your application. \n\
-  \ \n\
-  \   {i You must specify Regional endpoints when you work with API cluster operations to get or \
-   update routing control states in Route 53 ARC.} \n\
-  \  \n\
-  \   To see a code example for getting a routing control state, including accessing Regional \
-   cluster endpoints in sequence, see \
-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html}API \
-   examples} in the Amazon Route 53 Application Recovery Controller Developer Guide.\n\
-  \   \n\
-  \    Learn more about working with routing controls in the following topics in the Amazon Route \
-   53 Application Recovery Controller Developer Guide:\n\
-  \    \n\
-  \     {ul\n\
-  \           {-   \
-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html} Viewing and \
-   updating routing control states} \n\
-  \               \n\
-  \                }\n\
-  \           {-   \
-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing \
-   controls in Route 53 ARC} \n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \  "]
-
-module ListRoutingControls : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_routing_controls_request ->
-    ( list_routing_controls_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_routing_controls_request ->
-    ( list_routing_controls_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "List routing control names and Amazon Resource Names (ARNs), as well as the routing control \
-   state for each routing control, along with the control panel name and control panel ARN for the \
-   routing controls. If you specify a control panel ARN, this call lists the routing controls in \
-   the control panel. Otherwise, it lists all the routing controls in the cluster.\n\n\
-  \ A routing control is a simple on/off switch in Route 53 ARC that you can use to route traffic \
-   to cells. When a routing control state is set to ON, traffic flows to a cell. When the state is \
-   set to OFF, traffic does not flow.\n\
-  \ \n\
-  \  Before you can create a routing control, you must first create a cluster, and then host the \
-   control in a control panel on the cluster. For more information, see \
-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html} Create \
-   routing control structures} in the Amazon Route 53 Application Recovery Controller Developer \
-   Guide. You access one of the endpoints for the cluster to get or update the routing control \
-   state to redirect traffic for your application. \n\
-  \  \n\
-  \    {i You must specify Regional endpoints when you work with API cluster operations to use \
-   this API operation to list routing controls in Route 53 ARC.} \n\
-  \   \n\
-  \    Learn more about working with routing controls in the following topics in the Amazon Route \
-   53 Application Recovery Controller Developer Guide:\n\
-  \    \n\
-  \     {ul\n\
-  \           {-   \
-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html} Viewing and \
-   updating routing control states} \n\
-  \               \n\
-  \                }\n\
-  \           {-   \
-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing \
-   controls in Route 53 ARC} \n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \  "]
 
 module UpdateRoutingControlState : sig
   val error_to_string :
@@ -297,7 +149,6 @@ end
   \           }\n\
   \  "]
 
-(** {1:Serialization and Deserialization} *)
 module UpdateRoutingControlStates : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -377,6 +228,155 @@ end
   \           {-   \
    {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing \
    controls overall} \n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \  "]
+
+module ListRoutingControls : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_routing_controls_request ->
+    ( list_routing_controls_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_routing_controls_request ->
+    ( list_routing_controls_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "List routing control names and Amazon Resource Names (ARNs), as well as the routing control \
+   state for each routing control, along with the control panel name and control panel ARN for the \
+   routing controls. If you specify a control panel ARN, this call lists the routing controls in \
+   the control panel. Otherwise, it lists all the routing controls in the cluster.\n\n\
+  \ A routing control is a simple on/off switch in Route 53 ARC that you can use to route traffic \
+   to cells. When a routing control state is set to ON, traffic flows to a cell. When the state is \
+   set to OFF, traffic does not flow.\n\
+  \ \n\
+  \  Before you can create a routing control, you must first create a cluster, and then host the \
+   control in a control panel on the cluster. For more information, see \
+   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html} Create \
+   routing control structures} in the Amazon Route 53 Application Recovery Controller Developer \
+   Guide. You access one of the endpoints for the cluster to get or update the routing control \
+   state to redirect traffic for your application. \n\
+  \  \n\
+  \    {i You must specify Regional endpoints when you work with API cluster operations to use \
+   this API operation to list routing controls in Route 53 ARC.} \n\
+  \   \n\
+  \    Learn more about working with routing controls in the following topics in the Amazon Route \
+   53 Application Recovery Controller Developer Guide:\n\
+  \    \n\
+  \     {ul\n\
+  \           {-   \
+   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html} Viewing and \
+   updating routing control states} \n\
+  \               \n\
+  \                }\n\
+  \           {-   \
+   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing \
+   controls in Route 53 ARC} \n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \  "]
+
+(** {1:Serialization and Deserialization} *)
+module GetRoutingControlState : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_routing_control_state_request ->
+    ( get_routing_control_state_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_routing_control_state_request ->
+    ( get_routing_control_state_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Get the state for a routing control. A routing control is a simple on/off switch that you can \
+   use to route traffic to cells. When a routing control state is set to ON, traffic flows to a \
+   cell. When the state is set to OFF, traffic does not flow. \n\n\
+  \ Before you can create a routing control, you must first create a cluster, and then host the \
+   control in a control panel on the cluster. For more information, see \
+   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html} Create \
+   routing control structures} in the Amazon Route 53 Application Recovery Controller Developer \
+   Guide. You access one of the endpoints for the cluster to get or update the routing control \
+   state to redirect traffic for your application. \n\
+  \ \n\
+  \   {i You must specify Regional endpoints when you work with API cluster operations to get or \
+   update routing control states in Route 53 ARC.} \n\
+  \  \n\
+  \   To see a code example for getting a routing control state, including accessing Regional \
+   cluster endpoints in sequence, see \
+   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html}API \
+   examples} in the Amazon Route 53 Application Recovery Controller Developer Guide.\n\
+  \   \n\
+  \    Learn more about working with routing controls in the following topics in the Amazon Route \
+   53 Application Recovery Controller Developer Guide:\n\
+  \    \n\
+  \     {ul\n\
+  \           {-   \
+   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html} Viewing and \
+   updating routing control states} \n\
+  \               \n\
+  \                }\n\
+  \           {-   \
+   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing \
+   controls in Route 53 ARC} \n\
   \               \n\
   \                }\n\
   \           }\n\

@@ -971,39 +971,6 @@ end
   \ A delegated admin is authorized to invoke this command.\n\
   \ "]
 
-module DescribePortfolioShareStatus : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParametersException of invalid_parameters_exception
-    | `OperationNotSupportedException of operation_not_supported_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_portfolio_share_status_input ->
-    ( describe_portfolio_share_status_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParametersException of invalid_parameters_exception
-      | `OperationNotSupportedException of operation_not_supported_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_portfolio_share_status_input ->
-    ( describe_portfolio_share_status_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParametersException of invalid_parameters_exception
-      | `OperationNotSupportedException of operation_not_supported_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets the status of the specified portfolio share operation. This API can only be called by the \
-   management account in the organization or by a delegated admin.\n"]
-
 module DescribePortfolioShares : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1039,6 +1006,39 @@ end
   \ \n\
   \  The [PortfolioId] and [Type] parameters are both required.\n\
   \  "]
+
+module DescribePortfolioShareStatus : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParametersException of invalid_parameters_exception
+    | `OperationNotSupportedException of operation_not_supported_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_portfolio_share_status_input ->
+    ( describe_portfolio_share_status_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParametersException of invalid_parameters_exception
+      | `OperationNotSupportedException of operation_not_supported_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_portfolio_share_status_input ->
+    ( describe_portfolio_share_status_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParametersException of invalid_parameters_exception
+      | `OperationNotSupportedException of operation_not_supported_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets the status of the specified portfolio share operation. This API can only be called by the \
+   management account in the organization or by a delegated admin.\n"]
 
 module DescribeProduct : sig
   val error_to_string :

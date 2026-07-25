@@ -1,0 +1,1 @@
+val service : Smaws_Lib.Service.descriptor

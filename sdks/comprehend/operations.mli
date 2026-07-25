@@ -1,305 +1,5 @@
 open Types
 
-module BatchDetectDominantLanguage : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_dominant_language_request ->
-    ( batch_detect_dominant_language_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_dominant_language_request ->
-    ( batch_detect_dominant_language_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Determines the dominant language of the input text for a batch of documents. For a list of \
-   languages that Amazon Comprehend can detect, see \
-   {{:https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html}Amazon Comprehend \
-   Supported Languages}. \n"]
-
-module BatchDetectEntities : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-    | `UnsupportedLanguageException of unsupported_language_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_entities_request ->
-    ( batch_detect_entities_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-      | `UnsupportedLanguageException of unsupported_language_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_entities_request ->
-    ( batch_detect_entities_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-      | `UnsupportedLanguageException of unsupported_language_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Inspects the text of a batch of documents for named entities and returns information about \
-   them. For more information about named entities, see \
-   {{:https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html}Entities} in the \
-   Comprehend Developer Guide. \n"]
-
-module BatchDetectKeyPhrases : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-    | `UnsupportedLanguageException of unsupported_language_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_key_phrases_request ->
-    ( batch_detect_key_phrases_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-      | `UnsupportedLanguageException of unsupported_language_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_key_phrases_request ->
-    ( batch_detect_key_phrases_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-      | `UnsupportedLanguageException of unsupported_language_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Detects the key noun phrases found in a batch of documents.\n"]
-
-module BatchDetectSentiment : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-    | `UnsupportedLanguageException of unsupported_language_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_sentiment_request ->
-    ( batch_detect_sentiment_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-      | `UnsupportedLanguageException of unsupported_language_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_sentiment_request ->
-    ( batch_detect_sentiment_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-      | `UnsupportedLanguageException of unsupported_language_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Inspects a batch of documents and returns an inference of the prevailing sentiment, [POSITIVE], \
-   [NEUTRAL], [MIXED], or [NEGATIVE], in each one.\n"]
-
-module BatchDetectSyntax : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-    | `UnsupportedLanguageException of unsupported_language_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_syntax_request ->
-    ( batch_detect_syntax_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-      | `UnsupportedLanguageException of unsupported_language_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_syntax_request ->
-    ( batch_detect_syntax_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-      | `UnsupportedLanguageException of unsupported_language_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Inspects the text of a batch of documents for the syntax and part of speech of the words in the \
-   document and returns information about them. For more information, see \
-   {{:https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html}Syntax} in the Comprehend \
-   Developer Guide. \n"]
-
-module BatchDetectTargetedSentiment : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-    | `UnsupportedLanguageException of unsupported_language_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_targeted_sentiment_request ->
-    ( batch_detect_targeted_sentiment_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-      | `UnsupportedLanguageException of unsupported_language_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_detect_targeted_sentiment_request ->
-    ( batch_detect_targeted_sentiment_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
-      | `UnsupportedLanguageException of unsupported_language_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Inspects a batch of documents and returns a sentiment analysis for each entity identified in \
-   the documents.\n\n\
-  \ For more information about targeted sentiment, see \
-   {{:https://docs.aws.amazon.com/comprehend/latest/dg/how-targeted-sentiment.html}Targeted \
-   sentiment} in the {i Amazon Comprehend Developer Guide}.\n\
-  \ "]
-
-module ClassifyDocument : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `ResourceUnavailableException of resource_unavailable_exception
-    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    classify_document_request ->
-    ( classify_document_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `ResourceUnavailableException of resource_unavailable_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    classify_document_request ->
-    ( classify_document_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `ResourceUnavailableException of resource_unavailable_exception
-      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a classification request to analyze a single document in real-time. [ClassifyDocument] \
-   supports the following model types:\n\n\
-  \ {ul\n\
-  \       {-  Custom classifier - a custom model that you have created and trained. For input, you \
-   can provide plain text, a single-page document (PDF, Word, or image), or Amazon Textract API \
-   output. For more information, see \
-   {{:https://docs.aws.amazon.com/comprehend/latest/dg/how-document-classification.html}Custom \
-   classification} in the {i Amazon Comprehend Developer Guide}.\n\
-  \           \n\
-  \            }\n\
-  \       {-  Prompt safety classifier - Amazon Comprehend provides a pre-trained model for \
-   classifying input prompts for generative AI applications. For input, you provide English plain \
-   text input. For prompt safety classification, the response includes only the [Classes] field. \
-   For more information about prompt safety classifiers, see \
-   {{:https://docs.aws.amazon.com/comprehend/latest/dg/trust-safety.html#prompt-classification}Prompt \
-   safety classification} in the {i Amazon Comprehend Developer Guide}.\n\
-  \           \n\
-  \            }\n\
-  \       }\n\
-  \   If the system detects errors while processing a page in the input document, the API response \
-   includes an [Errors] field that describes the errors.\n\
-  \   \n\
-  \    If the system detects a document-level error in your input document, the API returns an \
-   [InvalidRequestException] error response. For details about this exception, see \
-   {{:https://docs.aws.amazon.com/comprehend/latest/dg/idp-inputs-sync-err.html} Errors in \
-   semi-structured documents} in the Comprehend Developer Guide. \n\
-  \    "]
-
 module ContainsPiiEntities : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1829,37 +1529,6 @@ module ListDocumentClassificationJobs : sig
 end
 [@@ocaml.doc "Gets a list of the documentation classification jobs that you have submitted.\n"]
 
-module ListDocumentClassifierSummaries : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `TooManyRequestsException of too_many_requests_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_document_classifier_summaries_request ->
-    ( list_document_classifier_summaries_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_document_classifier_summaries_request ->
-    ( list_document_classifier_summaries_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TooManyRequestsException of too_many_requests_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets a list of summaries of the document classifiers that you have created\n"]
-
 module ListDocumentClassifiers : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1893,6 +1562,37 @@ module ListDocumentClassifiers : sig
     result
 end
 [@@ocaml.doc "Gets a list of the document classifiers that you have created.\n"]
+
+module ListDocumentClassifierSummaries : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `TooManyRequestsException of too_many_requests_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_document_classifier_summaries_request ->
+    ( list_document_classifier_summaries_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_document_classifier_summaries_request ->
+    ( list_document_classifier_summaries_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets a list of summaries of the document classifiers that you have created\n"]
 
 module ListDominantLanguageDetectionJobs : sig
   val error_to_string :
@@ -1995,37 +1695,6 @@ module ListEntitiesDetectionJobs : sig
 end
 [@@ocaml.doc "Gets a list of the entity detection jobs that you have submitted.\n"]
 
-module ListEntityRecognizerSummaries : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `TooManyRequestsException of too_many_requests_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_entity_recognizer_summaries_request ->
-    ( list_entity_recognizer_summaries_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_entity_recognizer_summaries_request ->
-    ( list_entity_recognizer_summaries_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `TooManyRequestsException of too_many_requests_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets a list of summaries for the entity recognizers that you have created.\n"]
-
 module ListEntityRecognizers : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2066,6 +1735,37 @@ end
   \ The results of this list are not in any particular order. Please get the list and sort locally \
    if needed.\n\
   \ "]
+
+module ListEntityRecognizerSummaries : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `TooManyRequestsException of too_many_requests_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_entity_recognizer_summaries_request ->
+    ( list_entity_recognizer_summaries_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_entity_recognizer_summaries_request ->
+    ( list_entity_recognizer_summaries_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets a list of summaries for the entity recognizers that you have created.\n"]
 
 module ListEventsDetectionJobs : sig
   val error_to_string :
@@ -3351,3 +3051,303 @@ module UpdateFlywheel : sig
     result
 end
 [@@ocaml.doc "Update the configuration information for an existing flywheel.\n"]
+
+module ClassifyDocument : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceUnavailableException of resource_unavailable_exception
+    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    classify_document_request ->
+    ( classify_document_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceUnavailableException of resource_unavailable_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    classify_document_request ->
+    ( classify_document_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceUnavailableException of resource_unavailable_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a classification request to analyze a single document in real-time. [ClassifyDocument] \
+   supports the following model types:\n\n\
+  \ {ul\n\
+  \       {-  Custom classifier - a custom model that you have created and trained. For input, you \
+   can provide plain text, a single-page document (PDF, Word, or image), or Amazon Textract API \
+   output. For more information, see \
+   {{:https://docs.aws.amazon.com/comprehend/latest/dg/how-document-classification.html}Custom \
+   classification} in the {i Amazon Comprehend Developer Guide}.\n\
+  \           \n\
+  \            }\n\
+  \       {-  Prompt safety classifier - Amazon Comprehend provides a pre-trained model for \
+   classifying input prompts for generative AI applications. For input, you provide English plain \
+   text input. For prompt safety classification, the response includes only the [Classes] field. \
+   For more information about prompt safety classifiers, see \
+   {{:https://docs.aws.amazon.com/comprehend/latest/dg/trust-safety.html#prompt-classification}Prompt \
+   safety classification} in the {i Amazon Comprehend Developer Guide}.\n\
+  \           \n\
+  \            }\n\
+  \       }\n\
+  \   If the system detects errors while processing a page in the input document, the API response \
+   includes an [Errors] field that describes the errors.\n\
+  \   \n\
+  \    If the system detects a document-level error in your input document, the API returns an \
+   [InvalidRequestException] error response. For details about this exception, see \
+   {{:https://docs.aws.amazon.com/comprehend/latest/dg/idp-inputs-sync-err.html} Errors in \
+   semi-structured documents} in the Comprehend Developer Guide. \n\
+  \    "]
+
+module BatchDetectTargetedSentiment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+    | `UnsupportedLanguageException of unsupported_language_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_targeted_sentiment_request ->
+    ( batch_detect_targeted_sentiment_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+      | `UnsupportedLanguageException of unsupported_language_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_targeted_sentiment_request ->
+    ( batch_detect_targeted_sentiment_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+      | `UnsupportedLanguageException of unsupported_language_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Inspects a batch of documents and returns a sentiment analysis for each entity identified in \
+   the documents.\n\n\
+  \ For more information about targeted sentiment, see \
+   {{:https://docs.aws.amazon.com/comprehend/latest/dg/how-targeted-sentiment.html}Targeted \
+   sentiment} in the {i Amazon Comprehend Developer Guide}.\n\
+  \ "]
+
+module BatchDetectSyntax : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+    | `UnsupportedLanguageException of unsupported_language_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_syntax_request ->
+    ( batch_detect_syntax_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+      | `UnsupportedLanguageException of unsupported_language_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_syntax_request ->
+    ( batch_detect_syntax_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+      | `UnsupportedLanguageException of unsupported_language_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Inspects the text of a batch of documents for the syntax and part of speech of the words in the \
+   document and returns information about them. For more information, see \
+   {{:https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html}Syntax} in the Comprehend \
+   Developer Guide. \n"]
+
+module BatchDetectSentiment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+    | `UnsupportedLanguageException of unsupported_language_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_sentiment_request ->
+    ( batch_detect_sentiment_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+      | `UnsupportedLanguageException of unsupported_language_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_sentiment_request ->
+    ( batch_detect_sentiment_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+      | `UnsupportedLanguageException of unsupported_language_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Inspects a batch of documents and returns an inference of the prevailing sentiment, [POSITIVE], \
+   [NEUTRAL], [MIXED], or [NEGATIVE], in each one.\n"]
+
+module BatchDetectKeyPhrases : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+    | `UnsupportedLanguageException of unsupported_language_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_key_phrases_request ->
+    ( batch_detect_key_phrases_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+      | `UnsupportedLanguageException of unsupported_language_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_key_phrases_request ->
+    ( batch_detect_key_phrases_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+      | `UnsupportedLanguageException of unsupported_language_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Detects the key noun phrases found in a batch of documents.\n"]
+
+module BatchDetectEntities : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+    | `UnsupportedLanguageException of unsupported_language_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_entities_request ->
+    ( batch_detect_entities_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+      | `UnsupportedLanguageException of unsupported_language_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_entities_request ->
+    ( batch_detect_entities_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception
+      | `UnsupportedLanguageException of unsupported_language_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Inspects the text of a batch of documents for named entities and returns information about \
+   them. For more information about named entities, see \
+   {{:https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html}Entities} in the \
+   Comprehend Developer Guide. \n"]
+
+module BatchDetectDominantLanguage : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_dominant_language_request ->
+    ( batch_detect_dominant_language_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_detect_dominant_language_request ->
+    ( batch_detect_dominant_language_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BatchSizeLimitExceededException of batch_size_limit_exceeded_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `TextSizeLimitExceededException of text_size_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Determines the dominant language of the input text for a batch of documents. For a list of \
+   languages that Amazon Comprehend can detect, see \
+   {{:https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html}Amazon Comprehend \
+   Supported Languages}. \n"]

@@ -1,79 +1,5 @@
 open Types
 
-module AddTagsToResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidResourceId of invalid_resource_id
-    | `InvalidResourceType of invalid_resource_type
-    | `TooManyTagsError of too_many_tags_error
-    | `TooManyUpdates of too_many_updates ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_request ->
-    ( add_tags_to_resource_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidResourceId of invalid_resource_id
-      | `InvalidResourceType of invalid_resource_type
-      | `TooManyTagsError of too_many_tags_error
-      | `TooManyUpdates of too_many_updates ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_request ->
-    ( add_tags_to_resource_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidResourceId of invalid_resource_id
-      | `InvalidResourceType of invalid_resource_type
-      | `TooManyTagsError of too_many_tags_error
-      | `TooManyUpdates of too_many_updates ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds or overwrites one or more tags for the specified resource. {i Tags} are metadata that you \
-   can assign to your automations, documents, managed nodes, maintenance windows, Parameter Store \
-   parameters, and patch baselines. Tags enable you to categorize your resources in different \
-   ways, for example, by purpose, owner, or environment. Each tag consists of a key and an \
-   optional value, both of which you define. For example, you could define a set of tags for your \
-   account's managed nodes that helps you track each node's owner and stack level. For example:\n\n\
-  \ {ul\n\
-  \       {-   [Key=Owner,Value=DbAdmin] \n\
-  \           \n\
-  \            }\n\
-  \       {-   [Key=Owner,Value=SysAdmin] \n\
-  \           \n\
-  \            }\n\
-  \       {-   [Key=Owner,Value=Dev] \n\
-  \           \n\
-  \            }\n\
-  \       {-   [Key=Stack,Value=Production] \n\
-  \           \n\
-  \            }\n\
-  \       {-   [Key=Stack,Value=Pre-Production] \n\
-  \           \n\
-  \            }\n\
-  \       {-   [Key=Stack,Value=Test] \n\
-  \           \n\
-  \            }\n\
-  \       }\n\
-  \   Most resources can have a maximum of 50 tags. Automations can have a maximum of 5 tags.\n\
-  \   \n\
-  \    We recommend that you devise a set of tag keys that meets your needs for each resource \
-   type. Using a consistent set of tag keys makes it easier for you to manage your resources. You \
-   can search and filter the resources based on the tags you add. Tags don't have any semantic \
-   meaning to and are interpreted strictly as a string of characters.\n\
-  \    \n\
-  \     For more information about using tags with Amazon Elastic Compute Cloud (Amazon EC2) \
-   instances, see {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html}Tag your \
-   Amazon EC2 resources} in the {i Amazon EC2 User Guide}.\n\
-  \     "]
-
 module AssociateOpsItemRelatedItem : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1288,6 +1214,37 @@ end
    association by using the [Targets] parameter, then you must retrieve the association by using \
    the association ID.\n"]
 
+module DescribeAssociationExecutions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AssociationDoesNotExist of association_does_not_exist
+    | `InternalServerError of internal_server_error
+    | `InvalidNextToken of invalid_next_token ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_association_executions_request ->
+    ( describe_association_executions_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AssociationDoesNotExist of association_does_not_exist
+      | `InternalServerError of internal_server_error
+      | `InvalidNextToken of invalid_next_token ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_association_executions_request ->
+    ( describe_association_executions_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AssociationDoesNotExist of association_does_not_exist
+      | `InternalServerError of internal_server_error
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Views all executions for a specific association ID. \n"]
+
 module DescribeAssociationExecutionTargets : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1321,37 +1278,6 @@ module DescribeAssociationExecutionTargets : sig
     result
 end
 [@@ocaml.doc "Views information about a specific execution of a specific association.\n"]
-
-module DescribeAssociationExecutions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AssociationDoesNotExist of association_does_not_exist
-    | `InternalServerError of internal_server_error
-    | `InvalidNextToken of invalid_next_token ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_association_executions_request ->
-    ( describe_association_executions_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AssociationDoesNotExist of association_does_not_exist
-      | `InternalServerError of internal_server_error
-      | `InvalidNextToken of invalid_next_token ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_association_executions_request ->
-    ( describe_association_executions_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AssociationDoesNotExist of association_does_not_exist
-      | `InternalServerError of internal_server_error
-      | `InvalidNextToken of invalid_next_token ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Views all executions for a specific association ID. \n"]
 
 module DescribeAutomationExecutions : sig
   val error_to_string :
@@ -1670,6 +1596,42 @@ end
   \   \n\
   \    "]
 
+module DescribeInstancePatches : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidFilter of invalid_filter
+    | `InvalidInstanceId of invalid_instance_id
+    | `InvalidNextToken of invalid_next_token ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_instance_patches_request ->
+    ( describe_instance_patches_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidFilter of invalid_filter
+      | `InvalidInstanceId of invalid_instance_id
+      | `InvalidNextToken of invalid_next_token ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_instance_patches_request ->
+    ( describe_instance_patches_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidFilter of invalid_filter
+      | `InvalidInstanceId of invalid_instance_id
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves information about the patches on the specified managed node and their state relative \
+   to the patch baseline being used for the node.\n"]
+
 module DescribeInstancePatchStates : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1729,42 +1691,6 @@ module DescribeInstancePatchStatesForPatchGroup : sig
 end
 [@@ocaml.doc
   "Retrieves the high-level patch state for the managed nodes in the specified patch group.\n"]
-
-module DescribeInstancePatches : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidFilter of invalid_filter
-    | `InvalidInstanceId of invalid_instance_id
-    | `InvalidNextToken of invalid_next_token ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_instance_patches_request ->
-    ( describe_instance_patches_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidFilter of invalid_filter
-      | `InvalidInstanceId of invalid_instance_id
-      | `InvalidNextToken of invalid_next_token ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_instance_patches_request ->
-    ( describe_instance_patches_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidFilter of invalid_filter
-      | `InvalidInstanceId of invalid_instance_id
-      | `InvalidNextToken of invalid_next_token ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves information about the patches on the specified managed node and their state relative \
-   to the patch baseline being used for the node.\n"]
 
 module DescribeInstanceProperties : sig
   val error_to_string :
@@ -1842,6 +1768,30 @@ module DescribeInventoryDeletions : sig
 end
 [@@ocaml.doc "Describes a specific delete inventory operation.\n"]
 
+module DescribeMaintenanceWindowExecutions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_maintenance_window_executions_request ->
+    ( describe_maintenance_window_executions_result,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_maintenance_window_executions_request ->
+    ( describe_maintenance_window_executions_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the executions of a maintenance window. This includes information about when the \
+   maintenance window was scheduled to be active, and information about tasks registered and run \
+   with the maintenance window.\n"]
+
 module DescribeMaintenanceWindowExecutionTaskInvocations : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1900,29 +1850,26 @@ module DescribeMaintenanceWindowExecutionTasks : sig
 end
 [@@ocaml.doc "For a given maintenance window execution, lists the tasks that were run.\n"]
 
-module DescribeMaintenanceWindowExecutions : sig
+module DescribeMaintenanceWindows : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    describe_maintenance_window_executions_request ->
-    ( describe_maintenance_window_executions_result,
+    describe_maintenance_windows_request ->
+    ( describe_maintenance_windows_result,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    describe_maintenance_window_executions_request ->
-    ( describe_maintenance_window_executions_result Smaws_Lib.Response.t,
+    describe_maintenance_windows_request ->
+    ( describe_maintenance_windows_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc
-  "Lists the executions of a maintenance window. This includes information about when the \
-   maintenance window was scheduled to be active, and information about tasks registered and run \
-   with the maintenance window.\n"]
+[@@ocaml.doc "Retrieves the maintenance windows in an Amazon Web Services account.\n"]
 
 module DescribeMaintenanceWindowSchedule : sig
   val error_to_string :
@@ -1951,6 +1898,29 @@ module DescribeMaintenanceWindowSchedule : sig
     result
 end
 [@@ocaml.doc "Retrieves information about upcoming executions of a maintenance window.\n"]
+
+module DescribeMaintenanceWindowsForTarget : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_maintenance_windows_for_target_request ->
+    ( describe_maintenance_windows_for_target_result,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_maintenance_windows_for_target_request ->
+    ( describe_maintenance_windows_for_target_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves information about the maintenance window targets or tasks that a managed node is \
+   associated with.\n"]
 
 module DescribeMaintenanceWindowTargets : sig
   val error_to_string :
@@ -2014,50 +1984,6 @@ end
    your task and can be ignored.\n\
   \  \n\
   \   "]
-
-module DescribeMaintenanceWindows : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_maintenance_windows_request ->
-    ( describe_maintenance_windows_result,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_maintenance_windows_request ->
-    ( describe_maintenance_windows_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Retrieves the maintenance windows in an Amazon Web Services account.\n"]
-
-module DescribeMaintenanceWindowsForTarget : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_maintenance_windows_for_target_request ->
-    ( describe_maintenance_windows_for_target_result,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_maintenance_windows_for_target_request ->
-    ( describe_maintenance_windows_for_target_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves information about the maintenance window targets or tasks that a managed node is \
-   associated with.\n"]
 
 module DescribeOpsItems : sig
   val error_to_string :
@@ -2168,6 +2094,27 @@ module DescribePatchBaselines : sig
 end
 [@@ocaml.doc "Lists the patch baselines in your Amazon Web Services account.\n"]
 
+module DescribePatchGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_patch_groups_request ->
+    ( describe_patch_groups_result,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_patch_groups_request ->
+    ( describe_patch_groups_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists all patch groups that have been registered with patch baselines.\n"]
+
 module DescribePatchGroupState : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2196,27 +2143,6 @@ module DescribePatchGroupState : sig
 end
 [@@ocaml.doc
   "Returns high-level aggregated patch compliance state information for a patch group.\n"]
-
-module DescribePatchGroups : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_patch_groups_request ->
-    ( describe_patch_groups_result,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_patch_groups_request ->
-    ( describe_patch_groups_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists all patch groups that have been registered with patch baselines.\n"]
 
 module DescribePatchProperties : sig
   val error_to_string :
@@ -3391,37 +3317,6 @@ end
   \        }\n\
   \  "]
 
-module ListAssociationVersions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AssociationDoesNotExist of association_does_not_exist
-    | `InternalServerError of internal_server_error
-    | `InvalidNextToken of invalid_next_token ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_association_versions_request ->
-    ( list_association_versions_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AssociationDoesNotExist of association_does_not_exist
-      | `InternalServerError of internal_server_error
-      | `InvalidNextToken of invalid_next_token ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_association_versions_request ->
-    ( list_association_versions_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AssociationDoesNotExist of association_does_not_exist
-      | `InternalServerError of internal_server_error
-      | `InvalidNextToken of invalid_next_token ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Retrieves all versions of an association for a specific association ID.\n"]
-
 module ListAssociations : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -3453,6 +3348,37 @@ end
    Web Services Region. You can limit the results to a specific State Manager association document \
    or managed node by specifying a filter. State Manager is a tool in Amazon Web Services Systems \
    Manager.\n"]
+
+module ListAssociationVersions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AssociationDoesNotExist of association_does_not_exist
+    | `InternalServerError of internal_server_error
+    | `InvalidNextToken of invalid_next_token ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_association_versions_request ->
+    ( list_association_versions_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AssociationDoesNotExist of association_does_not_exist
+      | `InternalServerError of internal_server_error
+      | `InvalidNextToken of invalid_next_token ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_association_versions_request ->
+    ( list_association_versions_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AssociationDoesNotExist of association_does_not_exist
+      | `InternalServerError of internal_server_error
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Retrieves all versions of an association for a specific association ID.\n"]
 
 module ListCommandInvocations : sig
   val error_to_string :
@@ -3647,37 +3573,6 @@ end
   \   Information about approval reviews for a version of a change template in Change Manager.\n\
   \   "]
 
-module ListDocumentVersions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidDocument of invalid_document
-    | `InvalidNextToken of invalid_next_token ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_document_versions_request ->
-    ( list_document_versions_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidDocument of invalid_document
-      | `InvalidNextToken of invalid_next_token ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_document_versions_request ->
-    ( list_document_versions_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidDocument of invalid_document
-      | `InvalidNextToken of invalid_next_token ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "List all versions for a document.\n"]
-
 module ListDocuments : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -3710,6 +3605,37 @@ end
 [@@ocaml.doc
   "Returns all Systems Manager (SSM) documents in the current Amazon Web Services account and \
    Amazon Web Services Region. You can limit the results of this request by using a filter.\n"]
+
+module ListDocumentVersions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidDocument of invalid_document
+    | `InvalidNextToken of invalid_next_token ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_document_versions_request ->
+    ( list_document_versions_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidDocument of invalid_document
+      | `InvalidNextToken of invalid_next_token ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_document_versions_request ->
+    ( list_document_versions_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidDocument of invalid_document
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "List all versions for a document.\n"]
 
 module ListInventoryEntries : sig
   val error_to_string :
@@ -5771,3 +5697,77 @@ end
   \ \n\
   \  Update the service setting for the account. \n\
   \  "]
+
+module AddTagsToResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidResourceId of invalid_resource_id
+    | `InvalidResourceType of invalid_resource_type
+    | `TooManyTagsError of too_many_tags_error
+    | `TooManyUpdates of too_many_updates ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_request ->
+    ( add_tags_to_resource_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidResourceId of invalid_resource_id
+      | `InvalidResourceType of invalid_resource_type
+      | `TooManyTagsError of too_many_tags_error
+      | `TooManyUpdates of too_many_updates ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_request ->
+    ( add_tags_to_resource_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidResourceId of invalid_resource_id
+      | `InvalidResourceType of invalid_resource_type
+      | `TooManyTagsError of too_many_tags_error
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds or overwrites one or more tags for the specified resource. {i Tags} are metadata that you \
+   can assign to your automations, documents, managed nodes, maintenance windows, Parameter Store \
+   parameters, and patch baselines. Tags enable you to categorize your resources in different \
+   ways, for example, by purpose, owner, or environment. Each tag consists of a key and an \
+   optional value, both of which you define. For example, you could define a set of tags for your \
+   account's managed nodes that helps you track each node's owner and stack level. For example:\n\n\
+  \ {ul\n\
+  \       {-   [Key=Owner,Value=DbAdmin] \n\
+  \           \n\
+  \            }\n\
+  \       {-   [Key=Owner,Value=SysAdmin] \n\
+  \           \n\
+  \            }\n\
+  \       {-   [Key=Owner,Value=Dev] \n\
+  \           \n\
+  \            }\n\
+  \       {-   [Key=Stack,Value=Production] \n\
+  \           \n\
+  \            }\n\
+  \       {-   [Key=Stack,Value=Pre-Production] \n\
+  \           \n\
+  \            }\n\
+  \       {-   [Key=Stack,Value=Test] \n\
+  \           \n\
+  \            }\n\
+  \       }\n\
+  \   Most resources can have a maximum of 50 tags. Automations can have a maximum of 5 tags.\n\
+  \   \n\
+  \    We recommend that you devise a set of tag keys that meets your needs for each resource \
+   type. Using a consistent set of tag keys makes it easier for you to manage your resources. You \
+   can search and filter the resources based on the tags you add. Tags don't have any semantic \
+   meaning to and are interpreted strictly as a string of characters.\n\
+  \    \n\
+  \     For more information about using tags with Amazon Elastic Compute Cloud (Amazon EC2) \
+   instances, see {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html}Tag your \
+   Amazon EC2 resources} in the {i Amazon EC2 User Guide}.\n\
+  \     "]

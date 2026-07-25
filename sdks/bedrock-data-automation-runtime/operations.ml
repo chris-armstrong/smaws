@@ -1,6 +1,51 @@
 open Types
 open Service_metadata
 
+module InvokeDataAutomationAsync = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.bedrockdataautomationruntime#AccessDeniedException"
+    | `InternalServerException _ ->
+        "com.amazonaws.bedrockdataautomationruntime#InternalServerException"
+    | `ServiceQuotaExceededException _ ->
+        "com.amazonaws.bedrockdataautomationruntime#ServiceQuotaExceededException"
+    | `ThrottlingException _ -> "com.amazonaws.bedrockdataautomationruntime#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.bedrockdataautomationruntime#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ServiceQuotaExceededException" ->
+          `ServiceQuotaExceededException
+            (Json_deserializers.service_quota_exceeded_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : invoke_data_automation_async_request) =
+    let input = Json_serializers.invoke_data_automation_async_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AmazonBedrockKeystoneRuntimeService.InvokeDataAutomationAsync" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.invoke_data_automation_async_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : invoke_data_automation_async_request) =
+    let input = Json_serializers.invoke_data_automation_async_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonBedrockKeystoneRuntimeService.InvokeDataAutomationAsync" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.invoke_data_automation_async_response_of_yojson
+      ~error_deserializer
+end
+
 module GetDataAutomationStatus = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.bedrockdataautomationruntime#AccessDeniedException"
@@ -88,51 +133,6 @@ module InvokeDataAutomation = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AmazonBedrockKeystoneRuntimeService.InvokeDataAutomation" ~service ~context
       ~input ~output_deserializer:Json_deserializers.invoke_data_automation_response_of_yojson
-      ~error_deserializer
-end
-
-module InvokeDataAutomationAsync = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.bedrockdataautomationruntime#AccessDeniedException"
-    | `InternalServerException _ ->
-        "com.amazonaws.bedrockdataautomationruntime#InternalServerException"
-    | `ServiceQuotaExceededException _ ->
-        "com.amazonaws.bedrockdataautomationruntime#ServiceQuotaExceededException"
-    | `ThrottlingException _ -> "com.amazonaws.bedrockdataautomationruntime#ThrottlingException"
-    | `ValidationException _ -> "com.amazonaws.bedrockdataautomationruntime#ValidationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "ServiceQuotaExceededException" ->
-          `ServiceQuotaExceededException
-            (Json_deserializers.service_quota_exceeded_exception_of_yojson tree path)
-      | _, "ThrottlingException" ->
-          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
-      | _, "ValidationException" ->
-          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : invoke_data_automation_async_request) =
-    let input = Json_serializers.invoke_data_automation_async_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"AmazonBedrockKeystoneRuntimeService.InvokeDataAutomationAsync" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.invoke_data_automation_async_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : invoke_data_automation_async_request) =
-    let input = Json_serializers.invoke_data_automation_async_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonBedrockKeystoneRuntimeService.InvokeDataAutomationAsync" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.invoke_data_automation_async_response_of_yojson
       ~error_deserializer
 end
 

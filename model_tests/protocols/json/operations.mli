@@ -1,195 +1,5 @@
 open Types
 
-module ContentTypeParameters : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    content_type_parameters_input ->
-    (content_type_parameters_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    content_type_parameters_input ->
-    ( content_type_parameters_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The example tests how servers must support requests containing a `Content-Type` header with \
-   parameters."]
-
-module DatetimeOffsets : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    (datetime_offsets_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    ( datetime_offsets_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc ""]
-
-module EmptyOperation : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc ""]
-
-module EndpointOperation : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc ""]
-
-module EndpointWithHostLabelOperation : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    host_label_input ->
-    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    host_label_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc ""]
-
-module FractionalSeconds : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    (fractional_seconds_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    ( fractional_seconds_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc ""]
-
-module GreetingWithErrors : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ComplexError of complex_error
-    | `FooError of foo_error
-    | `InvalidGreeting of invalid_greeting ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    ( greeting_with_errors_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ComplexError of complex_error
-      | `FooError of foo_error
-      | `InvalidGreeting of invalid_greeting ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    ( greeting_with_errors_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ComplexError of complex_error
-      | `FooError of foo_error
-      | `InvalidGreeting of invalid_greeting ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "This operation has three possible return values: 1. A successful response in the form of \
-   GreetingWithErrorsOutput 2. An InvalidGreeting error. 3. A ComplexError error. Implementations \
-   must be able to successfully take a response and properly deserialize successful and error \
-   responses."]
-
-module HostWithPathOperation : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    Smaws_Lib.Smithy_api.Types.unit_ ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc ""]
-
-module JsonEnums : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    json_enums_input_output ->
-    (json_enums_input_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    json_enums_input_output ->
-    ( json_enums_input_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "This example serializes enums as top level properties, in lists, sets, and maps."]
-
-module JsonIntEnums : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    json_int_enums_input_output ->
-    (json_int_enums_input_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    json_int_enums_input_output ->
-    ( json_int_enums_input_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "This example serializes intEnums as top level properties, in lists, sets, and maps."]
-
 module JsonUnions : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
 
@@ -336,3 +146,193 @@ module SparseNullsOperation : sig
     result
 end
 [@@ocaml.doc ""]
+
+module JsonIntEnums : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    json_int_enums_input_output ->
+    (json_int_enums_input_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    json_int_enums_input_output ->
+    ( json_int_enums_input_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "This example serializes intEnums as top level properties, in lists, sets, and maps."]
+
+module JsonEnums : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    json_enums_input_output ->
+    (json_enums_input_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    json_enums_input_output ->
+    ( json_enums_input_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "This example serializes enums as top level properties, in lists, sets, and maps."]
+
+module HostWithPathOperation : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc ""]
+
+module GreetingWithErrors : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ComplexError of complex_error
+    | `FooError of foo_error
+    | `InvalidGreeting of invalid_greeting ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( greeting_with_errors_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ComplexError of complex_error
+      | `FooError of foo_error
+      | `InvalidGreeting of invalid_greeting ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( greeting_with_errors_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ComplexError of complex_error
+      | `FooError of foo_error
+      | `InvalidGreeting of invalid_greeting ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "This operation has three possible return values: 1. A successful response in the form of \
+   GreetingWithErrorsOutput 2. An InvalidGreeting error. 3. A ComplexError error. Implementations \
+   must be able to successfully take a response and properly deserialize successful and error \
+   responses."]
+
+module FractionalSeconds : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    (fractional_seconds_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( fractional_seconds_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc ""]
+
+module EndpointWithHostLabelOperation : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    host_label_input ->
+    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    host_label_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc ""]
+
+module EndpointOperation : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc ""]
+
+module EmptyOperation : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc ""]
+
+module DatetimeOffsets : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    (datetime_offsets_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( datetime_offsets_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc ""]
+
+module ContentTypeParameters : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    content_type_parameters_input ->
+    (content_type_parameters_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    content_type_parameters_input ->
+    ( content_type_parameters_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The example tests how servers must support requests containing a `Content-Type` header with \
+   parameters."]

@@ -1,41 +1,6 @@
 open Types
 open Service_metadata
 
-module CancelResourceRequest = struct
-  let error_to_string = function
-    | `ConcurrentModificationException _ ->
-        "com.amazonaws.cloudcontrol#ConcurrentModificationException"
-    | `RequestTokenNotFoundException _ -> "com.amazonaws.cloudcontrol#RequestTokenNotFoundException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ConcurrentModificationException" ->
-          `ConcurrentModificationException
-            (Json_deserializers.concurrent_modification_exception_of_yojson tree path)
-      | _, "RequestTokenNotFoundException" ->
-          `RequestTokenNotFoundException
-            (Json_deserializers.request_token_not_found_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : cancel_resource_request_input) =
-    let input = Json_serializers.cancel_resource_request_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudApiService.CancelResourceRequest" ~service
-      ~context ~input
-      ~output_deserializer:Json_deserializers.cancel_resource_request_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : cancel_resource_request_input) =
-    let input = Json_serializers.cancel_resource_request_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CloudApiService.CancelResourceRequest" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.cancel_resource_request_output_of_yojson
-      ~error_deserializer
-end
-
 module CreateResource = struct
   let error_to_string = function
     | `AlreadyExistsException _ -> "com.amazonaws.cloudcontrol#AlreadyExistsException"
@@ -546,4 +511,39 @@ module UpdateResource = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudApiService.UpdateResource"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_resource_output_of_yojson ~error_deserializer
+end
+
+module CancelResourceRequest = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.cloudcontrol#ConcurrentModificationException"
+    | `RequestTokenNotFoundException _ -> "com.amazonaws.cloudcontrol#RequestTokenNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ConcurrentModificationException" ->
+          `ConcurrentModificationException
+            (Json_deserializers.concurrent_modification_exception_of_yojson tree path)
+      | _, "RequestTokenNotFoundException" ->
+          `RequestTokenNotFoundException
+            (Json_deserializers.request_token_not_found_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : cancel_resource_request_input) =
+    let input = Json_serializers.cancel_resource_request_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudApiService.CancelResourceRequest" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_resource_request_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : cancel_resource_request_input) =
+    let input = Json_serializers.cancel_resource_request_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudApiService.CancelResourceRequest" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_resource_request_output_of_yojson
+      ~error_deserializer
 end

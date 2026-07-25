@@ -1,637 +1,5 @@
 open Types
 
-module CreateDevicePool : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_device_pool_request ->
-    ( create_device_pool_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_device_pool_request ->
-    ( create_device_pool_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Creates a device pool.\n"]
-
-module CreateInstanceProfile : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_instance_profile_request ->
-    ( create_instance_profile_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_instance_profile_request ->
-    ( create_instance_profile_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a profile that can be applied to one or more private fleet device instances.\n"]
-
-module CreateNetworkProfile : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_network_profile_request ->
-    ( create_network_profile_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_network_profile_request ->
-    ( create_network_profile_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Creates a network profile.\n"]
-
-module CreateProject : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception
-    | `TagOperationException of tag_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_project_request ->
-    ( create_project_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception
-      | `TagOperationException of tag_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_project_request ->
-    ( create_project_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception
-      | `TagOperationException of tag_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Creates a project.\n"]
-
-module CreateRemoteAccessSession : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_remote_access_session_request ->
-    ( create_remote_access_session_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_remote_access_session_request ->
-    ( create_remote_access_session_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Specifies and starts a remote access session.\n"]
-
-module CreateTestGridProject : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `InternalServiceException of internal_service_exception
-    | `LimitExceededException of limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_test_grid_project_request ->
-    ( create_test_grid_project_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `InternalServiceException of internal_service_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_test_grid_project_request ->
-    ( create_test_grid_project_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `InternalServiceException of internal_service_exception
-      | `LimitExceededException of limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a Selenium testing project. Projects are used to track [TestGridSession] instances.\n"]
-
-module CreateTestGridUrl : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `InternalServiceException of internal_service_exception
-    | `NotFoundException of not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_test_grid_url_request ->
-    ( create_test_grid_url_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `InternalServiceException of internal_service_exception
-      | `NotFoundException of not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_test_grid_url_request ->
-    ( create_test_grid_url_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `InternalServiceException of internal_service_exception
-      | `NotFoundException of not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a signed, short-term URL that can be passed to a Selenium [RemoteWebDriver] constructor.\n"]
-
-module CreateUpload : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_upload_request ->
-    ( create_upload_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_upload_request ->
-    ( create_upload_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Uploads an app or test scripts.\n"]
-
-module CreateVPCEConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_vpce_configuration_request ->
-    ( create_vpce_configuration_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_vpce_configuration_request ->
-    ( create_vpce_configuration_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a configuration record in Device Farm for your Amazon Virtual Private Cloud (VPC) \
-   endpoint.\n"]
-
-module DeleteDevicePool : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_device_pool_request ->
-    ( delete_device_pool_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_device_pool_request ->
-    ( delete_device_pool_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a device pool given the pool ARN. Does not allow deletion of curated pools owned by the \
-   system.\n"]
-
-module DeleteInstanceProfile : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_instance_profile_request ->
-    ( delete_instance_profile_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_instance_profile_request ->
-    ( delete_instance_profile_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes a profile that can be applied to one or more private device instances.\n"]
-
-module DeleteNetworkProfile : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_network_profile_request ->
-    ( delete_network_profile_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_network_profile_request ->
-    ( delete_network_profile_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes a network profile.\n"]
-
-module DeleteProject : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_project_request ->
-    ( delete_project_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_project_request ->
-    ( delete_project_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes an AWS Device Farm project, given the project ARN. You cannot delete a project if it \
-   has an active run or session.\n\n\
-  \  You cannot undo this operation.\n\
-  \  \n\
-  \   "]
-
-module DeleteRemoteAccessSession : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_remote_access_session_request ->
-    ( delete_remote_access_session_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_remote_access_session_request ->
-    ( delete_remote_access_session_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a completed remote access session and its results. You cannot delete a remote access \
-   session if it is still active.\n\n\
-  \  You cannot undo this operation.\n\
-  \  \n\
-  \   "]
-
-module DeleteRun : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_run_request ->
-    ( delete_run_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_run_request ->
-    ( delete_run_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes the run, given the run ARN. You cannot delete a run if it is still active.\n\n\
-  \  You cannot undo this operation.\n\
-  \  \n\
-  \   "]
-
-module DeleteTestGridProject : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `CannotDeleteException of cannot_delete_exception
-    | `InternalServiceException of internal_service_exception
-    | `NotFoundException of not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_test_grid_project_request ->
-    ( delete_test_grid_project_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `CannotDeleteException of cannot_delete_exception
-      | `InternalServiceException of internal_service_exception
-      | `NotFoundException of not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_test_grid_project_request ->
-    ( delete_test_grid_project_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `CannotDeleteException of cannot_delete_exception
-      | `InternalServiceException of internal_service_exception
-      | `NotFoundException of not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Deletes a Selenium testing project and all content generated under it. You cannot delete a \
-   project if it has active sessions.\n\n\
-  \  You cannot undo this operation.\n\
-  \  \n\
-  \   "]
-
-module DeleteUpload : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_upload_request ->
-    ( delete_upload_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_upload_request ->
-    ( delete_upload_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes an upload given the upload ARN.\n"]
-
-module DeleteVPCEConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `InvalidOperationException of invalid_operation_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_vpce_configuration_request ->
-    ( delete_vpce_configuration_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `InvalidOperationException of invalid_operation_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_vpce_configuration_request ->
-    ( delete_vpce_configuration_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `InvalidOperationException of invalid_operation_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes a configuration for your Amazon Virtual Private Cloud (VPC) endpoint.\n"]
-
 module GetAccountSettings : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1578,48 +946,6 @@ end
    {{:mailto:aws-devicefarm-support@amazon.com}aws-devicefarm-support\\@amazon.com} if you must be \
    able to invoke this operation.\n"]
 
-module ListOfferingTransactions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ArgumentException of argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotEligibleException of not_eligible_exception
-    | `NotFoundException of not_found_exception
-    | `ServiceAccountException of service_account_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_offering_transactions_request ->
-    ( list_offering_transactions_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotEligibleException of not_eligible_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_offering_transactions_request ->
-    ( list_offering_transactions_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ArgumentException of argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotEligibleException of not_eligible_exception
-      | `NotFoundException of not_found_exception
-      | `ServiceAccountException of service_account_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns a list of all historical purchases, renewals, and system renewal transactions for an \
-   AWS account. The list is paginated and ordered by a descending timestamp (most recent \
-   transactions are first). The API returns a [NotEligible] error if the user is not permitted to \
-   invoke the operation. If you must be able to invoke this operation, contact \
-   {{:mailto:aws-devicefarm-support@amazon.com}aws-devicefarm-support\\@amazon.com}.\n"]
-
 module ListOfferings : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1660,6 +986,48 @@ end
    record indicates the recurring price per unit and the frequency for that offering. The API \
    returns a [NotEligible] error if the user is not permitted to invoke the operation. If you must \
    be able to invoke this operation, contact \
+   {{:mailto:aws-devicefarm-support@amazon.com}aws-devicefarm-support\\@amazon.com}.\n"]
+
+module ListOfferingTransactions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotEligibleException of not_eligible_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_offering_transactions_request ->
+    ( list_offering_transactions_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotEligibleException of not_eligible_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_offering_transactions_request ->
+    ( list_offering_transactions_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotEligibleException of not_eligible_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns a list of all historical purchases, renewals, and system renewal transactions for an \
+   AWS account. The list is paginated and ordered by a descending timestamp (most recent \
+   transactions are first). The API returns a [NotEligible] error if the user is not permitted to \
+   invoke the operation. If you must be able to invoke this operation, contact \
    {{:mailto:aws-devicefarm-support@amazon.com}aws-devicefarm-support\\@amazon.com}.\n"]
 
 module ListProjects : sig
@@ -2700,3 +2068,635 @@ module UpdateVPCEConfiguration : sig
 end
 [@@ocaml.doc
   "Updates information about an Amazon Virtual Private Cloud (VPC) endpoint configuration.\n"]
+
+module DeleteVPCEConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vpce_configuration_request ->
+    ( delete_vpce_configuration_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vpce_configuration_request ->
+    ( delete_vpce_configuration_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes a configuration for your Amazon Virtual Private Cloud (VPC) endpoint.\n"]
+
+module DeleteUpload : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_upload_request ->
+    ( delete_upload_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_upload_request ->
+    ( delete_upload_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes an upload given the upload ARN.\n"]
+
+module DeleteTestGridProject : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `CannotDeleteException of cannot_delete_exception
+    | `InternalServiceException of internal_service_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_test_grid_project_request ->
+    ( delete_test_grid_project_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `CannotDeleteException of cannot_delete_exception
+      | `InternalServiceException of internal_service_exception
+      | `NotFoundException of not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_test_grid_project_request ->
+    ( delete_test_grid_project_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `CannotDeleteException of cannot_delete_exception
+      | `InternalServiceException of internal_service_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Deletes a Selenium testing project and all content generated under it. You cannot delete a \
+   project if it has active sessions.\n\n\
+  \  You cannot undo this operation.\n\
+  \  \n\
+  \   "]
+
+module DeleteRun : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_run_request ->
+    ( delete_run_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_run_request ->
+    ( delete_run_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes the run, given the run ARN. You cannot delete a run if it is still active.\n\n\
+  \  You cannot undo this operation.\n\
+  \  \n\
+  \   "]
+
+module DeleteRemoteAccessSession : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_remote_access_session_request ->
+    ( delete_remote_access_session_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_remote_access_session_request ->
+    ( delete_remote_access_session_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a completed remote access session and its results. You cannot delete a remote access \
+   session if it is still active.\n\n\
+  \  You cannot undo this operation.\n\
+  \  \n\
+  \   "]
+
+module DeleteProject : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_project_request ->
+    ( delete_project_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_project_request ->
+    ( delete_project_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes an AWS Device Farm project, given the project ARN. You cannot delete a project if it \
+   has an active run or session.\n\n\
+  \  You cannot undo this operation.\n\
+  \  \n\
+  \   "]
+
+module DeleteNetworkProfile : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_network_profile_request ->
+    ( delete_network_profile_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_network_profile_request ->
+    ( delete_network_profile_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes a network profile.\n"]
+
+module DeleteInstanceProfile : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_instance_profile_request ->
+    ( delete_instance_profile_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_instance_profile_request ->
+    ( delete_instance_profile_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes a profile that can be applied to one or more private device instances.\n"]
+
+module DeleteDevicePool : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_device_pool_request ->
+    ( delete_device_pool_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_device_pool_request ->
+    ( delete_device_pool_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a device pool given the pool ARN. Does not allow deletion of curated pools owned by the \
+   system.\n"]
+
+module CreateVPCEConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_vpce_configuration_request ->
+    ( create_vpce_configuration_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_vpce_configuration_request ->
+    ( create_vpce_configuration_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a configuration record in Device Farm for your Amazon Virtual Private Cloud (VPC) \
+   endpoint.\n"]
+
+module CreateUpload : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_upload_request ->
+    ( create_upload_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_upload_request ->
+    ( create_upload_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Uploads an app or test scripts.\n"]
+
+module CreateTestGridUrl : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `InternalServiceException of internal_service_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_test_grid_url_request ->
+    ( create_test_grid_url_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `InternalServiceException of internal_service_exception
+      | `NotFoundException of not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_test_grid_url_request ->
+    ( create_test_grid_url_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `InternalServiceException of internal_service_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a signed, short-term URL that can be passed to a Selenium [RemoteWebDriver] constructor.\n"]
+
+module CreateTestGridProject : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `InternalServiceException of internal_service_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_test_grid_project_request ->
+    ( create_test_grid_project_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `InternalServiceException of internal_service_exception
+      | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_test_grid_project_request ->
+    ( create_test_grid_project_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `InternalServiceException of internal_service_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a Selenium testing project. Projects are used to track [TestGridSession] instances.\n"]
+
+module CreateRemoteAccessSession : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_remote_access_session_request ->
+    ( create_remote_access_session_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_remote_access_session_request ->
+    ( create_remote_access_session_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Specifies and starts a remote access session.\n"]
+
+module CreateProject : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception
+    | `TagOperationException of tag_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_project_request ->
+    ( create_project_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception
+      | `TagOperationException of tag_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_project_request ->
+    ( create_project_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception
+      | `TagOperationException of tag_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Creates a project.\n"]
+
+module CreateNetworkProfile : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_network_profile_request ->
+    ( create_network_profile_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_network_profile_request ->
+    ( create_network_profile_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Creates a network profile.\n"]
+
+module CreateInstanceProfile : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_instance_profile_request ->
+    ( create_instance_profile_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_instance_profile_request ->
+    ( create_instance_profile_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a profile that can be applied to one or more private fleet device instances.\n"]
+
+module CreateDevicePool : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ArgumentException of argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceAccountException of service_account_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_device_pool_request ->
+    ( create_device_pool_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_device_pool_request ->
+    ( create_device_pool_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ArgumentException of argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `ServiceAccountException of service_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Creates a device pool.\n"]

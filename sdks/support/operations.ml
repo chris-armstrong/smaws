@@ -416,6 +416,38 @@ module DescribeTrustedAdvisorCheckResult = struct
       ~error_deserializer
 end
 
+module DescribeTrustedAdvisorChecks = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.support#InternalServerError"
+    | `ThrottlingException _ -> "com.amazonaws.support#ThrottlingException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_trusted_advisor_checks_request) =
+    let input = Json_serializers.describe_trusted_advisor_checks_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSSupport_20130415.DescribeTrustedAdvisorChecks" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_trusted_advisor_checks_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_trusted_advisor_checks_request) =
+    let input = Json_serializers.describe_trusted_advisor_checks_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSSupport_20130415.DescribeTrustedAdvisorChecks" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_trusted_advisor_checks_response_of_yojson
+      ~error_deserializer
+end
+
 module DescribeTrustedAdvisorCheckSummaries = struct
   let error_to_string = function
     | `InternalServerError _ -> "com.amazonaws.support#InternalServerError"
@@ -453,38 +485,6 @@ module DescribeTrustedAdvisorCheckSummaries = struct
       ~input
       ~output_deserializer:
         Json_deserializers.describe_trusted_advisor_check_summaries_response_of_yojson
-      ~error_deserializer
-end
-
-module DescribeTrustedAdvisorChecks = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.support#InternalServerError"
-    | `ThrottlingException _ -> "com.amazonaws.support#ThrottlingException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "ThrottlingException" ->
-          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_trusted_advisor_checks_request) =
-    let input = Json_serializers.describe_trusted_advisor_checks_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"AWSSupport_20130415.DescribeTrustedAdvisorChecks" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_trusted_advisor_checks_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_trusted_advisor_checks_request) =
-    let input = Json_serializers.describe_trusted_advisor_checks_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSSupport_20130415.DescribeTrustedAdvisorChecks" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_trusted_advisor_checks_response_of_yojson
       ~error_deserializer
 end
 

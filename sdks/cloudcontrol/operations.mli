@@ -1,38 +1,5 @@
 open Types
 
-module CancelResourceRequest : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConcurrentModificationException of concurrent_modification_exception
-    | `RequestTokenNotFoundException of request_token_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    cancel_resource_request_input ->
-    ( cancel_resource_request_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConcurrentModificationException of concurrent_modification_exception
-      | `RequestTokenNotFoundException of request_token_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    cancel_resource_request_input ->
-    ( cancel_resource_request_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConcurrentModificationException of concurrent_modification_exception
-      | `RequestTokenNotFoundException of request_token_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Cancels the specified resource operation request. For more information, see \
-   {{:https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-operations-manage-requests.html#resource-operations-manage-requests-cancel}Canceling \
-   resource operation requests} in the {i Amazon Web Services Cloud Control API User Guide}.\n\n\
-  \ Only resource operations requests with a status of [PENDING] or [IN_PROGRESS] can be canceled.\n\
-  \ "]
-
 module CreateResource : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -516,3 +483,36 @@ end
    {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html}Resource \
    and property types reference} in the {i CloudFormation Users Guide}.\n\
   \    "]
+
+module CancelResourceRequest : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConcurrentModificationException of concurrent_modification_exception
+    | `RequestTokenNotFoundException of request_token_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_resource_request_input ->
+    ( cancel_resource_request_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `RequestTokenNotFoundException of request_token_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_resource_request_input ->
+    ( cancel_resource_request_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `RequestTokenNotFoundException of request_token_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Cancels the specified resource operation request. For more information, see \
+   {{:https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-operations-manage-requests.html#resource-operations-manage-requests-cancel}Canceling \
+   resource operation requests} in the {i Amazon Web Services Cloud Control API User Guide}.\n\n\
+  \ Only resource operations requests with a status of [PENDING] or [IN_PROGRESS] can be canceled.\n\
+  \ "]

@@ -3,59 +3,6 @@ open Service_metadata
 open Query_deserializers
 open Query_serializers
 
-module AddPermission = struct
-  let error_to_string = function
-    | `AuthorizationErrorException _ -> "com.amazonaws.sns#AuthorizationErrorException"
-    | `InternalErrorException _ -> "com.amazonaws.sns#InternalErrorException"
-    | `InvalidParameterException _ -> "com.amazonaws.sns#InvalidParameterException"
-    | `NotFoundException _ -> "com.amazonaws.sns#NotFoundException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "AuthorizationError" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:authorization_error_exception_of_xml
-        with
-        | Ok s -> `AuthorizationErrorException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InternalError" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:internal_error_exception_of_xml
-        with
-        | Ok s -> `InternalErrorException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidParameter" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_parameter_exception_of_xml
-        with
-        | Ok s -> `InvalidParameterException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "NotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:not_found_exception_of_xml
-        with
-        | Ok s -> `NotFoundException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : add_permission_input) =
-    let fields = add_permission_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddPermission"
-      ~xmlNamespace:"http://sns.amazonaws.com/doc/2010-03-31/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-
-  let request_with_metadata context (request : add_permission_input) =
-    let fields = add_permission_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddPermission"
-      ~xmlNamespace:"http://sns.amazonaws.com/doc/2010-03-31/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-end
-
 module CheckIfPhoneNumberIsOptedOut = struct
   let error_to_string = function
     | `AuthorizationErrorException _ -> "com.amazonaws.sns#AuthorizationErrorException"
@@ -2701,4 +2648,57 @@ module VerifySMSSandboxPhoneNumber = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"VerifySMSSandboxPhoneNumber"
       ~xmlNamespace:"http://sns.amazonaws.com/doc/2010-03-31/" ~service ~context ~fields
       ~output_deserializer:verify_sms_sandbox_phone_number_result_of_xml ~error_deserializer
+end
+
+module AddPermission = struct
+  let error_to_string = function
+    | `AuthorizationErrorException _ -> "com.amazonaws.sns#AuthorizationErrorException"
+    | `InternalErrorException _ -> "com.amazonaws.sns#InternalErrorException"
+    | `InvalidParameterException _ -> "com.amazonaws.sns#InvalidParameterException"
+    | `NotFoundException _ -> "com.amazonaws.sns#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "AuthorizationError" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:authorization_error_exception_of_xml
+        with
+        | Ok s -> `AuthorizationErrorException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InternalError" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:internal_error_exception_of_xml
+        with
+        | Ok s -> `InternalErrorException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidParameter" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_parameter_exception_of_xml
+        with
+        | Ok s -> `InvalidParameterException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "NotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:not_found_exception_of_xml
+        with
+        | Ok s -> `NotFoundException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : add_permission_input) =
+    let fields = add_permission_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddPermission"
+      ~xmlNamespace:"http://sns.amazonaws.com/doc/2010-03-31/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : add_permission_input) =
+    let fields = add_permission_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddPermission"
+      ~xmlNamespace:"http://sns.amazonaws.com/doc/2010-03-31/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end

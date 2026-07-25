@@ -1,179 +1,5 @@
 open Types
 
-module AddRoleToDBCluster : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `DBClusterNotFoundFault of db_cluster_not_found_fault
-    | `DBClusterRoleAlreadyExistsFault of db_cluster_role_already_exists_fault
-    | `DBClusterRoleQuotaExceededFault of db_cluster_role_quota_exceeded_fault
-    | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_role_to_db_cluster_message ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DBClusterNotFoundFault of db_cluster_not_found_fault
-      | `DBClusterRoleAlreadyExistsFault of db_cluster_role_already_exists_fault
-      | `DBClusterRoleQuotaExceededFault of db_cluster_role_quota_exceeded_fault
-      | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_role_to_db_cluster_message ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DBClusterNotFoundFault of db_cluster_not_found_fault
-      | `DBClusterRoleAlreadyExistsFault of db_cluster_role_already_exists_fault
-      | `DBClusterRoleQuotaExceededFault of db_cluster_role_quota_exceeded_fault
-      | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Associates an Identity and Access Management (IAM) role with a DB cluster.\n"]
-
-module AddRoleToDBInstance : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `DBInstanceNotFoundFault of db_instance_not_found_fault
-    | `DBInstanceRoleAlreadyExistsFault of db_instance_role_already_exists_fault
-    | `DBInstanceRoleQuotaExceededFault of db_instance_role_quota_exceeded_fault
-    | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_role_to_db_instance_message ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DBInstanceNotFoundFault of db_instance_not_found_fault
-      | `DBInstanceRoleAlreadyExistsFault of db_instance_role_already_exists_fault
-      | `DBInstanceRoleQuotaExceededFault of db_instance_role_quota_exceeded_fault
-      | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_role_to_db_instance_message ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DBInstanceNotFoundFault of db_instance_not_found_fault
-      | `DBInstanceRoleAlreadyExistsFault of db_instance_role_already_exists_fault
-      | `DBInstanceRoleQuotaExceededFault of db_instance_role_quota_exceeded_fault
-      | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Associates an Amazon Web Services Identity and Access Management (IAM) role with a DB instance.\n\n\
-  \  To add a role to a DB instance, the status of the DB instance must be [available].\n\
-  \  \n\
-  \    This command doesn't apply to RDS Custom.\n\
-  \    "]
-
-module AddSourceIdentifierToSubscription : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `SourceNotFoundFault of source_not_found_fault
-    | `SubscriptionNotFoundFault of subscription_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_source_identifier_to_subscription_message ->
-    ( add_source_identifier_to_subscription_result,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `SourceNotFoundFault of source_not_found_fault
-      | `SubscriptionNotFoundFault of subscription_not_found_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_source_identifier_to_subscription_message ->
-    ( add_source_identifier_to_subscription_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `SourceNotFoundFault of source_not_found_fault
-      | `SubscriptionNotFoundFault of subscription_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Adds a source identifier to an existing RDS event notification subscription.\n"]
-
-module AddTagsToResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `BlueGreenDeploymentNotFoundFault of blue_green_deployment_not_found_fault
-    | `DBClusterNotFoundFault of db_cluster_not_found_fault
-    | `DBInstanceNotFoundFault of db_instance_not_found_fault
-    | `DBProxyEndpointNotFoundFault of db_proxy_endpoint_not_found_fault
-    | `DBProxyNotFoundFault of db_proxy_not_found_fault
-    | `DBProxyTargetGroupNotFoundFault of db_proxy_target_group_not_found_fault
-    | `DBShardGroupNotFoundFault of db_shard_group_not_found_fault
-    | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault
-    | `DBSnapshotTenantDatabaseNotFoundFault of db_snapshot_tenant_database_not_found_fault
-    | `IntegrationNotFoundFault of integration_not_found_fault
-    | `InvalidDBClusterEndpointStateFault of invalid_db_cluster_endpoint_state_fault
-    | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault
-    | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault
-    | `TenantDatabaseNotFoundFault of tenant_database_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_message ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `BlueGreenDeploymentNotFoundFault of blue_green_deployment_not_found_fault
-      | `DBClusterNotFoundFault of db_cluster_not_found_fault
-      | `DBInstanceNotFoundFault of db_instance_not_found_fault
-      | `DBProxyEndpointNotFoundFault of db_proxy_endpoint_not_found_fault
-      | `DBProxyNotFoundFault of db_proxy_not_found_fault
-      | `DBProxyTargetGroupNotFoundFault of db_proxy_target_group_not_found_fault
-      | `DBShardGroupNotFoundFault of db_shard_group_not_found_fault
-      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault
-      | `DBSnapshotTenantDatabaseNotFoundFault of db_snapshot_tenant_database_not_found_fault
-      | `IntegrationNotFoundFault of integration_not_found_fault
-      | `InvalidDBClusterEndpointStateFault of invalid_db_cluster_endpoint_state_fault
-      | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault
-      | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault
-      | `TenantDatabaseNotFoundFault of tenant_database_not_found_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_message ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `BlueGreenDeploymentNotFoundFault of blue_green_deployment_not_found_fault
-      | `DBClusterNotFoundFault of db_cluster_not_found_fault
-      | `DBInstanceNotFoundFault of db_instance_not_found_fault
-      | `DBProxyEndpointNotFoundFault of db_proxy_endpoint_not_found_fault
-      | `DBProxyNotFoundFault of db_proxy_not_found_fault
-      | `DBProxyTargetGroupNotFoundFault of db_proxy_target_group_not_found_fault
-      | `DBShardGroupNotFoundFault of db_shard_group_not_found_fault
-      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault
-      | `DBSnapshotTenantDatabaseNotFoundFault of db_snapshot_tenant_database_not_found_fault
-      | `IntegrationNotFoundFault of integration_not_found_fault
-      | `InvalidDBClusterEndpointStateFault of invalid_db_cluster_endpoint_state_fault
-      | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault
-      | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault
-      | `TenantDatabaseNotFoundFault of tenant_database_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds metadata tags to an Amazon RDS resource. These tags can also be used with cost allocation \
-   reporting to track cost associated with Amazon RDS resources, or used in a Condition statement \
-   in an IAM policy for Amazon RDS.\n\n\
-  \ For an overview on tagging your relational database resources, see \
-   {{:https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.html}Tagging Amazon RDS \
-   Resources} or \
-   {{:https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Tagging.html}Tagging \
-   Amazon Aurora and Amazon RDS Resources}. \n\
-  \ "]
-
 module ApplyPendingMaintenanceAction : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -2766,6 +2592,42 @@ end
    Multi-AZ DB cluster deployments} in the {i Amazon RDS User Guide}.\n\
   \  "]
 
+module DescribeDBClusters : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_db_clusters_message ->
+    ( db_cluster_message,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_db_clusters_message ->
+    ( db_cluster_message Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Describes existing Amazon Aurora DB clusters and Multi-AZ DB clusters. This API supports \
+   pagination.\n\n\
+  \ For more information on Amazon Aurora DB clusters, see \
+   {{:https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html} What \
+   is Amazon Aurora?} in the {i Amazon Aurora User Guide}.\n\
+  \ \n\
+  \  For more information on Multi-AZ DB clusters, see \
+   {{:https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html} \
+   Multi-AZ DB cluster deployments} in the {i Amazon RDS User Guide}.\n\
+  \  \n\
+  \   This operation can also return information for Amazon Neptune DB instances and Amazon \
+   DocumentDB instances.\n\
+  \   "]
+
 module DescribeDBClusterSnapshotAttributes : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -2837,42 +2699,6 @@ end
    {{:https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html} \
    Multi-AZ DB cluster deployments} in the {i Amazon RDS User Guide}.\n\
   \  "]
-
-module DescribeDBClusters : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_db_clusters_message ->
-    ( db_cluster_message,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_db_clusters_message ->
-    ( db_cluster_message Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Describes existing Amazon Aurora DB clusters and Multi-AZ DB clusters. This API supports \
-   pagination.\n\n\
-  \ For more information on Amazon Aurora DB clusters, see \
-   {{:https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html} What \
-   is Amazon Aurora?} in the {i Amazon Aurora User Guide}.\n\
-  \ \n\
-  \  For more information on Multi-AZ DB clusters, see \
-   {{:https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html} \
-   Multi-AZ DB cluster deployments} in the {i Amazon RDS User Guide}.\n\
-  \  \n\
-  \   This operation can also return information for Amazon Neptune DB instances and Amazon \
-   DocumentDB instances.\n\
-  \   "]
 
 module DescribeDBEngineVersions : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
@@ -3289,6 +3115,30 @@ end
    [ModifyDBSnapshotAttribute] API action.\n\
   \  "]
 
+module DescribeDBSnapshots : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_db_snapshots_message ->
+    ( db_snapshot_message,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_db_snapshots_message ->
+    ( db_snapshot_message Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns information about DB snapshots. This API action supports pagination.\n"]
+
 module DescribeDBSnapshotTenantDatabases : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ] ->
@@ -3319,30 +3169,6 @@ end
    snapshot that was taken from DB instance using the multi-tenant configuration, you restore all \
    its tenant databases.\n\
   \ "]
-
-module DescribeDBSnapshots : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_db_snapshots_message ->
-    ( db_snapshot_message,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_db_snapshots_message ->
-    ( db_snapshot_message Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns information about DB snapshots. This API action supports pagination.\n"]
 
 module DescribeDBSubnetGroups : sig
   val error_to_string :
@@ -3440,36 +3266,6 @@ end
    {{:https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Events.Messages.html} {i \
    Amazon Aurora User Guide} }.\n"]
 
-module DescribeEventSubscriptions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `SubscriptionNotFoundFault of subscription_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_event_subscriptions_message ->
-    ( event_subscriptions_message,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `SubscriptionNotFoundFault of subscription_not_found_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_event_subscriptions_message ->
-    ( event_subscriptions_message Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `SubscriptionNotFoundFault of subscription_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists all the subscription descriptions for a customer account. The description for a \
-   subscription includes [SubscriptionName], [SNSTopicARN], [CustomerID], [SourceType], \
-   [SourceID], [CreationTime], and [Status].\n\n\
-  \ If you specify a [SubscriptionName], lists the description for that subscription.\n\
-  \ "]
-
 module DescribeEvents : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
 
@@ -3499,6 +3295,36 @@ end
   \   By default, RDS returns events that were generated in the past hour.\n\
   \   \n\
   \    "]
+
+module DescribeEventSubscriptions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `SubscriptionNotFoundFault of subscription_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_event_subscriptions_message ->
+    ( event_subscriptions_message,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `SubscriptionNotFoundFault of subscription_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_event_subscriptions_message ->
+    ( event_subscriptions_message Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `SubscriptionNotFoundFault of subscription_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists all the subscription descriptions for a customer account. The description for a \
+   subscription includes [SubscriptionName], [SNSTopicARN], [CustomerID], [SourceType], \
+   [SourceID], [CreationTime], and [Status].\n\n\
+  \ If you specify a [SubscriptionName], lists the description for that subscription.\n\
+  \ "]
 
 module DescribeExportTasks : sig
   val error_to_string :
@@ -7019,3 +6845,177 @@ end
 [@@ocaml.doc
   "Switches over an Oracle standby database in an Oracle Data Guard environment, making it the new \
    primary database. Issue this command in the Region that hosts the current standby database.\n"]
+
+module AddTagsToResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `BlueGreenDeploymentNotFoundFault of blue_green_deployment_not_found_fault
+    | `DBClusterNotFoundFault of db_cluster_not_found_fault
+    | `DBInstanceNotFoundFault of db_instance_not_found_fault
+    | `DBProxyEndpointNotFoundFault of db_proxy_endpoint_not_found_fault
+    | `DBProxyNotFoundFault of db_proxy_not_found_fault
+    | `DBProxyTargetGroupNotFoundFault of db_proxy_target_group_not_found_fault
+    | `DBShardGroupNotFoundFault of db_shard_group_not_found_fault
+    | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault
+    | `DBSnapshotTenantDatabaseNotFoundFault of db_snapshot_tenant_database_not_found_fault
+    | `IntegrationNotFoundFault of integration_not_found_fault
+    | `InvalidDBClusterEndpointStateFault of invalid_db_cluster_endpoint_state_fault
+    | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault
+    | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault
+    | `TenantDatabaseNotFoundFault of tenant_database_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_message ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `BlueGreenDeploymentNotFoundFault of blue_green_deployment_not_found_fault
+      | `DBClusterNotFoundFault of db_cluster_not_found_fault
+      | `DBInstanceNotFoundFault of db_instance_not_found_fault
+      | `DBProxyEndpointNotFoundFault of db_proxy_endpoint_not_found_fault
+      | `DBProxyNotFoundFault of db_proxy_not_found_fault
+      | `DBProxyTargetGroupNotFoundFault of db_proxy_target_group_not_found_fault
+      | `DBShardGroupNotFoundFault of db_shard_group_not_found_fault
+      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault
+      | `DBSnapshotTenantDatabaseNotFoundFault of db_snapshot_tenant_database_not_found_fault
+      | `IntegrationNotFoundFault of integration_not_found_fault
+      | `InvalidDBClusterEndpointStateFault of invalid_db_cluster_endpoint_state_fault
+      | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault
+      | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault
+      | `TenantDatabaseNotFoundFault of tenant_database_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_message ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `BlueGreenDeploymentNotFoundFault of blue_green_deployment_not_found_fault
+      | `DBClusterNotFoundFault of db_cluster_not_found_fault
+      | `DBInstanceNotFoundFault of db_instance_not_found_fault
+      | `DBProxyEndpointNotFoundFault of db_proxy_endpoint_not_found_fault
+      | `DBProxyNotFoundFault of db_proxy_not_found_fault
+      | `DBProxyTargetGroupNotFoundFault of db_proxy_target_group_not_found_fault
+      | `DBShardGroupNotFoundFault of db_shard_group_not_found_fault
+      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault
+      | `DBSnapshotTenantDatabaseNotFoundFault of db_snapshot_tenant_database_not_found_fault
+      | `IntegrationNotFoundFault of integration_not_found_fault
+      | `InvalidDBClusterEndpointStateFault of invalid_db_cluster_endpoint_state_fault
+      | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault
+      | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault
+      | `TenantDatabaseNotFoundFault of tenant_database_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds metadata tags to an Amazon RDS resource. These tags can also be used with cost allocation \
+   reporting to track cost associated with Amazon RDS resources, or used in a Condition statement \
+   in an IAM policy for Amazon RDS.\n\n\
+  \ For an overview on tagging your relational database resources, see \
+   {{:https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.html}Tagging Amazon RDS \
+   Resources} or \
+   {{:https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Tagging.html}Tagging \
+   Amazon Aurora and Amazon RDS Resources}. \n\
+  \ "]
+
+module AddSourceIdentifierToSubscription : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `SourceNotFoundFault of source_not_found_fault
+    | `SubscriptionNotFoundFault of subscription_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_source_identifier_to_subscription_message ->
+    ( add_source_identifier_to_subscription_result,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `SourceNotFoundFault of source_not_found_fault
+      | `SubscriptionNotFoundFault of subscription_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_source_identifier_to_subscription_message ->
+    ( add_source_identifier_to_subscription_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `SourceNotFoundFault of source_not_found_fault
+      | `SubscriptionNotFoundFault of subscription_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Adds a source identifier to an existing RDS event notification subscription.\n"]
+
+module AddRoleToDBInstance : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `DBInstanceNotFoundFault of db_instance_not_found_fault
+    | `DBInstanceRoleAlreadyExistsFault of db_instance_role_already_exists_fault
+    | `DBInstanceRoleQuotaExceededFault of db_instance_role_quota_exceeded_fault
+    | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_role_to_db_instance_message ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DBInstanceNotFoundFault of db_instance_not_found_fault
+      | `DBInstanceRoleAlreadyExistsFault of db_instance_role_already_exists_fault
+      | `DBInstanceRoleQuotaExceededFault of db_instance_role_quota_exceeded_fault
+      | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_role_to_db_instance_message ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DBInstanceNotFoundFault of db_instance_not_found_fault
+      | `DBInstanceRoleAlreadyExistsFault of db_instance_role_already_exists_fault
+      | `DBInstanceRoleQuotaExceededFault of db_instance_role_quota_exceeded_fault
+      | `InvalidDBInstanceStateFault of invalid_db_instance_state_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Associates an Amazon Web Services Identity and Access Management (IAM) role with a DB instance.\n\n\
+  \  To add a role to a DB instance, the status of the DB instance must be [available].\n\
+  \  \n\
+  \    This command doesn't apply to RDS Custom.\n\
+  \    "]
+
+module AddRoleToDBCluster : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `DBClusterNotFoundFault of db_cluster_not_found_fault
+    | `DBClusterRoleAlreadyExistsFault of db_cluster_role_already_exists_fault
+    | `DBClusterRoleQuotaExceededFault of db_cluster_role_quota_exceeded_fault
+    | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_role_to_db_cluster_message ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DBClusterNotFoundFault of db_cluster_not_found_fault
+      | `DBClusterRoleAlreadyExistsFault of db_cluster_role_already_exists_fault
+      | `DBClusterRoleQuotaExceededFault of db_cluster_role_quota_exceeded_fault
+      | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_role_to_db_cluster_message ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DBClusterNotFoundFault of db_cluster_not_found_fault
+      | `DBClusterRoleAlreadyExistsFault of db_cluster_role_already_exists_fault
+      | `DBClusterRoleQuotaExceededFault of db_cluster_role_quota_exceeded_fault
+      | `InvalidDBClusterStateFault of invalid_db_cluster_state_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Associates an Identity and Access Management (IAM) role with a DB cluster.\n"]

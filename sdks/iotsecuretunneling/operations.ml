@@ -1,62 +1,6 @@
 open Types
 open Service_metadata
 
-module CloseTunnel = struct
-  let error_to_string = function
-    | `ResourceNotFoundException _ -> "com.amazonaws.iotsecuretunneling#ResourceNotFoundException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : close_tunnel_request) =
-    let input = Json_serializers.close_tunnel_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"IoTSecuredTunneling.CloseTunnel" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.close_tunnel_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : close_tunnel_request) =
-    let input = Json_serializers.close_tunnel_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"IoTSecuredTunneling.CloseTunnel"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.close_tunnel_response_of_yojson ~error_deserializer
-end
-
-module DescribeTunnel = struct
-  let error_to_string = function
-    | `ResourceNotFoundException _ -> "com.amazonaws.iotsecuretunneling#ResourceNotFoundException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_tunnel_request) =
-    let input = Json_serializers.describe_tunnel_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"IoTSecuredTunneling.DescribeTunnel" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.describe_tunnel_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_tunnel_request) =
-    let input = Json_serializers.describe_tunnel_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"IoTSecuredTunneling.DescribeTunnel" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_tunnel_response_of_yojson ~error_deserializer
-end
-
 module ListTagsForResource = struct
   let error_to_string = function
     | `ResourceNotFoundException _ -> "com.amazonaws.iotsecuretunneling#ResourceNotFoundException"
@@ -219,4 +163,60 @@ module UntagResource = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"IoTSecuredTunneling.UntagResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
+end
+
+module DescribeTunnel = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.iotsecuretunneling#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_tunnel_request) =
+    let input = Json_serializers.describe_tunnel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"IoTSecuredTunneling.DescribeTunnel" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_tunnel_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_tunnel_request) =
+    let input = Json_serializers.describe_tunnel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"IoTSecuredTunneling.DescribeTunnel" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_tunnel_response_of_yojson ~error_deserializer
+end
+
+module CloseTunnel = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.iotsecuretunneling#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : close_tunnel_request) =
+    let input = Json_serializers.close_tunnel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"IoTSecuredTunneling.CloseTunnel" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.close_tunnel_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : close_tunnel_request) =
+    let input = Json_serializers.close_tunnel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"IoTSecuredTunneling.CloseTunnel"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.close_tunnel_response_of_yojson ~error_deserializer
 end

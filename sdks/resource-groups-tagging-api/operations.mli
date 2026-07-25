@@ -1,274 +1,5 @@
 open Types
 
-module DescribeReportCreation : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConstraintViolationException of constraint_violation_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `ThrottledException of throttled_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_report_creation_input ->
-    ( describe_report_creation_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConstraintViolationException of constraint_violation_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `ThrottledException of throttled_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_report_creation_input ->
-    ( describe_report_creation_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConstraintViolationException of constraint_violation_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `ThrottledException of throttled_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Describes the status of the [StartReportCreation] operation. \n\n\
-  \ You can call this operation only from the organization's management account and from the \
-   us-east-1 Region.\n\
-  \ "]
-
-module GetComplianceSummary : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConstraintViolationException of constraint_violation_exception
-    | `InternalServiceException of internal_service_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `ThrottledException of throttled_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_compliance_summary_input ->
-    ( get_compliance_summary_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConstraintViolationException of constraint_violation_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `ThrottledException of throttled_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_compliance_summary_input ->
-    ( get_compliance_summary_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConstraintViolationException of constraint_violation_exception
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `ThrottledException of throttled_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns a table that shows counts of resources that are noncompliant with their tag policies.\n\n\
-  \ For more information on tag policies, see \
-   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html}Tag \
-   Policies} in the {i Organizations User Guide.} \n\
-  \ \n\
-  \  You can call this operation only from the organization's management account and from the \
-   us-east-1 Region.\n\
-  \  \n\
-  \   This operation supports pagination, where the response can be sent in multiple pages. You \
-   should check the [PaginationToken] response parameter to determine if there are additional \
-   results available to return. Repeat the query, passing the [PaginationToken] response parameter \
-   value as an input to the next request until you recieve a [null] value. A null value for \
-   [PaginationToken] indicates that there are no more results waiting to be returned.\n\
-  \   "]
-
-module GetResources : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `PaginationTokenExpiredException of pagination_token_expired_exception
-    | `ThrottledException of throttled_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_resources_input ->
-    ( get_resources_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_resources_input ->
-    ( get_resources_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns all the tagged or previously tagged resources that are located in the specified Amazon \
-   Web Services Region for the account. \n\n\
-  \ Depending on what information you want returned, you can also specify the following:\n\
-  \ \n\
-  \  {ul\n\
-  \        {-   {i Filters} that specify what tags and resource types you want returned. The \
-   response includes all tags that are associated with the requested resources.\n\
-  \            \n\
-  \             }\n\
-  \        {-  Information about compliance with the account's effective tag policy. For more \
-   information on tag policies, see \
-   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html}Tag \
-   Policies} in the {i Organizations User Guide.} \n\
-  \            \n\
-  \             }\n\
-  \        }\n\
-  \   This operation supports pagination, where the response can be sent in multiple pages. You \
-   should check the [PaginationToken] response parameter to determine if there are additional \
-   results available to return. Repeat the query, passing the [PaginationToken] response parameter \
-   value as an input to the next request until you recieve a [null] value. A null value for \
-   [PaginationToken] indicates that there are no more results waiting to be returned.\n\
-  \   \n\
-  \      [GetResources] does not return untagged resources. \n\
-  \     \n\
-  \      To find untagged resources in your account, use Amazon Web Services Resource Explorer \
-   with a query that uses [tag:none]. For more information, see \
-   {{:https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html} \
-   Search query syntax reference for Resource Explorer}. \n\
-  \      \n\
-  \       "]
-
-module GetTagKeys : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `PaginationTokenExpiredException of pagination_token_expired_exception
-    | `ThrottledException of throttled_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_tag_keys_input ->
-    ( get_tag_keys_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_tag_keys_input ->
-    ( get_tag_keys_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns all tag keys currently in use in the specified Amazon Web Services Region for the \
-   calling account.\n\n\
-  \ This operation supports pagination, where the response can be sent in multiple pages. You \
-   should check the [PaginationToken] response parameter to determine if there are additional \
-   results available to return. Repeat the query, passing the [PaginationToken] response parameter \
-   value as an input to the next request until you recieve a [null] value. A null value for \
-   [PaginationToken] indicates that there are no more results waiting to be returned.\n\
-  \ "]
-
-module GetTagValues : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `PaginationTokenExpiredException of pagination_token_expired_exception
-    | `ThrottledException of throttled_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_tag_values_input ->
-    ( get_tag_values_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_tag_values_input ->
-    ( get_tag_values_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns all tag values for the specified key that are used in the specified Amazon Web Services \
-   Region for the calling account.\n\n\
-  \ This operation supports pagination, where the response can be sent in multiple pages. You \
-   should check the [PaginationToken] response parameter to determine if there are additional \
-   results available to return. Repeat the query, passing the [PaginationToken] response parameter \
-   value as an input to the next request until you recieve a [null] value. A null value for \
-   [PaginationToken] indicates that there are no more results waiting to be returned.\n\
-  \ "]
-
-module ListRequiredTags : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceException of internal_service_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `PaginationTokenExpiredException of pagination_token_expired_exception
-    | `ThrottledException of throttled_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_required_tags_input ->
-    ( list_required_tags_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_required_tags_input ->
-    ( list_required_tags_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceException of internal_service_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the required tags for supported resource types in an Amazon Web Services account.\n"]
-
 module StartReportCreation : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -486,3 +217,272 @@ end
    documentation for that service's tagging APIs for more information.\n\
   \    \n\
   \     "]
+
+module ListRequiredTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `PaginationTokenExpiredException of pagination_token_expired_exception
+    | `ThrottledException of throttled_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_required_tags_input ->
+    ( list_required_tags_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_required_tags_input ->
+    ( list_required_tags_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the required tags for supported resource types in an Amazon Web Services account.\n"]
+
+module GetTagValues : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `PaginationTokenExpiredException of pagination_token_expired_exception
+    | `ThrottledException of throttled_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_tag_values_input ->
+    ( get_tag_values_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_tag_values_input ->
+    ( get_tag_values_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns all tag values for the specified key that are used in the specified Amazon Web Services \
+   Region for the calling account.\n\n\
+  \ This operation supports pagination, where the response can be sent in multiple pages. You \
+   should check the [PaginationToken] response parameter to determine if there are additional \
+   results available to return. Repeat the query, passing the [PaginationToken] response parameter \
+   value as an input to the next request until you recieve a [null] value. A null value for \
+   [PaginationToken] indicates that there are no more results waiting to be returned.\n\
+  \ "]
+
+module GetTagKeys : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `PaginationTokenExpiredException of pagination_token_expired_exception
+    | `ThrottledException of throttled_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_tag_keys_input ->
+    ( get_tag_keys_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_tag_keys_input ->
+    ( get_tag_keys_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns all tag keys currently in use in the specified Amazon Web Services Region for the \
+   calling account.\n\n\
+  \ This operation supports pagination, where the response can be sent in multiple pages. You \
+   should check the [PaginationToken] response parameter to determine if there are additional \
+   results available to return. Repeat the query, passing the [PaginationToken] response parameter \
+   value as an input to the next request until you recieve a [null] value. A null value for \
+   [PaginationToken] indicates that there are no more results waiting to be returned.\n\
+  \ "]
+
+module GetResources : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `PaginationTokenExpiredException of pagination_token_expired_exception
+    | `ThrottledException of throttled_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_resources_input ->
+    ( get_resources_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resources_input ->
+    ( get_resources_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns all the tagged or previously tagged resources that are located in the specified Amazon \
+   Web Services Region for the account. \n\n\
+  \ Depending on what information you want returned, you can also specify the following:\n\
+  \ \n\
+  \  {ul\n\
+  \        {-   {i Filters} that specify what tags and resource types you want returned. The \
+   response includes all tags that are associated with the requested resources.\n\
+  \            \n\
+  \             }\n\
+  \        {-  Information about compliance with the account's effective tag policy. For more \
+   information on tag policies, see \
+   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html}Tag \
+   Policies} in the {i Organizations User Guide.} \n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \   This operation supports pagination, where the response can be sent in multiple pages. You \
+   should check the [PaginationToken] response parameter to determine if there are additional \
+   results available to return. Repeat the query, passing the [PaginationToken] response parameter \
+   value as an input to the next request until you recieve a [null] value. A null value for \
+   [PaginationToken] indicates that there are no more results waiting to be returned.\n\
+  \   \n\
+  \      [GetResources] does not return untagged resources. \n\
+  \     \n\
+  \      To find untagged resources in your account, use Amazon Web Services Resource Explorer \
+   with a query that uses [tag:none]. For more information, see \
+   {{:https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html} \
+   Search query syntax reference for Resource Explorer}. \n\
+  \      \n\
+  \       "]
+
+module GetComplianceSummary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConstraintViolationException of constraint_violation_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ThrottledException of throttled_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_compliance_summary_input ->
+    ( get_compliance_summary_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_compliance_summary_input ->
+    ( get_compliance_summary_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns a table that shows counts of resources that are noncompliant with their tag policies.\n\n\
+  \ For more information on tag policies, see \
+   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html}Tag \
+   Policies} in the {i Organizations User Guide.} \n\
+  \ \n\
+  \  You can call this operation only from the organization's management account and from the \
+   us-east-1 Region.\n\
+  \  \n\
+  \   This operation supports pagination, where the response can be sent in multiple pages. You \
+   should check the [PaginationToken] response parameter to determine if there are additional \
+   results available to return. Repeat the query, passing the [PaginationToken] response parameter \
+   value as an input to the next request until you recieve a [null] value. A null value for \
+   [PaginationToken] indicates that there are no more results waiting to be returned.\n\
+  \   "]
+
+module DescribeReportCreation : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConstraintViolationException of constraint_violation_exception
+    | `InternalServiceException of internal_service_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ThrottledException of throttled_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_report_creation_input ->
+    ( describe_report_creation_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_report_creation_input ->
+    ( describe_report_creation_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Describes the status of the [StartReportCreation] operation. \n\n\
+  \ You can call this operation only from the organization's management account and from the \
+   us-east-1 Region.\n\
+  \ "]

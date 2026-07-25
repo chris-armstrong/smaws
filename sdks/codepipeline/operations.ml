@@ -1,78 +1,6 @@
 open Types
 open Service_metadata
 
-module AcknowledgeJob = struct
-  let error_to_string = function
-    | `InvalidNonceException _ -> "com.amazonaws.codepipeline#InvalidNonceException"
-    | `JobNotFoundException _ -> "com.amazonaws.codepipeline#JobNotFoundException"
-    | `ValidationException _ -> "com.amazonaws.codepipeline#ValidationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidNonceException" ->
-          `InvalidNonceException (Json_deserializers.invalid_nonce_exception_of_yojson tree path)
-      | _, "JobNotFoundException" ->
-          `JobNotFoundException (Json_deserializers.job_not_found_exception_of_yojson tree path)
-      | _, "ValidationException" ->
-          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : acknowledge_job_input) =
-    let input = Json_serializers.acknowledge_job_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodePipeline_20150709.AcknowledgeJob" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.acknowledge_job_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : acknowledge_job_input) =
-    let input = Json_serializers.acknowledge_job_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodePipeline_20150709.AcknowledgeJob" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.acknowledge_job_output_of_yojson ~error_deserializer
-end
-
-module AcknowledgeThirdPartyJob = struct
-  let error_to_string = function
-    | `InvalidClientTokenException _ -> "com.amazonaws.codepipeline#InvalidClientTokenException"
-    | `InvalidNonceException _ -> "com.amazonaws.codepipeline#InvalidNonceException"
-    | `JobNotFoundException _ -> "com.amazonaws.codepipeline#JobNotFoundException"
-    | `ValidationException _ -> "com.amazonaws.codepipeline#ValidationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidClientTokenException" ->
-          `InvalidClientTokenException
-            (Json_deserializers.invalid_client_token_exception_of_yojson tree path)
-      | _, "InvalidNonceException" ->
-          `InvalidNonceException (Json_deserializers.invalid_nonce_exception_of_yojson tree path)
-      | _, "JobNotFoundException" ->
-          `JobNotFoundException (Json_deserializers.job_not_found_exception_of_yojson tree path)
-      | _, "ValidationException" ->
-          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : acknowledge_third_party_job_input) =
-    let input = Json_serializers.acknowledge_third_party_job_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodePipeline_20150709.AcknowledgeThirdPartyJob"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.acknowledge_third_party_job_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : acknowledge_third_party_job_input) =
-    let input = Json_serializers.acknowledge_third_party_job_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodePipeline_20150709.AcknowledgeThirdPartyJob" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.acknowledge_third_party_job_output_of_yojson
-      ~error_deserializer
-end
-
 module CreateCustomActionType = struct
   let error_to_string = function
     | `ConcurrentModificationException _ ->
@@ -1742,4 +1670,76 @@ module UpdatePipeline = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CodePipeline_20150709.UpdatePipeline" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_pipeline_output_of_yojson ~error_deserializer
+end
+
+module AcknowledgeThirdPartyJob = struct
+  let error_to_string = function
+    | `InvalidClientTokenException _ -> "com.amazonaws.codepipeline#InvalidClientTokenException"
+    | `InvalidNonceException _ -> "com.amazonaws.codepipeline#InvalidNonceException"
+    | `JobNotFoundException _ -> "com.amazonaws.codepipeline#JobNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.codepipeline#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidClientTokenException" ->
+          `InvalidClientTokenException
+            (Json_deserializers.invalid_client_token_exception_of_yojson tree path)
+      | _, "InvalidNonceException" ->
+          `InvalidNonceException (Json_deserializers.invalid_nonce_exception_of_yojson tree path)
+      | _, "JobNotFoundException" ->
+          `JobNotFoundException (Json_deserializers.job_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : acknowledge_third_party_job_input) =
+    let input = Json_serializers.acknowledge_third_party_job_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodePipeline_20150709.AcknowledgeThirdPartyJob"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.acknowledge_third_party_job_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : acknowledge_third_party_job_input) =
+    let input = Json_serializers.acknowledge_third_party_job_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodePipeline_20150709.AcknowledgeThirdPartyJob" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.acknowledge_third_party_job_output_of_yojson
+      ~error_deserializer
+end
+
+module AcknowledgeJob = struct
+  let error_to_string = function
+    | `InvalidNonceException _ -> "com.amazonaws.codepipeline#InvalidNonceException"
+    | `JobNotFoundException _ -> "com.amazonaws.codepipeline#JobNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.codepipeline#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidNonceException" ->
+          `InvalidNonceException (Json_deserializers.invalid_nonce_exception_of_yojson tree path)
+      | _, "JobNotFoundException" ->
+          `JobNotFoundException (Json_deserializers.job_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : acknowledge_job_input) =
+    let input = Json_serializers.acknowledge_job_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodePipeline_20150709.AcknowledgeJob" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.acknowledge_job_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : acknowledge_job_input) =
+    let input = Json_serializers.acknowledge_job_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodePipeline_20150709.AcknowledgeJob" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.acknowledge_job_output_of_yojson ~error_deserializer
 end

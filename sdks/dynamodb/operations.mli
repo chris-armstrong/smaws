@@ -1,1255 +1,5 @@
 open Types
 
-module BatchExecuteStatement : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `RequestLimitExceeded of request_limit_exceeded
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_execute_statement_input ->
-    ( batch_execute_statement_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_execute_statement_input ->
-    ( batch_execute_statement_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "This operation allows you to perform batch reads or writes on data stored in DynamoDB, using \
-   PartiQL. Each read statement in a [BatchExecuteStatement] must specify an equality condition on \
-   all key attributes. This enforces that each [SELECT] statement in a batch returns at most a \
-   single item. For more information, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ql-reference.multiplestatements.batching.html}Running \
-   batch operations with PartiQL for DynamoDB }.\n\n\
-  \  The entire batch must consist of either read statements or write statements, you cannot mix \
-   both in one batch.\n\
-  \  \n\
-  \     A HTTP 200 response does not mean that all statements in the BatchExecuteStatement \
-   succeeded. Error details for individual statements can be found under the \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchStatementResponse.html#DDB-Type-BatchStatementResponse-Error}Error} \
-   field of the [BatchStatementResponse] for each statement.\n\
-  \     \n\
-  \      "]
-
-module BatchGetItem : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-    | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_item_input ->
-    ( batch_get_item_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_item_input ->
-    ( batch_get_item_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [BatchGetItem] operation returns the attributes of one or more items from one or more \
-   tables. You identify requested items by primary key.\n\n\
-  \ A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. \
-   [BatchGetItem] returns a partial result if the response size limit is exceeded, the table's \
-   provisioned throughput is exceeded, more than 1MB per partition is requested, or an internal \
-   processing failure occurs. If a partial result is returned, the operation returns a value for \
-   [UnprocessedKeys]. You can use this value to retry the operation starting with the next item to \
-   get.\n\
-  \ \n\
-  \   If you request more than 100 items, [BatchGetItem] returns a [ValidationException] with the \
-   message \"Too many items requested for the BatchGetItem call.\"\n\
-  \   \n\
-  \     For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, \
-   the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an \
-   appropriate [UnprocessedKeys] value so you can get the next page of results. If desired, your \
-   application can include its own logic to assemble the pages of results into one dataset.\n\
-  \     \n\
-  \      If {i none} of the items can be processed due to insufficient provisioned throughput on \
-   all of the tables in the request, then [BatchGetItem] returns a \
-   [ProvisionedThroughputExceededException]. If {i at least one} of the items is successfully \
-   processed, then [BatchGetItem] completes successfully, while returning the keys of the unread \
-   items in [UnprocessedKeys].\n\
-  \      \n\
-  \        If DynamoDB returns any unprocessed items, you should retry the batch operation on \
-   those items. However, {i we strongly recommend that you use an exponential backoff algorithm}. \
-   If you retry the batch operation immediately, the underlying read or write requests can still \
-   fail due to throttling on the individual tables. If you delay the batch operation using \
-   exponential backoff, the individual requests in the batch are much more likely to succeed.\n\
-  \        \n\
-  \         For more information, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations}Batch \
-   Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n\
-  \         \n\
-  \           By default, [BatchGetItem] performs eventually consistent reads on every table in \
-   the request. If you want strongly consistent reads instead, you can set [ConsistentRead] to \
-   [true] for any or all tables.\n\
-  \           \n\
-  \            In order to minimize response latency, [BatchGetItem] may retrieve items in parallel.\n\
-  \            \n\
-  \             When designing your application, keep in mind that DynamoDB does not return items \
-   in any particular order. To help parse the response by item, include the primary key values for \
-   the items in your request in the [ProjectionExpression] parameter.\n\
-  \             \n\
-  \              If a requested item does not exist, it is not returned in the result. Requests \
-   for nonexistent items consume the minimum read capacity units according to the type of read. \
-   For more information, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations}Working \
-   with Tables} in the {i Amazon DynamoDB Developer Guide}.\n\
-  \              \n\
-  \                 [BatchGetItem] will result in a [ValidationException] if the same key is \
-   specified multiple times.\n\
-  \                \n\
-  \                 "]
-
-module BatchWriteItem : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-    | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_write_item_input ->
-    ( batch_write_item_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_write_item_input ->
-    ( batch_write_item_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [BatchWriteItem] operation puts or deletes multiple items in one or more tables. A single \
-   call to [BatchWriteItem] can transmit up to 16MB of data over the network, consisting of up to \
-   25 item put or delete operations. While individual items can be up to 400 KB once stored, it's \
-   important to note that an item's representation might be greater than 400KB while being sent in \
-   DynamoDB's JSON format for the API call. For more details on this distinction, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html}Naming \
-   Rules and Data Types}.\n\n\
-  \   [BatchWriteItem] cannot update items. If you perform a [BatchWriteItem] operation on an \
-   existing item, that item's values will be overwritten by the operation and it will appear like \
-   it was updated. To update items, we recommend you use the [UpdateItem] action.\n\
-  \  \n\
-  \    The individual [PutItem] and [DeleteItem] operations specified in [BatchWriteItem] are \
-   atomic; however [BatchWriteItem] as a whole is not. If any requested operations fail because \
-   the table's provisioned throughput is exceeded or an internal processing failure occurs, the \
-   failed operations are returned in the [UnprocessedItems] response parameter. You can \
-   investigate and optionally resend the requests. Typically, you would call [BatchWriteItem] in a \
-   loop. Each iteration would check for unprocessed items and submit a new [BatchWriteItem] \
-   request with those unprocessed items until all items have been processed.\n\
-  \    \n\
-  \     For tables and indexes with provisioned capacity, if none of the items can be processed \
-   due to insufficient provisioned throughput on all of the tables in the request, then \
-   [BatchWriteItem] returns a [ProvisionedThroughputExceededException]. For all tables and \
-   indexes, if none of the items can be processed due to other throttling scenarios (such as \
-   exceeding partition level limits), then [BatchWriteItem] returns a [ThrottlingException].\n\
-  \     \n\
-  \       If DynamoDB returns any unprocessed items, you should retry the batch operation on those \
-   items. However, {i we strongly recommend that you use an exponential backoff algorithm}. If you \
-   retry the batch operation immediately, the underlying read or write requests can still fail due \
-   to throttling on the individual tables. If you delay the batch operation using exponential \
-   backoff, the individual requests in the batch are much more likely to succeed.\n\
-  \       \n\
-  \        For more information, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#Programming.Errors.BatchOperations}Batch \
-   Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n\
-  \        \n\
-  \          With [BatchWriteItem], you can efficiently write or delete large amounts of data, \
-   such as from Amazon EMR, or copy data from another database into DynamoDB. In order to improve \
-   performance with these large-scale operations, [BatchWriteItem] does not behave in the same way \
-   as individual [PutItem] and [DeleteItem] calls would. For example, you cannot specify \
-   conditions on individual put and delete requests, and [BatchWriteItem] does not return deleted \
-   items in the response.\n\
-  \          \n\
-  \           If you use a programming language that supports concurrency, you can use threads to \
-   write items in parallel. Your application must include the necessary logic to manage the \
-   threads. With languages that don't support threading, you must update or delete the specified \
-   items one at a time. In both situations, [BatchWriteItem] performs the specified put and delete \
-   operations in parallel, giving you the power of the thread pool approach without having to \
-   introduce complexity into your application.\n\
-  \           \n\
-  \            Parallel processing reduces latency, but each specified put and delete request \
-   consumes the same number of write capacity units whether it is processed in parallel or not. \
-   Delete operations on nonexistent items consume one write capacity unit.\n\
-  \            \n\
-  \             If one or more of the following is true, DynamoDB rejects the entire batch write \
-   operation:\n\
-  \             \n\
-  \              {ul\n\
-  \                    {-  One or more tables specified in the [BatchWriteItem] request does not \
-   exist.\n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  Primary key attributes specified on an item in the request do not match \
-   those in the corresponding table's primary key schema.\n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  You try to perform multiple operations on the same item in the same \
-   [BatchWriteItem] request. For example, you cannot put and delete the same item in the same \
-   [BatchWriteItem] request. \n\
-  \                        \n\
-  \                         }\n\
-  \                    {-   Your request contains at least two items with identical hash and range \
-   keys (which essentially is two put operations). \n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  There are more than 25 requests in the batch.\n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  Any individual item in a batch exceeds 400 KB.\n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  The total request size exceeds 16 MB.\n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  Any individual items with keys exceeding the key length limits. For a \
-   partition key, the limit is 2048 bytes and for a sort key, the limit is 1024 bytes.\n\
-  \                        \n\
-  \                         }\n\
-  \                    }\n\
-  \  "]
-
-module CreateBackup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BackupInUseException of backup_in_use_exception
-    | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `TableInUseException of table_in_use_exception
-    | `TableNotFoundException of table_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_backup_input ->
-    ( create_backup_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupInUseException of backup_in_use_exception
-      | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TableInUseException of table_in_use_exception
-      | `TableNotFoundException of table_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_backup_input ->
-    ( create_backup_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupInUseException of backup_in_use_exception
-      | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TableInUseException of table_in_use_exception
-      | `TableNotFoundException of table_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a backup for an existing table.\n\n\
-  \  Each time you create an on-demand backup, the entire table data is backed up. There is no \
-   limit to the number of on-demand backups that can be taken. \n\
-  \ \n\
-  \   When you create an on-demand backup, a time marker of the request is cataloged, and the \
-   backup is created asynchronously, by applying all changes until the time of the request to the \
-   last full table snapshot. Backup requests are processed instantaneously and become available \
-   for restore within minutes. \n\
-  \  \n\
-  \   You can call [CreateBackup] at a maximum rate of 50 times per second.\n\
-  \   \n\
-  \    All backups in DynamoDB work without consuming any provisioned throughput on the table.\n\
-  \    \n\
-  \      If you submit a backup request on 2018-12-14 at 14:25:00, the backup is guaranteed to \
-   contain all data committed to the table up to 14:24:00, and data committed after 14:26:00 will \
-   not be. The backup might contain data modifications made between 14:24:00 and 14:26:00. \
-   On-demand backup does not support causal consistency. \n\
-  \     \n\
-  \       Along with data, the following are also included on the backups: \n\
-  \      \n\
-  \       {ul\n\
-  \             {-  Global secondary indexes (GSIs)\n\
-  \                 \n\
-  \                  }\n\
-  \             {-  Local secondary indexes (LSIs)\n\
-  \                 \n\
-  \                  }\n\
-  \             {-  Streams\n\
-  \                 \n\
-  \                  }\n\
-  \             {-  Provisioned read and write capacity\n\
-  \                 \n\
-  \                  }\n\
-  \             }\n\
-  \  "]
-
-module CreateGlobalTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `TableNotFoundException of table_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_global_table_input ->
-    ( create_global_table_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TableNotFoundException of table_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_global_table_input ->
-    ( create_global_table_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TableNotFoundException of table_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a global table from an existing table. A global table creates a replication \
-   relationship between two or more DynamoDB tables with the same table name in the provided \
-   Regions. \n\n\
-  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
-   avoided for new global tables. Customers should use \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
-   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
-   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
-  \  \n\
-  \   To determine which version you're using, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
-   the global table version you are using}. To update existing global tables from version \
-   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
-   global tables}.\n\
-  \   \n\
-  \     If you want to add a new replica table to a global table, each of the following conditions \
-   must be true:\n\
-  \     \n\
-  \      {ul\n\
-  \            {-  The table must have the same primary key as all of the other replicas.\n\
-  \                \n\
-  \                 }\n\
-  \            {-  The table must have the same name as all of the other replicas.\n\
-  \                \n\
-  \                 }\n\
-  \            {-  The table must have DynamoDB Streams enabled, with the stream containing both \
-   the new and the old images of the item.\n\
-  \                \n\
-  \                 }\n\
-  \            {-  None of the replica tables in the global table can contain any data.\n\
-  \                \n\
-  \                 }\n\
-  \            }\n\
-  \    If global secondary indexes are specified, then the following conditions must also be met: \n\
-  \   \n\
-  \    {ul\n\
-  \          {-   The global secondary indexes must have the same name. \n\
-  \              \n\
-  \               }\n\
-  \          {-   The global secondary indexes must have the same hash key and sort key (if \
-   present). \n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \    If local secondary indexes are specified, then the following conditions must also be met: \n\
-  \   \n\
-  \    {ul\n\
-  \          {-   The local secondary indexes must have the same name. \n\
-  \              \n\
-  \               }\n\
-  \          {-   The local secondary indexes must have the same hash key and sort key (if \
-   present). \n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \     Write capacity settings should be set consistently across your replica tables and \
-   secondary indexes. DynamoDB strongly recommends enabling auto scaling to manage the write \
-   capacity settings for all of your global tables replicas and indexes. \n\
-  \    \n\
-  \      If you prefer to manage write capacity settings manually, you should provision equal \
-   replicated write capacity units to your replica tables. You should also provision equal \
-   replicated write capacity units to matching secondary indexes across your global table. \n\
-  \     \n\
-  \      "]
-
-module CreateTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_table_input ->
-    ( create_table_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_table_input ->
-    ( create_table_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [CreateTable] operation adds a new table to your account. In an Amazon Web Services \
-   account, table names must be unique within each Region. That is, you can have two tables with \
-   same name if you create the tables in different Regions.\n\n\
-  \  [CreateTable] is an asynchronous operation. Upon receiving a [CreateTable] request, DynamoDB \
-   immediately returns a response with a [TableStatus] of [CREATING]. After the table is created, \
-   DynamoDB sets the [TableStatus] to [ACTIVE]. You can perform read and write operations only on \
-   an [ACTIVE] table. \n\
-  \ \n\
-  \  You can optionally define secondary indexes on the new table, as part of the [CreateTable] \
-   operation. If you want to create multiple tables with secondary indexes on them, you must \
-   create the tables sequentially. Only one table with secondary indexes can be in the [CREATING] \
-   state at any given time.\n\
-  \  \n\
-  \   You can use the [DescribeTable] action to check the table status.\n\
-  \   "]
-
-module DeleteBackup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BackupInUseException of backup_in_use_exception
-    | `BackupNotFoundException of backup_not_found_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_backup_input ->
-    ( delete_backup_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupInUseException of backup_in_use_exception
-      | `BackupNotFoundException of backup_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_backup_input ->
-    ( delete_backup_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupInUseException of backup_in_use_exception
-      | `BackupNotFoundException of backup_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes an existing backup of a table.\n\n\
-  \ You can call [DeleteBackup] at a maximum rate of 10 times per second.\n\
-  \ "]
-
-module DeleteItem : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConditionalCheckFailedException of conditional_check_failed_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-    | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `TransactionConflictException of transaction_conflict_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_item_input ->
-    ( delete_item_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConditionalCheckFailedException of conditional_check_failed_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `TransactionConflictException of transaction_conflict_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_item_input ->
-    ( delete_item_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConditionalCheckFailedException of conditional_check_failed_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `TransactionConflictException of transaction_conflict_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a single item in a table by primary key. You can perform a conditional delete operation \
-   that deletes the item if it exists, or if it has an expected attribute value.\n\n\
-  \ In addition to deleting an item, you can also return the item's attribute values in the same \
-   operation, using the [ReturnValues] parameter.\n\
-  \ \n\
-  \  Unless you specify conditions, the [DeleteItem] is an idempotent operation; running it \
-   multiple times on the same item or attribute does {i not} result in an error response.\n\
-  \  \n\
-  \   Conditional deletes are useful for deleting items only if specific conditions are met. If \
-   those conditions are met, DynamoDB performs the delete. Otherwise, the item is not deleted.\n\
-  \   "]
-
-module DeleteResourcePolicy : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `PolicyNotFoundException of policy_not_found_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_resource_policy_input ->
-    ( delete_resource_policy_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `PolicyNotFoundException of policy_not_found_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_resource_policy_input ->
-    ( delete_resource_policy_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `PolicyNotFoundException of policy_not_found_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes the resource-based policy attached to the resource, which can be a table or stream.\n\n\
-  \  [DeleteResourcePolicy] is an idempotent operation; running it multiple times on the same \
-   resource {i doesn't} result in an error response, unless you specify an [ExpectedRevisionId], \
-   which will then return a [PolicyNotFoundException].\n\
-  \ \n\
-  \   To make sure that you don't inadvertently lock yourself out of your own resources, the root \
-   principal in your Amazon Web Services account can perform [DeleteResourcePolicy] requests, even \
-   if your resource-based policy explicitly denies the root principal's access. \n\
-  \   \n\
-  \       [DeleteResourcePolicy] is an asynchronous operation. If you issue a [GetResourcePolicy] \
-   request immediately after running the [DeleteResourcePolicy] request, DynamoDB might still \
-   return the deleted policy. This is because the policy for your resource might not have been \
-   deleted yet. Wait for a few seconds, and then try the [GetResourcePolicy] request again.\n\
-  \      \n\
-  \       "]
-
-module DeleteTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_table_input ->
-    ( delete_table_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_table_input ->
-    ( delete_table_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [DeleteTable] operation deletes a table and all of its items. After a [DeleteTable] \
-   request, the specified table is in the [DELETING] state until DynamoDB completes the deletion. \
-   If the table is in the [ACTIVE] state, you can delete it. If a table is in [CREATING] or \
-   [UPDATING] states, then DynamoDB returns a [ResourceInUseException]. If the specified table \
-   does not exist, DynamoDB returns a [ResourceNotFoundException]. If table is already in the \
-   [DELETING] state, no error is returned. \n\n\
-  \  DynamoDB might continue to accept data read and write operations, such as [GetItem] and \
-   [PutItem], on a table in the [DELETING] state until the table deletion is complete. For the \
-   full list of table states, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TableDescription.html#DDB-Type-TableDescription-TableStatus}TableStatus}.\n\
-  \  \n\
-  \    When you delete a table, any indexes on that table are also deleted.\n\
-  \    \n\
-  \     If you have DynamoDB Streams enabled on the table, then the corresponding stream on that \
-   table goes into the [DISABLED] state, and the stream is automatically deleted after 24 hours.\n\
-  \     \n\
-  \      Use the [DescribeTable] action to check the status of the table. \n\
-  \      "]
-
-module DescribeBackup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BackupNotFoundException of backup_not_found_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_backup_input ->
-    ( describe_backup_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupNotFoundException of backup_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_backup_input ->
-    ( describe_backup_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupNotFoundException of backup_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Describes an existing backup of a table.\n\n\
-  \ You can call [DescribeBackup] at a maximum rate of 10 times per second.\n\
-  \ "]
-
-module DescribeContinuousBackups : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `TableNotFoundException of table_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_continuous_backups_input ->
-    ( describe_continuous_backups_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `TableNotFoundException of table_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_continuous_backups_input ->
-    ( describe_continuous_backups_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `TableNotFoundException of table_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Checks the status of continuous backups and point in time recovery on the specified table. \
-   Continuous backups are [ENABLED] on all tables at table creation. If point in time recovery is \
-   enabled, [PointInTimeRecoveryStatus] will be set to ENABLED.\n\n\
-  \  After continuous backups and point in time recovery are enabled, you can restore to any point \
-   in time within [EarliestRestorableDateTime] and [LatestRestorableDateTime]. \n\
-  \ \n\
-  \   [LatestRestorableDateTime] is typically 5 minutes before the current time. You can restore \
-   your table to any point in time in the last 35 days. You can set the recovery period to any \
-   value between 1 and 35 days. \n\
-  \  \n\
-  \   You can call [DescribeContinuousBackups] at a maximum rate of 10 times per second.\n\
-  \   "]
-
-module DescribeContributorInsights : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_contributor_insights_input ->
-    ( describe_contributor_insights_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_contributor_insights_input ->
-    ( describe_contributor_insights_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about contributor insights for a given table or global secondary index.\n"]
-
-module DescribeEndpoints : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_endpoints_request ->
-    (describe_endpoints_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_endpoints_request ->
-    ( describe_endpoints_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the regional endpoint information. For more information on policy permissions, please \
-   see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/inter-network-traffic-privacy.html#inter-network-traffic-DescribeEndpoints}Internetwork \
-   traffic privacy}.\n"]
-
-module DescribeExport : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ExportNotFoundException of export_not_found_exception
-    | `InternalServerError of internal_server_error
-    | `LimitExceededException of limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_export_input ->
-    ( describe_export_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ExportNotFoundException of export_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `LimitExceededException of limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_export_input ->
-    ( describe_export_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ExportNotFoundException of export_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `LimitExceededException of limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Describes an existing table export.\n"]
-
-module DescribeGlobalTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `GlobalTableNotFoundException of global_table_not_found_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_global_table_input ->
-    ( describe_global_table_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableNotFoundException of global_table_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_global_table_input ->
-    ( describe_global_table_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableNotFoundException of global_table_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the specified global table.\n\n\
-  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
-   avoided for new global tables. Customers should use \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
-   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
-   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
-  \  \n\
-  \   To determine which version you're using, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
-   the global table version you are using}. To update existing global tables from version \
-   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
-   global tables}.\n\
-  \   \n\
-  \    "]
-
-module DescribeGlobalTableSettings : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `GlobalTableNotFoundException of global_table_not_found_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_global_table_settings_input ->
-    ( describe_global_table_settings_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableNotFoundException of global_table_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_global_table_settings_input ->
-    ( describe_global_table_settings_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableNotFoundException of global_table_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Describes Region-specific settings for a global table.\n\n\
-  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
-   avoided for new global tables. Customers should use \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
-   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
-   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
-  \  \n\
-  \   To determine which version you're using, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
-   the global table version you are using}. To update existing global tables from version \
-   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
-   global tables}.\n\
-  \   \n\
-  \    "]
-
-module DescribeImport : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_import_input ->
-    ( describe_import_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_import_input ->
-    ( describe_import_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Represents the properties of the import. \n"]
-
-module DescribeKinesisStreamingDestination : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_kinesis_streaming_destination_input ->
-    ( describe_kinesis_streaming_destination_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_kinesis_streaming_destination_input ->
-    ( describe_kinesis_streaming_destination_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns information about the status of Kinesis streaming.\n"]
-
-module DescribeLimits : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_limits_input ->
-    ( describe_limits_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_limits_input ->
-    ( describe_limits_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the current provisioned-capacity quotas for your Amazon Web Services account in a \
-   Region, both for the Region as a whole and for any one DynamoDB table that you create there.\n\n\
-  \ When you establish an Amazon Web Services account, the account has initial quotas on the \
-   maximum read capacity units and write capacity units that you can provision across all of your \
-   DynamoDB tables in a given Region. Also, there are per-table quotas that apply when you create \
-   a table there. For more information, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html}Service, \
-   Account, and Table Quotas} page in the {i Amazon DynamoDB Developer Guide}.\n\
-  \ \n\
-  \  Although you can increase these quotas by filing a case at \
-   {{:https://console.aws.amazon.com/support/home#/}Amazon Web Services Support Center}, obtaining \
-   the increase is not instantaneous. The [DescribeLimits] action lets you write code to compare \
-   the capacity you are currently using to those quotas imposed by your account so that you have \
-   enough time to apply for an increase before you hit a quota.\n\
-  \  \n\
-  \   For example, you could use one of the Amazon Web Services SDKs to do the following:\n\
-  \   \n\
-  \    {ol\n\
-  \          {-  Call [DescribeLimits] for a particular Region to obtain your current account \
-   quotas on provisioned capacity there.\n\
-  \              \n\
-  \               }\n\
-  \          {-  Create a variable to hold the aggregate read capacity units provisioned for all \
-   your tables in that Region, and one to hold the aggregate write capacity units. Zero them both.\n\
-  \              \n\
-  \               }\n\
-  \          {-  Call [ListTables] to obtain a list of all your DynamoDB tables.\n\
-  \              \n\
-  \               }\n\
-  \          {-  For each table name listed by [ListTables], do the following:\n\
-  \              \n\
-  \               {ul\n\
-  \                     {-  Call [DescribeTable] with the table name.\n\
-  \                         \n\
-  \                          }\n\
-  \                     {-  Use the data returned by [DescribeTable] to add the read capacity \
-   units and write capacity units provisioned for the table itself to your variables.\n\
-  \                         \n\
-  \                          }\n\
-  \                     {-  If the table has one or more global secondary indexes (GSIs), loop \
-   over these GSIs and add their provisioned capacity values to your variables as well.\n\
-  \                         \n\
-  \                          }\n\
-  \                     \n\
-  \           }\n\
-  \            }\n\
-  \          {-  Report the account quotas for that Region returned by [DescribeLimits], along \
-   with the total current provisioned capacity levels you have calculated.\n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \   This will let you see whether you are getting close to your account-level quotas.\n\
-  \   \n\
-  \    The per-table quotas apply only when you are creating a new table. They restrict the sum of \
-   the provisioned capacity of the new table itself and all its global secondary indexes.\n\
-  \    \n\
-  \     For existing tables and their GSIs, DynamoDB doesn't let you increase provisioned capacity \
-   extremely rapidly, but the only quota that applies is that the aggregate provisioned capacity \
-   over all your tables and GSIs cannot exceed either of the per-account quotas.\n\
-  \     \n\
-  \        [DescribeLimits] should only be called periodically. You can expect throttling errors \
-   if you call it more than once in a minute.\n\
-  \       \n\
-  \         The [DescribeLimits] Request element has no content.\n\
-  \         "]
-
-module DescribeTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_table_input ->
-    ( describe_table_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_table_input ->
-    ( describe_table_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the table, including the current status of the table, when it was \
-   created, the primary key schema, and any indexes on the table.\n\n\
-  \  If you issue a [DescribeTable] request immediately after a [CreateTable] request, DynamoDB \
-   might return a [ResourceNotFoundException]. This is because [DescribeTable] uses an eventually \
-   consistent query, and the metadata for your table might not be available at that moment. Wait \
-   for a few seconds, and then try the [DescribeTable] request again.\n\
-  \  \n\
-  \   "]
-
-module DescribeTableReplicaAutoScaling : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_table_replica_auto_scaling_input ->
-    ( describe_table_replica_auto_scaling_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_table_replica_auto_scaling_input ->
-    ( describe_table_replica_auto_scaling_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Describes auto scaling settings across replicas of the global table at once.\n"]
-
-module DescribeTimeToLive : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_time_to_live_input ->
-    ( describe_time_to_live_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_time_to_live_input ->
-    ( describe_time_to_live_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gives a description of the Time to Live (TTL) status on the specified table. \n"]
-
-module DisableKinesisStreamingDestination : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    kinesis_streaming_destination_input ->
-    ( kinesis_streaming_destination_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    kinesis_streaming_destination_input ->
-    ( kinesis_streaming_destination_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Stops replication from the DynamoDB table to the Kinesis data stream. This is done without \
-   deleting either of the resources.\n"]
-
 module EnableKinesisStreamingDestination : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -3062,3 +1812,1253 @@ end
    {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html}Time To Live} in \
    the Amazon DynamoDB Developer Guide. \n\
   \          "]
+
+module DisableKinesisStreamingDestination : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    kinesis_streaming_destination_input ->
+    ( kinesis_streaming_destination_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    kinesis_streaming_destination_input ->
+    ( kinesis_streaming_destination_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Stops replication from the DynamoDB table to the Kinesis data stream. This is done without \
+   deleting either of the resources.\n"]
+
+module DescribeTimeToLive : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_time_to_live_input ->
+    ( describe_time_to_live_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_time_to_live_input ->
+    ( describe_time_to_live_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gives a description of the Time to Live (TTL) status on the specified table. \n"]
+
+module DescribeTableReplicaAutoScaling : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_table_replica_auto_scaling_input ->
+    ( describe_table_replica_auto_scaling_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_table_replica_auto_scaling_input ->
+    ( describe_table_replica_auto_scaling_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Describes auto scaling settings across replicas of the global table at once.\n"]
+
+module DescribeTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_table_input ->
+    ( describe_table_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_table_input ->
+    ( describe_table_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the table, including the current status of the table, when it was \
+   created, the primary key schema, and any indexes on the table.\n\n\
+  \  If you issue a [DescribeTable] request immediately after a [CreateTable] request, DynamoDB \
+   might return a [ResourceNotFoundException]. This is because [DescribeTable] uses an eventually \
+   consistent query, and the metadata for your table might not be available at that moment. Wait \
+   for a few seconds, and then try the [DescribeTable] request again.\n\
+  \  \n\
+  \   "]
+
+module DescribeLimits : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_limits_input ->
+    ( describe_limits_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_limits_input ->
+    ( describe_limits_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the current provisioned-capacity quotas for your Amazon Web Services account in a \
+   Region, both for the Region as a whole and for any one DynamoDB table that you create there.\n\n\
+  \ When you establish an Amazon Web Services account, the account has initial quotas on the \
+   maximum read capacity units and write capacity units that you can provision across all of your \
+   DynamoDB tables in a given Region. Also, there are per-table quotas that apply when you create \
+   a table there. For more information, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html}Service, \
+   Account, and Table Quotas} page in the {i Amazon DynamoDB Developer Guide}.\n\
+  \ \n\
+  \  Although you can increase these quotas by filing a case at \
+   {{:https://console.aws.amazon.com/support/home#/}Amazon Web Services Support Center}, obtaining \
+   the increase is not instantaneous. The [DescribeLimits] action lets you write code to compare \
+   the capacity you are currently using to those quotas imposed by your account so that you have \
+   enough time to apply for an increase before you hit a quota.\n\
+  \  \n\
+  \   For example, you could use one of the Amazon Web Services SDKs to do the following:\n\
+  \   \n\
+  \    {ol\n\
+  \          {-  Call [DescribeLimits] for a particular Region to obtain your current account \
+   quotas on provisioned capacity there.\n\
+  \              \n\
+  \               }\n\
+  \          {-  Create a variable to hold the aggregate read capacity units provisioned for all \
+   your tables in that Region, and one to hold the aggregate write capacity units. Zero them both.\n\
+  \              \n\
+  \               }\n\
+  \          {-  Call [ListTables] to obtain a list of all your DynamoDB tables.\n\
+  \              \n\
+  \               }\n\
+  \          {-  For each table name listed by [ListTables], do the following:\n\
+  \              \n\
+  \               {ul\n\
+  \                     {-  Call [DescribeTable] with the table name.\n\
+  \                         \n\
+  \                          }\n\
+  \                     {-  Use the data returned by [DescribeTable] to add the read capacity \
+   units and write capacity units provisioned for the table itself to your variables.\n\
+  \                         \n\
+  \                          }\n\
+  \                     {-  If the table has one or more global secondary indexes (GSIs), loop \
+   over these GSIs and add their provisioned capacity values to your variables as well.\n\
+  \                         \n\
+  \                          }\n\
+  \                     \n\
+  \           }\n\
+  \            }\n\
+  \          {-  Report the account quotas for that Region returned by [DescribeLimits], along \
+   with the total current provisioned capacity levels you have calculated.\n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \   This will let you see whether you are getting close to your account-level quotas.\n\
+  \   \n\
+  \    The per-table quotas apply only when you are creating a new table. They restrict the sum of \
+   the provisioned capacity of the new table itself and all its global secondary indexes.\n\
+  \    \n\
+  \     For existing tables and their GSIs, DynamoDB doesn't let you increase provisioned capacity \
+   extremely rapidly, but the only quota that applies is that the aggregate provisioned capacity \
+   over all your tables and GSIs cannot exceed either of the per-account quotas.\n\
+  \     \n\
+  \        [DescribeLimits] should only be called periodically. You can expect throttling errors \
+   if you call it more than once in a minute.\n\
+  \       \n\
+  \         The [DescribeLimits] Request element has no content.\n\
+  \         "]
+
+module DescribeKinesisStreamingDestination : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_kinesis_streaming_destination_input ->
+    ( describe_kinesis_streaming_destination_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_kinesis_streaming_destination_input ->
+    ( describe_kinesis_streaming_destination_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns information about the status of Kinesis streaming.\n"]
+
+module DescribeImport : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_import_input ->
+    ( describe_import_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_import_input ->
+    ( describe_import_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Represents the properties of the import. \n"]
+
+module DescribeGlobalTableSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableNotFoundException of global_table_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_global_table_settings_input ->
+    ( describe_global_table_settings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableNotFoundException of global_table_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_global_table_settings_input ->
+    ( describe_global_table_settings_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableNotFoundException of global_table_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Describes Region-specific settings for a global table.\n\n\
+  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
+   avoided for new global tables. Customers should use \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
+   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
+   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
+  \  \n\
+  \   To determine which version you're using, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
+   the global table version you are using}. To update existing global tables from version \
+   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
+   global tables}.\n\
+  \   \n\
+  \    "]
+
+module DescribeGlobalTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableNotFoundException of global_table_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_global_table_input ->
+    ( describe_global_table_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableNotFoundException of global_table_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_global_table_input ->
+    ( describe_global_table_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableNotFoundException of global_table_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the specified global table.\n\n\
+  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
+   avoided for new global tables. Customers should use \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
+   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
+   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
+  \  \n\
+  \   To determine which version you're using, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
+   the global table version you are using}. To update existing global tables from version \
+   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
+   global tables}.\n\
+  \   \n\
+  \    "]
+
+module DescribeExport : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ExportNotFoundException of export_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_export_input ->
+    ( describe_export_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExportNotFoundException of export_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_export_input ->
+    ( describe_export_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExportNotFoundException of export_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Describes an existing table export.\n"]
+
+module DescribeEndpoints : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_endpoints_request ->
+    (describe_endpoints_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_endpoints_request ->
+    ( describe_endpoints_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the regional endpoint information. For more information on policy permissions, please \
+   see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/inter-network-traffic-privacy.html#inter-network-traffic-DescribeEndpoints}Internetwork \
+   traffic privacy}.\n"]
+
+module DescribeContributorInsights : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_contributor_insights_input ->
+    ( describe_contributor_insights_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_contributor_insights_input ->
+    ( describe_contributor_insights_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about contributor insights for a given table or global secondary index.\n"]
+
+module DescribeContinuousBackups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_continuous_backups_input ->
+    ( describe_continuous_backups_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `TableNotFoundException of table_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_continuous_backups_input ->
+    ( describe_continuous_backups_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Checks the status of continuous backups and point in time recovery on the specified table. \
+   Continuous backups are [ENABLED] on all tables at table creation. If point in time recovery is \
+   enabled, [PointInTimeRecoveryStatus] will be set to ENABLED.\n\n\
+  \  After continuous backups and point in time recovery are enabled, you can restore to any point \
+   in time within [EarliestRestorableDateTime] and [LatestRestorableDateTime]. \n\
+  \ \n\
+  \   [LatestRestorableDateTime] is typically 5 minutes before the current time. You can restore \
+   your table to any point in time in the last 35 days. You can set the recovery period to any \
+   value between 1 and 35 days. \n\
+  \  \n\
+  \   You can call [DescribeContinuousBackups] at a maximum rate of 10 times per second.\n\
+  \   "]
+
+module DescribeBackup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BackupNotFoundException of backup_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_backup_input ->
+    ( describe_backup_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupNotFoundException of backup_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_backup_input ->
+    ( describe_backup_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupNotFoundException of backup_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Describes an existing backup of a table.\n\n\
+  \ You can call [DescribeBackup] at a maximum rate of 10 times per second.\n\
+  \ "]
+
+module DeleteTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_input ->
+    ( delete_table_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_input ->
+    ( delete_table_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [DeleteTable] operation deletes a table and all of its items. After a [DeleteTable] \
+   request, the specified table is in the [DELETING] state until DynamoDB completes the deletion. \
+   If the table is in the [ACTIVE] state, you can delete it. If a table is in [CREATING] or \
+   [UPDATING] states, then DynamoDB returns a [ResourceInUseException]. If the specified table \
+   does not exist, DynamoDB returns a [ResourceNotFoundException]. If table is already in the \
+   [DELETING] state, no error is returned. \n\n\
+  \  DynamoDB might continue to accept data read and write operations, such as [GetItem] and \
+   [PutItem], on a table in the [DELETING] state until the table deletion is complete. For the \
+   full list of table states, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TableDescription.html#DDB-Type-TableDescription-TableStatus}TableStatus}.\n\
+  \  \n\
+  \    When you delete a table, any indexes on that table are also deleted.\n\
+  \    \n\
+  \     If you have DynamoDB Streams enabled on the table, then the corresponding stream on that \
+   table goes into the [DISABLED] state, and the stream is automatically deleted after 24 hours.\n\
+  \     \n\
+  \      Use the [DescribeTable] action to check the status of the table. \n\
+  \      "]
+
+module DeleteResourcePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `PolicyNotFoundException of policy_not_found_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_policy_input ->
+    ( delete_resource_policy_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `PolicyNotFoundException of policy_not_found_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_policy_input ->
+    ( delete_resource_policy_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `PolicyNotFoundException of policy_not_found_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes the resource-based policy attached to the resource, which can be a table or stream.\n\n\
+  \  [DeleteResourcePolicy] is an idempotent operation; running it multiple times on the same \
+   resource {i doesn't} result in an error response, unless you specify an [ExpectedRevisionId], \
+   which will then return a [PolicyNotFoundException].\n\
+  \ \n\
+  \   To make sure that you don't inadvertently lock yourself out of your own resources, the root \
+   principal in your Amazon Web Services account can perform [DeleteResourcePolicy] requests, even \
+   if your resource-based policy explicitly denies the root principal's access. \n\
+  \   \n\
+  \       [DeleteResourcePolicy] is an asynchronous operation. If you issue a [GetResourcePolicy] \
+   request immediately after running the [DeleteResourcePolicy] request, DynamoDB might still \
+   return the deleted policy. This is because the policy for your resource might not have been \
+   deleted yet. Wait for a few seconds, and then try the [GetResourcePolicy] request again.\n\
+  \      \n\
+  \       "]
+
+module DeleteItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConditionalCheckFailedException of conditional_check_failed_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `TransactionConflictException of transaction_conflict_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_item_input ->
+    ( delete_item_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConditionalCheckFailedException of conditional_check_failed_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `TransactionConflictException of transaction_conflict_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_item_input ->
+    ( delete_item_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConditionalCheckFailedException of conditional_check_failed_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `TransactionConflictException of transaction_conflict_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a single item in a table by primary key. You can perform a conditional delete operation \
+   that deletes the item if it exists, or if it has an expected attribute value.\n\n\
+  \ In addition to deleting an item, you can also return the item's attribute values in the same \
+   operation, using the [ReturnValues] parameter.\n\
+  \ \n\
+  \  Unless you specify conditions, the [DeleteItem] is an idempotent operation; running it \
+   multiple times on the same item or attribute does {i not} result in an error response.\n\
+  \  \n\
+  \   Conditional deletes are useful for deleting items only if specific conditions are met. If \
+   those conditions are met, DynamoDB performs the delete. Otherwise, the item is not deleted.\n\
+  \   "]
+
+module DeleteBackup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BackupInUseException of backup_in_use_exception
+    | `BackupNotFoundException of backup_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_backup_input ->
+    ( delete_backup_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupInUseException of backup_in_use_exception
+      | `BackupNotFoundException of backup_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_backup_input ->
+    ( delete_backup_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupInUseException of backup_in_use_exception
+      | `BackupNotFoundException of backup_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes an existing backup of a table.\n\n\
+  \ You can call [DeleteBackup] at a maximum rate of 10 times per second.\n\
+  \ "]
+
+module CreateTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_input ->
+    ( create_table_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_input ->
+    ( create_table_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [CreateTable] operation adds a new table to your account. In an Amazon Web Services \
+   account, table names must be unique within each Region. That is, you can have two tables with \
+   same name if you create the tables in different Regions.\n\n\
+  \  [CreateTable] is an asynchronous operation. Upon receiving a [CreateTable] request, DynamoDB \
+   immediately returns a response with a [TableStatus] of [CREATING]. After the table is created, \
+   DynamoDB sets the [TableStatus] to [ACTIVE]. You can perform read and write operations only on \
+   an [ACTIVE] table. \n\
+  \ \n\
+  \  You can optionally define secondary indexes on the new table, as part of the [CreateTable] \
+   operation. If you want to create multiple tables with secondary indexes on them, you must \
+   create the tables sequentially. Only one table with secondary indexes can be in the [CREATING] \
+   state at any given time.\n\
+  \  \n\
+  \   You can use the [DescribeTable] action to check the table status.\n\
+  \   "]
+
+module CreateGlobalTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_global_table_input ->
+    ( create_global_table_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TableNotFoundException of table_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_global_table_input ->
+    ( create_global_table_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a global table from an existing table. A global table creates a replication \
+   relationship between two or more DynamoDB tables with the same table name in the provided \
+   Regions. \n\n\
+  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
+   avoided for new global tables. Customers should use \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
+   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
+   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
+  \  \n\
+  \   To determine which version you're using, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
+   the global table version you are using}. To update existing global tables from version \
+   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
+   global tables}.\n\
+  \   \n\
+  \     If you want to add a new replica table to a global table, each of the following conditions \
+   must be true:\n\
+  \     \n\
+  \      {ul\n\
+  \            {-  The table must have the same primary key as all of the other replicas.\n\
+  \                \n\
+  \                 }\n\
+  \            {-  The table must have the same name as all of the other replicas.\n\
+  \                \n\
+  \                 }\n\
+  \            {-  The table must have DynamoDB Streams enabled, with the stream containing both \
+   the new and the old images of the item.\n\
+  \                \n\
+  \                 }\n\
+  \            {-  None of the replica tables in the global table can contain any data.\n\
+  \                \n\
+  \                 }\n\
+  \            }\n\
+  \    If global secondary indexes are specified, then the following conditions must also be met: \n\
+  \   \n\
+  \    {ul\n\
+  \          {-   The global secondary indexes must have the same name. \n\
+  \              \n\
+  \               }\n\
+  \          {-   The global secondary indexes must have the same hash key and sort key (if \
+   present). \n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \    If local secondary indexes are specified, then the following conditions must also be met: \n\
+  \   \n\
+  \    {ul\n\
+  \          {-   The local secondary indexes must have the same name. \n\
+  \              \n\
+  \               }\n\
+  \          {-   The local secondary indexes must have the same hash key and sort key (if \
+   present). \n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \     Write capacity settings should be set consistently across your replica tables and \
+   secondary indexes. DynamoDB strongly recommends enabling auto scaling to manage the write \
+   capacity settings for all of your global tables replicas and indexes. \n\
+  \    \n\
+  \      If you prefer to manage write capacity settings manually, you should provision equal \
+   replicated write capacity units to your replica tables. You should also provision equal \
+   replicated write capacity units to matching secondary indexes across your global table. \n\
+  \     \n\
+  \      "]
+
+module CreateBackup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BackupInUseException of backup_in_use_exception
+    | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TableInUseException of table_in_use_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_backup_input ->
+    ( create_backup_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupInUseException of backup_in_use_exception
+      | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TableInUseException of table_in_use_exception
+      | `TableNotFoundException of table_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_backup_input ->
+    ( create_backup_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupInUseException of backup_in_use_exception
+      | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TableInUseException of table_in_use_exception
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a backup for an existing table.\n\n\
+  \  Each time you create an on-demand backup, the entire table data is backed up. There is no \
+   limit to the number of on-demand backups that can be taken. \n\
+  \ \n\
+  \   When you create an on-demand backup, a time marker of the request is cataloged, and the \
+   backup is created asynchronously, by applying all changes until the time of the request to the \
+   last full table snapshot. Backup requests are processed instantaneously and become available \
+   for restore within minutes. \n\
+  \  \n\
+  \   You can call [CreateBackup] at a maximum rate of 50 times per second.\n\
+  \   \n\
+  \    All backups in DynamoDB work without consuming any provisioned throughput on the table.\n\
+  \    \n\
+  \      If you submit a backup request on 2018-12-14 at 14:25:00, the backup is guaranteed to \
+   contain all data committed to the table up to 14:24:00, and data committed after 14:26:00 will \
+   not be. The backup might contain data modifications made between 14:24:00 and 14:26:00. \
+   On-demand backup does not support causal consistency. \n\
+  \     \n\
+  \       Along with data, the following are also included on the backups: \n\
+  \      \n\
+  \       {ul\n\
+  \             {-  Global secondary indexes (GSIs)\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  Local secondary indexes (LSIs)\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  Streams\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  Provisioned read and write capacity\n\
+  \                 \n\
+  \                  }\n\
+  \             }\n\
+  \  "]
+
+module BatchWriteItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_write_item_input ->
+    ( batch_write_item_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_write_item_input ->
+    ( batch_write_item_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [BatchWriteItem] operation puts or deletes multiple items in one or more tables. A single \
+   call to [BatchWriteItem] can transmit up to 16MB of data over the network, consisting of up to \
+   25 item put or delete operations. While individual items can be up to 400 KB once stored, it's \
+   important to note that an item's representation might be greater than 400KB while being sent in \
+   DynamoDB's JSON format for the API call. For more details on this distinction, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html}Naming \
+   Rules and Data Types}.\n\n\
+  \   [BatchWriteItem] cannot update items. If you perform a [BatchWriteItem] operation on an \
+   existing item, that item's values will be overwritten by the operation and it will appear like \
+   it was updated. To update items, we recommend you use the [UpdateItem] action.\n\
+  \  \n\
+  \    The individual [PutItem] and [DeleteItem] operations specified in [BatchWriteItem] are \
+   atomic; however [BatchWriteItem] as a whole is not. If any requested operations fail because \
+   the table's provisioned throughput is exceeded or an internal processing failure occurs, the \
+   failed operations are returned in the [UnprocessedItems] response parameter. You can \
+   investigate and optionally resend the requests. Typically, you would call [BatchWriteItem] in a \
+   loop. Each iteration would check for unprocessed items and submit a new [BatchWriteItem] \
+   request with those unprocessed items until all items have been processed.\n\
+  \    \n\
+  \     For tables and indexes with provisioned capacity, if none of the items can be processed \
+   due to insufficient provisioned throughput on all of the tables in the request, then \
+   [BatchWriteItem] returns a [ProvisionedThroughputExceededException]. For all tables and \
+   indexes, if none of the items can be processed due to other throttling scenarios (such as \
+   exceeding partition level limits), then [BatchWriteItem] returns a [ThrottlingException].\n\
+  \     \n\
+  \       If DynamoDB returns any unprocessed items, you should retry the batch operation on those \
+   items. However, {i we strongly recommend that you use an exponential backoff algorithm}. If you \
+   retry the batch operation immediately, the underlying read or write requests can still fail due \
+   to throttling on the individual tables. If you delay the batch operation using exponential \
+   backoff, the individual requests in the batch are much more likely to succeed.\n\
+  \       \n\
+  \        For more information, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#Programming.Errors.BatchOperations}Batch \
+   Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n\
+  \        \n\
+  \          With [BatchWriteItem], you can efficiently write or delete large amounts of data, \
+   such as from Amazon EMR, or copy data from another database into DynamoDB. In order to improve \
+   performance with these large-scale operations, [BatchWriteItem] does not behave in the same way \
+   as individual [PutItem] and [DeleteItem] calls would. For example, you cannot specify \
+   conditions on individual put and delete requests, and [BatchWriteItem] does not return deleted \
+   items in the response.\n\
+  \          \n\
+  \           If you use a programming language that supports concurrency, you can use threads to \
+   write items in parallel. Your application must include the necessary logic to manage the \
+   threads. With languages that don't support threading, you must update or delete the specified \
+   items one at a time. In both situations, [BatchWriteItem] performs the specified put and delete \
+   operations in parallel, giving you the power of the thread pool approach without having to \
+   introduce complexity into your application.\n\
+  \           \n\
+  \            Parallel processing reduces latency, but each specified put and delete request \
+   consumes the same number of write capacity units whether it is processed in parallel or not. \
+   Delete operations on nonexistent items consume one write capacity unit.\n\
+  \            \n\
+  \             If one or more of the following is true, DynamoDB rejects the entire batch write \
+   operation:\n\
+  \             \n\
+  \              {ul\n\
+  \                    {-  One or more tables specified in the [BatchWriteItem] request does not \
+   exist.\n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  Primary key attributes specified on an item in the request do not match \
+   those in the corresponding table's primary key schema.\n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  You try to perform multiple operations on the same item in the same \
+   [BatchWriteItem] request. For example, you cannot put and delete the same item in the same \
+   [BatchWriteItem] request. \n\
+  \                        \n\
+  \                         }\n\
+  \                    {-   Your request contains at least two items with identical hash and range \
+   keys (which essentially is two put operations). \n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  There are more than 25 requests in the batch.\n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  Any individual item in a batch exceeds 400 KB.\n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  The total request size exceeds 16 MB.\n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  Any individual items with keys exceeding the key length limits. For a \
+   partition key, the limit is 2048 bytes and for a sort key, the limit is 1024 bytes.\n\
+  \                        \n\
+  \                         }\n\
+  \                    }\n\
+  \  "]
+
+module BatchGetItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_item_input ->
+    ( batch_get_item_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_item_input ->
+    ( batch_get_item_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [BatchGetItem] operation returns the attributes of one or more items from one or more \
+   tables. You identify requested items by primary key.\n\n\
+  \ A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. \
+   [BatchGetItem] returns a partial result if the response size limit is exceeded, the table's \
+   provisioned throughput is exceeded, more than 1MB per partition is requested, or an internal \
+   processing failure occurs. If a partial result is returned, the operation returns a value for \
+   [UnprocessedKeys]. You can use this value to retry the operation starting with the next item to \
+   get.\n\
+  \ \n\
+  \   If you request more than 100 items, [BatchGetItem] returns a [ValidationException] with the \
+   message \"Too many items requested for the BatchGetItem call.\"\n\
+  \   \n\
+  \     For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, \
+   the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an \
+   appropriate [UnprocessedKeys] value so you can get the next page of results. If desired, your \
+   application can include its own logic to assemble the pages of results into one dataset.\n\
+  \     \n\
+  \      If {i none} of the items can be processed due to insufficient provisioned throughput on \
+   all of the tables in the request, then [BatchGetItem] returns a \
+   [ProvisionedThroughputExceededException]. If {i at least one} of the items is successfully \
+   processed, then [BatchGetItem] completes successfully, while returning the keys of the unread \
+   items in [UnprocessedKeys].\n\
+  \      \n\
+  \        If DynamoDB returns any unprocessed items, you should retry the batch operation on \
+   those items. However, {i we strongly recommend that you use an exponential backoff algorithm}. \
+   If you retry the batch operation immediately, the underlying read or write requests can still \
+   fail due to throttling on the individual tables. If you delay the batch operation using \
+   exponential backoff, the individual requests in the batch are much more likely to succeed.\n\
+  \        \n\
+  \         For more information, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations}Batch \
+   Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n\
+  \         \n\
+  \           By default, [BatchGetItem] performs eventually consistent reads on every table in \
+   the request. If you want strongly consistent reads instead, you can set [ConsistentRead] to \
+   [true] for any or all tables.\n\
+  \           \n\
+  \            In order to minimize response latency, [BatchGetItem] may retrieve items in parallel.\n\
+  \            \n\
+  \             When designing your application, keep in mind that DynamoDB does not return items \
+   in any particular order. To help parse the response by item, include the primary key values for \
+   the items in your request in the [ProjectionExpression] parameter.\n\
+  \             \n\
+  \              If a requested item does not exist, it is not returned in the result. Requests \
+   for nonexistent items consume the minimum read capacity units according to the type of read. \
+   For more information, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations}Working \
+   with Tables} in the {i Amazon DynamoDB Developer Guide}.\n\
+  \              \n\
+  \                 [BatchGetItem] will result in a [ValidationException] if the same key is \
+   specified multiple times.\n\
+  \                \n\
+  \                 "]
+
+module BatchExecuteStatement : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_execute_statement_input ->
+    ( batch_execute_statement_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_execute_statement_input ->
+    ( batch_execute_statement_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "This operation allows you to perform batch reads or writes on data stored in DynamoDB, using \
+   PartiQL. Each read statement in a [BatchExecuteStatement] must specify an equality condition on \
+   all key attributes. This enforces that each [SELECT] statement in a batch returns at most a \
+   single item. For more information, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ql-reference.multiplestatements.batching.html}Running \
+   batch operations with PartiQL for DynamoDB }.\n\n\
+  \  The entire batch must consist of either read statements or write statements, you cannot mix \
+   both in one batch.\n\
+  \  \n\
+  \     A HTTP 200 response does not mean that all statements in the BatchExecuteStatement \
+   succeeded. Error details for individual statements can be found under the \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchStatementResponse.html#DDB-Type-BatchStatementResponse-Error}Error} \
+   field of the [BatchStatementResponse] for each statement.\n\
+  \     \n\
+  \      "]

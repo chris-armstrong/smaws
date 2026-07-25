@@ -32,8 +32,9 @@ for sid, shape in m.get("shapes", {}).items():
                 proto = "Query"; break
             if p in ("aws.protocols#awsJson1_0", "aws.protocols#awsJson1_1"):
                 proto = "Json"; break
-            if p in ("aws.protocols#restJson1", "aws.protocols#restXml",
-                     "aws.protocols#ec2Query"):
+            if p == "aws.protocols#restXml":
+                proto = "RestXml"; break
+            if p in ("aws.protocols#restJson1", "aws.protocols#ec2Query"):
                 raise SystemExit(f"unsupported protocol {p}")
         if proto is None:
             proto = "Json"
@@ -49,13 +50,17 @@ PY
 			echo "Unable to generate for $service_short_name!"
 			exit 1
 		fi
-		if [ "${protocol}" = "Query" ]; then
-			ser=query_serializers
-			deser=query_deserializers
-		else
-			ser=json_serializers
-			deser=json_deserializers
-		fi
+		case "${protocol}" in
+			Query)
+				ser=query_serializers
+				deser=query_deserializers ;;
+			RestXml)
+				ser=xml_serializers
+				deser=xml_deserializers ;;
+			*)
+				ser=json_serializers
+				deser=json_deserializers ;;
+		esac
 		echo "Generating \"${dir}/dune\" for \"$service_short_name\" \"$service_long_name\" (${protocol})"
 		cat service-dune-template | sed \
 			-e "s/%%service-short-name%%/${service_short_name}/g"  \
@@ -64,5 +69,11 @@ PY
 			-e "s/%%serializer-module%%/${ser}/g"  \
 			-e "s/%%deserializer-module%%/${deser}/g"  \
 			> "${dir}/dune"
+		# The generator's write_operations omits operations.mli for the restXml
+		# protocol (it returns Ok () instead of writing the interface), so the
+		# dune rule must not list operations.mli as a target / ocamlformat input.
+		if [ "${protocol}" = "RestXml" ]; then
+			sed -i '/operations\.mli/d' "${dir}/dune"
+		fi
 	fi
 done

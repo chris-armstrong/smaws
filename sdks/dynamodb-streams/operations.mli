@@ -1,43 +1,5 @@
 open Types
 
-module DescribeStream : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stream_input ->
-    ( describe_stream_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stream_input ->
-    ( describe_stream_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about a stream, including the current status of the stream, its Amazon \
-   Resource Name (ARN), the composition of its shards, and its corresponding DynamoDB table.\n\n\
-  \  You can call [DescribeStream] at a maximum rate of 10 times per second.\n\
-  \  \n\
-  \    Each shard in the stream has a [SequenceNumberRange] associated with it. If the \
-   [SequenceNumberRange] has a [StartingSequenceNumber] but no [EndingSequenceNumber], then the \
-   shard is still open (able to receive more stream records). If both [StartingSequenceNumber] and \
-   [EndingSequenceNumber] are present, then that shard is closed and can no longer receive more \
-   data.\n\
-  \    "]
-
 module GetRecords : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -156,3 +118,41 @@ end
   \  You can call [ListStreams] at a maximum rate of 5 times per second.\n\
   \  \n\
   \   "]
+
+module DescribeStream : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_input ->
+    ( describe_stream_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_input ->
+    ( describe_stream_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about a stream, including the current status of the stream, its Amazon \
+   Resource Name (ARN), the composition of its shards, and its corresponding DynamoDB table.\n\n\
+  \  You can call [DescribeStream] at a maximum rate of 10 times per second.\n\
+  \  \n\
+  \    Each shard in the stream has a [SequenceNumberRange] associated with it. If the \
+   [SequenceNumberRange] has a [StartingSequenceNumber] but no [EndingSequenceNumber], then the \
+   shard is still open (able to receive more stream records). If both [StartingSequenceNumber] and \
+   [EndingSequenceNumber] are present, then that shard is closed and can no longer receive more \
+   data.\n\
+  \    "]

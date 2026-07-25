@@ -1,67 +1,5 @@
 open Types
 
-module AssociateAccounts : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ForbiddenException of forbidden_exception
-    | `IdempotencyTokenInUseException of idempotency_token_in_use_exception
-    | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `NotManagementAccountException of not_management_account_exception
-    | `OptInRequiredException of opt_in_required_exception
-    | `ServiceUnavailableException of service_unavailable_exception
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    associate_accounts_request ->
-    ( associate_accounts_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ForbiddenException of forbidden_exception
-      | `IdempotencyTokenInUseException of idempotency_token_in_use_exception
-      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `NotManagementAccountException of not_management_account_exception
-      | `OptInRequiredException of opt_in_required_exception
-      | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    associate_accounts_request ->
-    ( associate_accounts_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ForbiddenException of forbidden_exception
-      | `IdempotencyTokenInUseException of idempotency_token_in_use_exception
-      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `NotManagementAccountException of not_management_account_exception
-      | `OptInRequiredException of opt_in_required_exception
-      | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Associates one or more member accounts with your organization's management account, enabling \
-   centralized implementation of optimization actions across those accounts. Once associated, the \
-   management account (or a delegated administrator) can apply recommended actions to the member \
-   account. When you associate a member account, its organization rule mode is automatically set \
-   to \"Any allowed,\" which permits the management account to create Automation rules that \
-   automatically apply actions to that account. If the member account has not previously enabled \
-   the Automation feature, the association process automatically enables it.\n\n\
-  \  Only the management account or a delegated administrator can perform this action.\n\
-  \  \n\
-  \   "]
-
 module CreateAutomationRule : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -419,6 +357,51 @@ end
   \  \n\
   \   "]
 
+module ListAutomationEvents : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ForbiddenException of forbidden_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `OptInRequiredException of opt_in_required_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_automation_events_request ->
+    ( list_automation_events_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ForbiddenException of forbidden_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `OptInRequiredException of opt_in_required_exception
+      | `ServiceUnavailableException of service_unavailable_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_automation_events_request ->
+    ( list_automation_events_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ForbiddenException of forbidden_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `OptInRequiredException of opt_in_required_exception
+      | `ServiceUnavailableException of service_unavailable_exception
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists automation events based on specified filters. You can retrieve events that were created \
+   within the past year. \n"]
+
 module ListAutomationEventSteps : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -511,51 +494,6 @@ end
 [@@ocaml.doc
   "Provides a summary of automation events based on specified filters. Only events created within \
    the past year will be included in the summary. \n"]
-
-module ListAutomationEvents : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ForbiddenException of forbidden_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `OptInRequiredException of opt_in_required_exception
-    | `ServiceUnavailableException of service_unavailable_exception
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_automation_events_request ->
-    ( list_automation_events_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ForbiddenException of forbidden_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `OptInRequiredException of opt_in_required_exception
-      | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_automation_events_request ->
-    ( list_automation_events_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ForbiddenException of forbidden_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `OptInRequiredException of opt_in_required_exception
-      | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists automation events based on specified filters. You can retrieve events that were created \
-   within the past year. \n"]
 
 module ListAutomationRulePreview : sig
   val error_to_string :
@@ -690,55 +628,6 @@ module ListAutomationRules : sig
 end
 [@@ocaml.doc " Lists the automation rules that match specified filters. \n"]
 
-module ListRecommendedActionSummaries : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ForbiddenException of forbidden_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `OptInRequiredException of opt_in_required_exception
-    | `ServiceUnavailableException of service_unavailable_exception
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_recommended_action_summaries_request ->
-    ( list_recommended_action_summaries_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ForbiddenException of forbidden_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `OptInRequiredException of opt_in_required_exception
-      | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_recommended_action_summaries_request ->
-    ( list_recommended_action_summaries_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ForbiddenException of forbidden_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `OptInRequiredException of opt_in_required_exception
-      | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Provides a summary of recommended actions based on specified filters. \n\n\
-  \  Management accounts and delegated administrators can retrieve recommended actions that \
-   include associated member accounts. You can associate a member account using \
-   [AssociateAccounts].\n\
-  \  \n\
-  \   "]
-
 module ListRecommendedActions : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -782,6 +671,55 @@ module ListRecommendedActions : sig
 end
 [@@ocaml.doc
   " Lists the recommended actions based that match specified filters. \n\n\
+  \  Management accounts and delegated administrators can retrieve recommended actions that \
+   include associated member accounts. You can associate a member account using \
+   [AssociateAccounts].\n\
+  \  \n\
+  \   "]
+
+module ListRecommendedActionSummaries : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ForbiddenException of forbidden_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `OptInRequiredException of opt_in_required_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_recommended_action_summaries_request ->
+    ( list_recommended_action_summaries_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ForbiddenException of forbidden_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `OptInRequiredException of opt_in_required_exception
+      | `ServiceUnavailableException of service_unavailable_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_recommended_action_summaries_request ->
+    ( list_recommended_action_summaries_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ForbiddenException of forbidden_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `OptInRequiredException of opt_in_required_exception
+      | `ServiceUnavailableException of service_unavailable_exception
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Provides a summary of recommended actions based on specified filters. \n\n\
   \  Management accounts and delegated administrators can retrieve recommended actions that \
    include associated member accounts. You can associate a member account using \
    [AssociateAccounts].\n\
@@ -1163,3 +1101,65 @@ module UpdateEnrollmentConfiguration : sig
 end
 [@@ocaml.doc
   "Updates your account\226\128\153s Compute Optimizer Automation enrollment configuration. \n"]
+
+module AssociateAccounts : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ForbiddenException of forbidden_exception
+    | `IdempotencyTokenInUseException of idempotency_token_in_use_exception
+    | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `NotManagementAccountException of not_management_account_exception
+    | `OptInRequiredException of opt_in_required_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    associate_accounts_request ->
+    ( associate_accounts_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ForbiddenException of forbidden_exception
+      | `IdempotencyTokenInUseException of idempotency_token_in_use_exception
+      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NotManagementAccountException of not_management_account_exception
+      | `OptInRequiredException of opt_in_required_exception
+      | `ServiceUnavailableException of service_unavailable_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    associate_accounts_request ->
+    ( associate_accounts_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ForbiddenException of forbidden_exception
+      | `IdempotencyTokenInUseException of idempotency_token_in_use_exception
+      | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NotManagementAccountException of not_management_account_exception
+      | `OptInRequiredException of opt_in_required_exception
+      | `ServiceUnavailableException of service_unavailable_exception
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Associates one or more member accounts with your organization's management account, enabling \
+   centralized implementation of optimization actions across those accounts. Once associated, the \
+   management account (or a delegated administrator) can apply recommended actions to the member \
+   account. When you associate a member account, its organization rule mode is automatically set \
+   to \"Any allowed,\" which permits the management account to create Automation rules that \
+   automatically apply actions to that account. If the member account has not previously enabled \
+   the Automation feature, the association process automatically enables it.\n\n\
+  \  Only the management account or a delegated administrator can perform this action.\n\
+  \  \n\
+  \   "]

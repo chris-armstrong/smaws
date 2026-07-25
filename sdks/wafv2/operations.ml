@@ -1760,6 +1760,44 @@ module ListAPIKeys = struct
       ~output_deserializer:Json_deserializers.list_api_keys_response_of_yojson ~error_deserializer
 end
 
+module ListAvailableManagedRuleGroups = struct
+  let error_to_string = function
+    | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
+    | `WAFInvalidOperationException _ -> "com.amazonaws.wafv2#WAFInvalidOperationException"
+    | `WAFInvalidParameterException _ -> "com.amazonaws.wafv2#WAFInvalidParameterException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "WAFInternalErrorException" ->
+          `WAFInternalErrorException
+            (Json_deserializers.waf_internal_error_exception_of_yojson tree path)
+      | _, "WAFInvalidOperationException" ->
+          `WAFInvalidOperationException
+            (Json_deserializers.waf_invalid_operation_exception_of_yojson tree path)
+      | _, "WAFInvalidParameterException" ->
+          `WAFInvalidParameterException
+            (Json_deserializers.waf_invalid_parameter_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_available_managed_rule_groups_request) =
+    let input = Json_serializers.list_available_managed_rule_groups_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20190729.ListAvailableManagedRuleGroups"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_available_managed_rule_groups_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_available_managed_rule_groups_request) =
+    let input = Json_serializers.list_available_managed_rule_groups_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20190729.ListAvailableManagedRuleGroups" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_available_managed_rule_groups_response_of_yojson
+      ~error_deserializer
+end
+
 module ListAvailableManagedRuleGroupVersions = struct
   let error_to_string = function
     | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
@@ -1805,44 +1843,6 @@ module ListAvailableManagedRuleGroupVersions = struct
       ~shape_name:"AWSWAF_20190729.ListAvailableManagedRuleGroupVersions" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.list_available_managed_rule_group_versions_response_of_yojson
-      ~error_deserializer
-end
-
-module ListAvailableManagedRuleGroups = struct
-  let error_to_string = function
-    | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
-    | `WAFInvalidOperationException _ -> "com.amazonaws.wafv2#WAFInvalidOperationException"
-    | `WAFInvalidParameterException _ -> "com.amazonaws.wafv2#WAFInvalidParameterException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "WAFInternalErrorException" ->
-          `WAFInternalErrorException
-            (Json_deserializers.waf_internal_error_exception_of_yojson tree path)
-      | _, "WAFInvalidOperationException" ->
-          `WAFInvalidOperationException
-            (Json_deserializers.waf_invalid_operation_exception_of_yojson tree path)
-      | _, "WAFInvalidParameterException" ->
-          `WAFInvalidParameterException
-            (Json_deserializers.waf_invalid_parameter_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_available_managed_rule_groups_request) =
-    let input = Json_serializers.list_available_managed_rule_groups_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20190729.ListAvailableManagedRuleGroups"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_available_managed_rule_groups_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_available_managed_rule_groups_request) =
-    let input = Json_serializers.list_available_managed_rule_groups_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSWAF_20190729.ListAvailableManagedRuleGroups" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_available_managed_rule_groups_response_of_yojson
       ~error_deserializer
 end
 

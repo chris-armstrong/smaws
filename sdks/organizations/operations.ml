@@ -1643,64 +1643,6 @@ module DisablePolicyType = struct
       ~error_deserializer
 end
 
-module EnableAWSServiceAccess = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.organizations#AccessDeniedException"
-    | `AWSOrganizationsNotInUseException _ ->
-        "com.amazonaws.organizations#AWSOrganizationsNotInUseException"
-    | `ConcurrentModificationException _ ->
-        "com.amazonaws.organizations#ConcurrentModificationException"
-    | `ConstraintViolationException _ -> "com.amazonaws.organizations#ConstraintViolationException"
-    | `InvalidInputException _ -> "com.amazonaws.organizations#InvalidInputException"
-    | `ServiceException _ -> "com.amazonaws.organizations#ServiceException"
-    | `TooManyRequestsException _ -> "com.amazonaws.organizations#TooManyRequestsException"
-    | `UnsupportedAPIEndpointException _ ->
-        "com.amazonaws.organizations#UnsupportedAPIEndpointException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "AWSOrganizationsNotInUseException" ->
-          `AWSOrganizationsNotInUseException
-            (Json_deserializers.aws_organizations_not_in_use_exception_of_yojson tree path)
-      | _, "ConcurrentModificationException" ->
-          `ConcurrentModificationException
-            (Json_deserializers.concurrent_modification_exception_of_yojson tree path)
-      | _, "ConstraintViolationException" ->
-          `ConstraintViolationException
-            (Json_deserializers.constraint_violation_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "ServiceException" ->
-          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
-      | _, "TooManyRequestsException" ->
-          `TooManyRequestsException
-            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
-      | _, "UnsupportedAPIEndpointException" ->
-          `UnsupportedAPIEndpointException
-            (Json_deserializers.unsupported_api_endpoint_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : enable_aws_service_access_request) =
-    let input = Json_serializers.enable_aws_service_access_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"AWSOrganizationsV20161128.EnableAWSServiceAccess" ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : enable_aws_service_access_request) =
-    let input = Json_serializers.enable_aws_service_access_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSOrganizationsV20161128.EnableAWSServiceAccess" ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
 module EnableAllFeatures = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.organizations#AccessDeniedException"
@@ -1756,6 +1698,64 @@ module EnableAllFeatures = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSOrganizationsV20161128.EnableAllFeatures" ~service ~context ~input
       ~output_deserializer:Json_deserializers.enable_all_features_response_of_yojson
+      ~error_deserializer
+end
+
+module EnableAWSServiceAccess = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.organizations#AccessDeniedException"
+    | `AWSOrganizationsNotInUseException _ ->
+        "com.amazonaws.organizations#AWSOrganizationsNotInUseException"
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.organizations#ConcurrentModificationException"
+    | `ConstraintViolationException _ -> "com.amazonaws.organizations#ConstraintViolationException"
+    | `InvalidInputException _ -> "com.amazonaws.organizations#InvalidInputException"
+    | `ServiceException _ -> "com.amazonaws.organizations#ServiceException"
+    | `TooManyRequestsException _ -> "com.amazonaws.organizations#TooManyRequestsException"
+    | `UnsupportedAPIEndpointException _ ->
+        "com.amazonaws.organizations#UnsupportedAPIEndpointException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "AWSOrganizationsNotInUseException" ->
+          `AWSOrganizationsNotInUseException
+            (Json_deserializers.aws_organizations_not_in_use_exception_of_yojson tree path)
+      | _, "ConcurrentModificationException" ->
+          `ConcurrentModificationException
+            (Json_deserializers.concurrent_modification_exception_of_yojson tree path)
+      | _, "ConstraintViolationException" ->
+          `ConstraintViolationException
+            (Json_deserializers.constraint_violation_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _, "TooManyRequestsException" ->
+          `TooManyRequestsException
+            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
+      | _, "UnsupportedAPIEndpointException" ->
+          `UnsupportedAPIEndpointException
+            (Json_deserializers.unsupported_api_endpoint_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : enable_aws_service_access_request) =
+    let input = Json_serializers.enable_aws_service_access_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSOrganizationsV20161128.EnableAWSServiceAccess" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : enable_aws_service_access_request) =
+    let input = Json_serializers.enable_aws_service_access_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSOrganizationsV20161128.EnableAWSServiceAccess" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -2046,67 +2046,6 @@ module LeaveOrganization = struct
       ~error_deserializer
 end
 
-module ListAWSServiceAccessForOrganization = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.organizations#AccessDeniedException"
-    | `AWSOrganizationsNotInUseException _ ->
-        "com.amazonaws.organizations#AWSOrganizationsNotInUseException"
-    | `ConstraintViolationException _ -> "com.amazonaws.organizations#ConstraintViolationException"
-    | `InvalidInputException _ -> "com.amazonaws.organizations#InvalidInputException"
-    | `ServiceException _ -> "com.amazonaws.organizations#ServiceException"
-    | `TooManyRequestsException _ -> "com.amazonaws.organizations#TooManyRequestsException"
-    | `UnsupportedAPIEndpointException _ ->
-        "com.amazonaws.organizations#UnsupportedAPIEndpointException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "AWSOrganizationsNotInUseException" ->
-          `AWSOrganizationsNotInUseException
-            (Json_deserializers.aws_organizations_not_in_use_exception_of_yojson tree path)
-      | _, "ConstraintViolationException" ->
-          `ConstraintViolationException
-            (Json_deserializers.constraint_violation_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "ServiceException" ->
-          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
-      | _, "TooManyRequestsException" ->
-          `TooManyRequestsException
-            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
-      | _, "UnsupportedAPIEndpointException" ->
-          `UnsupportedAPIEndpointException
-            (Json_deserializers.unsupported_api_endpoint_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_aws_service_access_for_organization_request) =
-    let input =
-      Json_serializers.list_aws_service_access_for_organization_request_to_yojson request
-    in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"AWSOrganizationsV20161128.ListAWSServiceAccessForOrganization" ~service ~context
-      ~input
-      ~output_deserializer:
-        Json_deserializers.list_aws_service_access_for_organization_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_aws_service_access_for_organization_request) =
-    let input =
-      Json_serializers.list_aws_service_access_for_organization_request_to_yojson request
-    in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSOrganizationsV20161128.ListAWSServiceAccessForOrganization" ~service ~context
-      ~input
-      ~output_deserializer:
-        Json_deserializers.list_aws_service_access_for_organization_response_of_yojson
-      ~error_deserializer
-end
-
 module ListAccounts = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.organizations#AccessDeniedException"
@@ -2261,6 +2200,67 @@ module ListAccountsWithInvalidEffectivePolicy = struct
       ~context ~input
       ~output_deserializer:
         Json_deserializers.list_accounts_with_invalid_effective_policy_response_of_yojson
+      ~error_deserializer
+end
+
+module ListAWSServiceAccessForOrganization = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.organizations#AccessDeniedException"
+    | `AWSOrganizationsNotInUseException _ ->
+        "com.amazonaws.organizations#AWSOrganizationsNotInUseException"
+    | `ConstraintViolationException _ -> "com.amazonaws.organizations#ConstraintViolationException"
+    | `InvalidInputException _ -> "com.amazonaws.organizations#InvalidInputException"
+    | `ServiceException _ -> "com.amazonaws.organizations#ServiceException"
+    | `TooManyRequestsException _ -> "com.amazonaws.organizations#TooManyRequestsException"
+    | `UnsupportedAPIEndpointException _ ->
+        "com.amazonaws.organizations#UnsupportedAPIEndpointException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "AWSOrganizationsNotInUseException" ->
+          `AWSOrganizationsNotInUseException
+            (Json_deserializers.aws_organizations_not_in_use_exception_of_yojson tree path)
+      | _, "ConstraintViolationException" ->
+          `ConstraintViolationException
+            (Json_deserializers.constraint_violation_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _, "TooManyRequestsException" ->
+          `TooManyRequestsException
+            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
+      | _, "UnsupportedAPIEndpointException" ->
+          `UnsupportedAPIEndpointException
+            (Json_deserializers.unsupported_api_endpoint_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_aws_service_access_for_organization_request) =
+    let input =
+      Json_serializers.list_aws_service_access_for_organization_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSOrganizationsV20161128.ListAWSServiceAccessForOrganization" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.list_aws_service_access_for_organization_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_aws_service_access_for_organization_request) =
+    let input =
+      Json_serializers.list_aws_service_access_for_organization_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSOrganizationsV20161128.ListAWSServiceAccessForOrganization" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.list_aws_service_access_for_organization_response_of_yojson
       ~error_deserializer
 end
 

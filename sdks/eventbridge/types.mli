@@ -1,10 +1,50 @@
-type nonrec string_ = string [@@ocaml.doc ""]
+type nonrec error_message = string [@@ocaml.doc ""]
 
-type nonrec event_bus_name = string [@@ocaml.doc ""]
+type nonrec resource_not_found_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "An entity that you specified does not exist.\n"]
 
-type nonrec kms_key_identifier = string [@@ocaml.doc ""]
+type nonrec operation_disabled_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The operation you are attempting is not available in this region.\n"]
 
-type nonrec event_bus_description = string [@@ocaml.doc ""]
+type nonrec internal_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "This exception occurs due to unexpected causes.\n"]
+
+type nonrec concurrent_modification_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "There is concurrent modification on a rule, target, archive, or replay.\n"]
+
+type nonrec level =
+  | OFF [@ocaml.doc ""]
+  | ERROR [@ocaml.doc ""]
+  | INFO [@ocaml.doc ""]
+  | TRACE [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec include_detail = NONE [@ocaml.doc ""] | FULL [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec log_config = {
+  include_detail : include_detail option;
+      [@ocaml.doc
+        "Whether EventBridge include detailed event information in the records it generates. \
+         Detailed data can be useful for troubleshooting and debugging. This information includes \
+         details of the event itself, as well as target details.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-logs.html#eb-event-logs-data}Including \
+         detail data in event bus logs} in the {i EventBridge User Guide}.\n\
+        \ "]
+  level : level option;
+      [@ocaml.doc
+        "The level of logging detail to include. This applies to all log destinations for the \
+         event bus.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-logs.html#eb-event-bus-logs-level}Specifying \
+         event bus log level} in the {i EventBridge User Guide}.\n\
+        \ "]
+}
+[@@ocaml.doc
+  "The logging configuration settings for the event bus.\n\n\
+  \ For more information, see {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring \
+   logs for event buses} in the {i EventBridge User Guide}.\n\
+  \ "]
 
 type nonrec resource_arn = string [@@ocaml.doc ""]
 
@@ -20,50 +60,17 @@ type nonrec dead_letter_config = {
    dead-letter queues to process undelivered events} in the {i EventBridge User Guide}.\n\
   \ "]
 
-type nonrec include_detail = FULL [@ocaml.doc ""] | NONE [@ocaml.doc ""] [@@ocaml.doc ""]
+type nonrec event_bus_description = string [@@ocaml.doc ""]
 
-type nonrec level =
-  | TRACE [@ocaml.doc ""]
-  | INFO [@ocaml.doc ""]
-  | ERROR [@ocaml.doc ""]
-  | OFF [@ocaml.doc ""]
-[@@ocaml.doc ""]
+type nonrec kms_key_identifier = string [@@ocaml.doc ""]
 
-type nonrec log_config = {
-  level : level option;
-      [@ocaml.doc
-        "The level of logging detail to include. This applies to all log destinations for the \
-         event bus.\n\n\
-        \ For more information, see \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-logs.html#eb-event-bus-logs-level}Specifying \
-         event bus log level} in the {i EventBridge User Guide}.\n\
-        \ "]
-  include_detail : include_detail option;
-      [@ocaml.doc
-        "Whether EventBridge include detailed event information in the records it generates. \
-         Detailed data can be useful for troubleshooting and debugging. This information includes \
-         details of the event itself, as well as target details.\n\n\
-        \ For more information, see \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-logs.html#eb-event-logs-data}Including \
-         detail data in event bus logs} in the {i EventBridge User Guide}.\n\
-        \ "]
-}
-[@@ocaml.doc
-  "The logging configuration settings for the event bus.\n\n\
-  \ For more information, see {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring \
-   logs for event buses} in the {i EventBridge User Guide}.\n\
-  \ "]
+type nonrec event_bus_name = string [@@ocaml.doc ""]
+
+type nonrec string_ = string [@@ocaml.doc ""]
 
 type nonrec update_event_bus_response = {
-  log_config : log_config option;
-      [@ocaml.doc
-        "The logging configuration settings for the event bus.\n\n\
-        \ For more information, see \
-         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
-         in the {i EventBridge User Guide}.\n\
-        \ "]
-  dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
-  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
+  arn : string_ option; [@ocaml.doc "The event bus Amazon Resource Name (ARN).\n"]
+  name : event_bus_name option; [@ocaml.doc "The event bus name.\n"]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
         "The identifier of the KMS customer managed key for EventBridge to use to encrypt events \
@@ -72,12 +79,8 @@ type nonrec update_event_bus_response = {
          {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html}Data \
          encryption in EventBridge} in the {i Amazon EventBridge User Guide}.\n\
         \ "]
-  name : event_bus_name option; [@ocaml.doc "The event bus name.\n"]
-  arn : string_ option; [@ocaml.doc "The event bus Amazon Resource Name (ARN).\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec update_event_bus_request = {
+  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
+  dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
   log_config : log_config option;
       [@ocaml.doc
         "The logging configuration settings for the event bus.\n\n\
@@ -85,8 +88,11 @@ type nonrec update_event_bus_request = {
          {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
          in the {i EventBridge User Guide}.\n\
         \ "]
-  dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
-  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec update_event_bus_request = {
+  name : event_bus_name option; [@ocaml.doc "The name of the event bus.\n"]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
         "The identifier of the KMS customer managed key for EventBridge to use, if you choose to \
@@ -135,27 +141,57 @@ type nonrec update_event_bus_request = {
          archives} in the {i Amazon EventBridge User Guide}.\n\
         \       \n\
         \        "]
-  name : event_bus_name option; [@ocaml.doc "The name of the event bus.\n"]
+  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
+  dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
+  log_config : log_config option;
+      [@ocaml.doc
+        "The logging configuration settings for the event bus.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
+         in the {i EventBridge User Guide}.\n\
+        \ "]
 }
 [@@ocaml.doc ""]
 
-type nonrec error_message = string [@@ocaml.doc ""]
+type nonrec endpoint_state =
+  | ACTIVE [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""]
+  | CREATE_FAILED [@ocaml.doc ""]
+  | UPDATE_FAILED [@ocaml.doc ""]
+  | DELETE_FAILED [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
-type nonrec resource_not_found_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "An entity that you specified does not exist.\n"]
+type nonrec endpoint_url = string [@@ocaml.doc ""]
 
-type nonrec operation_disabled_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The operation you are attempting is not available in this region.\n"]
+type nonrec endpoint_id = string [@@ocaml.doc ""]
 
-type nonrec internal_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "This exception occurs due to unexpected causes.\n"]
+type nonrec iam_role_arn = string [@@ocaml.doc ""]
 
-type nonrec concurrent_modification_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "There is concurrent modification on a rule, target, archive, or replay.\n"]
+type nonrec non_partner_event_bus_arn = string [@@ocaml.doc ""]
 
-type nonrec endpoint_name = string [@@ocaml.doc ""]
+type nonrec endpoint_event_bus = {
+  event_bus_arn : non_partner_event_bus_arn;
+      [@ocaml.doc "The ARN of the event bus the endpoint is associated with.\n"]
+}
+[@@ocaml.doc "The event buses the endpoint is associated with.\n"]
 
-type nonrec endpoint_arn = string [@@ocaml.doc ""]
+type nonrec endpoint_event_bus_list = endpoint_event_bus list [@@ocaml.doc ""]
+
+type nonrec replication_state = ENABLED [@ocaml.doc ""] | DISABLED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec replication_config = {
+  state : replication_state option; [@ocaml.doc "The state of event replication.\n"]
+}
+[@@ocaml.doc "Endpoints can replicate all events to the secondary Region.\n"]
+
+type nonrec route = string [@@ocaml.doc ""]
+
+type nonrec secondary = { route : route [@ocaml.doc "Defines the secondary Region.\n"] }
+[@@ocaml.doc
+  "The secondary Region that processes events when failover is triggered or replication is enabled.\n"]
 
 type nonrec health_check = string [@@ocaml.doc ""]
 
@@ -167,18 +203,12 @@ type nonrec primary = {
 }
 [@@ocaml.doc "The primary Region of the endpoint.\n"]
 
-type nonrec route = string [@@ocaml.doc ""]
-
-type nonrec secondary = { route : route [@ocaml.doc "Defines the secondary Region.\n"] }
-[@@ocaml.doc
-  "The secondary Region that processes events when failover is triggered or replication is enabled.\n"]
-
 type nonrec failover_config = {
+  primary : primary; [@ocaml.doc "The main Region of the endpoint.\n"]
   secondary : secondary;
       [@ocaml.doc
         "The Region that events are routed to when failover is triggered or event replication is \
          enabled.\n"]
-  primary : primary; [@ocaml.doc "The main Region of the endpoint.\n"]
 }
 [@@ocaml.doc
   "The failover configuration for an endpoint. This includes what triggers failover and what \
@@ -192,230 +222,91 @@ type nonrec routing_config = {
 }
 [@@ocaml.doc "The routing configuration of the endpoint.\n"]
 
-type nonrec replication_state = DISABLED [@ocaml.doc ""] | ENABLED [@ocaml.doc ""]
-[@@ocaml.doc ""]
+type nonrec endpoint_arn = string [@@ocaml.doc ""]
 
-type nonrec replication_config = {
-  state : replication_state option; [@ocaml.doc "The state of event replication.\n"]
-}
-[@@ocaml.doc "Endpoints can replicate all events to the secondary Region.\n"]
-
-type nonrec non_partner_event_bus_arn = string [@@ocaml.doc ""]
-
-type nonrec endpoint_event_bus = {
-  event_bus_arn : non_partner_event_bus_arn;
-      [@ocaml.doc "The ARN of the event bus the endpoint is associated with.\n"]
-}
-[@@ocaml.doc "The event buses the endpoint is associated with.\n"]
-
-type nonrec endpoint_event_bus_list = endpoint_event_bus list [@@ocaml.doc ""]
-
-type nonrec iam_role_arn = string [@@ocaml.doc ""]
-
-type nonrec endpoint_id = string [@@ocaml.doc ""]
-
-type nonrec endpoint_url = string [@@ocaml.doc ""]
-
-type nonrec endpoint_state =
-  | DELETE_FAILED [@ocaml.doc ""]
-  | UPDATE_FAILED [@ocaml.doc ""]
-  | CREATE_FAILED [@ocaml.doc ""]
-  | DELETING [@ocaml.doc ""]
-  | UPDATING [@ocaml.doc ""]
-  | CREATING [@ocaml.doc ""]
-  | ACTIVE [@ocaml.doc ""]
-[@@ocaml.doc ""]
+type nonrec endpoint_name = string [@@ocaml.doc ""]
 
 type nonrec update_endpoint_response = {
-  state : endpoint_state option;
-      [@ocaml.doc "The state of the endpoint you updated in this request.\n"]
-  endpoint_url : endpoint_url option;
-      [@ocaml.doc "The URL of the endpoint you updated in this request.\n"]
-  endpoint_id : endpoint_id option;
-      [@ocaml.doc "The ID of the endpoint you updated in this request.\n"]
-  role_arn : iam_role_arn option;
-      [@ocaml.doc
-        "The ARN of the role used by event replication for the endpoint you updated in this request.\n"]
-  event_buses : endpoint_event_bus_list option;
-      [@ocaml.doc
-        "The event buses used for replication for the endpoint you updated in this request.\n"]
+  name : endpoint_name option;
+      [@ocaml.doc "The name of the endpoint you updated in this request.\n"]
+  arn : endpoint_arn option; [@ocaml.doc "The ARN of the endpoint you updated in this request.\n"]
+  routing_config : routing_config option;
+      [@ocaml.doc "The routing configuration you updated in this request.\n"]
   replication_config : replication_config option;
       [@ocaml.doc
         "Whether event replication was enabled or disabled for the endpoint you updated in this \
          request.\n"]
-  routing_config : routing_config option;
-      [@ocaml.doc "The routing configuration you updated in this request.\n"]
-  arn : endpoint_arn option; [@ocaml.doc "The ARN of the endpoint you updated in this request.\n"]
-  name : endpoint_name option; [@ocaml.doc "The name of the endpoint you updated in this request.\n"]
+  event_buses : endpoint_event_bus_list option;
+      [@ocaml.doc
+        "The event buses used for replication for the endpoint you updated in this request.\n"]
+  role_arn : iam_role_arn option;
+      [@ocaml.doc
+        "The ARN of the role used by event replication for the endpoint you updated in this request.\n"]
+  endpoint_id : endpoint_id option;
+      [@ocaml.doc "The ID of the endpoint you updated in this request.\n"]
+  endpoint_url : endpoint_url option;
+      [@ocaml.doc "The URL of the endpoint you updated in this request.\n"]
+  state : endpoint_state option;
+      [@ocaml.doc "The state of the endpoint you updated in this request.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec endpoint_description = string [@@ocaml.doc ""]
 
 type nonrec update_endpoint_request = {
-  role_arn : iam_role_arn option;
-      [@ocaml.doc "The ARN of the role used by event replication for this request.\n"]
-  event_buses : endpoint_event_bus_list option;
-      [@ocaml.doc "Define event buses used for replication.\n"]
-  replication_config : replication_config option;
-      [@ocaml.doc "Whether event replication was enabled or disabled by this request.\n"]
+  name : endpoint_name; [@ocaml.doc "The name of the endpoint you want to update.\n"]
+  description : endpoint_description option; [@ocaml.doc "A description for the endpoint.\n"]
   routing_config : routing_config option;
       [@ocaml.doc
         "Configure the routing policy, including the health check and secondary Region.\n"]
-  description : endpoint_description option; [@ocaml.doc "A description for the endpoint.\n"]
-  name : endpoint_name; [@ocaml.doc "The name of the endpoint you want to update.\n"]
+  replication_config : replication_config option;
+      [@ocaml.doc "Whether event replication was enabled or disabled by this request.\n"]
+  event_buses : endpoint_event_bus_list option;
+      [@ocaml.doc "Define event buses used for replication.\n"]
+  role_arn : iam_role_arn option;
+      [@ocaml.doc "The ARN of the role used by event replication for this request.\n"]
 }
+[@@ocaml.doc ""]
+
+type nonrec throttling_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "This request cannot be completed due to throttling issues.\n"]
+
+type nonrec limit_exceeded_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The request failed because it attempted to create resource beyond the allowed service quota.\n"]
+
+type nonrec access_denied_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "You do not have the necessary permissions for this action.\n"]
+
+type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec connection_state =
+  | CREATING [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""]
+  | AUTHORIZED [@ocaml.doc ""]
+  | DEAUTHORIZED [@ocaml.doc ""]
+  | AUTHORIZING [@ocaml.doc ""]
+  | DEAUTHORIZING [@ocaml.doc ""]
+  | ACTIVE [@ocaml.doc ""]
+  | FAILED_CONNECTIVITY [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec connection_arn = string [@@ocaml.doc ""]
 
-type nonrec connection_state =
-  | FAILED_CONNECTIVITY [@ocaml.doc ""]
-  | ACTIVE [@ocaml.doc ""]
-  | DEAUTHORIZING [@ocaml.doc ""]
-  | AUTHORIZING [@ocaml.doc ""]
-  | DEAUTHORIZED [@ocaml.doc ""]
-  | AUTHORIZED [@ocaml.doc ""]
-  | DELETING [@ocaml.doc ""]
-  | UPDATING [@ocaml.doc ""]
-  | CREATING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
 type nonrec update_connection_response = {
-  last_authorized_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was last authorized.\n"]
-  last_modified_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was last modified.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
-  connection_state : connection_state option;
-      [@ocaml.doc "The state of the connection that was updated.\n"]
   connection_arn : connection_arn option;
       [@ocaml.doc "The ARN of the connection that was updated.\n"]
+  connection_state : connection_state option;
+      [@ocaml.doc "The state of the connection that was updated.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
+  last_modified_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was last modified.\n"]
+  last_authorized_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was last authorized.\n"]
 }
 [@@ocaml.doc ""]
-
-type nonrec connection_name = string [@@ocaml.doc ""]
-
-type nonrec connection_description = string [@@ocaml.doc ""]
-
-type nonrec connection_authorization_type =
-  | API_KEY [@ocaml.doc ""]
-  | OAUTH_CLIENT_CREDENTIALS [@ocaml.doc ""]
-  | BASIC [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec auth_header_parameters = string [@@ocaml.doc ""]
-
-type nonrec auth_header_parameters_sensitive = string [@@ocaml.doc ""]
-
-type nonrec update_connection_basic_auth_request_parameters = {
-  password : auth_header_parameters_sensitive option;
-      [@ocaml.doc "The password associated with the user name to use for Basic authorization.\n"]
-  username : auth_header_parameters option;
-      [@ocaml.doc "The user name to use for Basic authorization.\n"]
-}
-[@@ocaml.doc "The Basic authorization parameters for the connection.\n"]
-
-type nonrec update_connection_o_auth_client_request_parameters = {
-  client_secret : auth_header_parameters_sensitive option;
-      [@ocaml.doc
-        "The client secret assciated with the client ID to use for OAuth authorization.\n"]
-  client_i_d : auth_header_parameters option;
-      [@ocaml.doc "The client ID to use for OAuth authorization.\n"]
-}
-[@@ocaml.doc "The OAuth authorization parameters to use for the connection.\n"]
-
-type nonrec https_endpoint = string [@@ocaml.doc ""]
-
-type nonrec connection_o_auth_http_method =
-  | PUT [@ocaml.doc ""]
-  | POST [@ocaml.doc ""]
-  | GET [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec header_key = string [@@ocaml.doc ""]
-
-type nonrec header_value_sensitive = string [@@ocaml.doc ""]
-
-type nonrec boolean_ = bool [@@ocaml.doc ""]
-
-type nonrec connection_header_parameter = {
-  is_value_secret : boolean_ option; [@ocaml.doc "Specifies whether the value is a secret.\n"]
-  value : header_value_sensitive option; [@ocaml.doc "The value associated with the key.\n"]
-  key : header_key option; [@ocaml.doc "The key for the parameter.\n"]
-}
-[@@ocaml.doc
-  "Additional parameter included in the header. You can include up to 100 additional header \
-   parameters per request. An event payload cannot exceed 64 KB.\n"]
-
-type nonrec connection_header_parameters_list = connection_header_parameter list [@@ocaml.doc ""]
-
-type nonrec query_string_key = string [@@ocaml.doc ""]
-
-type nonrec query_string_value_sensitive = string [@@ocaml.doc ""]
-
-type nonrec connection_query_string_parameter = {
-  is_value_secret : boolean_ option; [@ocaml.doc "Specifies whether the value is secret.\n"]
-  value : query_string_value_sensitive option;
-      [@ocaml.doc "The value associated with the key for the query string parameter.\n"]
-  key : query_string_key option; [@ocaml.doc "The key for a query string parameter.\n"]
-}
-[@@ocaml.doc
-  "Any additional query string parameter for the connection. You can include up to 100 additional \
-   query string parameters per request. Each additional parameter counts towards the event payload \
-   size, which cannot exceed 64 KB.\n"]
-
-type nonrec connection_query_string_parameters_list = connection_query_string_parameter list
-[@@ocaml.doc ""]
-
-type nonrec sensitive_string = string [@@ocaml.doc ""]
-
-type nonrec connection_body_parameter = {
-  is_value_secret : boolean_ option; [@ocaml.doc "Specifies whether the value is secret.\n"]
-  value : sensitive_string option; [@ocaml.doc "The value associated with the key.\n"]
-  key : string_ option; [@ocaml.doc "The key for the parameter.\n"]
-}
-[@@ocaml.doc
-  "Additional parameter included in the body. You can include up to 100 additional body parameters \
-   per request. An event payload cannot exceed 64 KB.\n"]
-
-type nonrec connection_body_parameters_list = connection_body_parameter list [@@ocaml.doc ""]
-
-type nonrec connection_http_parameters = {
-  body_parameters : connection_body_parameters_list option;
-      [@ocaml.doc "Any additional body string parameters for the connection.\n"]
-  query_string_parameters : connection_query_string_parameters_list option;
-      [@ocaml.doc "Any additional query string parameters for the connection.\n"]
-  header_parameters : connection_header_parameters_list option;
-      [@ocaml.doc "Any additional header parameters for the connection.\n"]
-}
-[@@ocaml.doc "Any additional parameters for the connection.\n"]
-
-type nonrec update_connection_o_auth_request_parameters = {
-  o_auth_http_parameters : connection_http_parameters option;
-      [@ocaml.doc "The additional HTTP parameters used for the OAuth authorization request.\n"]
-  http_method : connection_o_auth_http_method option;
-      [@ocaml.doc "The method used to connect to the HTTP endpoint.\n"]
-  authorization_endpoint : https_endpoint option;
-      [@ocaml.doc
-        "The URL to the authorization endpoint when OAuth is specified as the authorization type.\n"]
-  client_parameters : update_connection_o_auth_client_request_parameters option;
-      [@ocaml.doc
-        "The client parameters to use for the connection when OAuth is specified as the \
-         authorization type.\n"]
-}
-[@@ocaml.doc "The OAuth request parameters to use for the connection.\n"]
-
-type nonrec update_connection_api_key_auth_request_parameters = {
-  api_key_value : auth_header_parameters_sensitive option;
-      [@ocaml.doc "The value associated with the API key to use for authorization.\n"]
-  api_key_name : auth_header_parameters option;
-      [@ocaml.doc "The name of the API key to use for authorization.\n"]
-}
-[@@ocaml.doc "Contains the API key authorization parameters to use to update the connection.\n"]
 
 type nonrec resource_configuration_arn = string [@@ocaml.doc ""]
 
@@ -435,7 +326,125 @@ type nonrec connectivity_resource_parameters = {
 }
 [@@ocaml.doc "The parameters for EventBridge to use when invoking the resource endpoint.\n"]
 
+type nonrec boolean_ = bool [@@ocaml.doc ""]
+
+type nonrec sensitive_string = string [@@ocaml.doc ""]
+
+type nonrec connection_body_parameter = {
+  key : string_ option; [@ocaml.doc "The key for the parameter.\n"]
+  value : sensitive_string option; [@ocaml.doc "The value associated with the key.\n"]
+  is_value_secret : boolean_ option; [@ocaml.doc "Specifies whether the value is secret.\n"]
+}
+[@@ocaml.doc
+  "Additional parameter included in the body. You can include up to 100 additional body parameters \
+   per request. An event payload cannot exceed 64 KB.\n"]
+
+type nonrec connection_body_parameters_list = connection_body_parameter list [@@ocaml.doc ""]
+
+type nonrec query_string_value_sensitive = string [@@ocaml.doc ""]
+
+type nonrec query_string_key = string [@@ocaml.doc ""]
+
+type nonrec connection_query_string_parameter = {
+  key : query_string_key option; [@ocaml.doc "The key for a query string parameter.\n"]
+  value : query_string_value_sensitive option;
+      [@ocaml.doc "The value associated with the key for the query string parameter.\n"]
+  is_value_secret : boolean_ option; [@ocaml.doc "Specifies whether the value is secret.\n"]
+}
+[@@ocaml.doc
+  "Any additional query string parameter for the connection. You can include up to 100 additional \
+   query string parameters per request. Each additional parameter counts towards the event payload \
+   size, which cannot exceed 64 KB.\n"]
+
+type nonrec connection_query_string_parameters_list = connection_query_string_parameter list
+[@@ocaml.doc ""]
+
+type nonrec header_value_sensitive = string [@@ocaml.doc ""]
+
+type nonrec header_key = string [@@ocaml.doc ""]
+
+type nonrec connection_header_parameter = {
+  key : header_key option; [@ocaml.doc "The key for the parameter.\n"]
+  value : header_value_sensitive option; [@ocaml.doc "The value associated with the key.\n"]
+  is_value_secret : boolean_ option; [@ocaml.doc "Specifies whether the value is a secret.\n"]
+}
+[@@ocaml.doc
+  "Additional parameter included in the header. You can include up to 100 additional header \
+   parameters per request. An event payload cannot exceed 64 KB.\n"]
+
+type nonrec connection_header_parameters_list = connection_header_parameter list [@@ocaml.doc ""]
+
+type nonrec connection_http_parameters = {
+  header_parameters : connection_header_parameters_list option;
+      [@ocaml.doc "Any additional header parameters for the connection.\n"]
+  query_string_parameters : connection_query_string_parameters_list option;
+      [@ocaml.doc "Any additional query string parameters for the connection.\n"]
+  body_parameters : connection_body_parameters_list option;
+      [@ocaml.doc "Any additional body string parameters for the connection.\n"]
+}
+[@@ocaml.doc "Any additional parameters for the connection.\n"]
+
+type nonrec auth_header_parameters_sensitive = string [@@ocaml.doc ""]
+
+type nonrec auth_header_parameters = string [@@ocaml.doc ""]
+
+type nonrec update_connection_api_key_auth_request_parameters = {
+  api_key_name : auth_header_parameters option;
+      [@ocaml.doc "The name of the API key to use for authorization.\n"]
+  api_key_value : auth_header_parameters_sensitive option;
+      [@ocaml.doc "The value associated with the API key to use for authorization.\n"]
+}
+[@@ocaml.doc "Contains the API key authorization parameters to use to update the connection.\n"]
+
+type nonrec connection_o_auth_http_method =
+  | GET [@ocaml.doc ""]
+  | POST [@ocaml.doc ""]
+  | PUT [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec https_endpoint = string [@@ocaml.doc ""]
+
+type nonrec update_connection_o_auth_client_request_parameters = {
+  client_i_d : auth_header_parameters option;
+      [@ocaml.doc "The client ID to use for OAuth authorization.\n"]
+  client_secret : auth_header_parameters_sensitive option;
+      [@ocaml.doc
+        "The client secret assciated with the client ID to use for OAuth authorization.\n"]
+}
+[@@ocaml.doc "The OAuth authorization parameters to use for the connection.\n"]
+
+type nonrec update_connection_o_auth_request_parameters = {
+  client_parameters : update_connection_o_auth_client_request_parameters option;
+      [@ocaml.doc
+        "The client parameters to use for the connection when OAuth is specified as the \
+         authorization type.\n"]
+  authorization_endpoint : https_endpoint option;
+      [@ocaml.doc
+        "The URL to the authorization endpoint when OAuth is specified as the authorization type.\n"]
+  http_method : connection_o_auth_http_method option;
+      [@ocaml.doc "The method used to connect to the HTTP endpoint.\n"]
+  o_auth_http_parameters : connection_http_parameters option;
+      [@ocaml.doc "The additional HTTP parameters used for the OAuth authorization request.\n"]
+}
+[@@ocaml.doc "The OAuth request parameters to use for the connection.\n"]
+
+type nonrec update_connection_basic_auth_request_parameters = {
+  username : auth_header_parameters option;
+      [@ocaml.doc "The user name to use for Basic authorization.\n"]
+  password : auth_header_parameters_sensitive option;
+      [@ocaml.doc "The password associated with the user name to use for Basic authorization.\n"]
+}
+[@@ocaml.doc "The Basic authorization parameters for the connection.\n"]
+
 type nonrec update_connection_auth_request_parameters = {
+  basic_auth_parameters : update_connection_basic_auth_request_parameters option;
+      [@ocaml.doc "The authorization parameters for Basic authorization.\n"]
+  o_auth_parameters : update_connection_o_auth_request_parameters option;
+      [@ocaml.doc "The authorization parameters for OAuth authorization.\n"]
+  api_key_auth_parameters : update_connection_api_key_auth_request_parameters option;
+      [@ocaml.doc "The authorization parameters for API key authorization.\n"]
+  invocation_http_parameters : connection_http_parameters option;
+      [@ocaml.doc "The additional parameters to use for the connection.\n"]
   connectivity_parameters : connectivity_resource_parameters option;
       [@ocaml.doc
         "If you specify a private OAuth endpoint, the parameters for EventBridge to use when \
@@ -444,18 +453,33 @@ type nonrec update_connection_auth_request_parameters = {
          {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html}Authorization \
          methods for connections} in the {i  {i Amazon EventBridge User Guide} }.\n\
         \ "]
-  invocation_http_parameters : connection_http_parameters option;
-      [@ocaml.doc "The additional parameters to use for the connection.\n"]
-  api_key_auth_parameters : update_connection_api_key_auth_request_parameters option;
-      [@ocaml.doc "The authorization parameters for API key authorization.\n"]
-  o_auth_parameters : update_connection_o_auth_request_parameters option;
-      [@ocaml.doc "The authorization parameters for OAuth authorization.\n"]
-  basic_auth_parameters : update_connection_basic_auth_request_parameters option;
-      [@ocaml.doc "The authorization parameters for Basic authorization.\n"]
 }
 [@@ocaml.doc "Contains the additional parameters to use for the connection.\n"]
 
+type nonrec connection_authorization_type =
+  | BASIC [@ocaml.doc ""]
+  | OAUTH_CLIENT_CREDENTIALS [@ocaml.doc ""]
+  | API_KEY [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec connection_description = string [@@ocaml.doc ""]
+
+type nonrec connection_name = string [@@ocaml.doc ""]
+
 type nonrec update_connection_request = {
+  name : connection_name; [@ocaml.doc "The name of the connection to update.\n"]
+  description : connection_description option; [@ocaml.doc "A description for the connection.\n"]
+  authorization_type : connection_authorization_type option;
+      [@ocaml.doc "The type of authorization to use for the connection.\n"]
+  auth_parameters : update_connection_auth_request_parameters option;
+      [@ocaml.doc "The authorization parameters to use for the connection.\n"]
+  invocation_connectivity_parameters : connectivity_resource_parameters option;
+      [@ocaml.doc
+        "For connections to private APIs, the parameters to use for invoking the API.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html}Connecting \
+         to private APIs} in the {i  {i Amazon EventBridge User Guide} }.\n\
+        \ "]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
         "The identifier of the KMS customer managed key for EventBridge to use, if you choose to \
@@ -468,63 +492,49 @@ type nonrec update_connection_request = {
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html}Identify and \
          view keys} in the {i Key Management Service Developer Guide}. \n\
         \  "]
-  invocation_connectivity_parameters : connectivity_resource_parameters option;
-      [@ocaml.doc
-        "For connections to private APIs, the parameters to use for invoking the API.\n\n\
-        \ For more information, see \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html}Connecting \
-         to private APIs} in the {i  {i Amazon EventBridge User Guide} }.\n\
-        \ "]
-  auth_parameters : update_connection_auth_request_parameters option;
-      [@ocaml.doc "The authorization parameters to use for the connection.\n"]
-  authorization_type : connection_authorization_type option;
-      [@ocaml.doc "The type of authorization to use for the connection.\n"]
-  description : connection_description option; [@ocaml.doc "A description for the connection.\n"]
-  name : connection_name; [@ocaml.doc "The name of the connection to update.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec throttling_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "This request cannot be completed due to throttling issues.\n"]
-
-type nonrec limit_exceeded_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The request failed because it attempted to create resource beyond the allowed service quota.\n"]
-
-type nonrec access_denied_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "You do not have the necessary permissions for this action.\n"]
-
-type nonrec archive_arn = string [@@ocaml.doc ""]
-
-type nonrec archive_state =
-  | UPDATE_FAILED [@ocaml.doc ""]
-  | CREATE_FAILED [@ocaml.doc ""]
-  | UPDATING [@ocaml.doc ""]
-  | CREATING [@ocaml.doc ""]
-  | DISABLED [@ocaml.doc ""]
-  | ENABLED [@ocaml.doc ""]
-[@@ocaml.doc ""]
+type nonrec invalid_event_pattern_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The event pattern is not valid.\n"]
 
 type nonrec archive_state_reason = string [@@ocaml.doc ""]
 
+type nonrec archive_state =
+  | ENABLED [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+  | CREATE_FAILED [@ocaml.doc ""]
+  | UPDATE_FAILED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec archive_arn = string [@@ocaml.doc ""]
+
 type nonrec update_archive_response = {
-  creation_time : timestamp option; [@ocaml.doc "The time at which the archive was updated.\n"]
+  archive_arn : archive_arn option; [@ocaml.doc "The ARN of the archive.\n"]
+  state : archive_state option; [@ocaml.doc "The state of the archive.\n"]
   state_reason : archive_state_reason option;
       [@ocaml.doc "The reason that the archive is in the current state.\n"]
-  state : archive_state option; [@ocaml.doc "The state of the archive.\n"]
-  archive_arn : archive_arn option; [@ocaml.doc "The ARN of the archive.\n"]
+  creation_time : timestamp option; [@ocaml.doc "The time at which the archive was updated.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec archive_name = string [@@ocaml.doc ""]
-
-type nonrec archive_description = string [@@ocaml.doc ""]
+type nonrec retention_days = int [@@ocaml.doc ""]
 
 type nonrec event_pattern = string [@@ocaml.doc ""]
 
-type nonrec retention_days = int [@@ocaml.doc ""]
+type nonrec archive_description = string [@@ocaml.doc ""]
+
+type nonrec archive_name = string [@@ocaml.doc ""]
 
 type nonrec update_archive_request = {
+  archive_name : archive_name; [@ocaml.doc "The name of the archive to update.\n"]
+  description : archive_description option; [@ocaml.doc "The description for the archive.\n"]
+  event_pattern : event_pattern option;
+      [@ocaml.doc "The event pattern to use to filter events sent to the archive.\n"]
+  retention_days : retention_days option;
+      [@ocaml.doc "The number of days to retain events in the archive.\n"]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
         "The identifier of the KMS customer managed key for EventBridge to use, if you choose to \
@@ -546,78 +556,54 @@ type nonrec update_archive_request = {
          archives} in the {i Amazon EventBridge User Guide}.\n\
         \     \n\
         \      "]
-  retention_days : retention_days option;
-      [@ocaml.doc "The number of days to retain events in the archive.\n"]
-  event_pattern : event_pattern option;
-      [@ocaml.doc "The event pattern to use to filter events sent to the archive.\n"]
-  description : archive_description option; [@ocaml.doc "The description for the archive.\n"]
-  archive_name : archive_name; [@ocaml.doc "The name of the archive to update.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec invalid_event_pattern_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The event pattern is not valid.\n"]
+type nonrec api_destination_state = ACTIVE [@ocaml.doc ""] | INACTIVE [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
 type nonrec api_destination_arn = string [@@ocaml.doc ""]
 
-type nonrec api_destination_state = INACTIVE [@ocaml.doc ""] | ACTIVE [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
 type nonrec update_api_destination_response = {
-  last_modified_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the API destination was last modified.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the API destination was created.\n"]
-  api_destination_state : api_destination_state option;
-      [@ocaml.doc "The state of the API destination that was updated.\n"]
   api_destination_arn : api_destination_arn option;
       [@ocaml.doc "The ARN of the API destination that was updated.\n"]
+  api_destination_state : api_destination_state option;
+      [@ocaml.doc "The state of the API destination that was updated.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the API destination was created.\n"]
+  last_modified_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the API destination was last modified.\n"]
 }
-[@@ocaml.doc ""]
-
-type nonrec api_destination_name = string [@@ocaml.doc ""]
-
-type nonrec api_destination_description = string [@@ocaml.doc ""]
-
-type nonrec api_destination_http_method =
-  | DELETE [@ocaml.doc ""]
-  | PATCH [@ocaml.doc ""]
-  | PUT [@ocaml.doc ""]
-  | OPTIONS [@ocaml.doc ""]
-  | HEAD [@ocaml.doc ""]
-  | GET [@ocaml.doc ""]
-  | POST [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec api_destination_invocation_rate_limit_per_second = int [@@ocaml.doc ""]
 
-type nonrec update_api_destination_request = {
-  invocation_rate_limit_per_second : api_destination_invocation_rate_limit_per_second option;
-      [@ocaml.doc "The maximum number of invocations per second to send to the API destination.\n"]
-  http_method : api_destination_http_method option;
-      [@ocaml.doc "The method to use for the API destination.\n"]
-  invocation_endpoint : https_endpoint option;
-      [@ocaml.doc "The URL to the endpoint to use for the API destination.\n"]
-  connection_arn : connection_arn option;
-      [@ocaml.doc "The ARN of the connection to use for the API destination.\n"]
-  description : api_destination_description option;
-      [@ocaml.doc "The name of the API destination to update.\n"]
-  name : api_destination_name; [@ocaml.doc "The name of the API destination to update.\n"]
-}
+type nonrec api_destination_http_method =
+  | POST [@ocaml.doc ""]
+  | GET [@ocaml.doc ""]
+  | HEAD [@ocaml.doc ""]
+  | OPTIONS [@ocaml.doc ""]
+  | PUT [@ocaml.doc ""]
+  | PATCH [@ocaml.doc ""]
+  | DELETE [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec untag_resource_response = unit [@@ocaml.doc ""]
+type nonrec api_destination_description = string [@@ocaml.doc ""]
 
-type nonrec arn = string [@@ocaml.doc ""]
+type nonrec api_destination_name = string [@@ocaml.doc ""]
 
-type nonrec tag_key = string [@@ocaml.doc ""]
-
-type nonrec tag_key_list = tag_key list [@@ocaml.doc ""]
-
-type nonrec untag_resource_request = {
-  tag_keys : tag_key_list; [@ocaml.doc "The list of tag keys to remove from the resource.\n"]
-  resource_ar_n : arn;
-      [@ocaml.doc "The ARN of the EventBridge resource from which you are removing tags.\n"]
+type nonrec update_api_destination_request = {
+  name : api_destination_name; [@ocaml.doc "The name of the API destination to update.\n"]
+  description : api_destination_description option;
+      [@ocaml.doc "The name of the API destination to update.\n"]
+  connection_arn : connection_arn option;
+      [@ocaml.doc "The ARN of the connection to use for the API destination.\n"]
+  invocation_endpoint : https_endpoint option;
+      [@ocaml.doc "The URL to the endpoint to use for the API destination.\n"]
+  http_method : api_destination_http_method option;
+      [@ocaml.doc "The method to use for the API destination.\n"]
+  invocation_rate_limit_per_second : api_destination_invocation_rate_limit_per_second option;
+      [@ocaml.doc "The maximum number of invocations per second to send to the API destination.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -629,16 +615,20 @@ type nonrec managed_rule_exception = { message : error_message option [@ocaml.do
    rule. You cannot modify these managed rules by using [DisableRule], [EnableRule], [PutTargets], \
    [PutRule], [TagResource], or [UntagResource]. \n"]
 
-type nonrec target_input_path = string [@@ocaml.doc ""]
+type nonrec untag_resource_response = unit [@@ocaml.doc ""]
 
-type nonrec input_transformer_path_key = string [@@ocaml.doc ""]
+type nonrec tag_key = string [@@ocaml.doc ""]
 
-type nonrec transformer_paths = (input_transformer_path_key * target_input_path) list
+type nonrec tag_key_list = tag_key list [@@ocaml.doc ""]
+
+type nonrec arn = string [@@ocaml.doc ""]
+
+type nonrec untag_resource_request = {
+  resource_ar_n : arn;
+      [@ocaml.doc "The ARN of the EventBridge resource from which you are removing tags.\n"]
+  tag_keys : tag_key_list; [@ocaml.doc "The list of tag keys to remove from the resource.\n"]
+}
 [@@ocaml.doc ""]
-
-type nonrec transformer_input = string [@@ocaml.doc ""]
-
-type nonrec trace_header = string [@@ocaml.doc ""]
 
 type nonrec test_event_pattern_response = {
   result_ : boolean_ option; [@ocaml.doc "Indicates whether the event matches the event pattern.\n"]
@@ -646,6 +636,11 @@ type nonrec test_event_pattern_response = {
 [@@ocaml.doc ""]
 
 type nonrec test_event_pattern_request = {
+  event_pattern : event_pattern;
+      [@ocaml.doc
+        "The event pattern. For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-and-event-patterns.html}Events \
+         and Event Patterns} in the {i  {i Amazon EventBridge User Guide} }.\n"]
   event : string_;
       [@ocaml.doc
         "The event, in JSON format, to test against the event pattern. The JSON must follow the \
@@ -676,25 +671,628 @@ type nonrec test_event_pattern_request = {
         \            }\n\
         \       }\n\
         \  "]
-  event_pattern : event_pattern;
-      [@ocaml.doc
-        "The event pattern. For more information, see \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-and-event-patterns.html}Events \
-         and Event Patterns} in the {i  {i Amazon EventBridge User Guide} }.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec target_partition_key_path = string [@@ocaml.doc ""]
+type nonrec tag_resource_response = unit [@@ocaml.doc ""]
+
+type nonrec tag_value = string [@@ocaml.doc ""]
+
+type nonrec tag = {
+  key : tag_key;
+      [@ocaml.doc
+        "A string you can use to assign a value. The combination of tag keys and values can help \
+         you organize and categorize your resources.\n"]
+  value : tag_value; [@ocaml.doc "The value for the specified tag key.\n"]
+}
+[@@ocaml.doc
+  "A key-value pair associated with an Amazon Web Services resource. In EventBridge, rules and \
+   event buses support tagging.\n"]
+
+type nonrec tag_list = tag list [@@ocaml.doc ""]
+
+type nonrec tag_resource_request = {
+  resource_ar_n : arn;
+      [@ocaml.doc "The ARN of the EventBridge resource that you're adding tags to.\n"]
+  tags : tag_list; [@ocaml.doc "The list of key-value pairs to associate with the resource.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec resource_already_exists_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The resource you are trying to create already exists.\n"]
+
+type nonrec replay_state_reason = string [@@ocaml.doc ""]
+
+type nonrec replay_state =
+  | STARTING [@ocaml.doc ""]
+  | RUNNING [@ocaml.doc ""]
+  | CANCELLING [@ocaml.doc ""]
+  | COMPLETED [@ocaml.doc ""]
+  | CANCELLED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec replay_arn = string [@@ocaml.doc ""]
+
+type nonrec start_replay_response = {
+  replay_arn : replay_arn option; [@ocaml.doc "The ARN of the replay.\n"]
+  state : replay_state option; [@ocaml.doc "The state of the replay.\n"]
+  state_reason : replay_state_reason option;
+      [@ocaml.doc "The reason that the replay is in the state.\n"]
+  replay_start_time : timestamp option; [@ocaml.doc "The time at which the replay started.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec replay_destination_filters = arn list [@@ocaml.doc ""]
+
+type nonrec replay_destination = {
+  arn : arn;
+      [@ocaml.doc
+        "The ARN of the event bus to replay event to. You can replay events only to the event bus \
+         specified to create the archive.\n"]
+  filter_arns : replay_destination_filters option;
+      [@ocaml.doc "A list of ARNs for rules to replay events to.\n"]
+}
+[@@ocaml.doc "A [ReplayDestination] object that contains details about a replay.\n"]
+
+type nonrec replay_description = string [@@ocaml.doc ""]
+
+type nonrec replay_name = string [@@ocaml.doc ""]
+
+type nonrec start_replay_request = {
+  replay_name : replay_name; [@ocaml.doc "The name of the replay to start.\n"]
+  description : replay_description option; [@ocaml.doc "A description for the replay to start.\n"]
+  event_source_arn : archive_arn; [@ocaml.doc "The ARN of the archive to replay events from.\n"]
+  event_start_time : timestamp;
+      [@ocaml.doc
+        "A time stamp for the time to start replaying events. Only events that occurred between \
+         the [EventStartTime] and [EventEndTime] are replayed.\n"]
+  event_end_time : timestamp;
+      [@ocaml.doc
+        "A time stamp for the time to stop replaying events. Only events that occurred between the \
+         [EventStartTime] and [EventEndTime] are replayed.\n"]
+  destination : replay_destination;
+      [@ocaml.doc
+        "A [ReplayDestination] object that includes details about the destination for the replay.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec error_code = string [@@ocaml.doc ""]
 
 type nonrec target_id = string [@@ocaml.doc ""]
 
-type nonrec target_arn = string [@@ocaml.doc ""]
+type nonrec remove_targets_result_entry = {
+  target_id : target_id option; [@ocaml.doc "The ID of the target.\n"]
+  error_code : error_code option;
+      [@ocaml.doc
+        "The error code that indicates why the target removal failed. If the value is \
+         [ConcurrentModificationException], too many requests were made at the same time.\n"]
+  error_message : error_message option;
+      [@ocaml.doc "The error message that explains why the target removal failed.\n"]
+}
+[@@ocaml.doc "Represents a target that failed to be removed from a rule.\n"]
 
-type nonrec role_arn = string [@@ocaml.doc ""]
+type nonrec remove_targets_result_entry_list = remove_targets_result_entry list [@@ocaml.doc ""]
 
-type nonrec target_input = string [@@ocaml.doc ""]
+type nonrec integer = int [@@ocaml.doc ""]
+
+type nonrec remove_targets_response = {
+  failed_entry_count : integer option; [@ocaml.doc "The number of failed entries.\n"]
+  failed_entries : remove_targets_result_entry_list option;
+      [@ocaml.doc "The failed target entries.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec target_id_list = target_id list [@@ocaml.doc ""]
+
+type nonrec event_bus_name_or_arn = string [@@ocaml.doc ""]
+
+type nonrec rule_name = string [@@ocaml.doc ""]
+
+type nonrec remove_targets_request = {
+  rule : rule_name; [@ocaml.doc "The name of the rule.\n"]
+  event_bus_name : event_bus_name_or_arn option;
+      [@ocaml.doc
+        "The name or ARN of the event bus associated with the rule. If you omit this, the default \
+         event bus is used.\n"]
+  ids : target_id_list; [@ocaml.doc "The IDs of the targets to remove from the rule.\n"]
+  force : boolean_ option;
+      [@ocaml.doc
+        "If this is a managed rule, created by an Amazon Web Services service on your behalf, you \
+         must specify [Force] as [True] to remove targets. This parameter is ignored for rules \
+         that are not managed rules. You can check whether a rule is a managed rule by using \
+         [DescribeRule] or [ListRules] and checking the [ManagedBy] field of the response.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec non_partner_event_bus_name = string [@@ocaml.doc ""]
+
+type nonrec statement_id = string [@@ocaml.doc ""]
+
+type nonrec remove_permission_request = {
+  statement_id : statement_id option;
+      [@ocaml.doc
+        "The statement ID corresponding to the account that is no longer allowed to put events to \
+         the default event bus.\n"]
+  remove_all_permissions : boolean_ option;
+      [@ocaml.doc "Specifies whether to remove all permissions.\n"]
+  event_bus_name : non_partner_event_bus_name option;
+      [@ocaml.doc
+        "The name of the event bus to revoke permissions for. If you omit this, the default event \
+         bus is used.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec put_targets_result_entry = {
+  target_id : target_id option; [@ocaml.doc "The ID of the target.\n"]
+  error_code : error_code option;
+      [@ocaml.doc
+        "The error code that indicates why the target addition failed. If the value is \
+         [ConcurrentModificationException], too many requests were made at the same time.\n"]
+  error_message : error_message option;
+      [@ocaml.doc "The error message that explains why the target addition failed.\n"]
+}
+[@@ocaml.doc "Represents a target that failed to be added to a rule.\n"]
+
+type nonrec put_targets_result_entry_list = put_targets_result_entry list [@@ocaml.doc ""]
+
+type nonrec put_targets_response = {
+  failed_entry_count : integer option; [@ocaml.doc "The number of failed entries.\n"]
+  failed_entries : put_targets_result_entry_list option; [@ocaml.doc "The failed target entries.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec graph_ql_operation = string [@@ocaml.doc ""]
+
+type nonrec app_sync_parameters = {
+  graph_ql_operation : graph_ql_operation option;
+      [@ocaml.doc
+        "The GraphQL operation; that is, the query, mutation, or subscription to be parsed and \
+         executed by the GraphQL service.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/appsync/latest/devguide/graphql-architecture.html#graphql-operations}Operations} \
+         in the {i AppSync User Guide}.\n\
+        \ "]
+}
+[@@ocaml.doc
+  "Contains the GraphQL operation to be parsed and executed, if the event target is an AppSync API.\n"]
+
+type nonrec maximum_event_age_in_seconds = int [@@ocaml.doc ""]
+
+type nonrec maximum_retry_attempts = int [@@ocaml.doc ""]
+
+type nonrec retry_policy = {
+  maximum_retry_attempts : maximum_retry_attempts option;
+      [@ocaml.doc
+        "The maximum number of retry attempts to make before the request fails. Retry attempts \
+         continue until either the maximum number of attempts is made or until the duration of the \
+         [MaximumEventAgeInSeconds] is met.\n"]
+  maximum_event_age_in_seconds : maximum_event_age_in_seconds option;
+      [@ocaml.doc "The maximum amount of time, in seconds, to continue to make retry attempts.\n"]
+}
+[@@ocaml.doc "A [RetryPolicy] object that includes information about the retry policy settings.\n"]
+
+type nonrec sage_maker_pipeline_parameter_value = string [@@ocaml.doc ""]
+
+type nonrec sage_maker_pipeline_parameter_name = string [@@ocaml.doc ""]
+
+type nonrec sage_maker_pipeline_parameter = {
+  name : sage_maker_pipeline_parameter_name;
+      [@ocaml.doc
+        "Name of parameter to start execution of a SageMaker AI Model Building Pipeline.\n"]
+  value : sage_maker_pipeline_parameter_value;
+      [@ocaml.doc
+        "Value of parameter to start execution of a SageMaker AI Model Building Pipeline.\n"]
+}
+[@@ocaml.doc
+  "Name/Value pair of a parameter to start execution of a SageMaker AI Model Building Pipeline.\n"]
+
+type nonrec sage_maker_pipeline_parameter_list = sage_maker_pipeline_parameter list [@@ocaml.doc ""]
+
+type nonrec sage_maker_pipeline_parameters = {
+  pipeline_parameter_list : sage_maker_pipeline_parameter_list option;
+      [@ocaml.doc
+        "List of Parameter names and values for SageMaker AI Model Building Pipeline execution.\n"]
+}
+[@@ocaml.doc
+  "These are custom parameters to use when the target is a SageMaker AI Model Building Pipeline \
+   that starts based on EventBridge events.\n"]
+
+type nonrec sql = string [@@ocaml.doc ""]
+
+type nonrec sqls = sql list [@@ocaml.doc ""]
+
+type nonrec statement_name = string [@@ocaml.doc ""]
+
+type nonrec db_user = string [@@ocaml.doc ""]
+
+type nonrec database = string [@@ocaml.doc ""]
+
+type nonrec redshift_secret_manager_arn = string [@@ocaml.doc ""]
+
+type nonrec redshift_data_parameters = {
+  secret_manager_arn : redshift_secret_manager_arn option;
+      [@ocaml.doc
+        "The name or ARN of the secret that enables access to the database. Required when \
+         authenticating using Amazon Web Services Secrets Manager.\n"]
+  database : database;
+      [@ocaml.doc
+        "The name of the database. Required when authenticating using temporary credentials.\n"]
+  db_user : db_user option;
+      [@ocaml.doc
+        "The database user name. Required when authenticating using temporary credentials.\n"]
+  sql : sql option; [@ocaml.doc "The SQL statement text to run.\n"]
+  statement_name : statement_name option;
+      [@ocaml.doc
+        "The name of the SQL statement. You can name the SQL statement when you create it to \
+         identify the query.\n"]
+  with_event : boolean_ option;
+      [@ocaml.doc
+        "Indicates whether to send an event back to EventBridge after the SQL statement runs.\n"]
+  sqls : sqls option;
+      [@ocaml.doc
+        "One or more SQL statements to run. The SQL statements are run as a single transaction. \
+         They run serially in the order of the array. Subsequent SQL statements don't start until \
+         the previous statement in the array completes. If any SQL statement fails, then because \
+         they are run as one transaction, all work is rolled back.\n"]
+}
+[@@ocaml.doc
+  "These are custom parameters to be used when the target is a Amazon Redshift cluster to invoke \
+   the Amazon Redshift Data API ExecuteStatement based on EventBridge events.\n"]
+
+type nonrec query_string_value = string [@@ocaml.doc ""]
+
+type nonrec query_string_parameters_map = (query_string_key * query_string_value) list
+[@@ocaml.doc ""]
+
+type nonrec header_value = string [@@ocaml.doc ""]
+
+type nonrec header_parameters_map = (header_key * header_value) list [@@ocaml.doc ""]
+
+type nonrec path_parameter = string [@@ocaml.doc ""]
+
+type nonrec path_parameter_list = path_parameter list [@@ocaml.doc ""]
+
+type nonrec http_parameters = {
+  path_parameter_values : path_parameter_list option;
+      [@ocaml.doc
+        "The path parameter values to be used to populate API Gateway API or EventBridge \
+         ApiDestination path wildcards (\"*\").\n"]
+  header_parameters : header_parameters_map option;
+      [@ocaml.doc
+        "The headers that need to be sent as part of request invoking the API Gateway API or \
+         EventBridge ApiDestination.\n"]
+  query_string_parameters : query_string_parameters_map option;
+      [@ocaml.doc
+        "The query string keys/values that need to be sent as part of request invoking the API \
+         Gateway API or EventBridge ApiDestination.\n"]
+}
+[@@ocaml.doc
+  "These are custom parameter to be used when the target is an API Gateway APIs or EventBridge \
+   ApiDestinations. In the latter case, these are merged with any InvocationParameters specified \
+   on the Connection, with any values from the Connection taking precedence.\n"]
+
+type nonrec message_group_id = string [@@ocaml.doc ""]
+
+type nonrec sqs_parameters = {
+  message_group_id : message_group_id option;
+      [@ocaml.doc "The FIFO message group ID to use as the target.\n"]
+}
+[@@ocaml.doc
+  "This structure includes the custom parameter to be used when the target is an SQS FIFO queue.\n"]
+
+type nonrec batch_retry_strategy = {
+  attempts : integer option;
+      [@ocaml.doc
+        "The number of times to attempt to retry, if the job fails. Valid values are \
+         1\226\128\14710.\n"]
+}
+[@@ocaml.doc
+  "The retry strategy to use for failed jobs, if the target is an Batch job. If you specify a \
+   retry strategy here, it overrides the retry strategy defined in the job definition.\n"]
+
+type nonrec batch_array_properties = {
+  size : integer option;
+      [@ocaml.doc
+        "The size of the array, if this is an array batch job. Valid values are integers between 2 \
+         and 10,000.\n"]
+}
+[@@ocaml.doc
+  "The array properties for the submitted job, such as the size of the array. The array size can \
+   be between 2 and 10,000. If you specify array properties for a job, it becomes an array job. \
+   This parameter is used only if the target is an Batch job.\n"]
+
+type nonrec batch_parameters = {
+  job_definition : string_;
+      [@ocaml.doc
+        "The ARN or name of the job definition to use if the event target is an Batch job. This \
+         job definition must already exist.\n"]
+  job_name : string_;
+      [@ocaml.doc "The name to use for this execution of the job, if the target is an Batch job.\n"]
+  array_properties : batch_array_properties option;
+      [@ocaml.doc
+        "The array properties for the submitted job, such as the size of the array. The array size \
+         can be between 2 and 10,000. If you specify array properties for a job, it becomes an \
+         array job. This parameter is used only if the target is an Batch job.\n"]
+  retry_strategy : batch_retry_strategy option;
+      [@ocaml.doc
+        "The retry strategy to use for failed jobs, if the target is an Batch job. The retry \
+         strategy is the number of times to retry the failed job execution. Valid values are \
+         1\226\128\14710. When you specify a retry strategy here, it overrides the retry strategy \
+         defined in the job definition.\n"]
+}
+[@@ocaml.doc "The custom parameters to be used when the target is an Batch job.\n"]
+
+type nonrec reference_id = string [@@ocaml.doc ""]
+
+type nonrec propagate_tags = TASK_DEFINITION [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec placement_strategy_field = string [@@ocaml.doc ""]
+
+type nonrec placement_strategy_type =
+  | RANDOM [@ocaml.doc ""]
+  | SPREAD [@ocaml.doc ""]
+  | BINPACK [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec placement_strategy = {
+  type_ : placement_strategy_type option;
+      [@ocaml.doc
+        "The type of placement strategy. The random placement strategy randomly places tasks on \
+         available candidates. The spread placement strategy spreads placement across available \
+         candidates evenly based on the field parameter. The binpack strategy places tasks on \
+         available candidates that have the least available amount of the resource that is \
+         specified with the field parameter. For example, if you binpack on memory, a task is \
+         placed on the instance with the least amount of remaining memory (but still enough to run \
+         the task). \n"]
+  field : placement_strategy_field option;
+      [@ocaml.doc
+        "The field to apply the placement strategy against. For the spread placement strategy, \
+         valid values are instanceId (or host, which has the same effect), or any platform or \
+         custom attribute that is applied to a container instance, such as \
+         attribute:ecs.availability-zone. For the binpack placement strategy, valid values are cpu \
+         and memory. For the random placement strategy, this field is not used. \n"]
+}
+[@@ocaml.doc
+  "The task placement strategy for a task or service. To learn more, see \
+   {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-strategies.html}Task \
+   Placement Strategies} in the Amazon Elastic Container Service Service Developer Guide.\n"]
+
+type nonrec placement_strategies = placement_strategy list [@@ocaml.doc ""]
+
+type nonrec placement_constraint_expression = string [@@ocaml.doc ""]
+
+type nonrec placement_constraint_type =
+  | DISTINCT_INSTANCE [@ocaml.doc ""]
+  | MEMBER_OF [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec placement_constraint = {
+  type_ : placement_constraint_type option;
+      [@ocaml.doc
+        "The type of constraint. Use distinctInstance to ensure that each task in a particular \
+         group is running on a different container instance. Use memberOf to restrict the \
+         selection to a group of valid candidates. \n"]
+  expression : placement_constraint_expression option;
+      [@ocaml.doc
+        "A cluster query language expression to apply to the constraint. You cannot specify an \
+         expression if the constraint type is [distinctInstance]. To learn more, see \
+         {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-query-language.html}Cluster \
+         Query Language} in the Amazon Elastic Container Service Developer Guide. \n"]
+}
+[@@ocaml.doc
+  "An object representing a constraint on task placement. To learn more, see \
+   {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-constraints.html}Task \
+   Placement Constraints} in the Amazon Elastic Container Service Developer Guide.\n"]
+
+type nonrec placement_constraints = placement_constraint list [@@ocaml.doc ""]
+
+type nonrec capacity_provider_strategy_item_base = int [@@ocaml.doc ""]
+
+type nonrec capacity_provider_strategy_item_weight = int [@@ocaml.doc ""]
+
+type nonrec capacity_provider = string [@@ocaml.doc ""]
+
+type nonrec capacity_provider_strategy_item = {
+  capacity_provider : capacity_provider; [@ocaml.doc "The short name of the capacity provider.\n"]
+  weight : capacity_provider_strategy_item_weight option;
+      [@ocaml.doc
+        "The weight value designates the relative percentage of the total number of tasks launched \
+         that should use the specified capacity provider. The weight value is taken into \
+         consideration after the base value, if defined, is satisfied.\n"]
+  base : capacity_provider_strategy_item_base option;
+      [@ocaml.doc
+        "The base value designates how many tasks, at a minimum, to run on the specified capacity \
+         provider. Only one capacity provider in a capacity provider strategy can have a base \
+         defined. If no value is specified, the default value of 0 is used. \n"]
+}
+[@@ocaml.doc
+  "The details of a capacity provider strategy. To learn more, see \
+   {{:https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_CapacityProviderStrategyItem.html}CapacityProviderStrategyItem} \
+   in the Amazon ECS API Reference.\n"]
+
+type nonrec capacity_provider_strategy = capacity_provider_strategy_item list [@@ocaml.doc ""]
+
+type nonrec assign_public_ip = ENABLED [@ocaml.doc ""] | DISABLED [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec string_list = string_ list [@@ocaml.doc ""]
+
+type nonrec aws_vpc_configuration = {
+  subnets : string_list;
+      [@ocaml.doc
+        "Specifies the subnets associated with the task. These subnets must all be in the same \
+         VPC. You can specify as many as 16 subnets.\n"]
+  security_groups : string_list option;
+      [@ocaml.doc
+        "Specifies the security groups associated with the task. These security groups must all be \
+         in the same VPC. You can specify as many as five security groups. If you do not specify a \
+         security group, the default security group for the VPC is used.\n"]
+  assign_public_ip : assign_public_ip option;
+      [@ocaml.doc
+        "Specifies whether the task's elastic network interface receives a public IP address. You \
+         can specify [ENABLED] only when [LaunchType] in [EcsParameters] is set to [FARGATE].\n"]
+}
+[@@ocaml.doc
+  "This structure specifies the VPC subnets and security groups for the task, and whether a public \
+   IP address is to be used. This structure is relevant only for ECS tasks that use the [awsvpc] \
+   network mode.\n"]
+
+type nonrec network_configuration = {
+  awsvpc_configuration : aws_vpc_configuration option;
+      [@ocaml.doc
+        "Use this structure to specify the VPC subnets and security groups for the task, and \
+         whether a public IP address is to be used. This structure is relevant only for ECS tasks \
+         that use the [awsvpc] network mode.\n"]
+}
+[@@ocaml.doc "This structure specifies the network configuration for an ECS task.\n"]
+
+type nonrec launch_type = EC2 [@ocaml.doc ""] | FARGATE [@ocaml.doc ""] | EXTERNAL [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec limit_min1 = int [@@ocaml.doc ""]
+
+type nonrec ecs_parameters = {
+  task_definition_arn : arn;
+      [@ocaml.doc
+        "The ARN of the task definition to use if the event target is an Amazon ECS task. \n"]
+  task_count : limit_min1 option;
+      [@ocaml.doc "The number of tasks to create based on [TaskDefinition]. The default is 1.\n"]
+  launch_type : launch_type option;
+      [@ocaml.doc
+        "Specifies the launch type on which your task is running. The launch type that you specify \
+         here must match one of the launch type (compatibilities) of the target task. The \
+         [FARGATE] value is supported only in the Regions where Fargate with Amazon ECS is \
+         supported. For more information, see \
+         {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS-Fargate.html}Fargate \
+         on Amazon ECS} in the {i Amazon Elastic Container Service Developer Guide}.\n"]
+  network_configuration : network_configuration option;
+      [@ocaml.doc
+        "Use this structure if the Amazon ECS task uses the [awsvpc] network mode. This structure \
+         specifies the VPC subnets and security groups associated with the task, and whether a \
+         public IP address is to be used. This structure is required if [LaunchType] is [FARGATE] \
+         because the [awsvpc] mode is required for Fargate tasks.\n\n\
+        \ If you specify [NetworkConfiguration] when the target ECS task does not use the [awsvpc] \
+         network mode, the task fails.\n\
+        \ "]
+  platform_version : string_ option;
+      [@ocaml.doc
+        "Specifies the platform version for the task. Specify only the numeric portion of the \
+         platform version, such as [1.1.0].\n\n\
+        \ This structure is used only if [LaunchType] is [FARGATE]. For more information about \
+         valid platform versions, see \
+         {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html}Fargate \
+         Platform Versions} in the {i Amazon Elastic Container Service Developer Guide}.\n\
+        \ "]
+  group : string_ option;
+      [@ocaml.doc
+        "Specifies an ECS task group for the task. The maximum length is 255 characters.\n"]
+  capacity_provider_strategy : capacity_provider_strategy option;
+      [@ocaml.doc
+        "The capacity provider strategy to use for the task.\n\n\
+        \ If a [capacityProviderStrategy] is specified, the [launchType] parameter must be \
+         omitted. If no [capacityProviderStrategy] or launchType is specified, the \
+         [defaultCapacityProviderStrategy] for the cluster is used. \n\
+        \ "]
+  enable_ecs_managed_tags : boolean_ option;
+      [@ocaml.doc
+        "Specifies whether to enable Amazon ECS managed tags for the task. For more information, \
+         see \
+         {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-using-tags.html}Tagging \
+         Your Amazon ECS Resources} in the Amazon Elastic Container Service Developer Guide. \n"]
+  enable_execute_command : boolean_ option;
+      [@ocaml.doc
+        "Whether or not to enable the execute command functionality for the containers in this \
+         task. If true, this enables execute command functionality on all containers in the task.\n"]
+  placement_constraints : placement_constraints option;
+      [@ocaml.doc
+        "An array of placement constraint objects to use for the task. You can specify up to 10 \
+         constraints per task (including constraints in the task definition and those specified at \
+         runtime).\n"]
+  placement_strategy : placement_strategies option;
+      [@ocaml.doc
+        "The placement strategy objects to use for the task. You can specify a maximum of five \
+         strategy rules per task. \n"]
+  propagate_tags : propagate_tags option;
+      [@ocaml.doc
+        "Specifies whether to propagate the tags from the task definition to the task. If no value \
+         is specified, the tags are not propagated. Tags can only be propagated to the task during \
+         task creation. To add tags to a task after task creation, use the TagResource API action. \n"]
+  reference_id : reference_id option; [@ocaml.doc "The reference ID to use for the task.\n"]
+  tags : tag_list option;
+      [@ocaml.doc
+        "The metadata that you apply to the task to help you categorize and organize them. Each \
+         tag consists of a key and an optional value, both of which you define. To learn more, see \
+         {{:https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_RunTask.html#ECS-RunTask-request-tags}RunTask} \
+         in the Amazon ECS API Reference.\n"]
+}
+[@@ocaml.doc "The custom parameters to be used when the target is an Amazon ECS task.\n"]
+
+type nonrec run_command_target_value = string [@@ocaml.doc ""]
+
+type nonrec run_command_target_values = run_command_target_value list [@@ocaml.doc ""]
+
+type nonrec run_command_target_key = string [@@ocaml.doc ""]
+
+type nonrec run_command_target = {
+  key : run_command_target_key; [@ocaml.doc "Can be either [tag:] {i tag-key} or [InstanceIds].\n"]
+  values : run_command_target_values;
+      [@ocaml.doc
+        "If [Key] is [tag:] {i tag-key}, [Values] is a list of tag values. If [Key] is \
+         [InstanceIds], [Values] is a list of Amazon EC2 instance IDs.\n"]
+}
+[@@ocaml.doc
+  "Information about the EC2 instances that are to be sent the command, specified as key-value \
+   pairs. Each [RunCommandTarget] block can include only one key, but this key may specify \
+   multiple values.\n"]
+
+type nonrec run_command_targets = run_command_target list [@@ocaml.doc ""]
+
+type nonrec run_command_parameters = {
+  run_command_targets : run_command_targets;
+      [@ocaml.doc
+        "Currently, we support including only one RunCommandTarget block, which specifies either \
+         an array of InstanceIds or a tag.\n"]
+}
+[@@ocaml.doc
+  "This parameter contains the criteria (either InstanceIds or a tag) used to specify which EC2 \
+   instances are to be sent the command. \n"]
+
+type nonrec target_partition_key_path = string [@@ocaml.doc ""]
+
+type nonrec kinesis_parameters = {
+  partition_key_path : target_partition_key_path;
+      [@ocaml.doc
+        "The JSON path to be extracted from the event and used as the partition key. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/streams/latest/dev/key-concepts.html#partition-key}Amazon \
+         Kinesis Streams Key Concepts} in the {i Amazon Kinesis Streams Developer Guide}.\n"]
+}
+[@@ocaml.doc
+  "This object enables you to specify a JSON path to extract from the event and use as the \
+   partition key for the Amazon Kinesis data stream, so that you can control the shard to which \
+   the event goes. If you do not include this parameter, the default is to use the [eventId] as \
+   the partition key.\n"]
+
+type nonrec transformer_input = string [@@ocaml.doc ""]
+
+type nonrec target_input_path = string [@@ocaml.doc ""]
+
+type nonrec input_transformer_path_key = string [@@ocaml.doc ""]
+
+type nonrec transformer_paths = (input_transformer_path_key * target_input_path) list
+[@@ocaml.doc ""]
 
 type nonrec input_transformer = {
+  input_paths_map : transformer_paths option;
+      [@ocaml.doc
+        "Map of JSON paths to be extracted from the event. You can then insert these in the \
+         template in [InputTemplate] to produce the output you want to be sent to the target.\n\n\
+        \  [InputPathsMap] is an array key-value pairs, where each value is a valid JSON path. You \
+         can have as many as 100 key-value pairs. You must use JSON dot notation, not bracket \
+         notation.\n\
+        \ \n\
+        \  The keys cannot start with \"Amazon Web Services.\" \n\
+        \  "]
   input_template : transformer_input;
       [@ocaml.doc
         "Input template where you specify placeholders that will be filled with the values of the \
@@ -762,491 +1360,68 @@ type nonrec input_transformer = {
         \                   \n\
         \                     [}] \n\
         \                    "]
-  input_paths_map : transformer_paths option;
-      [@ocaml.doc
-        "Map of JSON paths to be extracted from the event. You can then insert these in the \
-         template in [InputTemplate] to produce the output you want to be sent to the target.\n\n\
-        \  [InputPathsMap] is an array key-value pairs, where each value is a valid JSON path. You \
-         can have as many as 100 key-value pairs. You must use JSON dot notation, not bracket \
-         notation.\n\
-        \ \n\
-        \  The keys cannot start with \"Amazon Web Services.\" \n\
-        \  "]
 }
 [@@ocaml.doc
   "Contains the parameters needed for you to provide custom input to a target based on one or more \
    pieces of data extracted from the event.\n"]
 
-type nonrec kinesis_parameters = {
-  partition_key_path : target_partition_key_path;
-      [@ocaml.doc
-        "The JSON path to be extracted from the event and used as the partition key. For more \
-         information, see \
-         {{:https://docs.aws.amazon.com/streams/latest/dev/key-concepts.html#partition-key}Amazon \
-         Kinesis Streams Key Concepts} in the {i Amazon Kinesis Streams Developer Guide}.\n"]
-}
-[@@ocaml.doc
-  "This object enables you to specify a JSON path to extract from the event and use as the \
-   partition key for the Amazon Kinesis data stream, so that you can control the shard to which \
-   the event goes. If you do not include this parameter, the default is to use the [eventId] as \
-   the partition key.\n"]
+type nonrec target_input = string [@@ocaml.doc ""]
 
-type nonrec run_command_target_key = string [@@ocaml.doc ""]
+type nonrec role_arn = string [@@ocaml.doc ""]
 
-type nonrec run_command_target_value = string [@@ocaml.doc ""]
-
-type nonrec run_command_target_values = run_command_target_value list [@@ocaml.doc ""]
-
-type nonrec run_command_target = {
-  values : run_command_target_values;
-      [@ocaml.doc
-        "If [Key] is [tag:] {i tag-key}, [Values] is a list of tag values. If [Key] is \
-         [InstanceIds], [Values] is a list of Amazon EC2 instance IDs.\n"]
-  key : run_command_target_key; [@ocaml.doc "Can be either [tag:] {i tag-key} or [InstanceIds].\n"]
-}
-[@@ocaml.doc
-  "Information about the EC2 instances that are to be sent the command, specified as key-value \
-   pairs. Each [RunCommandTarget] block can include only one key, but this key may specify \
-   multiple values.\n"]
-
-type nonrec run_command_targets = run_command_target list [@@ocaml.doc ""]
-
-type nonrec run_command_parameters = {
-  run_command_targets : run_command_targets;
-      [@ocaml.doc
-        "Currently, we support including only one RunCommandTarget block, which specifies either \
-         an array of InstanceIds or a tag.\n"]
-}
-[@@ocaml.doc
-  "This parameter contains the criteria (either InstanceIds or a tag) used to specify which EC2 \
-   instances are to be sent the command. \n"]
-
-type nonrec limit_min1 = int [@@ocaml.doc ""]
-
-type nonrec launch_type = EXTERNAL [@ocaml.doc ""] | FARGATE [@ocaml.doc ""] | EC2 [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec string_list = string_ list [@@ocaml.doc ""]
-
-type nonrec assign_public_ip = DISABLED [@ocaml.doc ""] | ENABLED [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec aws_vpc_configuration = {
-  assign_public_ip : assign_public_ip option;
-      [@ocaml.doc
-        "Specifies whether the task's elastic network interface receives a public IP address. You \
-         can specify [ENABLED] only when [LaunchType] in [EcsParameters] is set to [FARGATE].\n"]
-  security_groups : string_list option;
-      [@ocaml.doc
-        "Specifies the security groups associated with the task. These security groups must all be \
-         in the same VPC. You can specify as many as five security groups. If you do not specify a \
-         security group, the default security group for the VPC is used.\n"]
-  subnets : string_list;
-      [@ocaml.doc
-        "Specifies the subnets associated with the task. These subnets must all be in the same \
-         VPC. You can specify as many as 16 subnets.\n"]
-}
-[@@ocaml.doc
-  "This structure specifies the VPC subnets and security groups for the task, and whether a public \
-   IP address is to be used. This structure is relevant only for ECS tasks that use the [awsvpc] \
-   network mode.\n"]
-
-type nonrec network_configuration = {
-  awsvpc_configuration : aws_vpc_configuration option;
-      [@ocaml.doc
-        "Use this structure to specify the VPC subnets and security groups for the task, and \
-         whether a public IP address is to be used. This structure is relevant only for ECS tasks \
-         that use the [awsvpc] network mode.\n"]
-}
-[@@ocaml.doc "This structure specifies the network configuration for an ECS task.\n"]
-
-type nonrec capacity_provider = string [@@ocaml.doc ""]
-
-type nonrec capacity_provider_strategy_item_weight = int [@@ocaml.doc ""]
-
-type nonrec capacity_provider_strategy_item_base = int [@@ocaml.doc ""]
-
-type nonrec capacity_provider_strategy_item = {
-  base : capacity_provider_strategy_item_base option;
-      [@ocaml.doc
-        "The base value designates how many tasks, at a minimum, to run on the specified capacity \
-         provider. Only one capacity provider in a capacity provider strategy can have a base \
-         defined. If no value is specified, the default value of 0 is used. \n"]
-  weight : capacity_provider_strategy_item_weight option;
-      [@ocaml.doc
-        "The weight value designates the relative percentage of the total number of tasks launched \
-         that should use the specified capacity provider. The weight value is taken into \
-         consideration after the base value, if defined, is satisfied.\n"]
-  capacity_provider : capacity_provider; [@ocaml.doc "The short name of the capacity provider.\n"]
-}
-[@@ocaml.doc
-  "The details of a capacity provider strategy. To learn more, see \
-   {{:https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_CapacityProviderStrategyItem.html}CapacityProviderStrategyItem} \
-   in the Amazon ECS API Reference.\n"]
-
-type nonrec capacity_provider_strategy = capacity_provider_strategy_item list [@@ocaml.doc ""]
-
-type nonrec placement_constraint_type =
-  | MEMBER_OF [@ocaml.doc ""]
-  | DISTINCT_INSTANCE [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec placement_constraint_expression = string [@@ocaml.doc ""]
-
-type nonrec placement_constraint = {
-  expression : placement_constraint_expression option;
-      [@ocaml.doc
-        "A cluster query language expression to apply to the constraint. You cannot specify an \
-         expression if the constraint type is [distinctInstance]. To learn more, see \
-         {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-query-language.html}Cluster \
-         Query Language} in the Amazon Elastic Container Service Developer Guide. \n"]
-  type_ : placement_constraint_type option;
-      [@ocaml.doc
-        "The type of constraint. Use distinctInstance to ensure that each task in a particular \
-         group is running on a different container instance. Use memberOf to restrict the \
-         selection to a group of valid candidates. \n"]
-}
-[@@ocaml.doc
-  "An object representing a constraint on task placement. To learn more, see \
-   {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-constraints.html}Task \
-   Placement Constraints} in the Amazon Elastic Container Service Developer Guide.\n"]
-
-type nonrec placement_constraints = placement_constraint list [@@ocaml.doc ""]
-
-type nonrec placement_strategy_type =
-  | BINPACK [@ocaml.doc ""]
-  | SPREAD [@ocaml.doc ""]
-  | RANDOM [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec placement_strategy_field = string [@@ocaml.doc ""]
-
-type nonrec placement_strategy = {
-  field : placement_strategy_field option;
-      [@ocaml.doc
-        "The field to apply the placement strategy against. For the spread placement strategy, \
-         valid values are instanceId (or host, which has the same effect), or any platform or \
-         custom attribute that is applied to a container instance, such as \
-         attribute:ecs.availability-zone. For the binpack placement strategy, valid values are cpu \
-         and memory. For the random placement strategy, this field is not used. \n"]
-  type_ : placement_strategy_type option;
-      [@ocaml.doc
-        "The type of placement strategy. The random placement strategy randomly places tasks on \
-         available candidates. The spread placement strategy spreads placement across available \
-         candidates evenly based on the field parameter. The binpack strategy places tasks on \
-         available candidates that have the least available amount of the resource that is \
-         specified with the field parameter. For example, if you binpack on memory, a task is \
-         placed on the instance with the least amount of remaining memory (but still enough to run \
-         the task). \n"]
-}
-[@@ocaml.doc
-  "The task placement strategy for a task or service. To learn more, see \
-   {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-strategies.html}Task \
-   Placement Strategies} in the Amazon Elastic Container Service Service Developer Guide.\n"]
-
-type nonrec placement_strategies = placement_strategy list [@@ocaml.doc ""]
-
-type nonrec propagate_tags = TASK_DEFINITION [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec reference_id = string [@@ocaml.doc ""]
-
-type nonrec tag_value = string [@@ocaml.doc ""]
-
-type nonrec tag = {
-  value : tag_value; [@ocaml.doc "The value for the specified tag key.\n"]
-  key : tag_key;
-      [@ocaml.doc
-        "A string you can use to assign a value. The combination of tag keys and values can help \
-         you organize and categorize your resources.\n"]
-}
-[@@ocaml.doc
-  "A key-value pair associated with an Amazon Web Services resource. In EventBridge, rules and \
-   event buses support tagging.\n"]
-
-type nonrec tag_list = tag list [@@ocaml.doc ""]
-
-type nonrec ecs_parameters = {
-  tags : tag_list option;
-      [@ocaml.doc
-        "The metadata that you apply to the task to help you categorize and organize them. Each \
-         tag consists of a key and an optional value, both of which you define. To learn more, see \
-         {{:https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_RunTask.html#ECS-RunTask-request-tags}RunTask} \
-         in the Amazon ECS API Reference.\n"]
-  reference_id : reference_id option; [@ocaml.doc "The reference ID to use for the task.\n"]
-  propagate_tags : propagate_tags option;
-      [@ocaml.doc
-        "Specifies whether to propagate the tags from the task definition to the task. If no value \
-         is specified, the tags are not propagated. Tags can only be propagated to the task during \
-         task creation. To add tags to a task after task creation, use the TagResource API action. \n"]
-  placement_strategy : placement_strategies option;
-      [@ocaml.doc
-        "The placement strategy objects to use for the task. You can specify a maximum of five \
-         strategy rules per task. \n"]
-  placement_constraints : placement_constraints option;
-      [@ocaml.doc
-        "An array of placement constraint objects to use for the task. You can specify up to 10 \
-         constraints per task (including constraints in the task definition and those specified at \
-         runtime).\n"]
-  enable_execute_command : boolean_ option;
-      [@ocaml.doc
-        "Whether or not to enable the execute command functionality for the containers in this \
-         task. If true, this enables execute command functionality on all containers in the task.\n"]
-  enable_ecs_managed_tags : boolean_ option;
-      [@ocaml.doc
-        "Specifies whether to enable Amazon ECS managed tags for the task. For more information, \
-         see \
-         {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-using-tags.html}Tagging \
-         Your Amazon ECS Resources} in the Amazon Elastic Container Service Developer Guide. \n"]
-  capacity_provider_strategy : capacity_provider_strategy option;
-      [@ocaml.doc
-        "The capacity provider strategy to use for the task.\n\n\
-        \ If a [capacityProviderStrategy] is specified, the [launchType] parameter must be \
-         omitted. If no [capacityProviderStrategy] or launchType is specified, the \
-         [defaultCapacityProviderStrategy] for the cluster is used. \n\
-        \ "]
-  group : string_ option;
-      [@ocaml.doc
-        "Specifies an ECS task group for the task. The maximum length is 255 characters.\n"]
-  platform_version : string_ option;
-      [@ocaml.doc
-        "Specifies the platform version for the task. Specify only the numeric portion of the \
-         platform version, such as [1.1.0].\n\n\
-        \ This structure is used only if [LaunchType] is [FARGATE]. For more information about \
-         valid platform versions, see \
-         {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html}Fargate \
-         Platform Versions} in the {i Amazon Elastic Container Service Developer Guide}.\n\
-        \ "]
-  network_configuration : network_configuration option;
-      [@ocaml.doc
-        "Use this structure if the Amazon ECS task uses the [awsvpc] network mode. This structure \
-         specifies the VPC subnets and security groups associated with the task, and whether a \
-         public IP address is to be used. This structure is required if [LaunchType] is [FARGATE] \
-         because the [awsvpc] mode is required for Fargate tasks.\n\n\
-        \ If you specify [NetworkConfiguration] when the target ECS task does not use the [awsvpc] \
-         network mode, the task fails.\n\
-        \ "]
-  launch_type : launch_type option;
-      [@ocaml.doc
-        "Specifies the launch type on which your task is running. The launch type that you specify \
-         here must match one of the launch type (compatibilities) of the target task. The \
-         [FARGATE] value is supported only in the Regions where Fargate with Amazon ECS is \
-         supported. For more information, see \
-         {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS-Fargate.html}Fargate \
-         on Amazon ECS} in the {i Amazon Elastic Container Service Developer Guide}.\n"]
-  task_count : limit_min1 option;
-      [@ocaml.doc "The number of tasks to create based on [TaskDefinition]. The default is 1.\n"]
-  task_definition_arn : arn;
-      [@ocaml.doc
-        "The ARN of the task definition to use if the event target is an Amazon ECS task. \n"]
-}
-[@@ocaml.doc "The custom parameters to be used when the target is an Amazon ECS task.\n"]
-
-type nonrec integer = int [@@ocaml.doc ""]
-
-type nonrec batch_array_properties = {
-  size : integer option;
-      [@ocaml.doc
-        "The size of the array, if this is an array batch job. Valid values are integers between 2 \
-         and 10,000.\n"]
-}
-[@@ocaml.doc
-  "The array properties for the submitted job, such as the size of the array. The array size can \
-   be between 2 and 10,000. If you specify array properties for a job, it becomes an array job. \
-   This parameter is used only if the target is an Batch job.\n"]
-
-type nonrec batch_retry_strategy = {
-  attempts : integer option;
-      [@ocaml.doc
-        "The number of times to attempt to retry, if the job fails. Valid values are \
-         1\226\128\14710.\n"]
-}
-[@@ocaml.doc
-  "The retry strategy to use for failed jobs, if the target is an Batch job. If you specify a \
-   retry strategy here, it overrides the retry strategy defined in the job definition.\n"]
-
-type nonrec batch_parameters = {
-  retry_strategy : batch_retry_strategy option;
-      [@ocaml.doc
-        "The retry strategy to use for failed jobs, if the target is an Batch job. The retry \
-         strategy is the number of times to retry the failed job execution. Valid values are \
-         1\226\128\14710. When you specify a retry strategy here, it overrides the retry strategy \
-         defined in the job definition.\n"]
-  array_properties : batch_array_properties option;
-      [@ocaml.doc
-        "The array properties for the submitted job, such as the size of the array. The array size \
-         can be between 2 and 10,000. If you specify array properties for a job, it becomes an \
-         array job. This parameter is used only if the target is an Batch job.\n"]
-  job_name : string_;
-      [@ocaml.doc "The name to use for this execution of the job, if the target is an Batch job.\n"]
-  job_definition : string_;
-      [@ocaml.doc
-        "The ARN or name of the job definition to use if the event target is an Batch job. This \
-         job definition must already exist.\n"]
-}
-[@@ocaml.doc "The custom parameters to be used when the target is an Batch job.\n"]
-
-type nonrec message_group_id = string [@@ocaml.doc ""]
-
-type nonrec sqs_parameters = {
-  message_group_id : message_group_id option;
-      [@ocaml.doc "The FIFO message group ID to use as the target.\n"]
-}
-[@@ocaml.doc
-  "This structure includes the custom parameter to be used when the target is an SQS FIFO queue.\n"]
-
-type nonrec path_parameter = string [@@ocaml.doc ""]
-
-type nonrec path_parameter_list = path_parameter list [@@ocaml.doc ""]
-
-type nonrec header_value = string [@@ocaml.doc ""]
-
-type nonrec header_parameters_map = (header_key * header_value) list [@@ocaml.doc ""]
-
-type nonrec query_string_value = string [@@ocaml.doc ""]
-
-type nonrec query_string_parameters_map = (query_string_key * query_string_value) list
-[@@ocaml.doc ""]
-
-type nonrec http_parameters = {
-  query_string_parameters : query_string_parameters_map option;
-      [@ocaml.doc
-        "The query string keys/values that need to be sent as part of request invoking the API \
-         Gateway API or EventBridge ApiDestination.\n"]
-  header_parameters : header_parameters_map option;
-      [@ocaml.doc
-        "The headers that need to be sent as part of request invoking the API Gateway API or \
-         EventBridge ApiDestination.\n"]
-  path_parameter_values : path_parameter_list option;
-      [@ocaml.doc
-        "The path parameter values to be used to populate API Gateway API or EventBridge \
-         ApiDestination path wildcards (\"*\").\n"]
-}
-[@@ocaml.doc
-  "These are custom parameter to be used when the target is an API Gateway APIs or EventBridge \
-   ApiDestinations. In the latter case, these are merged with any InvocationParameters specified \
-   on the Connection, with any values from the Connection taking precedence.\n"]
-
-type nonrec redshift_secret_manager_arn = string [@@ocaml.doc ""]
-
-type nonrec database = string [@@ocaml.doc ""]
-
-type nonrec db_user = string [@@ocaml.doc ""]
-
-type nonrec sql = string [@@ocaml.doc ""]
-
-type nonrec statement_name = string [@@ocaml.doc ""]
-
-type nonrec sqls = sql list [@@ocaml.doc ""]
-
-type nonrec redshift_data_parameters = {
-  sqls : sqls option;
-      [@ocaml.doc
-        "One or more SQL statements to run. The SQL statements are run as a single transaction. \
-         They run serially in the order of the array. Subsequent SQL statements don't start until \
-         the previous statement in the array completes. If any SQL statement fails, then because \
-         they are run as one transaction, all work is rolled back.\n"]
-  with_event : boolean_ option;
-      [@ocaml.doc
-        "Indicates whether to send an event back to EventBridge after the SQL statement runs.\n"]
-  statement_name : statement_name option;
-      [@ocaml.doc
-        "The name of the SQL statement. You can name the SQL statement when you create it to \
-         identify the query.\n"]
-  sql : sql option; [@ocaml.doc "The SQL statement text to run.\n"]
-  db_user : db_user option;
-      [@ocaml.doc
-        "The database user name. Required when authenticating using temporary credentials.\n"]
-  database : database;
-      [@ocaml.doc
-        "The name of the database. Required when authenticating using temporary credentials.\n"]
-  secret_manager_arn : redshift_secret_manager_arn option;
-      [@ocaml.doc
-        "The name or ARN of the secret that enables access to the database. Required when \
-         authenticating using Amazon Web Services Secrets Manager.\n"]
-}
-[@@ocaml.doc
-  "These are custom parameters to be used when the target is a Amazon Redshift cluster to invoke \
-   the Amazon Redshift Data API ExecuteStatement based on EventBridge events.\n"]
-
-type nonrec sage_maker_pipeline_parameter_name = string [@@ocaml.doc ""]
-
-type nonrec sage_maker_pipeline_parameter_value = string [@@ocaml.doc ""]
-
-type nonrec sage_maker_pipeline_parameter = {
-  value : sage_maker_pipeline_parameter_value;
-      [@ocaml.doc
-        "Value of parameter to start execution of a SageMaker AI Model Building Pipeline.\n"]
-  name : sage_maker_pipeline_parameter_name;
-      [@ocaml.doc
-        "Name of parameter to start execution of a SageMaker AI Model Building Pipeline.\n"]
-}
-[@@ocaml.doc
-  "Name/Value pair of a parameter to start execution of a SageMaker AI Model Building Pipeline.\n"]
-
-type nonrec sage_maker_pipeline_parameter_list = sage_maker_pipeline_parameter list [@@ocaml.doc ""]
-
-type nonrec sage_maker_pipeline_parameters = {
-  pipeline_parameter_list : sage_maker_pipeline_parameter_list option;
-      [@ocaml.doc
-        "List of Parameter names and values for SageMaker AI Model Building Pipeline execution.\n"]
-}
-[@@ocaml.doc
-  "These are custom parameters to use when the target is a SageMaker AI Model Building Pipeline \
-   that starts based on EventBridge events.\n"]
-
-type nonrec maximum_retry_attempts = int [@@ocaml.doc ""]
-
-type nonrec maximum_event_age_in_seconds = int [@@ocaml.doc ""]
-
-type nonrec retry_policy = {
-  maximum_event_age_in_seconds : maximum_event_age_in_seconds option;
-      [@ocaml.doc "The maximum amount of time, in seconds, to continue to make retry attempts.\n"]
-  maximum_retry_attempts : maximum_retry_attempts option;
-      [@ocaml.doc
-        "The maximum number of retry attempts to make before the request fails. Retry attempts \
-         continue until either the maximum number of attempts is made or until the duration of the \
-         [MaximumEventAgeInSeconds] is met.\n"]
-}
-[@@ocaml.doc "A [RetryPolicy] object that includes information about the retry policy settings.\n"]
-
-type nonrec graph_ql_operation = string [@@ocaml.doc ""]
-
-type nonrec app_sync_parameters = {
-  graph_ql_operation : graph_ql_operation option;
-      [@ocaml.doc
-        "The GraphQL operation; that is, the query, mutation, or subscription to be parsed and \
-         executed by the GraphQL service.\n\n\
-        \ For more information, see \
-         {{:https://docs.aws.amazon.com/appsync/latest/devguide/graphql-architecture.html#graphql-operations}Operations} \
-         in the {i AppSync User Guide}.\n\
-        \ "]
-}
-[@@ocaml.doc
-  "Contains the GraphQL operation to be parsed and executed, if the event target is an AppSync API.\n"]
+type nonrec target_arn = string [@@ocaml.doc ""]
 
 type nonrec target = {
-  app_sync_parameters : app_sync_parameters option;
+  id : target_id;
       [@ocaml.doc
-        "Contains the GraphQL operation to be parsed and executed, if the event target is an \
-         AppSync API.\n"]
-  retry_policy : retry_policy option;
-      [@ocaml.doc "The retry policy configuration to use for the dead-letter queue.\n"]
-  dead_letter_config : dead_letter_config option;
+        "The ID of the target within the specified rule. Use this ID to reference the target when \
+         updating the rule. We recommend using a memorable and unique string.\n"]
+  arn : target_arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the target.\n"]
+  role_arn : role_arn option;
       [@ocaml.doc
-        "The [DeadLetterConfig] that defines the target queue to send dead-letter queue events to.\n"]
-  sage_maker_pipeline_parameters : sage_maker_pipeline_parameters option;
+        "The Amazon Resource Name (ARN) of the IAM role to be used for this target when the rule \
+         is triggered. If one rule triggers multiple targets, you can use a different IAM role for \
+         each target.\n"]
+  input : target_input option;
       [@ocaml.doc
-        "Contains the SageMaker AI Model Building Pipeline parameters to start execution of a \
-         SageMaker AI Model Building Pipeline.\n\n\
-        \ If you specify a SageMaker AI Model Building Pipeline as a target, you can use this to \
-         specify parameters to start a pipeline execution based on EventBridge events.\n\
-        \ "]
-  redshift_data_parameters : redshift_data_parameters option;
+        "Valid JSON text passed to the target. In this case, nothing from the event itself is \
+         passed to the target. For more information, see \
+         {{:http://www.rfc-editor.org/rfc/rfc7159.txt}The JavaScript Object Notation (JSON) Data \
+         Interchange Format}.\n"]
+  input_path : target_input_path option;
       [@ocaml.doc
-        "Contains the Amazon Redshift Data API parameters to use when the target is a Amazon \
-         Redshift cluster.\n\n\
-        \ If you specify a Amazon Redshift Cluster as a Target, you can use this to specify \
-         parameters to invoke the Amazon Redshift Data API ExecuteStatement based on EventBridge \
-         events.\n\
+        "The value of the JSONPath that is used for extracting part of the matched event when \
+         passing it to the target. You may use JSON dot notation or bracket notation. For more \
+         information about JSON paths, see {{:http://goessner.net/articles/JsonPath/}JSONPath}.\n"]
+  input_transformer : input_transformer option;
+      [@ocaml.doc
+        "Settings to enable you to provide custom input to a target based on certain event data. \
+         You can extract one or more key-value pairs from the event and then use that data to send \
+         customized input to the target.\n"]
+  kinesis_parameters : kinesis_parameters option;
+      [@ocaml.doc
+        "The custom parameter you can use to control the shard assignment, when the target is a \
+         Kinesis data stream. If you do not include this parameter, the default is to use the \
+         [eventId] as the partition key.\n"]
+  run_command_parameters : run_command_parameters option;
+      [@ocaml.doc "Parameters used when you are using the rule to invoke Amazon EC2 Run Command.\n"]
+  ecs_parameters : ecs_parameters option;
+      [@ocaml.doc
+        "Contains the Amazon ECS task definition and task count to be used, if the event target is \
+         an Amazon ECS task. For more information about Amazon ECS tasks, see \
+         {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_defintions.html}Task \
+         Definitions } in the {i Amazon EC2 Container Service Developer Guide}.\n"]
+  batch_parameters : batch_parameters option;
+      [@ocaml.doc
+        "If the event target is an Batch job, this contains the job definition, job name, and \
+         other parameters. For more information, see \
+         {{:https://docs.aws.amazon.com/batch/latest/userguide/jobs.html}Jobs} in the {i Batch \
+         User Guide}.\n"]
+  sqs_parameters : sqs_parameters option;
+      [@ocaml.doc
+        "Contains the message group ID to use when the target is a FIFO queue.\n\n\
+        \ If you specify an SQS FIFO queue as a target, the queue must have content-based \
+         deduplication enabled.\n\
         \ "]
   http_parameters : http_parameters option;
       [@ocaml.doc
@@ -1258,57 +1433,30 @@ type nonrec target = {
          Connection can also have these values configured. In case of any conflicting keys, values \
          from the Connection take precedence.\n\
         \ "]
-  sqs_parameters : sqs_parameters option;
+  redshift_data_parameters : redshift_data_parameters option;
       [@ocaml.doc
-        "Contains the message group ID to use when the target is a FIFO queue.\n\n\
-        \ If you specify an SQS FIFO queue as a target, the queue must have content-based \
-         deduplication enabled.\n\
+        "Contains the Amazon Redshift Data API parameters to use when the target is a Amazon \
+         Redshift cluster.\n\n\
+        \ If you specify a Amazon Redshift Cluster as a Target, you can use this to specify \
+         parameters to invoke the Amazon Redshift Data API ExecuteStatement based on EventBridge \
+         events.\n\
         \ "]
-  batch_parameters : batch_parameters option;
+  sage_maker_pipeline_parameters : sage_maker_pipeline_parameters option;
       [@ocaml.doc
-        "If the event target is an Batch job, this contains the job definition, job name, and \
-         other parameters. For more information, see \
-         {{:https://docs.aws.amazon.com/batch/latest/userguide/jobs.html}Jobs} in the {i Batch \
-         User Guide}.\n"]
-  ecs_parameters : ecs_parameters option;
+        "Contains the SageMaker AI Model Building Pipeline parameters to start execution of a \
+         SageMaker AI Model Building Pipeline.\n\n\
+        \ If you specify a SageMaker AI Model Building Pipeline as a target, you can use this to \
+         specify parameters to start a pipeline execution based on EventBridge events.\n\
+        \ "]
+  dead_letter_config : dead_letter_config option;
       [@ocaml.doc
-        "Contains the Amazon ECS task definition and task count to be used, if the event target is \
-         an Amazon ECS task. For more information about Amazon ECS tasks, see \
-         {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_defintions.html}Task \
-         Definitions } in the {i Amazon EC2 Container Service Developer Guide}.\n"]
-  run_command_parameters : run_command_parameters option;
-      [@ocaml.doc "Parameters used when you are using the rule to invoke Amazon EC2 Run Command.\n"]
-  kinesis_parameters : kinesis_parameters option;
+        "The [DeadLetterConfig] that defines the target queue to send dead-letter queue events to.\n"]
+  retry_policy : retry_policy option;
+      [@ocaml.doc "The retry policy configuration to use for the dead-letter queue.\n"]
+  app_sync_parameters : app_sync_parameters option;
       [@ocaml.doc
-        "The custom parameter you can use to control the shard assignment, when the target is a \
-         Kinesis data stream. If you do not include this parameter, the default is to use the \
-         [eventId] as the partition key.\n"]
-  input_transformer : input_transformer option;
-      [@ocaml.doc
-        "Settings to enable you to provide custom input to a target based on certain event data. \
-         You can extract one or more key-value pairs from the event and then use that data to send \
-         customized input to the target.\n"]
-  input_path : target_input_path option;
-      [@ocaml.doc
-        "The value of the JSONPath that is used for extracting part of the matched event when \
-         passing it to the target. You may use JSON dot notation or bracket notation. For more \
-         information about JSON paths, see {{:http://goessner.net/articles/JsonPath/}JSONPath}.\n"]
-  input : target_input option;
-      [@ocaml.doc
-        "Valid JSON text passed to the target. In this case, nothing from the event itself is \
-         passed to the target. For more information, see \
-         {{:http://www.rfc-editor.org/rfc/rfc7159.txt}The JavaScript Object Notation (JSON) Data \
-         Interchange Format}.\n"]
-  role_arn : role_arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the IAM role to be used for this target when the rule \
-         is triggered. If one rule triggers multiple targets, you can use a different IAM role for \
-         each target.\n"]
-  arn : target_arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the target.\n"]
-  id : target_id;
-      [@ocaml.doc
-        "The ID of the target within the specified rule. Use this ID to reference the target when \
-         updating the rule. We recommend using a memorable and unique string.\n"]
+        "Contains the GraphQL operation to be parsed and executed, if the event target is an \
+         AppSync API.\n"]
 }
 [@@ocaml.doc
   "Targets are the resources to be invoked when a rule is triggered. For a complete list of \
@@ -1325,120 +1473,43 @@ type nonrec target = {
 
 type nonrec target_list = target list [@@ocaml.doc ""]
 
-type nonrec target_id_list = target_id list [@@ocaml.doc ""]
-
-type nonrec tag_resource_response = unit [@@ocaml.doc ""]
-
-type nonrec tag_resource_request = {
-  tags : tag_list; [@ocaml.doc "The list of key-value pairs to associate with the resource.\n"]
-  resource_ar_n : arn;
-      [@ocaml.doc "The ARN of the EventBridge resource that you're adding tags to.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec statement_id = string [@@ocaml.doc ""]
-
-type nonrec replay_arn = string [@@ocaml.doc ""]
-
-type nonrec replay_state =
-  | FAILED [@ocaml.doc ""]
-  | CANCELLED [@ocaml.doc ""]
-  | COMPLETED [@ocaml.doc ""]
-  | CANCELLING [@ocaml.doc ""]
-  | RUNNING [@ocaml.doc ""]
-  | STARTING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec replay_state_reason = string [@@ocaml.doc ""]
-
-type nonrec start_replay_response = {
-  replay_start_time : timestamp option; [@ocaml.doc "The time at which the replay started.\n"]
-  state_reason : replay_state_reason option;
-      [@ocaml.doc "The reason that the replay is in the state.\n"]
-  state : replay_state option; [@ocaml.doc "The state of the replay.\n"]
-  replay_arn : replay_arn option; [@ocaml.doc "The ARN of the replay.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec replay_name = string [@@ocaml.doc ""]
-
-type nonrec replay_description = string [@@ocaml.doc ""]
-
-type nonrec replay_destination_filters = arn list [@@ocaml.doc ""]
-
-type nonrec replay_destination = {
-  filter_arns : replay_destination_filters option;
-      [@ocaml.doc "A list of ARNs for rules to replay events to.\n"]
-  arn : arn;
-      [@ocaml.doc
-        "The ARN of the event bus to replay event to. You can replay events only to the event bus \
-         specified to create the archive.\n"]
-}
-[@@ocaml.doc "A [ReplayDestination] object that contains details about a replay.\n"]
-
-type nonrec start_replay_request = {
-  destination : replay_destination;
-      [@ocaml.doc
-        "A [ReplayDestination] object that includes details about the destination for the replay.\n"]
-  event_end_time : timestamp;
-      [@ocaml.doc
-        "A time stamp for the time to stop replaying events. Only events that occurred between the \
-         [EventStartTime] and [EventEndTime] are replayed.\n"]
-  event_start_time : timestamp;
-      [@ocaml.doc
-        "A time stamp for the time to start replaying events. Only events that occurred between \
-         the [EventStartTime] and [EventEndTime] are replayed.\n"]
-  event_source_arn : archive_arn; [@ocaml.doc "The ARN of the archive to replay events from.\n"]
-  description : replay_description option; [@ocaml.doc "A description for the replay to start.\n"]
-  replay_name : replay_name; [@ocaml.doc "The name of the replay to start.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec resource_already_exists_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The resource you are trying to create already exists.\n"]
-
-type nonrec secrets_manager_secret_arn = string [@@ocaml.doc ""]
-
-type nonrec schedule_expression = string [@@ocaml.doc ""]
-
-type nonrec rule_state =
-  | ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS [@ocaml.doc ""]
-  | DISABLED [@ocaml.doc ""]
-  | ENABLED [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec rule_name = string [@@ocaml.doc ""]
-
-type nonrec rule_arn = string [@@ocaml.doc ""]
-
-type nonrec rule_description = string [@@ocaml.doc ""]
-
-type nonrec managed_by = string [@@ocaml.doc ""]
-
-type nonrec rule = {
-  event_bus_name : event_bus_name option;
+type nonrec put_targets_request = {
+  rule : rule_name; [@ocaml.doc "The name of the rule.\n"]
+  event_bus_name : event_bus_name_or_arn option;
       [@ocaml.doc
         "The name or ARN of the event bus associated with the rule. If you omit this, the default \
          event bus is used.\n"]
-  managed_by : managed_by option;
-      [@ocaml.doc
-        "If the rule was created on behalf of your account by an Amazon Web Services service, this \
-         field displays the principal name of the service that created the rule.\n"]
-  role_arn : role_arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the role that is used for target invocation.\n\n\
-        \ If you're setting an event bus in another account as the target and that account granted \
-         permission to your account through an organization instead of directly by the account ID, \
-         you must specify a [RoleArn] with proper permissions in the [Target] structure, instead \
-         of here in this parameter.\n\
-        \ "]
+  targets : target_list; [@ocaml.doc "The targets to update or add to the rule.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec rule_arn = string [@@ocaml.doc ""]
+
+type nonrec put_rule_response = {
+  rule_arn : rule_arn option; [@ocaml.doc "The Amazon Resource Name (ARN) of the rule.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec rule_description = string [@@ocaml.doc ""]
+
+type nonrec rule_state =
+  | ENABLED [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""]
+  | ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec schedule_expression = string [@@ocaml.doc ""]
+
+type nonrec put_rule_request = {
+  name : rule_name; [@ocaml.doc "The name of the rule that you are creating or updating.\n"]
   schedule_expression : schedule_expression option;
       [@ocaml.doc
-        "The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\". For \
-         more information, see \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-rule-schedule.html}Creating \
-         an Amazon EventBridge rule that runs on a schedule}.\n"]
-  description : rule_description option; [@ocaml.doc "The description of the rule.\n"]
+        "The scheduling expression. For example, \"cron(0 20 * * ? *)\" or \"rate(5 minutes)\".\n"]
+  event_pattern : event_pattern option;
+      [@ocaml.doc
+        "The event pattern. For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns.html}Amazon \
+         EventBridge event patterns} in the {i  {i Amazon EventBridge User Guide} }.\n"]
   state : rule_state option;
       [@ocaml.doc
         "The state of the rule.\n\n\
@@ -1476,145 +1547,7 @@ type nonrec rule = {
         \               }\n\
         \        }\n\
         \  "]
-  event_pattern : event_pattern option;
-      [@ocaml.doc
-        "The event pattern of the rule. For more information, see \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-and-event-patterns.html}Events \
-         and Event Patterns} in the {i  {i Amazon EventBridge User Guide} }.\n"]
-  arn : rule_arn option; [@ocaml.doc "The Amazon Resource Name (ARN) of the rule.\n"]
-  name : rule_name option; [@ocaml.doc "The name of the rule.\n"]
-}
-[@@ocaml.doc "Contains information about a rule in Amazon EventBridge.\n"]
-
-type nonrec rule_response_list = rule list [@@ocaml.doc ""]
-
-type nonrec rule_name_list = rule_name list [@@ocaml.doc ""]
-
-type nonrec resource_association_arn = string [@@ocaml.doc ""]
-
-type nonrec replay = {
-  replay_end_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the replay completed.\n"]
-  replay_start_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the replay started.\n"]
-  event_last_replayed_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the last event was replayed.\n"]
-  event_end_time : timestamp option;
-      [@ocaml.doc
-        "A time stamp for the time to start replaying events. Any event with a creation time prior \
-         to the [EventEndTime] specified is replayed.\n"]
-  event_start_time : timestamp option;
-      [@ocaml.doc
-        "A time stamp for the time to start replaying events. This is determined by the time in \
-         the event as described in \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutEventsRequestEntry.html#eventbridge-Type-PutEventsRequestEntry-Time}Time}.\n"]
-  state_reason : replay_state_reason option;
-      [@ocaml.doc "A description of why the replay is in the current state.\n"]
-  state : replay_state option; [@ocaml.doc "The current state of the replay.\n"]
-  event_source_arn : archive_arn option;
-      [@ocaml.doc "The ARN of the archive to replay event from.\n"]
-  replay_name : replay_name option; [@ocaml.doc "The name of the replay.\n"]
-}
-[@@ocaml.doc "A [Replay] object that contains details about a replay.\n"]
-
-type nonrec replay_list = replay list [@@ocaml.doc ""]
-
-type nonrec error_code = string [@@ocaml.doc ""]
-
-type nonrec remove_targets_result_entry = {
-  error_message : error_message option;
-      [@ocaml.doc "The error message that explains why the target removal failed.\n"]
-  error_code : error_code option;
-      [@ocaml.doc
-        "The error code that indicates why the target removal failed. If the value is \
-         [ConcurrentModificationException], too many requests were made at the same time.\n"]
-  target_id : target_id option; [@ocaml.doc "The ID of the target.\n"]
-}
-[@@ocaml.doc "Represents a target that failed to be removed from a rule.\n"]
-
-type nonrec remove_targets_result_entry_list = remove_targets_result_entry list [@@ocaml.doc ""]
-
-type nonrec remove_targets_response = {
-  failed_entries : remove_targets_result_entry_list option;
-      [@ocaml.doc "The failed target entries.\n"]
-  failed_entry_count : integer option; [@ocaml.doc "The number of failed entries.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec event_bus_name_or_arn = string [@@ocaml.doc ""]
-
-type nonrec remove_targets_request = {
-  force : boolean_ option;
-      [@ocaml.doc
-        "If this is a managed rule, created by an Amazon Web Services service on your behalf, you \
-         must specify [Force] as [True] to remove targets. This parameter is ignored for rules \
-         that are not managed rules. You can check whether a rule is a managed rule by using \
-         [DescribeRule] or [ListRules] and checking the [ManagedBy] field of the response.\n"]
-  ids : target_id_list; [@ocaml.doc "The IDs of the targets to remove from the rule.\n"]
-  event_bus_name : event_bus_name_or_arn option;
-      [@ocaml.doc
-        "The name or ARN of the event bus associated with the rule. If you omit this, the default \
-         event bus is used.\n"]
-  rule : rule_name; [@ocaml.doc "The name of the rule.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec non_partner_event_bus_name = string [@@ocaml.doc ""]
-
-type nonrec remove_permission_request = {
-  event_bus_name : non_partner_event_bus_name option;
-      [@ocaml.doc
-        "The name of the event bus to revoke permissions for. If you omit this, the default event \
-         bus is used.\n"]
-  remove_all_permissions : boolean_ option;
-      [@ocaml.doc "Specifies whether to remove all permissions.\n"]
-  statement_id : statement_id option;
-      [@ocaml.doc
-        "The statement ID corresponding to the account that is no longer allowed to put events to \
-         the default event bus.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec put_targets_result_entry = {
-  error_message : error_message option;
-      [@ocaml.doc "The error message that explains why the target addition failed.\n"]
-  error_code : error_code option;
-      [@ocaml.doc
-        "The error code that indicates why the target addition failed. If the value is \
-         [ConcurrentModificationException], too many requests were made at the same time.\n"]
-  target_id : target_id option; [@ocaml.doc "The ID of the target.\n"]
-}
-[@@ocaml.doc "Represents a target that failed to be added to a rule.\n"]
-
-type nonrec put_targets_result_entry_list = put_targets_result_entry list [@@ocaml.doc ""]
-
-type nonrec put_targets_response = {
-  failed_entries : put_targets_result_entry_list option; [@ocaml.doc "The failed target entries.\n"]
-  failed_entry_count : integer option; [@ocaml.doc "The number of failed entries.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec put_targets_request = {
-  targets : target_list; [@ocaml.doc "The targets to update or add to the rule.\n"]
-  event_bus_name : event_bus_name_or_arn option;
-      [@ocaml.doc
-        "The name or ARN of the event bus associated with the rule. If you omit this, the default \
-         event bus is used.\n"]
-  rule : rule_name; [@ocaml.doc "The name of the rule.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec put_rule_response = {
-  rule_arn : rule_arn option; [@ocaml.doc "The Amazon Resource Name (ARN) of the rule.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec put_rule_request = {
-  event_bus_name : event_bus_name_or_arn option;
-      [@ocaml.doc
-        "The name or ARN of the event bus to associate with this rule. If you omit this, the \
-         default event bus is used.\n"]
-  tags : tag_list option; [@ocaml.doc "The list of key-value pairs to associate with the rule.\n"]
+  description : rule_description option; [@ocaml.doc "A description of the rule.\n"]
   role_arn : role_arn option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of the IAM role associated with the rule.\n\n\
@@ -1623,71 +1556,28 @@ type nonrec put_rule_request = {
          you must specify a [RoleArn] with proper permissions in the [Target] structure, instead \
          of here in this parameter.\n\
         \ "]
-  description : rule_description option; [@ocaml.doc "A description of the rule.\n"]
-  state : rule_state option;
+  tags : tag_list option; [@ocaml.doc "The list of key-value pairs to associate with the rule.\n"]
+  event_bus_name : event_bus_name_or_arn option;
       [@ocaml.doc
-        "The state of the rule.\n\n\
-        \ Valid values include:\n\
-        \ \n\
-        \  {ul\n\
-        \        {-   [DISABLED]: The rule is disabled. EventBridge does not match any events \
-         against the rule.\n\
-        \            \n\
-        \             }\n\
-        \        {-   [ENABLED]: The rule is enabled. EventBridge matches events against the rule, \
-         {i except} for Amazon Web Services management events delivered through CloudTrail.\n\
-        \            \n\
-        \             }\n\
-        \        {-   [ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS]: The rule is enabled for all \
-         events, including Amazon Web Services management events delivered through CloudTrail.\n\
-        \            \n\
-        \             Management events provide visibility into management operations that are \
-         performed on resources in your Amazon Web Services account. These are also known as \
-         control plane operations. For more information, see \
-         {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html#logging-management-events}Logging \
-         management events} in the {i CloudTrail User Guide}, and \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event.html#eb-service-event-cloudtrail}Filtering \
-         management events from Amazon Web Services services} in the {i  {i Amazon EventBridge \
-         User Guide} }.\n\
-        \             \n\
-        \              This value is only valid for rules on the \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is-how-it-works-concepts.html#eb-bus-concepts-buses}default} \
-         event bus or \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-event-bus.html}custom \
-         event buses}. It does not apply to \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-saas.html}partner event \
-         buses}.\n\
-        \              \n\
-        \               }\n\
-        \        }\n\
-        \  "]
-  event_pattern : event_pattern option;
-      [@ocaml.doc
-        "The event pattern. For more information, see \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns.html}Amazon \
-         EventBridge event patterns} in the {i  {i Amazon EventBridge User Guide} }.\n"]
-  schedule_expression : schedule_expression option;
-      [@ocaml.doc
-        "The scheduling expression. For example, \"cron(0 20 * * ? *)\" or \"rate(5 minutes)\".\n"]
-  name : rule_name; [@ocaml.doc "The name of the rule that you are creating or updating.\n"]
+        "The name or ARN of the event bus to associate with this rule. If you omit this, the \
+         default event bus is used.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec action = string [@@ocaml.doc ""]
-
-type nonrec principal = string [@@ocaml.doc ""]
+type nonrec policy_length_exceeded_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The event bus policy is too long. For more information, see the limits.\n"]
 
 type nonrec condition = {
-  value : string_;
+  type_ : string_;
       [@ocaml.doc
-        "Specifies the value for the key. Currently, this must be the ID of the organization.\n"]
+        "Specifies the type of condition. Currently the only supported value is [StringEquals].\n"]
   key : string_;
       [@ocaml.doc
         "Specifies the key for the condition. Currently the only supported key is \
          [aws:PrincipalOrgID].\n"]
-  type_ : string_;
+  value : string_;
       [@ocaml.doc
-        "Specifies the type of condition. Currently the only supported value is [StringEquals].\n"]
+        "Specifies the value for the key. Currently, this must be the ID of the organization.\n"]
 }
 [@@ocaml.doc
   "A JSON string which you can use to limit the event bus permissions you are granting to only \
@@ -1699,12 +1589,36 @@ type nonrec condition = {
   \        \"o-1234567890\"}'] \n\
   \ "]
 
+type nonrec principal = string [@@ocaml.doc ""]
+
+type nonrec action = string [@@ocaml.doc ""]
+
 type nonrec put_permission_request = {
-  policy : string_ option;
+  event_bus_name : non_partner_event_bus_name option;
       [@ocaml.doc
-        "A JSON string that describes the permission policy statement. You can include a [Policy] \
-         parameter in the request instead of using the [StatementId], [Action], [Principal], or \
-         [Condition] parameters.\n"]
+        "The name of the event bus associated with the rule. If you omit this, the default event \
+         bus is used.\n"]
+  action : action option;
+      [@ocaml.doc "The action that you are enabling the other account to perform.\n"]
+  principal : principal option;
+      [@ocaml.doc
+        "The 12-digit Amazon Web Services account ID that you are permitting to put events to your \
+         default event bus. Specify \"*\" to permit any account to put events to your default \
+         event bus.\n\n\
+        \ If you specify \"*\" without specifying [Condition], avoid creating rules that may match \
+         undesirable events. To create more secure rules, make sure that the event pattern for \
+         each rule contains an [account] field with a specific account ID from which to receive \
+         events. Rules with an account field do not match any events sent from other accounts.\n\
+        \ "]
+  statement_id : statement_id option;
+      [@ocaml.doc
+        "An identifier string for the external account that you are granting permissions to. If \
+         you later want to revoke the permission for this external account, specify this \
+         [StatementId] when you run \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_RemovePermission.html}RemovePermission}.\n\n\
+        \  Each [StatementId] must be unique.\n\
+        \  \n\
+        \   "]
   condition : condition option;
       [@ocaml.doc
         "This parameter enables you to limit the permission to accounts that fulfill a certain \
@@ -1719,45 +1633,22 @@ type nonrec put_permission_request = {
         \ \n\
         \  The [Condition] is a JSON string which must contain [Type], [Key], and [Value] fields.\n\
         \  "]
-  statement_id : statement_id option;
+  policy : string_ option;
       [@ocaml.doc
-        "An identifier string for the external account that you are granting permissions to. If \
-         you later want to revoke the permission for this external account, specify this \
-         [StatementId] when you run \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_RemovePermission.html}RemovePermission}.\n\n\
-        \  Each [StatementId] must be unique.\n\
-        \  \n\
-        \   "]
-  principal : principal option;
-      [@ocaml.doc
-        "The 12-digit Amazon Web Services account ID that you are permitting to put events to your \
-         default event bus. Specify \"*\" to permit any account to put events to your default \
-         event bus.\n\n\
-        \ If you specify \"*\" without specifying [Condition], avoid creating rules that may match \
-         undesirable events. To create more secure rules, make sure that the event pattern for \
-         each rule contains an [account] field with a specific account ID from which to receive \
-         events. Rules with an account field do not match any events sent from other accounts.\n\
-        \ "]
-  action : action option;
-      [@ocaml.doc "The action that you are enabling the other account to perform.\n"]
-  event_bus_name : non_partner_event_bus_name option;
-      [@ocaml.doc
-        "The name of the event bus associated with the rule. If you omit this, the default event \
-         bus is used.\n"]
+        "A JSON string that describes the permission policy statement. You can include a [Policy] \
+         parameter in the request instead of using the [StatementId], [Action], [Principal], or \
+         [Condition] parameters.\n"]
 }
 [@@ocaml.doc ""]
-
-type nonrec policy_length_exceeded_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The event bus policy is too long. For more information, see the limits.\n"]
 
 type nonrec event_id = string [@@ocaml.doc ""]
 
 type nonrec put_partner_events_result_entry = {
-  error_message : error_message option;
-      [@ocaml.doc "The error message that explains why the event submission failed.\n"]
+  event_id : event_id option; [@ocaml.doc "The ID of the event.\n"]
   error_code : error_code option;
       [@ocaml.doc "The error code that indicates why the event submission failed.\n"]
-  event_id : event_id option; [@ocaml.doc "The ID of the event.\n"]
+  error_message : error_message option;
+      [@ocaml.doc "The error message that explains why the event submission failed.\n"]
 }
 [@@ocaml.doc
   "The result of an event entry the partner submitted in this request. If the event was \
@@ -1768,6 +1659,10 @@ type nonrec put_partner_events_result_entry_list = put_partner_events_result_ent
 [@@ocaml.doc ""]
 
 type nonrec put_partner_events_response = {
+  failed_entry_count : integer option;
+      [@ocaml.doc
+        "The number of events from this operation that could not be written to the partner event \
+         bus.\n"]
   entries : put_partner_events_result_entry_list option;
       [@ocaml.doc
         "The results for each event entry the partner submitted in this request. If the event was \
@@ -1776,37 +1671,22 @@ type nonrec put_partner_events_response = {
         \ For each record, the index of the response element is the same as the index in the \
          request array.\n\
         \ "]
-  failed_entry_count : integer option;
-      [@ocaml.doc
-        "The number of events from this operation that could not be written to the partner event \
-         bus.\n"]
 }
 [@@ocaml.doc ""]
-
-type nonrec event_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec event_source_name = string [@@ocaml.doc ""]
 
 type nonrec event_resource = string [@@ocaml.doc ""]
 
 type nonrec event_resource_list = event_resource list [@@ocaml.doc ""]
 
+type nonrec event_source_name = string [@@ocaml.doc ""]
+
+type nonrec event_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
 type nonrec put_partner_events_request_entry = {
-  detail : string_ option;
+  time : event_time option; [@ocaml.doc "The date and time of the event.\n"]
+  source : event_source_name option;
       [@ocaml.doc
-        "A valid JSON string. There is no other schema imposed. The JSON string may contain fields \
-         and nested sub-objects.\n\n\
-        \   [Detail], [DetailType], and [Source] are required for EventBridge to successfully send \
-         an event to an event bus. If you include event entries in a request that do not include \
-         each of those properties, EventBridge fails that entry. If you submit a request in which \
-         {i none} of the entries have each of these properties, EventBridge fails the entire \
-         request. \n\
-        \  \n\
-        \   "]
-  detail_type : string_ option;
-      [@ocaml.doc
-        "A free-form string, with a maximum of 128 characters, used to decide what fields to \
-         expect in the event detail.\n\n\
+        "The event source that is generating the entry.\n\n\
         \   [Detail], [DetailType], and [Source] are required for EventBridge to successfully send \
          an event to an event bus. If you include event entries in a request that do not include \
          each of those properties, EventBridge fails that entry. If you submit a request in which \
@@ -1818,9 +1698,10 @@ type nonrec put_partner_events_request_entry = {
       [@ocaml.doc
         "Amazon Web Services resources, identified by Amazon Resource Name (ARN), which the event \
          primarily concerns. Any number, including zero, may be present.\n"]
-  source : event_source_name option;
+  detail_type : string_ option;
       [@ocaml.doc
-        "The event source that is generating the entry.\n\n\
+        "A free-form string, with a maximum of 128 characters, used to decide what fields to \
+         expect in the event detail.\n\n\
         \   [Detail], [DetailType], and [Source] are required for EventBridge to successfully send \
          an event to an event bus. If you include event entries in a request that do not include \
          each of those properties, EventBridge fails that entry. If you submit a request in which \
@@ -1828,7 +1709,17 @@ type nonrec put_partner_events_request_entry = {
          request. \n\
         \  \n\
         \   "]
-  time : event_time option; [@ocaml.doc "The date and time of the event.\n"]
+  detail : string_ option;
+      [@ocaml.doc
+        "A valid JSON string. There is no other schema imposed. The JSON string may contain fields \
+         and nested sub-objects.\n\n\
+        \   [Detail], [DetailType], and [Source] are required for EventBridge to successfully send \
+         an event to an event bus. If you include event entries in a request that do not include \
+         each of those properties, EventBridge fails that entry. If you submit a request in which \
+         {i none} of the entries have each of these properties, EventBridge fails the entire \
+         request. \n\
+        \  \n\
+        \   "]
 }
 [@@ocaml.doc "The details about an event generated by an SaaS partner.\n"]
 
@@ -1842,8 +1733,7 @@ type nonrec put_partner_events_request = {
 [@@ocaml.doc ""]
 
 type nonrec put_events_result_entry = {
-  error_message : error_message option;
-      [@ocaml.doc "The error message that explains why the event submission failed.\n"]
+  event_id : event_id option; [@ocaml.doc "The ID of the event.\n"]
   error_code : error_code option;
       [@ocaml.doc
         "The error code that indicates why the event submission failed.\n\n\
@@ -1919,7 +1809,8 @@ type nonrec put_events_result_entry = {
         \                }\n\
         \          }\n\
         \  "]
-  event_id : event_id option; [@ocaml.doc "The ID of the event.\n"]
+  error_message : error_message option;
+      [@ocaml.doc "The error message that explains why the event submission failed.\n"]
 }
 [@@ocaml.doc
   "Represents the results of an event submitted to an event bus.\n\n\
@@ -1933,6 +1824,7 @@ type nonrec put_events_result_entry = {
 type nonrec put_events_result_entry_list = put_events_result_entry list [@@ocaml.doc ""]
 
 type nonrec put_events_response = {
+  failed_entry_count : integer option; [@ocaml.doc "The number of failed entries.\n"]
   entries : put_events_result_entry_list option;
       [@ocaml.doc
         "The successfully and unsuccessfully ingested events results. If the ingestion was \
@@ -1941,30 +1833,43 @@ type nonrec put_events_response = {
         \ For each record, the index of the response element is the same as the index in the \
          request array.\n\
         \ "]
-  failed_entry_count : integer option; [@ocaml.doc "The number of failed entries.\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec trace_header = string [@@ocaml.doc ""]
 
 type nonrec non_partner_event_bus_name_or_arn = string [@@ocaml.doc ""]
 
 type nonrec put_events_request_entry = {
-  trace_header : trace_header option;
+  time : event_time option;
       [@ocaml.doc
-        "An X-Ray trace header, which is an http header (X-Amzn-Trace-Id) that contains the \
-         trace-id associated with the event.\n\n\
-        \ To learn more about X-Ray trace headers, see \
-         {{:https://docs.aws.amazon.com/xray/latest/devguide/xray-concepts.html#xray-concepts-tracingheader}Tracing \
-         header} in the X-Ray Developer Guide.\n\
-        \ "]
-  event_bus_name : non_partner_event_bus_name_or_arn option;
+        "The time stamp of the event, per {{:https://www.rfc-editor.org/rfc/rfc3339.txt}RFC3339}. \
+         If no time stamp is provided, the time stamp of the \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutEvents.html}PutEvents} \
+         call is used.\n"]
+  source : string_ option;
       [@ocaml.doc
-        "The name or ARN of the event bus to receive the event. Only the rules that are associated \
-         with this event bus are used to match the event. If you omit this, the default event bus \
-         is used.\n\n\
-        \  If you're using a global endpoint with a custom bus, you can enter either the name or \
-         Amazon Resource Name (ARN) of the event bus in either the primary or secondary Region \
-         here. EventBridge then determines the corresponding event bus in the other Region based \
-         on the endpoint referenced by the [EndpointId]. Specifying the event bus ARN is preferred.\n\
+        "The source of the event.\n\n\
+        \   [Detail], [DetailType], and [Source] are required for EventBridge to successfully send \
+         an event to an event bus. If you include event entries in a request that do not include \
+         each of those properties, EventBridge fails that entry. If you submit a request in which \
+         {i none} of the entries have each of these properties, EventBridge fails the entire \
+         request. \n\
+        \  \n\
+        \   "]
+  resources : event_resource_list option;
+      [@ocaml.doc
+        "Amazon Web Services resources, identified by Amazon Resource Name (ARN), which the event \
+         primarily concerns. Any number, including zero, may be present.\n"]
+  detail_type : string_ option;
+      [@ocaml.doc
+        "Free-form string, with a maximum of 128 characters, used to decide what fields to expect \
+         in the event detail.\n\n\
+        \   [Detail], [DetailType], and [Source] are required for EventBridge to successfully send \
+         an event to an event bus. If you include event entries in a request that do not include \
+         each of those properties, EventBridge fails that entry. If you submit a request in which \
+         {i none} of the entries have each of these properties, EventBridge fails the entire \
+         request. \n\
         \  \n\
         \   "]
   detail : string_ option;
@@ -1978,43 +1883,36 @@ type nonrec put_events_request_entry = {
          request. \n\
         \  \n\
         \   "]
-  detail_type : string_ option;
+  event_bus_name : non_partner_event_bus_name_or_arn option;
       [@ocaml.doc
-        "Free-form string, with a maximum of 128 characters, used to decide what fields to expect \
-         in the event detail.\n\n\
-        \   [Detail], [DetailType], and [Source] are required for EventBridge to successfully send \
-         an event to an event bus. If you include event entries in a request that do not include \
-         each of those properties, EventBridge fails that entry. If you submit a request in which \
-         {i none} of the entries have each of these properties, EventBridge fails the entire \
-         request. \n\
+        "The name or ARN of the event bus to receive the event. Only the rules that are associated \
+         with this event bus are used to match the event. If you omit this, the default event bus \
+         is used.\n\n\
+        \  If you're using a global endpoint with a custom bus, you can enter either the name or \
+         Amazon Resource Name (ARN) of the event bus in either the primary or secondary Region \
+         here. EventBridge then determines the corresponding event bus in the other Region based \
+         on the endpoint referenced by the [EndpointId]. Specifying the event bus ARN is preferred.\n\
         \  \n\
         \   "]
-  resources : event_resource_list option;
+  trace_header : trace_header option;
       [@ocaml.doc
-        "Amazon Web Services resources, identified by Amazon Resource Name (ARN), which the event \
-         primarily concerns. Any number, including zero, may be present.\n"]
-  source : string_ option;
-      [@ocaml.doc
-        "The source of the event.\n\n\
-        \   [Detail], [DetailType], and [Source] are required for EventBridge to successfully send \
-         an event to an event bus. If you include event entries in a request that do not include \
-         each of those properties, EventBridge fails that entry. If you submit a request in which \
-         {i none} of the entries have each of these properties, EventBridge fails the entire \
-         request. \n\
-        \  \n\
-        \   "]
-  time : event_time option;
-      [@ocaml.doc
-        "The time stamp of the event, per {{:https://www.rfc-editor.org/rfc/rfc3339.txt}RFC3339}. \
-         If no time stamp is provided, the time stamp of the \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutEvents.html}PutEvents} \
-         call is used.\n"]
+        "An X-Ray trace header, which is an http header (X-Amzn-Trace-Id) that contains the \
+         trace-id associated with the event.\n\n\
+        \ To learn more about X-Ray trace headers, see \
+         {{:https://docs.aws.amazon.com/xray/latest/devguide/xray-concepts.html#xray-concepts-tracingheader}Tracing \
+         header} in the X-Ray Developer Guide.\n\
+        \ "]
 }
 [@@ocaml.doc "Represents an event to be submitted.\n"]
 
 type nonrec put_events_request_entry_list = put_events_request_entry list [@@ocaml.doc ""]
 
 type nonrec put_events_request = {
+  entries : put_events_request_entry_list;
+      [@ocaml.doc
+        "The entry that defines an event in your system. You can specify several parameters for \
+         the entry such as the source and type of the event, resources associated with the event, \
+         and so on.\n"]
   endpoint_id : endpoint_id option;
       [@ocaml.doc
         "The URL subdomain of the endpoint. For example, if the URL for Endpoint is \
@@ -2022,61 +1920,13 @@ type nonrec put_events_request = {
         \  When using Java, you must include [auth-crt] on the class path.\n\
         \  \n\
         \   "]
-  entries : put_events_request_entry_list;
-      [@ocaml.doc
-        "The entry that defines an event in your system. You can specify several parameters for \
-         the entry such as the source and type of the event, resources associated with the event, \
-         and so on.\n"]
 }
 [@@ocaml.doc ""]
-
-type nonrec partner_event_source_name_prefix = string [@@ocaml.doc ""]
-
-type nonrec partner_event_source = {
-  name : string_ option; [@ocaml.doc "The name of the partner event source.\n"]
-  arn : string_ option; [@ocaml.doc "The ARN of the partner event source.\n"]
-}
-[@@ocaml.doc
-  "A partner event source is created by an SaaS partner. If a customer creates a partner event bus \
-   that matches this event source, that Amazon Web Services account can receive events from the \
-   partner's applications or services.\n"]
-
-type nonrec partner_event_source_list = partner_event_source list [@@ocaml.doc ""]
-
-type nonrec account_id = string [@@ocaml.doc ""]
-
-type nonrec event_source_state =
-  | DELETED [@ocaml.doc ""]
-  | ACTIVE [@ocaml.doc ""]
-  | PENDING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec partner_event_source_account = {
-  state : event_source_state option;
-      [@ocaml.doc
-        "The state of the event source. If it is ACTIVE, you have already created a matching event \
-         bus for this event source, and that event bus is active. If it is PENDING, either you \
-         haven't yet created a matching event bus, or that event bus is deactivated. If it is \
-         DELETED, you have created a matching event bus, but the event source has since been \
-         deleted.\n"]
-  expiration_time : timestamp option;
-      [@ocaml.doc
-        "The date and time that the event source will expire, if the Amazon Web Services account \
-         doesn't create a matching event bus for it.\n"]
-  creation_time : timestamp option; [@ocaml.doc "The date and time the event source was created.\n"]
-  account : account_id option;
-      [@ocaml.doc
-        "The Amazon Web Services account ID that the partner event source was offered to.\n"]
-}
-[@@ocaml.doc "The Amazon Web Services account that a partner event source has been offered to.\n"]
-
-type nonrec partner_event_source_account_list = partner_event_source_account list [@@ocaml.doc ""]
 
 type nonrec next_token = string [@@ocaml.doc ""]
 
-type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
-
 type nonrec list_targets_by_rule_response = {
+  targets : target_list option; [@ocaml.doc "The targets assigned to the rule.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A token indicating there are more results available. If there are no more results, no \
@@ -2087,14 +1937,17 @@ type nonrec list_targets_by_rule_response = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  targets : target_list option; [@ocaml.doc "The targets assigned to the rule.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec limit_max100 = int [@@ocaml.doc ""]
 
 type nonrec list_targets_by_rule_request = {
-  limit : limit_max100 option; [@ocaml.doc "The maximum number of results to return.\n"]
+  rule : rule_name; [@ocaml.doc "The name of the rule.\n"]
+  event_bus_name : event_bus_name_or_arn option;
+      [@ocaml.doc
+        "The name or ARN of the event bus associated with the rule. If you omit this, the default \
+         event bus is used.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "The token returned by a previous call, which you can use to retrieve the next set of \
@@ -2105,11 +1958,7 @@ type nonrec list_targets_by_rule_request = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  event_bus_name : event_bus_name_or_arn option;
-      [@ocaml.doc
-        "The name or ARN of the event bus associated with the rule. If you omit this, the default \
-         event bus is used.\n"]
-  rule : rule_name; [@ocaml.doc "The name of the rule.\n"]
+  limit : limit_max100 option; [@ocaml.doc "The maximum number of results to return.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2125,7 +1974,83 @@ type nonrec list_tags_for_resource_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec managed_by = string [@@ocaml.doc ""]
+
+type nonrec rule = {
+  name : rule_name option; [@ocaml.doc "The name of the rule.\n"]
+  arn : rule_arn option; [@ocaml.doc "The Amazon Resource Name (ARN) of the rule.\n"]
+  event_pattern : event_pattern option;
+      [@ocaml.doc
+        "The event pattern of the rule. For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-and-event-patterns.html}Events \
+         and Event Patterns} in the {i  {i Amazon EventBridge User Guide} }.\n"]
+  state : rule_state option;
+      [@ocaml.doc
+        "The state of the rule.\n\n\
+        \ Valid values include:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-   [DISABLED]: The rule is disabled. EventBridge does not match any events \
+         against the rule.\n\
+        \            \n\
+        \             }\n\
+        \        {-   [ENABLED]: The rule is enabled. EventBridge matches events against the rule, \
+         {i except} for Amazon Web Services management events delivered through CloudTrail.\n\
+        \            \n\
+        \             }\n\
+        \        {-   [ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS]: The rule is enabled for all \
+         events, including Amazon Web Services management events delivered through CloudTrail.\n\
+        \            \n\
+        \             Management events provide visibility into management operations that are \
+         performed on resources in your Amazon Web Services account. These are also known as \
+         control plane operations. For more information, see \
+         {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html#logging-management-events}Logging \
+         management events} in the {i CloudTrail User Guide}, and \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event.html#eb-service-event-cloudtrail}Filtering \
+         management events from Amazon Web Services services} in the {i  {i Amazon EventBridge \
+         User Guide} }.\n\
+        \             \n\
+        \              This value is only valid for rules on the \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is-how-it-works-concepts.html#eb-bus-concepts-buses}default} \
+         event bus or \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-event-bus.html}custom \
+         event buses}. It does not apply to \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-saas.html}partner event \
+         buses}.\n\
+        \              \n\
+        \               }\n\
+        \        }\n\
+        \  "]
+  description : rule_description option; [@ocaml.doc "The description of the rule.\n"]
+  schedule_expression : schedule_expression option;
+      [@ocaml.doc
+        "The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\". For \
+         more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-rule-schedule.html}Creating \
+         an Amazon EventBridge rule that runs on a schedule}.\n"]
+  role_arn : role_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the role that is used for target invocation.\n\n\
+        \ If you're setting an event bus in another account as the target and that account granted \
+         permission to your account through an organization instead of directly by the account ID, \
+         you must specify a [RoleArn] with proper permissions in the [Target] structure, instead \
+         of here in this parameter.\n\
+        \ "]
+  managed_by : managed_by option;
+      [@ocaml.doc
+        "If the rule was created on behalf of your account by an Amazon Web Services service, this \
+         field displays the principal name of the service that created the rule.\n"]
+  event_bus_name : event_bus_name option;
+      [@ocaml.doc
+        "The name or ARN of the event bus associated with the rule. If you omit this, the default \
+         event bus is used.\n"]
+}
+[@@ocaml.doc "Contains information about a rule in Amazon EventBridge.\n"]
+
+type nonrec rule_response_list = rule list [@@ocaml.doc ""]
+
 type nonrec list_rules_response = {
+  rules : rule_response_list option; [@ocaml.doc "The rules that match the specified criteria.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A token indicating there are more results available. If there are no more results, no \
@@ -2136,31 +2061,34 @@ type nonrec list_rules_response = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  rules : rule_response_list option; [@ocaml.doc "The rules that match the specified criteria.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec list_rules_request = {
-  limit : limit_max100 option; [@ocaml.doc "The maximum number of results to return.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The token returned by a previous call, which you can use to retrieve the next set of \
-         results.\n\n\
-        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
-         next page of results, make the call again using the returned token. Keep all other \
-         arguments unchanged.\n\
-        \ \n\
-        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
-        \  "]
+  name_prefix : rule_name option; [@ocaml.doc "The prefix matching the rule name.\n"]
   event_bus_name : event_bus_name_or_arn option;
       [@ocaml.doc
         "The name or ARN of the event bus to list the rules for. If you omit this, the default \
          event bus is used.\n"]
-  name_prefix : rule_name option; [@ocaml.doc "The prefix matching the rule name.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token returned by a previous call, which you can use to retrieve the next set of \
+         results.\n\n\
+        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
+         next page of results, make the call again using the returned token. Keep all other \
+         arguments unchanged.\n\
+        \ \n\
+        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
+        \  "]
+  limit : limit_max100 option; [@ocaml.doc "The maximum number of results to return.\n"]
 }
 [@@ocaml.doc ""]
 
+type nonrec rule_name_list = rule_name list [@@ocaml.doc ""]
+
 type nonrec list_rule_names_by_target_response = {
+  rule_names : rule_name_list option;
+      [@ocaml.doc "The names of the rules that can invoke the given target.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A token indicating there are more results available. If there are no more results, no \
@@ -2171,49 +2099,15 @@ type nonrec list_rule_names_by_target_response = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  rule_names : rule_name_list option;
-      [@ocaml.doc "The names of the rules that can invoke the given target.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec list_rule_names_by_target_request = {
-  limit : limit_max100 option; [@ocaml.doc "The maximum number of results to return.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The token returned by a previous call, which you can use to retrieve the next set of \
-         results.\n\n\
-        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
-         next page of results, make the call again using the returned token. Keep all other \
-         arguments unchanged.\n\
-        \ \n\
-        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
-        \  "]
+  target_arn : target_arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the target resource.\n"]
   event_bus_name : event_bus_name_or_arn option;
       [@ocaml.doc
         "The name or ARN of the event bus to list rules for. If you omit this, the default event \
          bus is used.\n"]
-  target_arn : target_arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the target resource.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_replays_response = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "A token indicating there are more results available. If there are no more results, no \
-         token is included in the response.\n\n\
-        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
-         next page of results, make the call again using the returned token. Keep all other \
-         arguments unchanged.\n\
-        \ \n\
-        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
-        \  "]
-  replays : replay_list option;
-      [@ocaml.doc "An array of [Replay] objects that contain information about the replay.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_replays_request = {
-  limit : limit_max100 option; [@ocaml.doc "The maximum number of replays to retrieve.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "The token returned by a previous call, which you can use to retrieve the next set of \
@@ -2224,17 +2118,40 @@ type nonrec list_replays_request = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  event_source_arn : archive_arn option;
-      [@ocaml.doc "The ARN of the archive from which the events are replayed.\n"]
-  state : replay_state option; [@ocaml.doc "The state of the replay.\n"]
-  name_prefix : replay_name option;
-      [@ocaml.doc
-        "A name prefix to filter the replays returned. Only replays with name that match the \
-         prefix are returned.\n"]
+  limit : limit_max100 option; [@ocaml.doc "The maximum number of results to return.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec list_partner_event_sources_response = {
+type nonrec replay = {
+  replay_name : replay_name option; [@ocaml.doc "The name of the replay.\n"]
+  event_source_arn : archive_arn option;
+      [@ocaml.doc "The ARN of the archive to replay event from.\n"]
+  state : replay_state option; [@ocaml.doc "The current state of the replay.\n"]
+  state_reason : replay_state_reason option;
+      [@ocaml.doc "A description of why the replay is in the current state.\n"]
+  event_start_time : timestamp option;
+      [@ocaml.doc
+        "A time stamp for the time to start replaying events. This is determined by the time in \
+         the event as described in \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutEventsRequestEntry.html#eventbridge-Type-PutEventsRequestEntry-Time}Time}.\n"]
+  event_end_time : timestamp option;
+      [@ocaml.doc
+        "A time stamp for the time to start replaying events. Any event with a creation time prior \
+         to the [EventEndTime] specified is replayed.\n"]
+  event_last_replayed_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the last event was replayed.\n"]
+  replay_start_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the replay started.\n"]
+  replay_end_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the replay completed.\n"]
+}
+[@@ocaml.doc "A [Replay] object that contains details about a replay.\n"]
+
+type nonrec replay_list = replay list [@@ocaml.doc ""]
+
+type nonrec list_replays_response = {
+  replays : replay_list option;
+      [@ocaml.doc "An array of [Replay] objects that contain information about the replay.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A token indicating there are more results available. If there are no more results, no \
@@ -2245,72 +2162,100 @@ type nonrec list_partner_event_sources_response = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  partner_event_sources : partner_event_source_list option;
-      [@ocaml.doc "The list of partner event sources returned by the operation.\n"]
 }
 [@@ocaml.doc ""]
 
+type nonrec list_replays_request = {
+  name_prefix : replay_name option;
+      [@ocaml.doc
+        "A name prefix to filter the replays returned. Only replays with name that match the \
+         prefix are returned.\n"]
+  state : replay_state option; [@ocaml.doc "The state of the replay.\n"]
+  event_source_arn : archive_arn option;
+      [@ocaml.doc "The ARN of the archive from which the events are replayed.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token returned by a previous call, which you can use to retrieve the next set of \
+         results.\n\n\
+        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
+         next page of results, make the call again using the returned token. Keep all other \
+         arguments unchanged.\n\
+        \ \n\
+        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
+        \  "]
+  limit : limit_max100 option; [@ocaml.doc "The maximum number of replays to retrieve.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec partner_event_source = {
+  arn : string_ option; [@ocaml.doc "The ARN of the partner event source.\n"]
+  name : string_ option; [@ocaml.doc "The name of the partner event source.\n"]
+}
+[@@ocaml.doc
+  "A partner event source is created by an SaaS partner. If a customer creates a partner event bus \
+   that matches this event source, that Amazon Web Services account can receive events from the \
+   partner's applications or services.\n"]
+
+type nonrec partner_event_source_list = partner_event_source list [@@ocaml.doc ""]
+
+type nonrec list_partner_event_sources_response = {
+  partner_event_sources : partner_event_source_list option;
+      [@ocaml.doc "The list of partner event sources returned by the operation.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "A token indicating there are more results available. If there are no more results, no \
+         token is included in the response.\n\n\
+        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
+         next page of results, make the call again using the returned token. Keep all other \
+         arguments unchanged.\n\
+        \ \n\
+        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
+        \  "]
+}
+[@@ocaml.doc ""]
+
+type nonrec partner_event_source_name_prefix = string [@@ocaml.doc ""]
+
 type nonrec list_partner_event_sources_request = {
+  name_prefix : partner_event_source_name_prefix;
+      [@ocaml.doc
+        "If you specify this, the results are limited to only those partner event sources that \
+         start with the string you specify.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token returned by a previous call, which you can use to retrieve the next set of \
+         results.\n\n\
+        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
+         next page of results, make the call again using the returned token. Keep all other \
+         arguments unchanged.\n\
+        \ \n\
+        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
+        \  "]
   limit : limit_max100 option;
       [@ocaml.doc
         "pecifying this limits the number of results returned by this operation. The operation \
          also returns a NextToken which you can use in a subsequent operation to retrieve the next \
          set of results.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The token returned by a previous call, which you can use to retrieve the next set of \
-         results.\n\n\
-        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
-         next page of results, make the call again using the returned token. Keep all other \
-         arguments unchanged.\n\
-        \ \n\
-        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
-        \  "]
-  name_prefix : partner_event_source_name_prefix;
-      [@ocaml.doc
-        "If you specify this, the results are limited to only those partner event sources that \
-         start with the string you specify.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec list_partner_event_source_accounts_response = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "A token indicating there are more results available. If there are no more results, no \
-         token is included in the response.\n\n\
-        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
-         next page of results, make the call again using the returned token. Keep all other \
-         arguments unchanged.\n\
-        \ \n\
-        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
-        \  "]
-  partner_event_source_accounts : partner_event_source_account_list option;
-      [@ocaml.doc "The list of partner event sources returned by the operation.\n"]
-}
+type nonrec event_source_state =
+  | PENDING [@ocaml.doc ""]
+  | ACTIVE [@ocaml.doc ""]
+  | DELETED [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec list_partner_event_source_accounts_request = {
-  limit : limit_max100 option;
-      [@ocaml.doc
-        "Specifying this limits the number of results returned by this operation. The operation \
-         also returns a NextToken which you can use in a subsequent operation to retrieve the next \
-         set of results.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The token returned by a previous call, which you can use to retrieve the next set of \
-         results.\n\n\
-        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
-         next page of results, make the call again using the returned token. Keep all other \
-         arguments unchanged.\n\
-        \ \n\
-        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
-        \  "]
-  event_source_name : event_source_name;
-      [@ocaml.doc "The name of the partner event source to display account information about.\n"]
-}
-[@@ocaml.doc ""]
+type nonrec account_id = string [@@ocaml.doc ""]
 
-type nonrec event_source = {
+type nonrec partner_event_source_account = {
+  account : account_id option;
+      [@ocaml.doc
+        "The Amazon Web Services account ID that the partner event source was offered to.\n"]
+  creation_time : timestamp option; [@ocaml.doc "The date and time the event source was created.\n"]
+  expiration_time : timestamp option;
+      [@ocaml.doc
+        "The date and time that the event source will expire, if the Amazon Web Services account \
+         doesn't create a matching event bus for it.\n"]
   state : event_source_state option;
       [@ocaml.doc
         "The state of the event source. If it is ACTIVE, you have already created a matching event \
@@ -2318,15 +2263,65 @@ type nonrec event_source = {
          haven't yet created a matching event bus, or that event bus is deactivated. If it is \
          DELETED, you have created a matching event bus, but the event source has since been \
          deleted.\n"]
-  name : string_ option; [@ocaml.doc "The name of the event source.\n"]
+}
+[@@ocaml.doc "The Amazon Web Services account that a partner event source has been offered to.\n"]
+
+type nonrec partner_event_source_account_list = partner_event_source_account list [@@ocaml.doc ""]
+
+type nonrec list_partner_event_source_accounts_response = {
+  partner_event_source_accounts : partner_event_source_account_list option;
+      [@ocaml.doc "The list of partner event sources returned by the operation.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "A token indicating there are more results available. If there are no more results, no \
+         token is included in the response.\n\n\
+        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
+         next page of results, make the call again using the returned token. Keep all other \
+         arguments unchanged.\n\
+        \ \n\
+        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
+        \  "]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_partner_event_source_accounts_request = {
+  event_source_name : event_source_name;
+      [@ocaml.doc "The name of the partner event source to display account information about.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token returned by a previous call, which you can use to retrieve the next set of \
+         results.\n\n\
+        \ The value of [nextToken] is a unique pagination token for each page. To retrieve the \
+         next page of results, make the call again using the returned token. Keep all other \
+         arguments unchanged.\n\
+        \ \n\
+        \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
+        \  "]
+  limit : limit_max100 option;
+      [@ocaml.doc
+        "Specifying this limits the number of results returned by this operation. The operation \
+         also returns a NextToken which you can use in a subsequent operation to retrieve the next \
+         set of results.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec event_source = {
+  arn : string_ option; [@ocaml.doc "The ARN of the event source.\n"]
+  created_by : string_ option;
+      [@ocaml.doc "The name of the partner that created the event source.\n"]
+  creation_time : timestamp option; [@ocaml.doc "The date and time the event source was created.\n"]
   expiration_time : timestamp option;
       [@ocaml.doc
         "The date and time that the event source will expire, if the Amazon Web Services account \
          doesn't create a matching event bus for it.\n"]
-  creation_time : timestamp option; [@ocaml.doc "The date and time the event source was created.\n"]
-  created_by : string_ option;
-      [@ocaml.doc "The name of the partner that created the event source.\n"]
-  arn : string_ option; [@ocaml.doc "The ARN of the event source.\n"]
+  name : string_ option; [@ocaml.doc "The name of the event source.\n"]
+  state : event_source_state option;
+      [@ocaml.doc
+        "The state of the event source. If it is ACTIVE, you have already created a matching event \
+         bus for this event source, and that event bus is active. If it is PENDING, either you \
+         haven't yet created a matching event bus, or that event bus is deactivated. If it is \
+         DELETED, you have created a matching event bus, but the event source has since been \
+         deleted.\n"]
 }
 [@@ocaml.doc
   "A partner event source is created by an SaaS partner. If a customer creates a partner event bus \
@@ -2336,6 +2331,7 @@ type nonrec event_source = {
 type nonrec event_source_list = event_source list [@@ocaml.doc ""]
 
 type nonrec list_event_sources_response = {
+  event_sources : event_source_list option; [@ocaml.doc "The list of event sources.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A token indicating there are more results available. If there are no more results, no \
@@ -2346,18 +2342,16 @@ type nonrec list_event_sources_response = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  event_sources : event_source_list option; [@ocaml.doc "The list of event sources.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec event_source_name_prefix = string [@@ocaml.doc ""]
 
 type nonrec list_event_sources_request = {
-  limit : limit_max100 option;
+  name_prefix : event_source_name_prefix option;
       [@ocaml.doc
-        "Specifying this limits the number of results returned by this operation. The operation \
-         also returns a NextToken which you can use in a subsequent operation to retrieve the next \
-         set of results.\n"]
+        "Specifying this limits the results to only those partner event sources with names that \
+         start with the specified prefix.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "The token returned by a previous call, which you can use to retrieve the next set of \
@@ -2368,23 +2362,24 @@ type nonrec list_event_sources_request = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  name_prefix : event_source_name_prefix option;
+  limit : limit_max100 option;
       [@ocaml.doc
-        "Specifying this limits the results to only those partner event sources with names that \
-         start with the specified prefix.\n"]
+        "Specifying this limits the number of results returned by this operation. The operation \
+         also returns a NextToken which you can use in a subsequent operation to retrieve the next \
+         set of results.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec event_bus = {
-  last_modified_time : timestamp option; [@ocaml.doc "The time the event bus was last modified.\n"]
-  creation_time : timestamp option; [@ocaml.doc "The time the event bus was created.\n"]
+  name : string_ option; [@ocaml.doc "The name of the event bus.\n"]
+  arn : string_ option; [@ocaml.doc "The ARN of the event bus.\n"]
+  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
   policy : string_ option;
       [@ocaml.doc
         "The permissions policy of the event bus, describing which other Amazon Web Services \
          accounts can write events to this event bus.\n"]
-  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
-  arn : string_ option; [@ocaml.doc "The ARN of the event bus.\n"]
-  name : string_ option; [@ocaml.doc "The name of the event bus.\n"]
+  creation_time : timestamp option; [@ocaml.doc "The time the event bus was created.\n"]
+  last_modified_time : timestamp option; [@ocaml.doc "The time the event bus was last modified.\n"]
 }
 [@@ocaml.doc
   "An event bus receives events from a source, uses rules to evaluate them, applies any configured \
@@ -2397,6 +2392,7 @@ type nonrec event_bus = {
 type nonrec event_bus_list = event_bus list [@@ocaml.doc ""]
 
 type nonrec list_event_buses_response = {
+  event_buses : event_bus_list option; [@ocaml.doc "This list of event buses.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A token indicating there are more results available. If there are no more results, no \
@@ -2407,16 +2403,14 @@ type nonrec list_event_buses_response = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  event_buses : event_bus_list option; [@ocaml.doc "This list of event buses.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec list_event_buses_request = {
-  limit : limit_max100 option;
+  name_prefix : event_bus_name option;
       [@ocaml.doc
-        "Specifying this limits the number of results returned by this operation. The operation \
-         also returns a NextToken which you can use in a subsequent operation to retrieve the next \
-         set of results.\n"]
+        "Specifying this limits the results to only those event buses with names that start with \
+         the specified prefix.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "The token returned by a previous call, which you can use to retrieve the next set of \
@@ -2427,40 +2421,41 @@ type nonrec list_event_buses_request = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  name_prefix : event_bus_name option;
+  limit : limit_max100 option;
       [@ocaml.doc
-        "Specifying this limits the results to only those event buses with names that start with \
-         the specified prefix.\n"]
+        "Specifying this limits the number of results returned by this operation. The operation \
+         also returns a NextToken which you can use in a subsequent operation to retrieve the next \
+         set of results.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec endpoint_state_reason = string [@@ocaml.doc ""]
 
 type nonrec endpoint = {
-  last_modified_time : timestamp option; [@ocaml.doc "The last time the endpoint was modified.\n"]
-  creation_time : timestamp option; [@ocaml.doc "The time the endpoint was created.\n"]
-  state_reason : endpoint_state_reason option;
-      [@ocaml.doc "The reason the endpoint is in its current state.\n"]
-  state : endpoint_state option; [@ocaml.doc "The current state of the endpoint.\n"]
-  endpoint_url : endpoint_url option; [@ocaml.doc "The URL of the endpoint.\n"]
-  endpoint_id : endpoint_id option;
-      [@ocaml.doc
-        "The URL subdomain of the endpoint. For example, if the URL for Endpoint is \
-         https://abcde.veo.endpoints.event.amazonaws.com, then the EndpointId is [abcde.veo].\n"]
-  role_arn : iam_role_arn option;
-      [@ocaml.doc "The ARN of the role used by event replication for the endpoint.\n"]
-  event_buses : endpoint_event_bus_list option;
-      [@ocaml.doc "The event buses being used by the endpoint.\n"]
+  name : endpoint_name option; [@ocaml.doc "The name of the endpoint.\n"]
+  description : endpoint_description option; [@ocaml.doc "A description for the endpoint.\n"]
+  arn : endpoint_arn option; [@ocaml.doc "The ARN of the endpoint.\n"]
+  routing_config : routing_config option;
+      [@ocaml.doc "The routing configuration of the endpoint.\n"]
   replication_config : replication_config option;
       [@ocaml.doc
         "Whether event replication was enabled or disabled for this endpoint. The default state is \
          [ENABLED] which means you must supply a [RoleArn]. If you don't have a [RoleArn] or you \
          don't want event replication enabled, set the state to [DISABLED].\n"]
-  routing_config : routing_config option;
-      [@ocaml.doc "The routing configuration of the endpoint.\n"]
-  arn : endpoint_arn option; [@ocaml.doc "The ARN of the endpoint.\n"]
-  description : endpoint_description option; [@ocaml.doc "A description for the endpoint.\n"]
-  name : endpoint_name option; [@ocaml.doc "The name of the endpoint.\n"]
+  event_buses : endpoint_event_bus_list option;
+      [@ocaml.doc "The event buses being used by the endpoint.\n"]
+  role_arn : iam_role_arn option;
+      [@ocaml.doc "The ARN of the role used by event replication for the endpoint.\n"]
+  endpoint_id : endpoint_id option;
+      [@ocaml.doc
+        "The URL subdomain of the endpoint. For example, if the URL for Endpoint is \
+         https://abcde.veo.endpoints.event.amazonaws.com, then the EndpointId is [abcde.veo].\n"]
+  endpoint_url : endpoint_url option; [@ocaml.doc "The URL of the endpoint.\n"]
+  state : endpoint_state option; [@ocaml.doc "The current state of the endpoint.\n"]
+  state_reason : endpoint_state_reason option;
+      [@ocaml.doc "The reason the endpoint is in its current state.\n"]
+  creation_time : timestamp option; [@ocaml.doc "The time the endpoint was created.\n"]
+  last_modified_time : timestamp option; [@ocaml.doc "The last time the endpoint was modified.\n"]
 }
 [@@ocaml.doc
   "A global endpoint used to improve your application's availability by making it regional-fault \
@@ -2472,6 +2467,7 @@ type nonrec endpoint = {
 type nonrec endpoint_list = endpoint list [@@ocaml.doc ""]
 
 type nonrec list_endpoints_response = {
+  endpoints : endpoint_list option; [@ocaml.doc "The endpoints returned by the call.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A token indicating there are more results available. If there are no more results, no \
@@ -2482,15 +2478,20 @@ type nonrec list_endpoints_response = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  endpoints : endpoint_list option; [@ocaml.doc "The endpoints returned by the call.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec home_region = string [@@ocaml.doc ""]
 
 type nonrec list_endpoints_request = {
-  max_results : limit_max100 option;
-      [@ocaml.doc "The maximum number of results returned by the call.\n"]
+  name_prefix : endpoint_name option;
+      [@ocaml.doc
+        "A value that will return a subset of the endpoints associated with this account. For \
+         example, [\"NamePrefix\": \"ABC\"] will return all endpoints with \"ABC\" in the name.\n"]
+  home_region : home_region option;
+      [@ocaml.doc
+        "The primary Region of the endpoints associated with this account. For example \
+         [\"HomeRegion\": \"us-east-1\"].\n"]
   next_token : next_token option;
       [@ocaml.doc
         "The token returned by a previous call, which you can use to retrieve the next set of \
@@ -2501,43 +2502,39 @@ type nonrec list_endpoints_request = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  home_region : home_region option;
-      [@ocaml.doc
-        "The primary Region of the endpoints associated with this account. For example \
-         [\"HomeRegion\": \"us-east-1\"].\n"]
-  name_prefix : endpoint_name option;
-      [@ocaml.doc
-        "A value that will return a subset of the endpoints associated with this account. For \
-         example, [\"NamePrefix\": \"ABC\"] will return all endpoints with \"ABC\" in the name.\n"]
+  max_results : limit_max100 option;
+      [@ocaml.doc "The maximum number of results returned by the call.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec connection_state_reason = string [@@ocaml.doc ""]
 
 type nonrec connection = {
-  last_authorized_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was last authorized.\n"]
-  last_modified_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was last modified.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
+  connection_arn : connection_arn option; [@ocaml.doc "The ARN of the connection.\n"]
+  name : connection_name option; [@ocaml.doc "The name of the connection.\n"]
+  connection_state : connection_state option; [@ocaml.doc "The state of the connection.\n"]
+  state_reason : connection_state_reason option;
+      [@ocaml.doc "The reason that the connection is in the connection state.\n"]
   authorization_type : connection_authorization_type option;
       [@ocaml.doc
         "The authorization type specified for the connection.\n\n\
         \  OAUTH tokens are refreshed when a 401 or 407 response is returned.\n\
         \  \n\
         \   "]
-  state_reason : connection_state_reason option;
-      [@ocaml.doc "The reason that the connection is in the connection state.\n"]
-  connection_state : connection_state option; [@ocaml.doc "The state of the connection.\n"]
-  name : connection_name option; [@ocaml.doc "The name of the connection.\n"]
-  connection_arn : connection_arn option; [@ocaml.doc "The ARN of the connection.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
+  last_modified_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was last modified.\n"]
+  last_authorized_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was last authorized.\n"]
 }
 [@@ocaml.doc "Contains information about a connection.\n"]
 
 type nonrec connection_response_list = connection list [@@ocaml.doc ""]
 
 type nonrec list_connections_response = {
+  connections : connection_response_list option;
+      [@ocaml.doc "An array of connections objects that include details about the connections.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A token indicating there are more results available. If there are no more results, no \
@@ -2548,13 +2545,15 @@ type nonrec list_connections_response = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  connections : connection_response_list option;
-      [@ocaml.doc "An array of connections objects that include details about the connections.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec list_connections_request = {
-  limit : limit_max100 option; [@ocaml.doc "The maximum number of connections to return.\n"]
+  name_prefix : connection_name option;
+      [@ocaml.doc
+        "A name prefix to filter results returned. Only connections with a name that starts with \
+         the prefix are returned.\n"]
+  connection_state : connection_state option; [@ocaml.doc "The state of the connection.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "The token returned by a previous call, which you can use to retrieve the next set of \
@@ -2565,37 +2564,37 @@ type nonrec list_connections_request = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  connection_state : connection_state option; [@ocaml.doc "The state of the connection.\n"]
-  name_prefix : connection_name option;
-      [@ocaml.doc
-        "A name prefix to filter results returned. Only connections with a name that starts with \
-         the prefix are returned.\n"]
+  limit : limit_max100 option; [@ocaml.doc "The maximum number of connections to return.\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec event_bus_arn = string [@@ocaml.doc ""]
 
 type nonrec archive = {
-  creation_time : timestamp option;
-      [@ocaml.doc "The time stamp for the time that the archive was created.\n"]
-  event_count : long option; [@ocaml.doc "The number of events in the archive.\n"]
-  size_bytes : long option; [@ocaml.doc "The size of the archive, in bytes.\n"]
-  retention_days : retention_days option;
-      [@ocaml.doc "The number of days to retain events in the archive before they are deleted.\n"]
-  state_reason : archive_state_reason option;
-      [@ocaml.doc "A description for the reason that the archive is in the current state.\n"]
-  state : archive_state option; [@ocaml.doc "The current state of the archive.\n"]
+  archive_name : archive_name option; [@ocaml.doc "The name of the archive.\n"]
   event_source_arn : event_bus_arn option;
       [@ocaml.doc
         "The ARN of the event bus associated with the archive. Only events from this event bus are \
          sent to the archive.\n"]
-  archive_name : archive_name option; [@ocaml.doc "The name of the archive.\n"]
+  state : archive_state option; [@ocaml.doc "The current state of the archive.\n"]
+  state_reason : archive_state_reason option;
+      [@ocaml.doc "A description for the reason that the archive is in the current state.\n"]
+  retention_days : retention_days option;
+      [@ocaml.doc "The number of days to retain events in the archive before they are deleted.\n"]
+  size_bytes : long option; [@ocaml.doc "The size of the archive, in bytes.\n"]
+  event_count : long option; [@ocaml.doc "The number of events in the archive.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "The time stamp for the time that the archive was created.\n"]
 }
 [@@ocaml.doc "An [Archive] object that contains details about an archive.\n"]
 
 type nonrec archive_response_list = archive list [@@ocaml.doc ""]
 
 type nonrec list_archives_response = {
+  archives : archive_response_list option;
+      [@ocaml.doc "An array of [Archive] objects that include details about an archive.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A token indicating there are more results available. If there are no more results, no \
@@ -2606,13 +2605,17 @@ type nonrec list_archives_response = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  archives : archive_response_list option;
-      [@ocaml.doc "An array of [Archive] objects that include details about an archive.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec list_archives_request = {
-  limit : limit_max100 option; [@ocaml.doc "The maximum number of results to return.\n"]
+  name_prefix : archive_name option;
+      [@ocaml.doc
+        "A name prefix to filter the archives returned. Only archives with name that match the \
+         prefix are returned.\n"]
+  event_source_arn : event_bus_arn option;
+      [@ocaml.doc "The ARN of the event source associated with the archive.\n"]
+  state : archive_state option; [@ocaml.doc "The state of the archive.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "The token returned by a previous call, which you can use to retrieve the next set of \
@@ -2623,39 +2626,35 @@ type nonrec list_archives_request = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  state : archive_state option; [@ocaml.doc "The state of the archive.\n"]
-  event_source_arn : event_bus_arn option;
-      [@ocaml.doc "The ARN of the event source associated with the archive.\n"]
-  name_prefix : archive_name option;
-      [@ocaml.doc
-        "A name prefix to filter the archives returned. Only archives with name that match the \
-         prefix are returned.\n"]
+  limit : limit_max100 option; [@ocaml.doc "The maximum number of results to return.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec api_destination = {
-  last_modified_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the API destination was last modified.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the API destination was created.\n"]
-  invocation_rate_limit_per_second : api_destination_invocation_rate_limit_per_second option;
-      [@ocaml.doc "The maximum number of invocations per second to send to the HTTP endpoint.\n"]
-  http_method : api_destination_http_method option;
-      [@ocaml.doc "The method to use to connect to the HTTP endpoint.\n"]
-  invocation_endpoint : https_endpoint option;
-      [@ocaml.doc "The URL to the endpoint for the API destination.\n"]
-  connection_arn : connection_arn option;
-      [@ocaml.doc "The ARN of the connection specified for the API destination.\n"]
+  api_destination_arn : api_destination_arn option; [@ocaml.doc "The ARN of the API destination.\n"]
+  name : api_destination_name option; [@ocaml.doc "The name of the API destination.\n"]
   api_destination_state : api_destination_state option;
       [@ocaml.doc "The state of the API destination.\n"]
-  name : api_destination_name option; [@ocaml.doc "The name of the API destination.\n"]
-  api_destination_arn : api_destination_arn option; [@ocaml.doc "The ARN of the API destination.\n"]
+  connection_arn : connection_arn option;
+      [@ocaml.doc "The ARN of the connection specified for the API destination.\n"]
+  invocation_endpoint : https_endpoint option;
+      [@ocaml.doc "The URL to the endpoint for the API destination.\n"]
+  http_method : api_destination_http_method option;
+      [@ocaml.doc "The method to use to connect to the HTTP endpoint.\n"]
+  invocation_rate_limit_per_second : api_destination_invocation_rate_limit_per_second option;
+      [@ocaml.doc "The maximum number of invocations per second to send to the HTTP endpoint.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the API destination was created.\n"]
+  last_modified_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the API destination was last modified.\n"]
 }
 [@@ocaml.doc "Contains details about an API destination.\n"]
 
 type nonrec api_destination_response_list = api_destination list [@@ocaml.doc ""]
 
 type nonrec list_api_destinations_response = {
+  api_destinations : api_destination_response_list option;
+      [@ocaml.doc "An array that includes information about each API destination.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A token indicating there are more results available. If there are no more results, no \
@@ -2666,14 +2665,16 @@ type nonrec list_api_destinations_response = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  api_destinations : api_destination_response_list option;
-      [@ocaml.doc "An array that includes information about each API destination.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec list_api_destinations_request = {
-  limit : limit_max100 option;
-      [@ocaml.doc "The maximum number of API destinations to include in the response.\n"]
+  name_prefix : api_destination_name option;
+      [@ocaml.doc
+        "A name prefix to filter results returned. Only API destinations with a name that starts \
+         with the prefix are returned.\n"]
+  connection_arn : connection_arn option;
+      [@ocaml.doc "The ARN of the connection specified for the API destination.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "The token returned by a previous call, which you can use to retrieve the next set of \
@@ -2684,103 +2685,92 @@ type nonrec list_api_destinations_request = {
         \ \n\
         \   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n\
         \  "]
-  connection_arn : connection_arn option;
-      [@ocaml.doc "The ARN of the connection specified for the API destination.\n"]
-  name_prefix : api_destination_name option;
-      [@ocaml.doc
-        "A name prefix to filter results returned. Only API destinations with a name that starts \
-         with the prefix are returned.\n"]
+  limit : limit_max100 option;
+      [@ocaml.doc "The maximum number of API destinations to include in the response.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec invalid_state_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The specified state is not a valid state for an event source.\n"]
-
-type nonrec illegal_status_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "An error occurred because a replay can be canceled only when the state is Running or Starting.\n"]
-
 type nonrec enable_rule_request = {
+  name : rule_name; [@ocaml.doc "The name of the rule.\n"]
   event_bus_name : event_bus_name_or_arn option;
       [@ocaml.doc
         "The name or ARN of the event bus associated with the rule. If you omit this, the default \
          event bus is used.\n"]
-  name : rule_name; [@ocaml.doc "The name of the rule.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec disable_rule_request = {
+  name : rule_name; [@ocaml.doc "The name of the rule.\n"]
   event_bus_name : event_bus_name_or_arn option;
       [@ocaml.doc
         "The name or ARN of the event bus associated with the rule. If you omit this, the default \
          event bus is used.\n"]
-  name : rule_name; [@ocaml.doc "The name of the rule.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec created_by = string [@@ocaml.doc ""]
 
 type nonrec describe_rule_response = {
+  name : rule_name option; [@ocaml.doc "The name of the rule.\n"]
+  arn : rule_arn option; [@ocaml.doc "The Amazon Resource Name (ARN) of the rule.\n"]
+  event_pattern : event_pattern option;
+      [@ocaml.doc
+        "The event pattern. For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-and-event-patterns.html}Events \
+         and Event Patterns} in the {i  {i Amazon EventBridge User Guide} }.\n"]
+  schedule_expression : schedule_expression option;
+      [@ocaml.doc
+        "The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".\n"]
+  state : rule_state option; [@ocaml.doc "Specifies whether the rule is enabled or disabled.\n"]
+  description : rule_description option; [@ocaml.doc "The description of the rule.\n"]
+  role_arn : role_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the IAM role associated with the rule.\n"]
+  managed_by : managed_by option;
+      [@ocaml.doc
+        "If this is a managed rule, created by an Amazon Web Services service on your behalf, this \
+         field displays the principal name of the Amazon Web Services service that created the \
+         rule.\n"]
+  event_bus_name : event_bus_name option;
+      [@ocaml.doc "The name of the event bus associated with the rule.\n"]
   created_by : created_by option;
       [@ocaml.doc
         "The account ID of the user that created the rule. If you use [PutRule] to put a rule on \
          an event bus in another account, the other account is the owner of the rule, and the rule \
          ARN includes the account ID for that account. However, the value for [CreatedBy] is the \
          account ID as the account that created the rule in the other account.\n"]
-  event_bus_name : event_bus_name option;
-      [@ocaml.doc "The name of the event bus associated with the rule.\n"]
-  managed_by : managed_by option;
-      [@ocaml.doc
-        "If this is a managed rule, created by an Amazon Web Services service on your behalf, this \
-         field displays the principal name of the Amazon Web Services service that created the \
-         rule.\n"]
-  role_arn : role_arn option;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the IAM role associated with the rule.\n"]
-  description : rule_description option; [@ocaml.doc "The description of the rule.\n"]
-  state : rule_state option; [@ocaml.doc "Specifies whether the rule is enabled or disabled.\n"]
-  schedule_expression : schedule_expression option;
-      [@ocaml.doc
-        "The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".\n"]
-  event_pattern : event_pattern option;
-      [@ocaml.doc
-        "The event pattern. For more information, see \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-and-event-patterns.html}Events \
-         and Event Patterns} in the {i  {i Amazon EventBridge User Guide} }.\n"]
-  arn : rule_arn option; [@ocaml.doc "The Amazon Resource Name (ARN) of the rule.\n"]
-  name : rule_name option; [@ocaml.doc "The name of the rule.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec describe_rule_request = {
+  name : rule_name; [@ocaml.doc "The name of the rule.\n"]
   event_bus_name : event_bus_name_or_arn option;
       [@ocaml.doc
         "The name or ARN of the event bus associated with the rule. If you omit this, the default \
          event bus is used.\n"]
-  name : rule_name; [@ocaml.doc "The name of the rule.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec describe_replay_response = {
-  replay_end_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the replay stopped.\n"]
-  replay_start_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the replay started.\n"]
-  event_last_replayed_time : timestamp option;
-      [@ocaml.doc "The time that the event was last replayed.\n"]
-  event_end_time : timestamp option;
-      [@ocaml.doc "The time stamp for the last event that was replayed from the archive.\n"]
-  event_start_time : timestamp option;
-      [@ocaml.doc "The time stamp of the first event that was last replayed from the archive.\n"]
-  destination : replay_destination option;
-      [@ocaml.doc "A [ReplayDestination] object that contains details about the replay.\n"]
-  event_source_arn : archive_arn option;
-      [@ocaml.doc "The ARN of the archive events were replayed from.\n"]
+  replay_name : replay_name option; [@ocaml.doc "The name of the replay.\n"]
+  replay_arn : replay_arn option; [@ocaml.doc "The ARN of the replay.\n"]
+  description : replay_description option; [@ocaml.doc "The description of the replay.\n"]
+  state : replay_state option; [@ocaml.doc "The current state of the replay.\n"]
   state_reason : replay_state_reason option;
       [@ocaml.doc "The reason that the replay is in the current state.\n"]
-  state : replay_state option; [@ocaml.doc "The current state of the replay.\n"]
-  description : replay_description option; [@ocaml.doc "The description of the replay.\n"]
-  replay_arn : replay_arn option; [@ocaml.doc "The ARN of the replay.\n"]
-  replay_name : replay_name option; [@ocaml.doc "The name of the replay.\n"]
+  event_source_arn : archive_arn option;
+      [@ocaml.doc "The ARN of the archive events were replayed from.\n"]
+  destination : replay_destination option;
+      [@ocaml.doc "A [ReplayDestination] object that contains details about the replay.\n"]
+  event_start_time : timestamp option;
+      [@ocaml.doc "The time stamp of the first event that was last replayed from the archive.\n"]
+  event_end_time : timestamp option;
+      [@ocaml.doc "The time stamp for the last event that was replayed from the archive.\n"]
+  event_last_replayed_time : timestamp option;
+      [@ocaml.doc "The time that the event was last replayed.\n"]
+  replay_start_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the replay started.\n"]
+  replay_end_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the replay stopped.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2790,8 +2780,8 @@ type nonrec describe_replay_request = {
 [@@ocaml.doc ""]
 
 type nonrec describe_partner_event_source_response = {
-  name : string_ option; [@ocaml.doc "The name of the event source.\n"]
   arn : string_ option; [@ocaml.doc "The ARN of the event source.\n"]
+  name : string_ option; [@ocaml.doc "The name of the event source.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2801,6 +2791,16 @@ type nonrec describe_partner_event_source_request = {
 [@@ocaml.doc ""]
 
 type nonrec describe_event_source_response = {
+  arn : string_ option; [@ocaml.doc "The ARN of the partner event source.\n"]
+  created_by : string_ option;
+      [@ocaml.doc "The name of the SaaS partner that created the event source.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "The date and time that the event source was created.\n"]
+  expiration_time : timestamp option;
+      [@ocaml.doc
+        "The date and time that the event source will expire if you do not create a matching event \
+         bus.\n"]
+  name : string_ option; [@ocaml.doc "The name of the partner event source.\n"]
   state : event_source_state option;
       [@ocaml.doc
         "The state of the event source. If it is ACTIVE, you have already created a matching event \
@@ -2808,16 +2808,6 @@ type nonrec describe_event_source_response = {
          haven't yet created a matching event bus, or that event bus is deactivated. If it is \
          DELETED, you have created a matching event bus, but the event source has since been \
          deleted.\n"]
-  name : string_ option; [@ocaml.doc "The name of the partner event source.\n"]
-  expiration_time : timestamp option;
-      [@ocaml.doc
-        "The date and time that the event source will expire if you do not create a matching event \
-         bus.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "The date and time that the event source was created.\n"]
-  created_by : string_ option;
-      [@ocaml.doc "The name of the SaaS partner that created the event source.\n"]
-  arn : string_ option; [@ocaml.doc "The ARN of the partner event source.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2828,18 +2818,13 @@ type nonrec describe_event_source_request = {
 [@@ocaml.doc ""]
 
 type nonrec describe_event_bus_response = {
-  last_modified_time : timestamp option; [@ocaml.doc "The time the event bus was last modified.\n"]
-  creation_time : timestamp option; [@ocaml.doc "The time the event bus was created.\n"]
-  log_config : log_config option;
+  name : string_ option;
+      [@ocaml.doc "The name of the event bus. Currently, this is always [default].\n"]
+  arn : string_ option;
       [@ocaml.doc
-        "The logging configuration settings for the event bus.\n\n\
-        \ For more information, see \
-         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
-         in the {i EventBridge User Guide}.\n\
-        \ "]
-  policy : string_ option;
-      [@ocaml.doc "The policy that enables the external account to send events to your account.\n"]
-  dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
+        "The Amazon Resource Name (ARN) of the account permitted to write events to the current \
+         account.\n"]
+  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
         "The identifier of the KMS customer managed key for EventBridge to use to encrypt events \
@@ -2848,13 +2833,18 @@ type nonrec describe_event_bus_response = {
          {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html}Data \
          encryption in EventBridge} in the {i Amazon EventBridge User Guide}.\n\
         \ "]
-  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
-  arn : string_ option;
+  dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
+  policy : string_ option;
+      [@ocaml.doc "The policy that enables the external account to send events to your account.\n"]
+  log_config : log_config option;
       [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the account permitted to write events to the current \
-         account.\n"]
-  name : string_ option;
-      [@ocaml.doc "The name of the event bus. Currently, this is always [default].\n"]
+        "The logging configuration settings for the event bus.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
+         in the {i EventBridge User Guide}.\n\
+        \ "]
+  creation_time : timestamp option; [@ocaml.doc "The time the event bus was created.\n"]
+  last_modified_time : timestamp option; [@ocaml.doc "The time the event bus was last modified.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2867,51 +2857,56 @@ type nonrec describe_event_bus_request = {
 [@@ocaml.doc ""]
 
 type nonrec describe_endpoint_response = {
-  last_modified_time : timestamp option;
-      [@ocaml.doc "The last time the endpoint you asked for information about was modified.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "The time the endpoint you asked for information about was created.\n"]
-  state_reason : endpoint_state_reason option;
-      [@ocaml.doc
-        "The reason the endpoint you asked for information about is in its current state.\n"]
-  state : endpoint_state option;
-      [@ocaml.doc "The current state of the endpoint you asked for information about.\n"]
-  endpoint_url : endpoint_url option;
-      [@ocaml.doc "The URL of the endpoint you asked for information about.\n"]
-  endpoint_id : endpoint_id option;
-      [@ocaml.doc "The ID of the endpoint you asked for information about.\n"]
-  role_arn : iam_role_arn option;
-      [@ocaml.doc "The ARN of the role used by the endpoint you asked for information about.\n"]
-  event_buses : endpoint_event_bus_list option;
-      [@ocaml.doc "The event buses being used by the endpoint you asked for information about.\n"]
+  name : endpoint_name option;
+      [@ocaml.doc "The name of the endpoint you asked for information about.\n"]
+  description : endpoint_description option;
+      [@ocaml.doc "The description of the endpoint you asked for information about.\n"]
+  arn : endpoint_arn option;
+      [@ocaml.doc "The ARN of the endpoint you asked for information about.\n"]
+  routing_config : routing_config option;
+      [@ocaml.doc "The routing configuration of the endpoint you asked for information about.\n"]
   replication_config : replication_config option;
       [@ocaml.doc
         "Whether replication is enabled or disabled for the endpoint you asked for information \
          about.\n"]
-  routing_config : routing_config option;
-      [@ocaml.doc "The routing configuration of the endpoint you asked for information about.\n"]
-  arn : endpoint_arn option;
-      [@ocaml.doc "The ARN of the endpoint you asked for information about.\n"]
-  description : endpoint_description option;
-      [@ocaml.doc "The description of the endpoint you asked for information about.\n"]
-  name : endpoint_name option;
-      [@ocaml.doc "The name of the endpoint you asked for information about.\n"]
+  event_buses : endpoint_event_bus_list option;
+      [@ocaml.doc "The event buses being used by the endpoint you asked for information about.\n"]
+  role_arn : iam_role_arn option;
+      [@ocaml.doc "The ARN of the role used by the endpoint you asked for information about.\n"]
+  endpoint_id : endpoint_id option;
+      [@ocaml.doc "The ID of the endpoint you asked for information about.\n"]
+  endpoint_url : endpoint_url option;
+      [@ocaml.doc "The URL of the endpoint you asked for information about.\n"]
+  state : endpoint_state option;
+      [@ocaml.doc "The current state of the endpoint you asked for information about.\n"]
+  state_reason : endpoint_state_reason option;
+      [@ocaml.doc
+        "The reason the endpoint you asked for information about is in its current state.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "The time the endpoint you asked for information about was created.\n"]
+  last_modified_time : timestamp option;
+      [@ocaml.doc "The last time the endpoint you asked for information about was modified.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec describe_endpoint_request = {
-  home_region : home_region option;
-      [@ocaml.doc
-        "The primary Region of the endpoint you want to get information about. For example \
-         [\"HomeRegion\": \"us-east-1\"].\n"]
   name : endpoint_name;
       [@ocaml.doc
         "The name of the endpoint you want to get information about. For example, \
          [\"Name\":\"us-east-2-custom_bus_A-endpoint\"].\n"]
+  home_region : home_region option;
+      [@ocaml.doc
+        "The primary Region of the endpoint you want to get information about. For example \
+         [\"HomeRegion\": \"us-east-1\"].\n"]
 }
 [@@ocaml.doc ""]
 
+type nonrec resource_association_arn = string [@@ocaml.doc ""]
+
 type nonrec describe_connection_resource_parameters = {
+  resource_configuration_arn : resource_configuration_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the resource configuration for the private API.\n"]
   resource_association_arn : resource_association_arn;
       [@ocaml.doc
         "For connections to private APIs, the Amazon Resource Name (ARN) of the resource \
@@ -2922,9 +2917,6 @@ type nonrec describe_connection_resource_parameters = {
          Managing service network resource associations for connections} in the {i  {i Amazon \
          EventBridge User Guide} }.\n\
         \ "]
-  resource_configuration_arn : resource_configuration_arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the resource configuration for the private API.\n"]
 }
 [@@ocaml.doc "The parameters for EventBridge to use when invoking the resource endpoint.\n"]
 
@@ -2940,12 +2932,13 @@ type nonrec describe_connection_connectivity_parameters = {
    methods for connections} in the {i  {i Amazon EventBridge User Guide} }.\n\
   \ "]
 
-type nonrec connection_basic_auth_response_parameters = {
-  username : auth_header_parameters option;
-      [@ocaml.doc "The user name to use for Basic authorization.\n"]
+type nonrec connection_api_key_auth_response_parameters = {
+  api_key_name : auth_header_parameters option;
+      [@ocaml.doc "The name of the header to use for the [APIKeyValue] used for authorization.\n"]
 }
 [@@ocaml.doc
-  "The authorization parameters for the connection if Basic is specified as the authorization type.\n"]
+  "Contains the authorization parameters for the connection if API Key is specified as the \
+   authorization type.\n"]
 
 type nonrec connection_o_auth_client_response_parameters = {
   client_i_d : auth_header_parameters option;
@@ -2956,28 +2949,37 @@ type nonrec connection_o_auth_client_response_parameters = {
    type.\n"]
 
 type nonrec connection_o_auth_response_parameters = {
-  o_auth_http_parameters : connection_http_parameters option;
-      [@ocaml.doc "The additional HTTP parameters used for the OAuth authorization request.\n"]
-  http_method : connection_o_auth_http_method option;
-      [@ocaml.doc "The method used to connect to the HTTP endpoint.\n"]
-  authorization_endpoint : https_endpoint option;
-      [@ocaml.doc "The URL to the HTTP endpoint that authorized the request.\n"]
   client_parameters : connection_o_auth_client_response_parameters option;
       [@ocaml.doc
         "Details about the client parameters returned when OAuth is specified as the authorization \
          type.\n"]
+  authorization_endpoint : https_endpoint option;
+      [@ocaml.doc "The URL to the HTTP endpoint that authorized the request.\n"]
+  http_method : connection_o_auth_http_method option;
+      [@ocaml.doc "The method used to connect to the HTTP endpoint.\n"]
+  o_auth_http_parameters : connection_http_parameters option;
+      [@ocaml.doc "The additional HTTP parameters used for the OAuth authorization request.\n"]
 }
 [@@ocaml.doc "The response parameters when OAuth is specified as the authorization type.\n"]
 
-type nonrec connection_api_key_auth_response_parameters = {
-  api_key_name : auth_header_parameters option;
-      [@ocaml.doc "The name of the header to use for the [APIKeyValue] used for authorization.\n"]
+type nonrec connection_basic_auth_response_parameters = {
+  username : auth_header_parameters option;
+      [@ocaml.doc "The user name to use for Basic authorization.\n"]
 }
 [@@ocaml.doc
-  "Contains the authorization parameters for the connection if API Key is specified as the \
-   authorization type.\n"]
+  "The authorization parameters for the connection if Basic is specified as the authorization type.\n"]
 
 type nonrec connection_auth_response_parameters = {
+  basic_auth_parameters : connection_basic_auth_response_parameters option;
+      [@ocaml.doc "The authorization parameters for Basic authorization.\n"]
+  o_auth_parameters : connection_o_auth_response_parameters option;
+      [@ocaml.doc "The OAuth parameters to use for authorization.\n"]
+  api_key_auth_parameters : connection_api_key_auth_response_parameters option;
+      [@ocaml.doc "The API Key parameters to use for authorization.\n"]
+  invocation_http_parameters : connection_http_parameters option;
+      [@ocaml.doc
+        "Additional parameters for the connection that are passed through with every invocation to \
+         the HTTP endpoint.\n"]
   connectivity_parameters : describe_connection_connectivity_parameters option;
       [@ocaml.doc
         "For private OAuth authentication endpoints. The parameters EventBridge uses to \
@@ -2986,46 +2988,16 @@ type nonrec connection_auth_response_parameters = {
          {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html}Authorization \
          methods for connections} in the {i  {i Amazon EventBridge User Guide} }.\n\
         \ "]
-  invocation_http_parameters : connection_http_parameters option;
-      [@ocaml.doc
-        "Additional parameters for the connection that are passed through with every invocation to \
-         the HTTP endpoint.\n"]
-  api_key_auth_parameters : connection_api_key_auth_response_parameters option;
-      [@ocaml.doc "The API Key parameters to use for authorization.\n"]
-  o_auth_parameters : connection_o_auth_response_parameters option;
-      [@ocaml.doc "The OAuth parameters to use for authorization.\n"]
-  basic_auth_parameters : connection_basic_auth_response_parameters option;
-      [@ocaml.doc "The authorization parameters for Basic authorization.\n"]
 }
 [@@ocaml.doc "Tthe authorization parameters to use for the connection.\n"]
 
+type nonrec secrets_manager_secret_arn = string [@@ocaml.doc ""]
+
 type nonrec describe_connection_response = {
-  last_authorized_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was last authorized.\n"]
-  last_modified_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was last modified.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
-  auth_parameters : connection_auth_response_parameters option;
-      [@ocaml.doc "The parameters to use for authorization for the connection.\n"]
-  kms_key_identifier : kms_key_identifier option;
-      [@ocaml.doc
-        "The identifier of the KMS customer managed key for EventBridge to use to encrypt the \
-         connection, if one has been specified.\n\n\
-        \ For more information, see \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-connections.html}Encrypting \
-         connections} in the {i Amazon EventBridge User Guide}.\n\
-        \ "]
-  secret_arn : secrets_manager_secret_arn option;
-      [@ocaml.doc
-        "The ARN of the secret created from the authorization parameters specified for the \
-         connection.\n"]
-  authorization_type : connection_authorization_type option;
-      [@ocaml.doc "The type of authorization specified for the connection.\n"]
-  state_reason : connection_state_reason option;
-      [@ocaml.doc "The reason that the connection is in the current connection state.\n"]
-  connection_state : connection_state option;
-      [@ocaml.doc "The state of the connection retrieved.\n"]
+  connection_arn : connection_arn option; [@ocaml.doc "The ARN of the connection retrieved.\n"]
+  name : connection_name option; [@ocaml.doc "The name of the connection retrieved.\n"]
+  description : connection_description option;
+      [@ocaml.doc "The description for the connection retrieved.\n"]
   invocation_connectivity_parameters : describe_connection_connectivity_parameters option;
       [@ocaml.doc
         "For connections to private APIs The parameters EventBridge uses to invoke the resource \
@@ -3034,10 +3006,32 @@ type nonrec describe_connection_response = {
          {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html}Connecting \
          to private APIs} in the {i  {i Amazon EventBridge User Guide} }.\n\
         \ "]
-  description : connection_description option;
-      [@ocaml.doc "The description for the connection retrieved.\n"]
-  name : connection_name option; [@ocaml.doc "The name of the connection retrieved.\n"]
-  connection_arn : connection_arn option; [@ocaml.doc "The ARN of the connection retrieved.\n"]
+  connection_state : connection_state option;
+      [@ocaml.doc "The state of the connection retrieved.\n"]
+  state_reason : connection_state_reason option;
+      [@ocaml.doc "The reason that the connection is in the current connection state.\n"]
+  authorization_type : connection_authorization_type option;
+      [@ocaml.doc "The type of authorization specified for the connection.\n"]
+  secret_arn : secrets_manager_secret_arn option;
+      [@ocaml.doc
+        "The ARN of the secret created from the authorization parameters specified for the \
+         connection.\n"]
+  kms_key_identifier : kms_key_identifier option;
+      [@ocaml.doc
+        "The identifier of the KMS customer managed key for EventBridge to use to encrypt the \
+         connection, if one has been specified.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-connections.html}Encrypting \
+         connections} in the {i Amazon EventBridge User Guide}.\n\
+        \ "]
+  auth_parameters : connection_auth_response_parameters option;
+      [@ocaml.doc "The parameters to use for authorization for the connection.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
+  last_modified_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was last modified.\n"]
+  last_authorized_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was last authorized.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -3047,11 +3041,16 @@ type nonrec describe_connection_request = {
 [@@ocaml.doc ""]
 
 type nonrec describe_archive_response = {
-  creation_time : timestamp option; [@ocaml.doc "The time at which the archive was created.\n"]
-  event_count : long option; [@ocaml.doc "The number of events in the archive.\n"]
-  size_bytes : long option; [@ocaml.doc "The size of the archive in bytes.\n"]
-  retention_days : retention_days option;
-      [@ocaml.doc "The number of days to retain events for in the archive.\n"]
+  archive_arn : archive_arn option; [@ocaml.doc "The ARN of the archive.\n"]
+  archive_name : archive_name option; [@ocaml.doc "The name of the archive.\n"]
+  event_source_arn : event_bus_arn option;
+      [@ocaml.doc "The ARN of the event source associated with the archive.\n"]
+  description : archive_description option; [@ocaml.doc "The description of the archive.\n"]
+  event_pattern : event_pattern option;
+      [@ocaml.doc "The event pattern used to filter events sent to the archive.\n"]
+  state : archive_state option; [@ocaml.doc "The state of the archive.\n"]
+  state_reason : archive_state_reason option;
+      [@ocaml.doc "The reason that the archive is in the state.\n"]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
         "The identifier of the KMS customer managed key for EventBridge to use to encrypt this \
@@ -3060,16 +3059,11 @@ type nonrec describe_archive_response = {
          {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html}Encrypting \
          archives} in the {i Amazon EventBridge User Guide}.\n\
         \ "]
-  state_reason : archive_state_reason option;
-      [@ocaml.doc "The reason that the archive is in the state.\n"]
-  state : archive_state option; [@ocaml.doc "The state of the archive.\n"]
-  event_pattern : event_pattern option;
-      [@ocaml.doc "The event pattern used to filter events sent to the archive.\n"]
-  description : archive_description option; [@ocaml.doc "The description of the archive.\n"]
-  event_source_arn : event_bus_arn option;
-      [@ocaml.doc "The ARN of the event source associated with the archive.\n"]
-  archive_name : archive_name option; [@ocaml.doc "The name of the archive.\n"]
-  archive_arn : archive_arn option; [@ocaml.doc "The ARN of the archive.\n"]
+  retention_days : retention_days option;
+      [@ocaml.doc "The number of days to retain events for in the archive.\n"]
+  size_bytes : long option; [@ocaml.doc "The size of the archive in bytes.\n"]
+  event_count : long option; [@ocaml.doc "The number of events in the archive.\n"]
+  creation_time : timestamp option; [@ocaml.doc "The time at which the archive was created.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -3079,10 +3073,19 @@ type nonrec describe_archive_request = {
 [@@ocaml.doc ""]
 
 type nonrec describe_api_destination_response = {
-  last_modified_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the API destination was last modified.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the API destination was created.\n"]
+  api_destination_arn : api_destination_arn option;
+      [@ocaml.doc "The ARN of the API destination retrieved.\n"]
+  name : api_destination_name option; [@ocaml.doc "The name of the API destination retrieved.\n"]
+  description : api_destination_description option;
+      [@ocaml.doc "The description for the API destination retrieved.\n"]
+  api_destination_state : api_destination_state option;
+      [@ocaml.doc "The state of the API destination retrieved.\n"]
+  connection_arn : connection_arn option;
+      [@ocaml.doc "The ARN of the connection specified for the API destination retrieved.\n"]
+  invocation_endpoint : https_endpoint option;
+      [@ocaml.doc "The URL to use to connect to the HTTP endpoint.\n"]
+  http_method : api_destination_http_method option;
+      [@ocaml.doc "The method to use to connect to the HTTP endpoint.\n"]
   invocation_rate_limit_per_second : api_destination_invocation_rate_limit_per_second option;
       [@ocaml.doc
         "The maximum number of invocations per second to specified for the API destination. Note \
@@ -3091,19 +3094,10 @@ type nonrec describe_api_destination_response = {
          within the 24-hour retry window. If you plan to set the rate lower than the rate \
          necessary to deliver all events, consider using a dead-letter queue to catch events that \
          are not delivered within 24 hours.\n"]
-  http_method : api_destination_http_method option;
-      [@ocaml.doc "The method to use to connect to the HTTP endpoint.\n"]
-  invocation_endpoint : https_endpoint option;
-      [@ocaml.doc "The URL to use to connect to the HTTP endpoint.\n"]
-  connection_arn : connection_arn option;
-      [@ocaml.doc "The ARN of the connection specified for the API destination retrieved.\n"]
-  api_destination_state : api_destination_state option;
-      [@ocaml.doc "The state of the API destination retrieved.\n"]
-  description : api_destination_description option;
-      [@ocaml.doc "The description for the API destination retrieved.\n"]
-  name : api_destination_name option; [@ocaml.doc "The name of the API destination retrieved.\n"]
-  api_destination_arn : api_destination_arn option;
-      [@ocaml.doc "The ARN of the API destination retrieved.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the API destination was created.\n"]
+  last_modified_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the API destination was last modified.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -3113,26 +3107,26 @@ type nonrec describe_api_destination_request = {
 [@@ocaml.doc ""]
 
 type nonrec delete_rule_request = {
+  name : rule_name; [@ocaml.doc "The name of the rule.\n"]
+  event_bus_name : event_bus_name_or_arn option;
+      [@ocaml.doc
+        "The name or ARN of the event bus associated with the rule. If you omit this, the default \
+         event bus is used.\n"]
   force : boolean_ option;
       [@ocaml.doc
         "If this is a managed rule, created by an Amazon Web Services service on your behalf, you \
          must specify [Force] as [True] to delete the rule. This parameter is ignored for rules \
          that are not managed rules. You can check whether a rule is a managed rule by using \
          [DescribeRule] or [ListRules] and checking the [ManagedBy] field of the response.\n"]
-  event_bus_name : event_bus_name_or_arn option;
-      [@ocaml.doc
-        "The name or ARN of the event bus associated with the rule. If you omit this, the default \
-         event bus is used.\n"]
-  name : rule_name; [@ocaml.doc "The name of the rule.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec delete_partner_event_source_request = {
+  name : event_source_name; [@ocaml.doc "The name of the event source to delete.\n"]
   account : account_id;
       [@ocaml.doc
         "The Amazon Web Services account ID of the Amazon Web Services customer that the event \
          source was created for.\n"]
-  name : event_source_name; [@ocaml.doc "The name of the event source to delete.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -3152,18 +3146,18 @@ type nonrec delete_endpoint_request = {
 [@@ocaml.doc ""]
 
 type nonrec delete_connection_response = {
-  last_authorized_time : timestamp option;
-      [@ocaml.doc
-        "A time stamp for the time that the connection was last authorized before it wa deleted.\n"]
+  connection_arn : connection_arn option;
+      [@ocaml.doc "The ARN of the connection that was deleted.\n"]
+  connection_state : connection_state option;
+      [@ocaml.doc "The state of the connection before it was deleted.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
   last_modified_time : timestamp option;
       [@ocaml.doc
         "A time stamp for the time that the connection was last modified before it was deleted.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
-  connection_state : connection_state option;
-      [@ocaml.doc "The state of the connection before it was deleted.\n"]
-  connection_arn : connection_arn option;
-      [@ocaml.doc "The ARN of the connection that was deleted.\n"]
+  last_authorized_time : timestamp option;
+      [@ocaml.doc
+        "A time stamp for the time that the connection was last authorized before it wa deleted.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -3187,15 +3181,15 @@ type nonrec delete_api_destination_request = {
 [@@ocaml.doc ""]
 
 type nonrec deauthorize_connection_response = {
-  last_authorized_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was last authorized.\n"]
-  last_modified_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was last updated.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
-  connection_state : connection_state option; [@ocaml.doc "The state of the connection.\n"]
   connection_arn : connection_arn option;
       [@ocaml.doc "The ARN of the connection that authorization was removed from.\n"]
+  connection_state : connection_state option; [@ocaml.doc "The state of the connection.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
+  last_modified_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was last updated.\n"]
+  last_authorized_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was last authorized.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -3203,6 +3197,9 @@ type nonrec deauthorize_connection_request = {
   name : connection_name; [@ocaml.doc "The name of the connection to remove authorization from.\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec invalid_state_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The specified state is not a valid state for an event source.\n"]
 
 type nonrec deactivate_event_source_request = {
   name : event_source_name; [@ocaml.doc "The name of the partner event source to deactivate.\n"]
@@ -3215,10 +3212,6 @@ type nonrec create_partner_event_source_response = {
 [@@ocaml.doc ""]
 
 type nonrec create_partner_event_source_request = {
-  account : account_id;
-      [@ocaml.doc
-        "The Amazon Web Services account ID that is permitted to create a matching partner event \
-         bus for this partner event source.\n"]
   name : event_source_name;
       [@ocaml.doc
         "The name of the partner event source. This name must be unique and must be in the format \n\
@@ -3227,18 +3220,16 @@ type nonrec create_partner_event_source_request = {
          ]}\n\
          . The Amazon Web Services account that wants to use this partner event source must create \
          a partner event bus with a name that matches the name of the partner event source.\n"]
+  account : account_id;
+      [@ocaml.doc
+        "The Amazon Web Services account ID that is permitted to create a matching partner event \
+         bus for this partner event source.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec create_event_bus_response = {
-  log_config : log_config option;
-      [@ocaml.doc
-        "The logging configuration settings for the event bus.\n\n\
-        \ For more information, see \
-         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
-         in the {i EventBridge User Guide}.\n\
-        \ "]
-  dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
+  event_bus_arn : string_ option; [@ocaml.doc "The ARN of the new event bus.\n"]
+  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
         "The identifier of the KMS customer managed key for EventBridge to use to encrypt events \
@@ -3247,13 +3238,7 @@ type nonrec create_event_bus_response = {
          {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html}Data \
          encryption in EventBridge} in the {i Amazon EventBridge User Guide}.\n\
         \ "]
-  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
-  event_bus_arn : string_ option; [@ocaml.doc "The ARN of the new event bus.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec create_event_bus_request = {
-  tags : tag_list option; [@ocaml.doc "Tags to associate with the event bus.\n"]
+  dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
   log_config : log_config option;
       [@ocaml.doc
         "The logging configuration settings for the event bus.\n\n\
@@ -3261,7 +3246,25 @@ type nonrec create_event_bus_request = {
          {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
          in the {i EventBridge User Guide}.\n\
         \ "]
-  dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_event_bus_request = {
+  name : event_bus_name;
+      [@ocaml.doc
+        "The name of the new event bus. \n\n\
+        \ Custom event bus names can't contain the [/] character, but you can use the [/] \
+         character in partner event bus names. In addition, for partner event buses, the name must \
+         exactly match the name of the partner event source that this event bus is matched to.\n\
+        \ \n\
+        \  You can't use the name [default] for a custom event bus, as this name is already used \
+         for your account's default event bus.\n\
+        \  "]
+  event_source_name : event_source_name option;
+      [@ocaml.doc
+        "If you are creating a partner event bus, this specifies the partner event source that the \
+         new event bus will be matched with.\n"]
+  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
         "The identifier of the KMS customer managed key for EventBridge to use, if you choose to \
@@ -3310,117 +3313,122 @@ type nonrec create_event_bus_request = {
          archives} in the {i Amazon EventBridge User Guide}.\n\
         \       \n\
         \        "]
-  description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
-  event_source_name : event_source_name option;
+  dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
+  log_config : log_config option;
       [@ocaml.doc
-        "If you are creating a partner event bus, this specifies the partner event source that the \
-         new event bus will be matched with.\n"]
-  name : event_bus_name;
-      [@ocaml.doc
-        "The name of the new event bus. \n\n\
-        \ Custom event bus names can't contain the [/] character, but you can use the [/] \
-         character in partner event bus names. In addition, for partner event buses, the name must \
-         exactly match the name of the partner event source that this event bus is matched to.\n\
-        \ \n\
-        \  You can't use the name [default] for a custom event bus, as this name is already used \
-         for your account's default event bus.\n\
-        \  "]
+        "The logging configuration settings for the event bus.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
+         in the {i EventBridge User Guide}.\n\
+        \ "]
+  tags : tag_list option; [@ocaml.doc "Tags to associate with the event bus.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec create_endpoint_response = {
-  state : endpoint_state option;
-      [@ocaml.doc "The state of the endpoint that was created by this request.\n"]
-  role_arn : iam_role_arn option;
-      [@ocaml.doc "The ARN of the role used by event replication for this request.\n"]
-  event_buses : endpoint_event_bus_list option;
-      [@ocaml.doc "The event buses used by this request.\n"]
-  replication_config : replication_config option;
-      [@ocaml.doc "Whether event replication was enabled or disabled by this request.\n"]
-  routing_config : routing_config option;
-      [@ocaml.doc "The routing configuration defined by this request.\n"]
-  arn : endpoint_arn option;
-      [@ocaml.doc "The ARN of the endpoint that was created by this request.\n"]
   name : endpoint_name option;
       [@ocaml.doc "The name of the endpoint that was created by this request.\n"]
+  arn : endpoint_arn option;
+      [@ocaml.doc "The ARN of the endpoint that was created by this request.\n"]
+  routing_config : routing_config option;
+      [@ocaml.doc "The routing configuration defined by this request.\n"]
+  replication_config : replication_config option;
+      [@ocaml.doc "Whether event replication was enabled or disabled by this request.\n"]
+  event_buses : endpoint_event_bus_list option;
+      [@ocaml.doc "The event buses used by this request.\n"]
+  role_arn : iam_role_arn option;
+      [@ocaml.doc "The ARN of the role used by event replication for this request.\n"]
+  state : endpoint_state option;
+      [@ocaml.doc "The state of the endpoint that was created by this request.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec create_endpoint_request = {
-  role_arn : iam_role_arn option; [@ocaml.doc "The ARN of the role used for replication.\n"]
+  name : endpoint_name;
+      [@ocaml.doc
+        "The name of the global endpoint. For example, \
+         [\"Name\":\"us-east-2-custom_bus_A-endpoint\"].\n"]
+  description : endpoint_description option; [@ocaml.doc "A description of the global endpoint.\n"]
+  routing_config : routing_config;
+      [@ocaml.doc
+        "Configure the routing policy, including the health check and secondary Region..\n"]
+  replication_config : replication_config option;
+      [@ocaml.doc
+        "Enable or disable event replication. The default state is [ENABLED] which means you must \
+         supply a [RoleArn]. If you don't have a [RoleArn] or you don't want event replication \
+         enabled, set the state to [DISABLED].\n"]
   event_buses : endpoint_event_bus_list;
       [@ocaml.doc
         "Define the event buses used. \n\n\
         \  The names of the event buses must be identical in each Region.\n\
         \  \n\
         \   "]
-  replication_config : replication_config option;
-      [@ocaml.doc
-        "Enable or disable event replication. The default state is [ENABLED] which means you must \
-         supply a [RoleArn]. If you don't have a [RoleArn] or you don't want event replication \
-         enabled, set the state to [DISABLED].\n"]
-  routing_config : routing_config;
-      [@ocaml.doc
-        "Configure the routing policy, including the health check and secondary Region..\n"]
-  description : endpoint_description option; [@ocaml.doc "A description of the global endpoint.\n"]
-  name : endpoint_name;
-      [@ocaml.doc
-        "The name of the global endpoint. For example, \
-         [\"Name\":\"us-east-2-custom_bus_A-endpoint\"].\n"]
+  role_arn : iam_role_arn option; [@ocaml.doc "The ARN of the role used for replication.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec create_connection_response = {
-  last_modified_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was last updated.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
-  connection_state : connection_state option;
-      [@ocaml.doc "The state of the connection that was created by the request.\n"]
   connection_arn : connection_arn option;
       [@ocaml.doc "The ARN of the connection that was created by the request.\n"]
+  connection_state : connection_state option;
+      [@ocaml.doc "The state of the connection that was created by the request.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was created.\n"]
+  last_modified_time : timestamp option;
+      [@ocaml.doc "A time stamp for the time that the connection was last updated.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec create_connection_basic_auth_request_parameters = {
-  password : auth_header_parameters_sensitive;
-      [@ocaml.doc "The password associated with the user name to use for Basic authorization.\n"]
-  username : auth_header_parameters; [@ocaml.doc "The user name to use for Basic authorization.\n"]
+type nonrec create_connection_api_key_auth_request_parameters = {
+  api_key_name : auth_header_parameters;
+      [@ocaml.doc "The name of the API key to use for authorization.\n"]
+  api_key_value : auth_header_parameters_sensitive;
+      [@ocaml.doc "The value for the API key to use for authorization.\n"]
 }
-[@@ocaml.doc "Contains the Basic authorization parameters to use for the connection.\n"]
+[@@ocaml.doc "The API key authorization parameters for the connection.\n"]
 
 type nonrec create_connection_o_auth_client_request_parameters = {
+  client_i_d : auth_header_parameters;
+      [@ocaml.doc "The client ID to use for OAuth authorization for the connection.\n"]
   client_secret : auth_header_parameters_sensitive;
       [@ocaml.doc
         "The client secret associated with the client ID to use for OAuth authorization for the \
          connection.\n"]
-  client_i_d : auth_header_parameters;
-      [@ocaml.doc "The client ID to use for OAuth authorization for the connection.\n"]
 }
 [@@ocaml.doc "The Basic authorization parameters to use for the connection.\n"]
 
 type nonrec create_connection_o_auth_request_parameters = {
-  o_auth_http_parameters : connection_http_parameters option;
-      [@ocaml.doc "Details about the additional parameters to use for the connection.\n"]
-  http_method : connection_o_auth_http_method;
-      [@ocaml.doc "The method to use for the authorization request.\n"]
+  client_parameters : create_connection_o_auth_client_request_parameters;
+      [@ocaml.doc "The client parameters for OAuth authorization.\n"]
   authorization_endpoint : https_endpoint;
       [@ocaml.doc
         "The URL to the authorization endpoint when OAuth is specified as the authorization type.\n"]
-  client_parameters : create_connection_o_auth_client_request_parameters;
-      [@ocaml.doc "The client parameters for OAuth authorization.\n"]
+  http_method : connection_o_auth_http_method;
+      [@ocaml.doc "The method to use for the authorization request.\n"]
+  o_auth_http_parameters : connection_http_parameters option;
+      [@ocaml.doc "Details about the additional parameters to use for the connection.\n"]
 }
 [@@ocaml.doc "Contains the OAuth authorization parameters to use for the connection.\n"]
 
-type nonrec create_connection_api_key_auth_request_parameters = {
-  api_key_value : auth_header_parameters_sensitive;
-      [@ocaml.doc "The value for the API key to use for authorization.\n"]
-  api_key_name : auth_header_parameters;
-      [@ocaml.doc "The name of the API key to use for authorization.\n"]
+type nonrec create_connection_basic_auth_request_parameters = {
+  username : auth_header_parameters; [@ocaml.doc "The user name to use for Basic authorization.\n"]
+  password : auth_header_parameters_sensitive;
+      [@ocaml.doc "The password associated with the user name to use for Basic authorization.\n"]
 }
-[@@ocaml.doc "The API key authorization parameters for the connection.\n"]
+[@@ocaml.doc "Contains the Basic authorization parameters to use for the connection.\n"]
 
 type nonrec create_connection_auth_request_parameters = {
+  basic_auth_parameters : create_connection_basic_auth_request_parameters option;
+      [@ocaml.doc "The Basic authorization parameters to use for the connection.\n"]
+  o_auth_parameters : create_connection_o_auth_request_parameters option;
+      [@ocaml.doc "The OAuth authorization parameters to use for the connection.\n"]
+  api_key_auth_parameters : create_connection_api_key_auth_request_parameters option;
+      [@ocaml.doc "The API key authorization parameters to use for the connection.\n"]
+  invocation_http_parameters : connection_http_parameters option;
+      [@ocaml.doc
+        "The API key authorization parameters to use for the connection. Note that if you include \
+         additional parameters for the target of a rule via [HttpParameters], including query \
+         strings, the parameters added for the connection take precedence.\n"]
   connectivity_parameters : connectivity_resource_parameters option;
       [@ocaml.doc
         "If you specify a private OAuth endpoint, the parameters for EventBridge to use when \
@@ -3429,17 +3437,6 @@ type nonrec create_connection_auth_request_parameters = {
          {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html}Authorization \
          methods for connections} in the {i  {i Amazon EventBridge User Guide} }.\n\
         \ "]
-  invocation_http_parameters : connection_http_parameters option;
-      [@ocaml.doc
-        "The API key authorization parameters to use for the connection. Note that if you include \
-         additional parameters for the target of a rule via [HttpParameters], including query \
-         strings, the parameters added for the connection take precedence.\n"]
-  api_key_auth_parameters : create_connection_api_key_auth_request_parameters option;
-      [@ocaml.doc "The API key authorization parameters to use for the connection.\n"]
-  o_auth_parameters : create_connection_o_auth_request_parameters option;
-      [@ocaml.doc "The OAuth authorization parameters to use for the connection.\n"]
-  basic_auth_parameters : create_connection_basic_auth_request_parameters option;
-      [@ocaml.doc "The Basic authorization parameters to use for the connection.\n"]
 }
 [@@ocaml.doc
   "The authorization parameters for the connection.\n\n\
@@ -3447,6 +3444,27 @@ type nonrec create_connection_auth_request_parameters = {
   \ "]
 
 type nonrec create_connection_request = {
+  name : connection_name; [@ocaml.doc "The name for the connection to create.\n"]
+  description : connection_description option;
+      [@ocaml.doc "A description for the connection to create.\n"]
+  authorization_type : connection_authorization_type;
+      [@ocaml.doc
+        "The type of authorization to use for the connection.\n\n\
+        \  OAUTH tokens are refreshed when a 401 or 407 response is returned.\n\
+        \  \n\
+        \   "]
+  auth_parameters : create_connection_auth_request_parameters;
+      [@ocaml.doc
+        "The authorization parameters to use to authorize with the endpoint. \n\n\
+        \ You must include only authorization parameters for the [AuthorizationType] you specify.\n\
+        \ "]
+  invocation_connectivity_parameters : connectivity_resource_parameters option;
+      [@ocaml.doc
+        "For connections to private APIs, the parameters to use for invoking the API.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html}Connecting \
+         to private APIs} in the {i  {i Amazon EventBridge User Guide} }.\n\
+        \ "]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
         "The identifier of the KMS customer managed key for EventBridge to use, if you choose to \
@@ -3459,40 +3477,29 @@ type nonrec create_connection_request = {
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html}Identify and \
          view keys} in the {i Key Management Service Developer Guide}. \n\
         \  "]
-  invocation_connectivity_parameters : connectivity_resource_parameters option;
-      [@ocaml.doc
-        "For connections to private APIs, the parameters to use for invoking the API.\n\n\
-        \ For more information, see \
-         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html}Connecting \
-         to private APIs} in the {i  {i Amazon EventBridge User Guide} }.\n\
-        \ "]
-  auth_parameters : create_connection_auth_request_parameters;
-      [@ocaml.doc
-        "The authorization parameters to use to authorize with the endpoint. \n\n\
-        \ You must include only authorization parameters for the [AuthorizationType] you specify.\n\
-        \ "]
-  authorization_type : connection_authorization_type;
-      [@ocaml.doc
-        "The type of authorization to use for the connection.\n\n\
-        \  OAUTH tokens are refreshed when a 401 or 407 response is returned.\n\
-        \  \n\
-        \   "]
-  description : connection_description option;
-      [@ocaml.doc "A description for the connection to create.\n"]
-  name : connection_name; [@ocaml.doc "The name for the connection to create.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec create_archive_response = {
-  creation_time : timestamp option; [@ocaml.doc "The time at which the archive was created.\n"]
+  archive_arn : archive_arn option; [@ocaml.doc "The ARN of the archive that was created.\n"]
+  state : archive_state option; [@ocaml.doc "The state of the archive that was created.\n"]
   state_reason : archive_state_reason option;
       [@ocaml.doc "The reason that the archive is in the state.\n"]
-  state : archive_state option; [@ocaml.doc "The state of the archive that was created.\n"]
-  archive_arn : archive_arn option; [@ocaml.doc "The ARN of the archive that was created.\n"]
+  creation_time : timestamp option; [@ocaml.doc "The time at which the archive was created.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec create_archive_request = {
+  archive_name : archive_name; [@ocaml.doc "The name for the archive to create.\n"]
+  event_source_arn : event_bus_arn;
+      [@ocaml.doc "The ARN of the event bus that sends events to the archive.\n"]
+  description : archive_description option; [@ocaml.doc "A description for the archive.\n"]
+  event_pattern : event_pattern option;
+      [@ocaml.doc "An event pattern to use to filter events sent to the archive.\n"]
+  retention_days : retention_days option;
+      [@ocaml.doc
+        "The number of days to retain events for. Default value is 0. If set to 0, events are \
+         retained indefinitely\n"]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
         "The identifier of the KMS customer managed key for EventBridge to use, if you choose to \
@@ -3514,54 +3521,48 @@ type nonrec create_archive_request = {
          archives} in the {i Amazon EventBridge User Guide}.\n\
         \     \n\
         \      "]
-  retention_days : retention_days option;
-      [@ocaml.doc
-        "The number of days to retain events for. Default value is 0. If set to 0, events are \
-         retained indefinitely\n"]
-  event_pattern : event_pattern option;
-      [@ocaml.doc "An event pattern to use to filter events sent to the archive.\n"]
-  description : archive_description option; [@ocaml.doc "A description for the archive.\n"]
-  event_source_arn : event_bus_arn;
-      [@ocaml.doc "The ARN of the event bus that sends events to the archive.\n"]
-  archive_name : archive_name; [@ocaml.doc "The name for the archive to create.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec create_api_destination_response = {
-  last_modified_time : timestamp option;
-      [@ocaml.doc "A time stamp indicating the time that the API destination was last modified.\n"]
-  creation_time : timestamp option;
-      [@ocaml.doc "A time stamp indicating the time that the API destination was created.\n"]
-  api_destination_state : api_destination_state option;
-      [@ocaml.doc "The state of the API destination that was created by the request.\n"]
   api_destination_arn : api_destination_arn option;
       [@ocaml.doc "The ARN of the API destination that was created by the request.\n"]
+  api_destination_state : api_destination_state option;
+      [@ocaml.doc "The state of the API destination that was created by the request.\n"]
+  creation_time : timestamp option;
+      [@ocaml.doc "A time stamp indicating the time that the API destination was created.\n"]
+  last_modified_time : timestamp option;
+      [@ocaml.doc "A time stamp indicating the time that the API destination was last modified.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec create_api_destination_request = {
-  invocation_rate_limit_per_second : api_destination_invocation_rate_limit_per_second option;
-      [@ocaml.doc
-        "The maximum number of requests per second to send to the HTTP invocation endpoint.\n"]
-  http_method : api_destination_http_method;
-      [@ocaml.doc "The method to use for the request to the HTTP invocation endpoint.\n"]
-  invocation_endpoint : https_endpoint;
-      [@ocaml.doc "The URL to the HTTP invocation endpoint for the API destination.\n"]
+  name : api_destination_name; [@ocaml.doc "The name for the API destination to create.\n"]
+  description : api_destination_description option;
+      [@ocaml.doc "A description for the API destination to create.\n"]
   connection_arn : connection_arn;
       [@ocaml.doc
         "The ARN of the connection to use for the API destination. The destination endpoint must \
          support the authorization type specified for the connection.\n"]
-  description : api_destination_description option;
-      [@ocaml.doc "A description for the API destination to create.\n"]
-  name : api_destination_name; [@ocaml.doc "The name for the API destination to create.\n"]
+  invocation_endpoint : https_endpoint;
+      [@ocaml.doc "The URL to the HTTP invocation endpoint for the API destination.\n"]
+  http_method : api_destination_http_method;
+      [@ocaml.doc "The method to use for the request to the HTTP invocation endpoint.\n"]
+  invocation_rate_limit_per_second : api_destination_invocation_rate_limit_per_second option;
+      [@ocaml.doc
+        "The maximum number of requests per second to send to the HTTP invocation endpoint.\n"]
 }
 [@@ocaml.doc ""]
 
+type nonrec illegal_status_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "An error occurred because a replay can be canceled only when the state is Running or Starting.\n"]
+
 type nonrec cancel_replay_response = {
+  replay_arn : replay_arn option; [@ocaml.doc "The ARN of the replay to cancel.\n"]
+  state : replay_state option; [@ocaml.doc "The current state of the replay.\n"]
   state_reason : replay_state_reason option;
       [@ocaml.doc "The reason that the replay is in the current state.\n"]
-  state : replay_state option; [@ocaml.doc "The current state of the replay.\n"]
-  replay_arn : replay_arn option; [@ocaml.doc "The ARN of the replay to cancel.\n"]
 }
 [@@ocaml.doc ""]
 

@@ -1,47 +1,6 @@
 open Types
 open Service_metadata
 
-module AddPermission = struct
-  let error_to_string = function
-    | `InvalidAddress _ -> "com.amazonaws.sqs#InvalidAddress"
-    | `InvalidSecurity _ -> "com.amazonaws.sqs#InvalidSecurity"
-    | `OverLimit _ -> "com.amazonaws.sqs#OverLimit"
-    | `QueueDoesNotExist _ -> "com.amazonaws.sqs#QueueDoesNotExist"
-    | `RequestThrottled _ -> "com.amazonaws.sqs#RequestThrottled"
-    | `UnsupportedOperation _ -> "com.amazonaws.sqs#UnsupportedOperation"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidAddress" ->
-          `InvalidAddress (Json_deserializers.invalid_address_of_yojson tree path)
-      | _, "InvalidSecurity" ->
-          `InvalidSecurity (Json_deserializers.invalid_security_of_yojson tree path)
-      | _, "OverLimit" -> `OverLimit (Json_deserializers.over_limit_of_yojson tree path)
-      | _, "QueueDoesNotExist" ->
-          `QueueDoesNotExist (Json_deserializers.queue_does_not_exist_of_yojson tree path)
-      | _, "RequestThrottled" ->
-          `RequestThrottled (Json_deserializers.request_throttled_of_yojson tree path)
-      | _, "UnsupportedOperation" ->
-          `UnsupportedOperation (Json_deserializers.unsupported_operation_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_permission_request) =
-    let input = Json_serializers.add_permission_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.AddPermission" ~service ~context
-      ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : add_permission_request) =
-    let input = Json_serializers.add_permission_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.AddPermission" ~service
-      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
 module CancelMessageMoveTask = struct
   let error_to_string = function
     | `InvalidAddress _ -> "com.amazonaws.sqs#InvalidAddress"
@@ -534,6 +493,41 @@ module ListMessageMoveTasks = struct
       ~error_deserializer
 end
 
+module ListQueues = struct
+  let error_to_string = function
+    | `InvalidAddress _ -> "com.amazonaws.sqs#InvalidAddress"
+    | `InvalidSecurity _ -> "com.amazonaws.sqs#InvalidSecurity"
+    | `RequestThrottled _ -> "com.amazonaws.sqs#RequestThrottled"
+    | `UnsupportedOperation _ -> "com.amazonaws.sqs#UnsupportedOperation"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidAddress" ->
+          `InvalidAddress (Json_deserializers.invalid_address_of_yojson tree path)
+      | _, "InvalidSecurity" ->
+          `InvalidSecurity (Json_deserializers.invalid_security_of_yojson tree path)
+      | _, "RequestThrottled" ->
+          `RequestThrottled (Json_deserializers.request_throttled_of_yojson tree path)
+      | _, "UnsupportedOperation" ->
+          `UnsupportedOperation (Json_deserializers.unsupported_operation_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_queues_request) =
+    let input = Json_serializers.list_queues_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.ListQueues" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_queues_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_queues_request) =
+    let input = Json_serializers.list_queues_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.ListQueues" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_queues_result_of_yojson
+      ~error_deserializer
+end
+
 module ListQueueTags = struct
   let error_to_string = function
     | `InvalidAddress _ -> "com.amazonaws.sqs#InvalidAddress"
@@ -570,41 +564,6 @@ module ListQueueTags = struct
     let input = Json_serializers.list_queue_tags_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.ListQueueTags" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_queue_tags_result_of_yojson
-      ~error_deserializer
-end
-
-module ListQueues = struct
-  let error_to_string = function
-    | `InvalidAddress _ -> "com.amazonaws.sqs#InvalidAddress"
-    | `InvalidSecurity _ -> "com.amazonaws.sqs#InvalidSecurity"
-    | `RequestThrottled _ -> "com.amazonaws.sqs#RequestThrottled"
-    | `UnsupportedOperation _ -> "com.amazonaws.sqs#UnsupportedOperation"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidAddress" ->
-          `InvalidAddress (Json_deserializers.invalid_address_of_yojson tree path)
-      | _, "InvalidSecurity" ->
-          `InvalidSecurity (Json_deserializers.invalid_security_of_yojson tree path)
-      | _, "RequestThrottled" ->
-          `RequestThrottled (Json_deserializers.request_throttled_of_yojson tree path)
-      | _, "UnsupportedOperation" ->
-          `UnsupportedOperation (Json_deserializers.unsupported_operation_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_queues_request) =
-    let input = Json_serializers.list_queues_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.ListQueues" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_queues_result_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : list_queues_request) =
-    let input = Json_serializers.list_queues_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.ListQueues" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.list_queues_result_of_yojson
       ~error_deserializer
 end
 
@@ -1047,6 +1006,47 @@ module UntagQueue = struct
   let request_with_metadata context (request : untag_queue_request) =
     let input = Json_serializers.untag_queue_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.UntagQueue" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module AddPermission = struct
+  let error_to_string = function
+    | `InvalidAddress _ -> "com.amazonaws.sqs#InvalidAddress"
+    | `InvalidSecurity _ -> "com.amazonaws.sqs#InvalidSecurity"
+    | `OverLimit _ -> "com.amazonaws.sqs#OverLimit"
+    | `QueueDoesNotExist _ -> "com.amazonaws.sqs#QueueDoesNotExist"
+    | `RequestThrottled _ -> "com.amazonaws.sqs#RequestThrottled"
+    | `UnsupportedOperation _ -> "com.amazonaws.sqs#UnsupportedOperation"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidAddress" ->
+          `InvalidAddress (Json_deserializers.invalid_address_of_yojson tree path)
+      | _, "InvalidSecurity" ->
+          `InvalidSecurity (Json_deserializers.invalid_security_of_yojson tree path)
+      | _, "OverLimit" -> `OverLimit (Json_deserializers.over_limit_of_yojson tree path)
+      | _, "QueueDoesNotExist" ->
+          `QueueDoesNotExist (Json_deserializers.queue_does_not_exist_of_yojson tree path)
+      | _, "RequestThrottled" ->
+          `RequestThrottled (Json_deserializers.request_throttled_of_yojson tree path)
+      | _, "UnsupportedOperation" ->
+          `UnsupportedOperation (Json_deserializers.unsupported_operation_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_permission_request) =
+    let input = Json_serializers.add_permission_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.AddPermission" ~service ~context
+      ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : add_permission_request) =
+    let input = Json_serializers.add_permission_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.AddPermission" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end

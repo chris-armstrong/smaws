@@ -3,147 +3,6 @@ open Service_metadata
 open Query_deserializers
 open Query_serializers
 
-module ActivateOrganizationsAccess = struct
-  let error_to_string = function
-    | `InvalidOperationException _ -> "com.amazonaws.cloudformation#InvalidOperationException"
-    | `OperationNotFoundException _ -> "com.amazonaws.cloudformation#OperationNotFoundException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "InvalidOperationException" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_operation_exception_of_xml
-        with
-        | Ok s -> `InvalidOperationException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "OperationNotFoundException" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:operation_not_found_exception_of_xml
-        with
-        | Ok s -> `OperationNotFoundException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : activate_organizations_access_input) =
-    let fields = activate_organizations_access_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ActivateOrganizationsAccess"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:activate_organizations_access_output_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : activate_organizations_access_input) =
-    let fields = activate_organizations_access_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ActivateOrganizationsAccess"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:activate_organizations_access_output_of_xml ~error_deserializer
-end
-
-module ActivateType = struct
-  let error_to_string = function
-    | `CFNRegistryException _ -> "com.amazonaws.cloudformation#CFNRegistryException"
-    | `TypeNotFoundException _ -> "com.amazonaws.cloudformation#TypeNotFoundException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "CFNRegistryException" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:cfn_registry_exception_of_xml
-        with
-        | Ok s -> `CFNRegistryException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "TypeNotFoundException" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:type_not_found_exception_of_xml
-        with
-        | Ok s -> `TypeNotFoundException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : activate_type_input) =
-    let fields = activate_type_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ActivateType"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:activate_type_output_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : activate_type_input) =
-    let fields = activate_type_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ActivateType"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:activate_type_output_of_xml ~error_deserializer
-end
-
-module BatchDescribeTypeConfigurations = struct
-  let error_to_string = function
-    | `CFNRegistryException _ -> "com.amazonaws.cloudformation#CFNRegistryException"
-    | `TypeConfigurationNotFoundException _ ->
-        "com.amazonaws.cloudformation#TypeConfigurationNotFoundException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "CFNRegistryException" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:cfn_registry_exception_of_xml
-        with
-        | Ok s -> `CFNRegistryException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "TypeConfigurationNotFoundException" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:type_configuration_not_found_exception_of_xml
-        with
-        | Ok s -> `TypeConfigurationNotFoundException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : batch_describe_type_configurations_input) =
-    let fields = batch_describe_type_configurations_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"BatchDescribeTypeConfigurations"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:batch_describe_type_configurations_output_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : batch_describe_type_configurations_input) =
-    let fields = batch_describe_type_configurations_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"BatchDescribeTypeConfigurations"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:batch_describe_type_configurations_output_of_xml ~error_deserializer
-end
-
-module CancelUpdateStack = struct
-  let error_to_string = function
-    | `TokenAlreadyExistsException _ -> "com.amazonaws.cloudformation#TokenAlreadyExistsException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "TokenAlreadyExistsException" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:token_already_exists_exception_of_xml
-        with
-        | Ok s -> `TokenAlreadyExistsException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : cancel_update_stack_input) =
-    let fields = cancel_update_stack_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"CancelUpdateStack"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-
-  let request_with_metadata context (request : cancel_update_stack_input) =
-    let fields = cancel_update_stack_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"CancelUpdateStack"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-end
-
 module ContinueUpdateRollback = struct
   let error_to_string = function
     | `TokenAlreadyExistsException _ -> "com.amazonaws.cloudformation#TokenAlreadyExistsException"
@@ -1146,6 +1005,25 @@ module DescribeStackResources = struct
       ~output_deserializer:describe_stack_resources_output_of_xml ~error_deserializer
 end
 
+module DescribeStacks = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ =
+    Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : describe_stacks_input) =
+    let fields = describe_stacks_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeStacks"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:describe_stacks_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : describe_stacks_input) =
+    let fields = describe_stacks_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeStacks"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:describe_stacks_output_of_xml ~error_deserializer
+end
+
 module DescribeStackSet = struct
   let error_to_string = function
     | `StackSetNotFoundException _ -> "com.amazonaws.cloudformation#StackSetNotFoundException"
@@ -1210,25 +1088,6 @@ module DescribeStackSetOperation = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeStackSetOperation"
       ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
       ~output_deserializer:describe_stack_set_operation_output_of_xml ~error_deserializer
-end
-
-module DescribeStacks = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ =
-    Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : describe_stacks_input) =
-    let fields = describe_stacks_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeStacks"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:describe_stacks_output_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : describe_stacks_input) =
-    let fields = describe_stacks_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeStacks"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:describe_stacks_output_of_xml ~error_deserializer
 end
 
 module DescribeType = struct
@@ -2021,6 +1880,25 @@ module ListStackResources = struct
       ~output_deserializer:list_stack_resources_output_of_xml ~error_deserializer
 end
 
+module ListStacks = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ =
+    Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : list_stacks_input) =
+    let fields = list_stacks_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListStacks"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:list_stacks_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : list_stacks_input) =
+    let fields = list_stacks_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListStacks"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:list_stacks_output_of_xml ~error_deserializer
+end
+
 module ListStackSetAutoDeploymentTargets = struct
   let error_to_string = function
     | `StackSetNotFoundException _ -> "com.amazonaws.cloudformation#StackSetNotFoundException"
@@ -2135,25 +2013,6 @@ module ListStackSets = struct
       ~output_deserializer:list_stack_sets_output_of_xml ~error_deserializer
 end
 
-module ListStacks = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ =
-    Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : list_stacks_input) =
-    let fields = list_stacks_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListStacks"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:list_stacks_output_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : list_stacks_input) =
-    let fields = list_stacks_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListStacks"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:list_stacks_output_of_xml ~error_deserializer
-end
-
 module ListTypeRegistrations = struct
   let error_to_string = function
     | `CFNRegistryException _ -> "com.amazonaws.cloudformation#CFNRegistryException"
@@ -2183,35 +2042,6 @@ module ListTypeRegistrations = struct
       ~output_deserializer:list_type_registrations_output_of_xml ~error_deserializer
 end
 
-module ListTypeVersions = struct
-  let error_to_string = function
-    | `CFNRegistryException _ -> "com.amazonaws.cloudformation#CFNRegistryException"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "CFNRegistryException" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:cfn_registry_exception_of_xml
-        with
-        | Ok s -> `CFNRegistryException s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : list_type_versions_input) =
-    let fields = list_type_versions_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListTypeVersions"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:list_type_versions_output_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : list_type_versions_input) =
-    let fields = list_type_versions_input_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListTypeVersions"
-      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
-      ~output_deserializer:list_type_versions_output_of_xml ~error_deserializer
-end
-
 module ListTypes = struct
   let error_to_string = function
     | `CFNRegistryException _ -> "com.amazonaws.cloudformation#CFNRegistryException"
@@ -2239,6 +2069,35 @@ module ListTypes = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListTypes"
       ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
       ~output_deserializer:list_types_output_of_xml ~error_deserializer
+end
+
+module ListTypeVersions = struct
+  let error_to_string = function
+    | `CFNRegistryException _ -> "com.amazonaws.cloudformation#CFNRegistryException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "CFNRegistryException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:cfn_registry_exception_of_xml
+        with
+        | Ok s -> `CFNRegistryException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : list_type_versions_input) =
+    let fields = list_type_versions_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ListTypeVersions"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:list_type_versions_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : list_type_versions_input) =
+    let fields = list_type_versions_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ListTypeVersions"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:list_type_versions_output_of_xml ~error_deserializer
 end
 
 module PublishType = struct
@@ -2899,4 +2758,145 @@ module ValidateTemplate = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ValidateTemplate"
       ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
       ~output_deserializer:validate_template_output_of_xml ~error_deserializer
+end
+
+module CancelUpdateStack = struct
+  let error_to_string = function
+    | `TokenAlreadyExistsException _ -> "com.amazonaws.cloudformation#TokenAlreadyExistsException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "TokenAlreadyExistsException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:token_already_exists_exception_of_xml
+        with
+        | Ok s -> `TokenAlreadyExistsException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : cancel_update_stack_input) =
+    let fields = cancel_update_stack_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"CancelUpdateStack"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : cancel_update_stack_input) =
+    let fields = cancel_update_stack_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"CancelUpdateStack"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+end
+
+module BatchDescribeTypeConfigurations = struct
+  let error_to_string = function
+    | `CFNRegistryException _ -> "com.amazonaws.cloudformation#CFNRegistryException"
+    | `TypeConfigurationNotFoundException _ ->
+        "com.amazonaws.cloudformation#TypeConfigurationNotFoundException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "CFNRegistryException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:cfn_registry_exception_of_xml
+        with
+        | Ok s -> `CFNRegistryException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "TypeConfigurationNotFoundException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:type_configuration_not_found_exception_of_xml
+        with
+        | Ok s -> `TypeConfigurationNotFoundException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : batch_describe_type_configurations_input) =
+    let fields = batch_describe_type_configurations_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"BatchDescribeTypeConfigurations"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:batch_describe_type_configurations_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : batch_describe_type_configurations_input) =
+    let fields = batch_describe_type_configurations_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"BatchDescribeTypeConfigurations"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:batch_describe_type_configurations_output_of_xml ~error_deserializer
+end
+
+module ActivateType = struct
+  let error_to_string = function
+    | `CFNRegistryException _ -> "com.amazonaws.cloudformation#CFNRegistryException"
+    | `TypeNotFoundException _ -> "com.amazonaws.cloudformation#TypeNotFoundException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "CFNRegistryException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:cfn_registry_exception_of_xml
+        with
+        | Ok s -> `CFNRegistryException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "TypeNotFoundException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:type_not_found_exception_of_xml
+        with
+        | Ok s -> `TypeNotFoundException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : activate_type_input) =
+    let fields = activate_type_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ActivateType"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:activate_type_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : activate_type_input) =
+    let fields = activate_type_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ActivateType"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:activate_type_output_of_xml ~error_deserializer
+end
+
+module ActivateOrganizationsAccess = struct
+  let error_to_string = function
+    | `InvalidOperationException _ -> "com.amazonaws.cloudformation#InvalidOperationException"
+    | `OperationNotFoundException _ -> "com.amazonaws.cloudformation#OperationNotFoundException"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "InvalidOperationException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_operation_exception_of_xml
+        with
+        | Ok s -> `InvalidOperationException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "OperationNotFoundException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:operation_not_found_exception_of_xml
+        with
+        | Ok s -> `OperationNotFoundException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : activate_organizations_access_input) =
+    let fields = activate_organizations_access_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"ActivateOrganizationsAccess"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:activate_organizations_access_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : activate_organizations_access_input) =
+    let fields = activate_organizations_access_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"ActivateOrganizationsAccess"
+      ~xmlNamespace:"http://cloudformation.amazonaws.com/doc/2010-05-15/" ~service ~context ~fields
+      ~output_deserializer:activate_organizations_access_output_of_xml ~error_deserializer
 end

@@ -3,88 +3,6 @@ open Service_metadata
 open Query_deserializers
 open Query_serializers
 
-module AddSourceIdentifierToSubscription = struct
-  let error_to_string = function
-    | `SourceNotFoundFault _ -> "com.amazonaws.docdb#SourceNotFoundFault"
-    | `SubscriptionNotFoundFault _ -> "com.amazonaws.docdb#SubscriptionNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "SourceNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:source_not_found_fault_of_xml
-        with
-        | Ok s -> `SourceNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "SubscriptionNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:subscription_not_found_fault_of_xml
-        with
-        | Ok s -> `SubscriptionNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : add_source_identifier_to_subscription_message) =
-    let fields = add_source_identifier_to_subscription_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddSourceIdentifierToSubscription"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:add_source_identifier_to_subscription_result_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : add_source_identifier_to_subscription_message) =
-    let fields = add_source_identifier_to_subscription_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddSourceIdentifierToSubscription"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:add_source_identifier_to_subscription_result_of_xml ~error_deserializer
-end
-
-module AddTagsToResource = struct
-  let error_to_string = function
-    | `DBClusterNotFoundFault _ -> "com.amazonaws.docdb#DBClusterNotFoundFault"
-    | `DBInstanceNotFoundFault _ -> "com.amazonaws.docdb#DBInstanceNotFoundFault"
-    | `DBSnapshotNotFoundFault _ -> "com.amazonaws.docdb#DBSnapshotNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "DBClusterNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_cluster_not_found_fault_of_xml
-        with
-        | Ok s -> `DBClusterNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBInstanceNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_instance_not_found_fault_of_xml
-        with
-        | Ok s -> `DBInstanceNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBSnapshotNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_snapshot_not_found_fault_of_xml
-        with
-        | Ok s -> `DBSnapshotNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : add_tags_to_resource_message) =
-    let fields = add_tags_to_resource_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddTagsToResource"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_to_resource_message) =
-    let fields = add_tags_to_resource_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddTagsToResource"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-end
-
 module ApplyPendingMaintenanceAction = struct
   let error_to_string = function
     | `InvalidDBClusterStateFault _ -> "com.amazonaws.docdb#InvalidDBClusterStateFault"
@@ -1262,6 +1180,35 @@ module DescribeDBClusterParameters = struct
       ~output_deserializer:db_cluster_parameter_group_details_of_xml ~error_deserializer
 end
 
+module DescribeDBClusters = struct
+  let error_to_string = function
+    | `DBClusterNotFoundFault _ -> "com.amazonaws.docdb#DBClusterNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "DBClusterNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_cluster_not_found_fault_of_xml
+        with
+        | Ok s -> `DBClusterNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : describe_db_clusters_message) =
+    let fields = describe_db_clusters_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeDBClusters"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:db_cluster_message_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : describe_db_clusters_message) =
+    let fields = describe_db_clusters_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeDBClusters"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:db_cluster_message_of_xml ~error_deserializer
+end
+
 module DescribeDBClusterSnapshotAttributes = struct
   let error_to_string = function
     | `DBClusterSnapshotNotFoundFault _ -> "com.amazonaws.docdb#DBClusterSnapshotNotFoundFault"
@@ -1318,35 +1265,6 @@ module DescribeDBClusterSnapshots = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeDBClusterSnapshots"
       ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
       ~output_deserializer:db_cluster_snapshot_message_of_xml ~error_deserializer
-end
-
-module DescribeDBClusters = struct
-  let error_to_string = function
-    | `DBClusterNotFoundFault _ -> "com.amazonaws.docdb#DBClusterNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "DBClusterNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_cluster_not_found_fault_of_xml
-        with
-        | Ok s -> `DBClusterNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : describe_db_clusters_message) =
-    let fields = describe_db_clusters_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeDBClusters"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:db_cluster_message_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : describe_db_clusters_message) =
-    let fields = describe_db_clusters_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeDBClusters"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:db_cluster_message_of_xml ~error_deserializer
 end
 
 module DescribeDBEngineVersions = struct
@@ -1467,6 +1385,25 @@ module DescribeEventCategories = struct
       ~output_deserializer:event_categories_message_of_xml ~error_deserializer
 end
 
+module DescribeEvents = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ =
+    Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : describe_events_message) =
+    let fields = describe_events_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeEvents"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:events_message_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : describe_events_message) =
+    let fields = describe_events_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeEvents"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:events_message_of_xml ~error_deserializer
+end
+
 module DescribeEventSubscriptions = struct
   let error_to_string = function
     | `SubscriptionNotFoundFault _ -> "com.amazonaws.docdb#SubscriptionNotFoundFault"
@@ -1494,25 +1431,6 @@ module DescribeEventSubscriptions = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeEventSubscriptions"
       ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
       ~output_deserializer:event_subscriptions_message_of_xml ~error_deserializer
-end
-
-module DescribeEvents = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ =
-    Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : describe_events_message) =
-    let fields = describe_events_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeEvents"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:events_message_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : describe_events_message) =
-    let fields = describe_events_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeEvents"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:events_message_of_xml ~error_deserializer
 end
 
 module DescribeGlobalClusters = struct
@@ -2875,4 +2793,86 @@ module SwitchoverGlobalCluster = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"SwitchoverGlobalCluster"
       ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
       ~output_deserializer:switchover_global_cluster_result_of_xml ~error_deserializer
+end
+
+module AddTagsToResource = struct
+  let error_to_string = function
+    | `DBClusterNotFoundFault _ -> "com.amazonaws.docdb#DBClusterNotFoundFault"
+    | `DBInstanceNotFoundFault _ -> "com.amazonaws.docdb#DBInstanceNotFoundFault"
+    | `DBSnapshotNotFoundFault _ -> "com.amazonaws.docdb#DBSnapshotNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "DBClusterNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_cluster_not_found_fault_of_xml
+        with
+        | Ok s -> `DBClusterNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBInstanceNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_instance_not_found_fault_of_xml
+        with
+        | Ok s -> `DBInstanceNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBSnapshotNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_snapshot_not_found_fault_of_xml
+        with
+        | Ok s -> `DBSnapshotNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : add_tags_to_resource_message) =
+    let fields = add_tags_to_resource_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddTagsToResource"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_resource_message) =
+    let fields = add_tags_to_resource_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddTagsToResource"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+end
+
+module AddSourceIdentifierToSubscription = struct
+  let error_to_string = function
+    | `SourceNotFoundFault _ -> "com.amazonaws.docdb#SourceNotFoundFault"
+    | `SubscriptionNotFoundFault _ -> "com.amazonaws.docdb#SubscriptionNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "SourceNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:source_not_found_fault_of_xml
+        with
+        | Ok s -> `SourceNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "SubscriptionNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:subscription_not_found_fault_of_xml
+        with
+        | Ok s -> `SubscriptionNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : add_source_identifier_to_subscription_message) =
+    let fields = add_source_identifier_to_subscription_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddSourceIdentifierToSubscription"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:add_source_identifier_to_subscription_result_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : add_source_identifier_to_subscription_message) =
+    let fields = add_source_identifier_to_subscription_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddSourceIdentifierToSubscription"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:add_source_identifier_to_subscription_result_of_xml ~error_deserializer
 end

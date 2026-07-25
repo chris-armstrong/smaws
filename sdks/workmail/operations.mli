@@ -1,46 +1,6 @@
 open Types
 
-module AssociateDelegateToResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    associate_delegate_to_resource_request ->
-    ( associate_delegate_to_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    associate_delegate_to_resource_request ->
-    ( associate_delegate_to_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Adds a member (user or group) to the resource's set of delegates.\n"]
-
-module AssociateMemberToGroup : sig
+module UpdateUser : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `DirectoryServiceAuthenticationFailedException of
@@ -56,8 +16,8 @@ module AssociateMemberToGroup : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    associate_member_to_group_request ->
-    ( associate_member_to_group_response,
+    update_user_request ->
+    ( update_user_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DirectoryServiceAuthenticationFailedException of
         directory_service_authentication_failed_exception
@@ -72,8 +32,8 @@ module AssociateMemberToGroup : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    associate_member_to_group_request ->
-    ( associate_member_to_group_response Smaws_Lib.Response.t,
+    update_user_request ->
+    ( update_user_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DirectoryServiceAuthenticationFailedException of
         directory_service_authentication_failed_exception
@@ -87,45 +47,134 @@ module AssociateMemberToGroup : sig
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc "Adds a member (user or group) to the group's set.\n"]
+[@@ocaml.doc
+  "Updates data for the user. To have the latest information, it must be preceded by a \
+   [DescribeUser] call. The dataset in the request should be the one expected when performing \
+   another [DescribeUser] call.\n"]
 
-module AssumeImpersonationRole : sig
+module UpdateResource : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EmailAddressInUseException of email_address_in_use_exception
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidConfigurationException of invalid_configuration_exception
     | `InvalidParameterException of invalid_parameter_exception
+    | `MailDomainNotFoundException of mail_domain_not_found_exception
+    | `MailDomainStateException of mail_domain_state_exception
+    | `NameAvailabilityException of name_availability_exception
     | `OrganizationNotFoundException of organization_not_found_exception
     | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    assume_impersonation_role_request ->
-    ( assume_impersonation_role_response,
+    update_resource_request ->
+    ( update_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EmailAddressInUseException of email_address_in_use_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidConfigurationException of invalid_configuration_exception
       | `InvalidParameterException of invalid_parameter_exception
+      | `MailDomainNotFoundException of mail_domain_not_found_exception
+      | `MailDomainStateException of mail_domain_state_exception
+      | `NameAvailabilityException of name_availability_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    assume_impersonation_role_request ->
-    ( assume_impersonation_role_response Smaws_Lib.Response.t,
+    update_resource_request ->
+    ( update_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EmailAddressInUseException of email_address_in_use_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidConfigurationException of invalid_configuration_exception
       | `InvalidParameterException of invalid_parameter_exception
+      | `MailDomainNotFoundException of mail_domain_not_found_exception
+      | `MailDomainStateException of mail_domain_state_exception
+      | `NameAvailabilityException of name_availability_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
+      | `UnsupportedOperationException of unsupported_operation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Assumes an impersonation role for the given WorkMail organization. This method returns an \
-   authentication token you can use to make impersonated calls.\n"]
+  "Updates data for the resource. To have the latest information, it must be preceded by a \
+   [DescribeResource] call. The dataset in the request should be the one expected when performing \
+   another [DescribeResource] call.\n"]
 
-module CancelMailboxExportJob : sig
+module UpdatePrimaryEmailAddress : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryServiceAuthenticationFailedException of
+      directory_service_authentication_failed_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EmailAddressInUseException of email_address_in_use_exception
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `MailDomainNotFoundException of mail_domain_not_found_exception
+    | `MailDomainStateException of mail_domain_state_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_primary_email_address_request ->
+    ( update_primary_email_address_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EmailAddressInUseException of email_address_in_use_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `MailDomainNotFoundException of mail_domain_not_found_exception
+      | `MailDomainStateException of mail_domain_state_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_primary_email_address_request ->
+    ( update_primary_email_address_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EmailAddressInUseException of email_address_in_use_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `MailDomainNotFoundException of mail_domain_not_found_exception
+      | `MailDomainStateException of mail_domain_state_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Updates the primary email for a user, group, or resource. The current email is moved into the \
+   list of aliases (or swapped between an existing alias and the current primary email), and the \
+   email provided in the input is promoted as the primary.\n"]
+
+module UpdateMobileDeviceAccessRule : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `EntityNotFoundException of entity_not_found_exception
@@ -136,8 +185,8 @@ module CancelMailboxExportJob : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    cancel_mailbox_export_job_request ->
-    ( cancel_mailbox_export_job_response,
+    update_mobile_device_access_rule_request ->
+    ( update_mobile_device_access_rule_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -147,8 +196,8 @@ module CancelMailboxExportJob : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    cancel_mailbox_export_job_request ->
-    ( cancel_mailbox_export_job_response Smaws_Lib.Response.t,
+    update_mobile_device_access_rule_request ->
+    ( update_mobile_device_access_rule_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -157,20 +206,132 @@ module CancelMailboxExportJob : sig
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc
-  "Cancels a mailbox export job.\n\n\
-  \  If the mailbox export job is near completion, it might not be possible to cancel it.\n\
-  \  \n\
-  \   "]
+[@@ocaml.doc "Updates a mobile device access rule for the specified WorkMail organization.\n"]
 
-module CreateAlias : sig
+module UpdateMailboxQuota : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
-    | `EmailAddressInUseException of email_address_in_use_exception
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_mailbox_quota_request ->
+    ( update_mailbox_quota_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_mailbox_quota_request ->
+    ( update_mailbox_quota_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Updates a user's current mailbox quota for a specified organization and user.\n"]
+
+module UpdateImpersonationRole : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
     | `EntityNotFoundException of entity_not_found_exception
     | `EntityStateException of entity_state_exception
     | `InvalidParameterException of invalid_parameter_exception
     | `LimitExceededException of limit_exceeded_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_impersonation_role_request ->
+    ( update_impersonation_role_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_impersonation_role_request ->
+    ( update_impersonation_role_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Updates an impersonation role for the given WorkMail organization.\n"]
+
+module UpdateGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_group_request ->
+    ( update_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_group_request ->
+    ( update_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Updates attributes in a group.\n"]
+
+module UpdateDefaultMailDomain : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
     | `MailDomainNotFoundException of mail_domain_not_found_exception
     | `MailDomainStateException of mail_domain_state_exception
     | `OrganizationNotFoundException of organization_not_found_exception
@@ -179,14 +340,10 @@ module CreateAlias : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_alias_request ->
-    ( create_alias_response,
+    update_default_mail_domain_request ->
+    ( update_default_mail_domain_response,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `EmailAddressInUseException of email_address_in_use_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `MailDomainNotFoundException of mail_domain_not_found_exception
       | `MailDomainStateException of mail_domain_state_exception
       | `OrganizationNotFoundException of organization_not_found_exception
@@ -195,2633 +352,253 @@ module CreateAlias : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_alias_request ->
-    ( create_alias_response Smaws_Lib.Response.t,
+    update_default_mail_domain_request ->
+    ( update_default_mail_domain_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `EmailAddressInUseException of email_address_in_use_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `MailDomainNotFoundException of mail_domain_not_found_exception
       | `MailDomainStateException of mail_domain_state_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Adds an alias to the set of a given member (user or group) of WorkMail.\n"]
-
-module CreateAvailabilityConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NameAvailabilityException of name_availability_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_availability_configuration_request ->
-    ( create_availability_configuration_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NameAvailabilityException of name_availability_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_availability_configuration_request ->
-    ( create_availability_configuration_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NameAvailabilityException of name_availability_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Creates an [AvailabilityConfiguration] for the given WorkMail organization and domain.\n"]
+  "Updates the default mail domain for an organization. The default mail domain is used by the \
+   WorkMail AWS Console to suggest an email address when enabling a mail user. You can only have \
+   one default domain.\n"]
 
-module CreateGroup : sig
+module UpdateAvailabilityConfiguration : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryServiceAuthenticationFailedException of
-      directory_service_authentication_failed_exception
-    | `DirectoryUnavailableException of directory_unavailable_exception
     | `InvalidParameterException of invalid_parameter_exception
-    | `NameAvailabilityException of name_availability_exception
     | `OrganizationNotFoundException of organization_not_found_exception
     | `OrganizationStateException of organization_state_exception
-    | `ReservedNameException of reserved_name_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_group_request ->
-    ( create_group_response,
+    update_availability_configuration_request ->
+    ( update_availability_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `NameAvailabilityException of name_availability_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ReservedNameException of reserved_name_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_group_request ->
-    ( create_group_response Smaws_Lib.Response.t,
+    update_availability_configuration_request ->
+    ( update_availability_configuration_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `NameAvailabilityException of name_availability_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ReservedNameException of reserved_name_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
+      | `ResourceNotFoundException of resource_not_found_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Creates a group that can be used in WorkMail by calling the [RegisterToWorkMail] operation.\n"]
+  "Updates an existing [AvailabilityConfiguration] for the given WorkMail organization and domain.\n"]
 
-module CreateIdentityCenterApplication : sig
+module UntagResource : sig
   val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidParameterException of invalid_parameter_exception ] ->
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_identity_center_application_request ->
-    ( create_identity_center_application_response,
+    untag_resource_request ->
+    ( untag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_identity_center_application_request ->
-    ( create_identity_center_application_response Smaws_Lib.Response.t,
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception ]
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Untags the specified tags from the specified WorkMail organization resource.\n"]
+
+module TestAvailabilityConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    test_availability_configuration_request ->
+    ( test_availability_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    test_availability_configuration_request ->
+    ( test_availability_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  " Creates the WorkMail application in IAM Identity Center that can be used later in the WorkMail \
-   - IdC integration. For more information, see PutIdentityProviderConfiguration. This action does \
-   not affect the authentication settings for any WorkMail organizations. \n"]
+  "Performs a test on an availability provider to ensure that access is allowed. For EWS, it \
+   verifies the provided credentials can be used to successfully log in. For Lambda, it verifies \
+   that the Lambda function can be invoked and that the resource access policy was configured to \
+   deny anonymous access. An anonymous invocation is one done without providing either a \
+   [SourceArn] or [SourceAccount] header.\n\n\
+  \  The request must contain either one provider definition ([EwsProvider] or [LambdaProvider]) \
+   or the [DomainName] parameter. If the [DomainName] parameter is provided, the configuration \
+   stored under the [DomainName] will be tested.\n\
+  \  \n\
+  \   "]
 
-module CreateImpersonationRole : sig
+module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TooManyTagsException of too_many_tags_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyTagsException of too_many_tags_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Applies the specified tags to the specified WorkMailorganization resource.\n"]
+
+module StartMailboxExportJob : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    start_mailbox_export_job_request ->
+    ( start_mailbox_export_job_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_mailbox_export_job_request ->
+    ( start_mailbox_export_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Starts a mailbox export job to export MIME-format email messages and calendar items from the \
+   specified mailbox to the specified Amazon Simple Storage Service (Amazon S3) bucket. For more \
+   information, see \
+   {{:https://docs.aws.amazon.com/workmail/latest/adminguide/mail-export.html}Exporting mailbox \
+   content} in the {i WorkMail Administrator Guide}.\n"]
+
+module ResetPassword : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryServiceAuthenticationFailedException of
+      directory_service_authentication_failed_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityNotFoundException of entity_not_found_exception
     | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_impersonation_role_request ->
-    ( create_impersonation_role_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_impersonation_role_request ->
-    ( create_impersonation_role_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates an impersonation role for the given WorkMail organization.\n\n\
-  \  {i Idempotency} ensures that an API request completes no more than one time. With an \
-   idempotent request, if the original request completes successfully, any subsequent retries also \
-   complete successfully without performing any further actions.\n\
-  \ "]
-
-module CreateMobileDeviceAccessRule : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_mobile_device_access_rule_request ->
-    ( create_mobile_device_access_rule_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_mobile_device_access_rule_request ->
-    ( create_mobile_device_access_rule_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Creates a new mobile device access rule for the specified WorkMail organization.\n"]
-
-module CreateOrganization : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryInUseException of directory_in_use_exception
-    | `DirectoryUnavailableException of directory_unavailable_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NameAvailabilityException of name_availability_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_organization_request ->
-    ( create_organization_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryInUseException of directory_in_use_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NameAvailabilityException of name_availability_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_organization_request ->
-    ( create_organization_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryInUseException of directory_in_use_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NameAvailabilityException of name_availability_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a new WorkMail organization. Optionally, you can choose to associate an existing AWS \
-   Directory Service directory with your organization. If an AWS Directory Service directory ID is \
-   specified, the organization alias must match the directory alias. If you choose not to \
-   associate an existing directory with your organization, then we create a new WorkMail directory \
-   for you. For more information, see \
-   {{:https://docs.aws.amazon.com/workmail/latest/adminguide/add_new_organization.html}Adding an \
-   organization} in the {i WorkMail Administrator Guide}.\n\n\
-  \ You can associate multiple email domains with an organization, then choose your default email \
-   domain from the WorkMail console. You can also associate a domain that is managed in an Amazon \
-   Route 53 public hosted zone. For more information, see \
-   {{:https://docs.aws.amazon.com/workmail/latest/adminguide/add_domain.html}Adding a domain} and \
-   {{:https://docs.aws.amazon.com/workmail/latest/adminguide/default_domain.html}Choosing the \
-   default domain} in the {i WorkMail Administrator Guide}.\n\
-  \ \n\
-  \  Optionally, you can use a customer managed key from AWS Key Management Service (AWS KMS) to \
-   encrypt email for your organization. If you don't associate an AWS KMS key, WorkMail creates a \
-   default, AWS managed key for you.\n\
-  \  "]
-
-module CreateResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryServiceAuthenticationFailedException of
-      directory_service_authentication_failed_exception
-    | `DirectoryUnavailableException of directory_unavailable_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `NameAvailabilityException of name_availability_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ReservedNameException of reserved_name_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_resource_request ->
-    ( create_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `NameAvailabilityException of name_availability_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ReservedNameException of reserved_name_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_resource_request ->
-    ( create_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `NameAvailabilityException of name_availability_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ReservedNameException of reserved_name_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Creates a new WorkMail resource.\n"]
-
-module CreateUser : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryServiceAuthenticationFailedException of
-      directory_service_authentication_failed_exception
-    | `DirectoryUnavailableException of directory_unavailable_exception
     | `InvalidParameterException of invalid_parameter_exception
     | `InvalidPasswordException of invalid_password_exception
-    | `NameAvailabilityException of name_availability_exception
     | `OrganizationNotFoundException of organization_not_found_exception
     | `OrganizationStateException of organization_state_exception
-    | `ReservedNameException of reserved_name_exception
     | `UnsupportedOperationException of unsupported_operation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_user_request ->
-    ( create_user_response,
+    reset_password_request ->
+    ( reset_password_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DirectoryServiceAuthenticationFailedException of
         directory_service_authentication_failed_exception
       | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `InvalidPasswordException of invalid_password_exception
-      | `NameAvailabilityException of name_availability_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ReservedNameException of reserved_name_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_user_request ->
-    ( create_user_response Smaws_Lib.Response.t,
+    reset_password_request ->
+    ( reset_password_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DirectoryServiceAuthenticationFailedException of
         directory_service_authentication_failed_exception
       | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `InvalidPasswordException of invalid_password_exception
-      | `NameAvailabilityException of name_availability_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ReservedNameException of reserved_name_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a user who can be used in WorkMail by calling the [RegisterToWorkMail] operation.\n"]
-
-module DeleteAccessControlRule : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_access_control_rule_request ->
-    ( delete_access_control_rule_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_access_control_rule_request ->
-    ( delete_access_control_rule_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes an access control rule for the specified WorkMail organization.\n\n\
-  \  Deleting already deleted and non-existing rules does not produce an error. In those cases, \
-   the service sends back an HTTP 200 response with an empty HTTP body.\n\
-  \  \n\
-  \   "]
-
-module DeleteAlias : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_alias_request ->
-    ( delete_alias_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_alias_request ->
-    ( delete_alias_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Remove one or more specified aliases from a set of aliases for a given user.\n"]
-
-module DeleteAvailabilityConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_availability_configuration_request ->
-    ( delete_availability_configuration_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_availability_configuration_request ->
-    ( delete_availability_configuration_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes the [AvailabilityConfiguration] for the given WorkMail organization and domain.\n"]
-
-module DeleteEmailMonitoringConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_email_monitoring_configuration_request ->
-    ( delete_email_monitoring_configuration_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_email_monitoring_configuration_request ->
-    ( delete_email_monitoring_configuration_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes the email monitoring configuration for a specified organization.\n"]
-
-module DeleteGroup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryServiceAuthenticationFailedException of
-      directory_service_authentication_failed_exception
-    | `DirectoryUnavailableException of directory_unavailable_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_group_request ->
-    ( delete_group_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_group_request ->
-    ( delete_group_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
       | `UnsupportedOperationException of unsupported_operation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc "Deletes a group from WorkMail.\n"]
-
-module DeleteIdentityCenterApplication : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_identity_center_application_request ->
-    ( delete_identity_center_application_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_identity_center_application_request ->
-    ( delete_identity_center_application_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Deletes the IAM Identity Center application from WorkMail. This action does not affect the \
-   authentication settings for any WorkMail organizations. \n"]
-
-module DeleteIdentityProviderConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_identity_provider_configuration_request ->
-    ( delete_identity_provider_configuration_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_identity_provider_configuration_request ->
-    ( delete_identity_provider_configuration_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Disables the integration between IdC and WorkMail. Authentication will continue with the \
-   directory as it was before the IdC integration. You might have to reset your directory \
-   passwords and reconfigure your desktop and mobile email clients. \n"]
-
-module DeleteImpersonationRole : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_impersonation_role_request ->
-    ( delete_impersonation_role_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_impersonation_role_request ->
-    ( delete_impersonation_role_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes an impersonation role for the given WorkMail organization.\n"]
-
-module DeleteMailboxPermissions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_mailbox_permissions_request ->
-    ( delete_mailbox_permissions_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_mailbox_permissions_request ->
-    ( delete_mailbox_permissions_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes permissions granted to a member (user or group).\n"]
-
-module DeleteMobileDeviceAccessOverride : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_mobile_device_access_override_request ->
-    ( delete_mobile_device_access_override_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_mobile_device_access_override_request ->
-    ( delete_mobile_device_access_override_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes the mobile device access override for the given WorkMail organization, user, and \
-   device.\n\n\
-  \  Deleting already deleted and non-existing overrides does not produce an error. In those \
-   cases, the service sends back an HTTP 200 response with an empty HTTP body.\n\
-  \  \n\
-  \   "]
-
-module DeleteMobileDeviceAccessRule : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_mobile_device_access_rule_request ->
-    ( delete_mobile_device_access_rule_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_mobile_device_access_rule_request ->
-    ( delete_mobile_device_access_rule_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a mobile device access rule for the specified WorkMail organization.\n\n\
-  \  Deleting already deleted and non-existing rules does not produce an error. In those cases, \
-   the service sends back an HTTP 200 response with an empty HTTP body.\n\
-  \  \n\
-  \   "]
-
-module DeleteOrganization : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_organization_request ->
-    ( delete_organization_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_organization_request ->
-    ( delete_organization_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes an WorkMail organization and all underlying AWS resources managed by WorkMail as part \
-   of the organization. You can choose whether to delete the associated directory. For more \
-   information, see \
-   {{:https://docs.aws.amazon.com/workmail/latest/adminguide/remove_organization.html}Removing an \
-   organization} in the {i WorkMail Administrator Guide}.\n"]
-
-module DeletePersonalAccessToken : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_personal_access_token_request ->
-    ( delete_personal_access_token_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_personal_access_token_request ->
-    ( delete_personal_access_token_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Deletes the Personal Access Token from the provided WorkMail Organization. \n"]
-
-module DeleteResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_resource_request ->
-    ( delete_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_resource_request ->
-    ( delete_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes the specified resource.\n"]
-
-module DeleteRetentionPolicy : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_retention_policy_request ->
-    ( delete_retention_policy_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_retention_policy_request ->
-    ( delete_retention_policy_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes the specified retention policy from the specified organization.\n"]
-
-module DeleteUser : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryServiceAuthenticationFailedException of
-      directory_service_authentication_failed_exception
-    | `DirectoryUnavailableException of directory_unavailable_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_user_request ->
-    ( delete_user_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_user_request ->
-    ( delete_user_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a user from WorkMail and all subsequent systems. Before you can delete a user, the user \
-   state must be [DISABLED]. Use the [DescribeUser] action to confirm the user state.\n\n\
-  \ Deleting a user is permanent and cannot be undone. WorkMail archives user mailboxes for 30 \
-   days before they are permanently removed.\n\
-  \ "]
-
-module DeregisterFromWorkMail : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    deregister_from_work_mail_request ->
-    ( deregister_from_work_mail_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    deregister_from_work_mail_request ->
-    ( deregister_from_work_mail_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Mark a user, group, or resource as no longer used in WorkMail. This action disassociates the \
-   mailbox and schedules it for clean-up. WorkMail keeps mailboxes for 30 days before they are \
-   permanently removed. The functionality in the console is {i Disable}.\n"]
-
-module DeregisterMailDomain : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidCustomSesConfigurationException of invalid_custom_ses_configuration_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `MailDomainInUseException of mail_domain_in_use_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    deregister_mail_domain_request ->
-    ( deregister_mail_domain_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidCustomSesConfigurationException of invalid_custom_ses_configuration_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `MailDomainInUseException of mail_domain_in_use_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    deregister_mail_domain_request ->
-    ( deregister_mail_domain_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidCustomSesConfigurationException of invalid_custom_ses_configuration_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `MailDomainInUseException of mail_domain_in_use_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Removes a domain from WorkMail, stops email routing to WorkMail, and removes the authorization \
-   allowing WorkMail use. SES keeps the domain because other applications may use it. You must \
-   first remove any email address used by WorkMail entities before you remove the domain.\n"]
-
-module DescribeEmailMonitoringConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_email_monitoring_configuration_request ->
-    ( describe_email_monitoring_configuration_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_email_monitoring_configuration_request ->
-    ( describe_email_monitoring_configuration_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Describes the current email monitoring configuration for a specified organization.\n"]
-
-module DescribeEntity : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_entity_request ->
-    ( describe_entity_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_entity_request ->
-    ( describe_entity_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns basic details about an entity in WorkMail. \n"]
-
-module DescribeGroup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_group_request ->
-    ( describe_group_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_group_request ->
-    ( describe_group_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns the data available for the group.\n"]
-
-module DescribeIdentityProviderConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_identity_provider_configuration_request ->
-    ( describe_identity_provider_configuration_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_identity_provider_configuration_request ->
-    ( describe_identity_provider_configuration_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Returns detailed information on the current IdC setup for the WorkMail organization. \n"]
-
-module DescribeInboundDmarcSettings : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_inbound_dmarc_settings_request ->
-    ( describe_inbound_dmarc_settings_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_inbound_dmarc_settings_request ->
-    ( describe_inbound_dmarc_settings_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists the settings in a DMARC policy for a specified organization.\n"]
-
-module DescribeMailboxExportJob : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_mailbox_export_job_request ->
-    ( describe_mailbox_export_job_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_mailbox_export_job_request ->
-    ( describe_mailbox_export_job_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Describes the current status of a mailbox export job.\n"]
-
-module DescribeOrganization : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_organization_request ->
-    ( describe_organization_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_organization_request ->
-    ( describe_organization_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Provides more information regarding a given organization based on its identifier.\n"]
-
-module DescribeResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_resource_request ->
-    ( describe_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_resource_request ->
-    ( describe_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns the data available for the resource.\n"]
-
-module DescribeUser : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryServiceAuthenticationFailedException of
-      directory_service_authentication_failed_exception
-    | `DirectoryUnavailableException of directory_unavailable_exception
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_user_request ->
-    ( describe_user_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_user_request ->
-    ( describe_user_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Provides information regarding the user.\n"]
-
-module DisassociateDelegateFromResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    disassociate_delegate_from_resource_request ->
-    ( disassociate_delegate_from_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    disassociate_delegate_from_resource_request ->
-    ( disassociate_delegate_from_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Removes a member from the resource's set of delegates.\n"]
-
-module DisassociateMemberFromGroup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryServiceAuthenticationFailedException of
-      directory_service_authentication_failed_exception
-    | `DirectoryUnavailableException of directory_unavailable_exception
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    disassociate_member_from_group_request ->
-    ( disassociate_member_from_group_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    disassociate_member_from_group_request ->
-    ( disassociate_member_from_group_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Removes a member from a group.\n"]
-
-module GetAccessControlEffect : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_access_control_effect_request ->
-    ( get_access_control_effect_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_access_control_effect_request ->
-    ( get_access_control_effect_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets the effects of an organization's access control rules as they apply to a specified IPv4 \
-   address, access protocol action, and user ID or impersonation role ID. You must provide either \
-   the user ID or impersonation role ID. Impersonation role ID can only be used with Action EWS.\n"]
-
-module GetDefaultRetentionPolicy : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_default_retention_policy_request ->
-    ( get_default_retention_policy_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_default_retention_policy_request ->
-    ( get_default_retention_policy_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets the default retention policy details for the specified organization.\n"]
-
-module GetImpersonationRole : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_impersonation_role_request ->
-    ( get_impersonation_role_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_impersonation_role_request ->
-    ( get_impersonation_role_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets the impersonation role details for the given WorkMail organization.\n"]
-
-module GetImpersonationRoleEffect : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_impersonation_role_effect_request ->
-    ( get_impersonation_role_effect_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_impersonation_role_effect_request ->
-    ( get_impersonation_role_effect_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Tests whether the given impersonation role can impersonate a target user.\n"]
-
-module GetMailboxDetails : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_mailbox_details_request ->
-    ( get_mailbox_details_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_mailbox_details_request ->
-    ( get_mailbox_details_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Requests a user's mailbox details for a specified organization and user.\n"]
-
-module GetMailDomain : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `MailDomainNotFoundException of mail_domain_not_found_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_mail_domain_request ->
-    ( get_mail_domain_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `MailDomainNotFoundException of mail_domain_not_found_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_mail_domain_request ->
-    ( get_mail_domain_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `MailDomainNotFoundException of mail_domain_not_found_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets details for a mail domain, including domain records required to configure your domain with \
-   recommended security.\n"]
-
-module GetMobileDeviceAccessEffect : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_mobile_device_access_effect_request ->
-    ( get_mobile_device_access_effect_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_mobile_device_access_effect_request ->
-    ( get_mobile_device_access_effect_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Simulates the effect of the mobile device access rules for the given attributes of a sample \
-   access event. Use this method to test the effects of the current set of mobile device access \
-   rules for the WorkMail organization for a particular user's attributes.\n"]
-
-module GetMobileDeviceAccessOverride : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_mobile_device_access_override_request ->
-    ( get_mobile_device_access_override_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_mobile_device_access_override_request ->
-    ( get_mobile_device_access_override_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets the mobile device access override for the given WorkMail organization, user, and device.\n"]
-
-module GetPersonalAccessTokenMetadata : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_personal_access_token_metadata_request ->
-    ( get_personal_access_token_metadata_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_personal_access_token_metadata_request ->
-    ( get_personal_access_token_metadata_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Requests details of a specific Personal Access Token within the WorkMail organization. \n"]
-
-module ListAccessControlRules : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_access_control_rules_request ->
-    ( list_access_control_rules_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_access_control_rules_request ->
-    ( list_access_control_rules_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists the access control rules for the specified organization.\n"]
-
-module ListAliases : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_aliases_request ->
-    ( list_aliases_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_aliases_request ->
-    ( list_aliases_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Creates a paginated call to list the aliases associated with a given entity.\n"]
-
-module ListAvailabilityConfigurations : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_availability_configurations_request ->
-    ( list_availability_configurations_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_availability_configurations_request ->
-    ( list_availability_configurations_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "List all the [AvailabilityConfiguration]'s for the given WorkMail organization.\n"]
-
-module ListGroupMembers : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_group_members_request ->
-    ( list_group_members_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_group_members_request ->
-    ( list_group_members_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns an overview of the members of a group. Users and groups can be members of a group.\n"]
-
-module ListGroups : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_groups_request ->
-    ( list_groups_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_groups_request ->
-    ( list_groups_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns summaries of the organization's groups.\n"]
-
-module ListGroupsForEntity : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_groups_for_entity_request ->
-    ( list_groups_for_entity_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_groups_for_entity_request ->
-    ( list_groups_for_entity_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns all the groups to which an entity belongs.\n"]
-
-module ListImpersonationRoles : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_impersonation_roles_request ->
-    ( list_impersonation_roles_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_impersonation_roles_request ->
-    ( list_impersonation_roles_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists all the impersonation roles for the given WorkMail organization.\n"]
-
-module ListMailboxExportJobs : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_mailbox_export_jobs_request ->
-    ( list_mailbox_export_jobs_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_mailbox_export_jobs_request ->
-    ( list_mailbox_export_jobs_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the mailbox export jobs started for the specified organization within the last seven days.\n"]
-
-module ListMailboxPermissions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_mailbox_permissions_request ->
-    ( list_mailbox_permissions_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_mailbox_permissions_request ->
-    ( list_mailbox_permissions_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists the mailbox permissions associated with a user, group, or resource mailbox.\n"]
-
-module ListMailDomains : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_mail_domains_request ->
-    ( list_mail_domains_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_mail_domains_request ->
-    ( list_mail_domains_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists the mail domains in a given WorkMail organization.\n"]
-
-module ListMobileDeviceAccessOverrides : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_mobile_device_access_overrides_request ->
-    ( list_mobile_device_access_overrides_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_mobile_device_access_overrides_request ->
-    ( list_mobile_device_access_overrides_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists all the mobile device access overrides for any given combination of WorkMail \
-   organization, user, or device.\n"]
-
-module ListMobileDeviceAccessRules : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_mobile_device_access_rules_request ->
-    ( list_mobile_device_access_rules_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_mobile_device_access_rules_request ->
-    ( list_mobile_device_access_rules_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists the mobile device access rules for the specified WorkMail organization.\n"]
-
-module ListOrganizations : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidParameterException of invalid_parameter_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_organizations_request ->
-    ( list_organizations_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_organizations_request ->
-    ( list_organizations_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns summaries of the customer's organizations.\n"]
-
-module ListPersonalAccessTokens : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_personal_access_tokens_request ->
-    ( list_personal_access_tokens_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_personal_access_tokens_request ->
-    ( list_personal_access_tokens_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Returns a summary of your Personal Access Tokens. \n"]
-
-module ListResourceDelegates : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_resource_delegates_request ->
-    ( list_resource_delegates_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_resource_delegates_request ->
-    ( list_resource_delegates_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the delegates associated with a resource. Users and groups can be resource delegates and \
-   answer requests on behalf of the resource.\n"]
-
-module ListResources : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_resources_request ->
-    ( list_resources_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_resources_request ->
-    ( list_resources_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns summaries of the organization's resources.\n"]
-
-module ListTagsForResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_tags_for_resource_request ->
-    ( list_tags_for_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_tags_for_resource_request ->
-    ( list_tags_for_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists the tags applied to an WorkMail organization resource.\n"]
-
-module ListUsers : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_users_request ->
-    ( list_users_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_users_request ->
-    ( list_users_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns summaries of the organization's users.\n"]
-
-module PutAccessControlRule : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    put_access_control_rule_request ->
-    ( put_access_control_rule_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    put_access_control_rule_request ->
-    ( put_access_control_rule_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds a new access control rule for the specified organization. The rule allows or denies access \
-   to the organization for the specified IPv4 addresses, access protocol actions, user IDs and \
-   impersonation IDs. Adding a new rule with the same name as an existing rule replaces the older \
-   rule.\n"]
-
-module PutEmailMonitoringConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    put_email_monitoring_configuration_request ->
-    ( put_email_monitoring_configuration_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    put_email_monitoring_configuration_request ->
-    ( put_email_monitoring_configuration_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates or updates the email monitoring configuration for a specified organization.\n"]
-
-module PutIdentityProviderConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    put_identity_provider_configuration_request ->
-    ( put_identity_provider_configuration_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    put_identity_provider_configuration_request ->
-    ( put_identity_provider_configuration_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Enables integration between IAM Identity Center (IdC) and WorkMail to proxy authentication \
-   requests for mailbox users. You can connect your IdC directory or your external directory to \
-   WorkMail through IdC and manage access to WorkMail mailboxes in a single place. For enhanced \
-   protection, you could enable Multifactor Authentication (MFA) and Personal Access Tokens. \n"]
-
-module PutInboundDmarcSettings : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    put_inbound_dmarc_settings_request ->
-    ( put_inbound_dmarc_settings_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    put_inbound_dmarc_settings_request ->
-    ( put_inbound_dmarc_settings_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Enables or disables a DMARC policy for a given organization.\n"]
-
-module PutMailboxPermissions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    put_mailbox_permissions_request ->
-    ( put_mailbox_permissions_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    put_mailbox_permissions_request ->
-    ( put_mailbox_permissions_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Sets permissions for a user, group, or resource. This replaces any pre-existing permissions.\n"]
-
-module PutMobileDeviceAccessOverride : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    put_mobile_device_access_override_request ->
-    ( put_mobile_device_access_override_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    put_mobile_device_access_override_request ->
-    ( put_mobile_device_access_override_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates or updates a mobile device access override for the given WorkMail organization, user, \
-   and device.\n"]
-
-module PutRetentionPolicy : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    put_retention_policy_request ->
-    ( put_retention_policy_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    put_retention_policy_request ->
-    ( put_retention_policy_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Puts a retention policy to the specified organization.\n"]
-
-module RegisterMailDomain : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `MailDomainInUseException of mail_domain_in_use_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    register_mail_domain_request ->
-    ( register_mail_domain_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `MailDomainInUseException of mail_domain_in_use_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    register_mail_domain_request ->
-    ( register_mail_domain_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `MailDomainInUseException of mail_domain_in_use_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Registers a new domain in WorkMail and SES, and configures it for use by WorkMail. Emails \
-   received by SES for this domain are routed to the specified WorkMail organization, and WorkMail \
-   has permanent permission to use the specified domain for sending your users' emails.\n"]
+[@@ocaml.doc "Allows the administrator to reset the password for a user.\n"]
 
 module RegisterToWorkMail : sig
   val error_to_string :
@@ -2893,62 +670,49 @@ end
    synchronized from your directory. For more information, see [DeregisterFromWorkMail].\n\
   \ "]
 
-module ResetPassword : sig
+module RegisterMailDomain : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryServiceAuthenticationFailedException of
-      directory_service_authentication_failed_exception
-    | `DirectoryUnavailableException of directory_unavailable_exception
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
     | `InvalidParameterException of invalid_parameter_exception
-    | `InvalidPasswordException of invalid_password_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `MailDomainInUseException of mail_domain_in_use_exception
     | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    | `OrganizationStateException of organization_state_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    reset_password_request ->
-    ( reset_password_response,
+    register_mail_domain_request ->
+    ( register_mail_domain_response,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `InvalidPasswordException of invalid_password_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `MailDomainInUseException of mail_domain_in_use_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `OrganizationStateException of organization_state_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    reset_password_request ->
-    ( reset_password_response Smaws_Lib.Response.t,
+    register_mail_domain_request ->
+    ( register_mail_domain_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `InvalidPasswordException of invalid_password_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `MailDomainInUseException of mail_domain_in_use_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
+      | `OrganizationStateException of organization_state_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc "Allows the administrator to reset the password for a user.\n"]
+[@@ocaml.doc
+  "Registers a new domain in WorkMail and SES, and configures it for use by WorkMail. Emails \
+   received by SES for this domain are routed to the specified WorkMail organization, and WorkMail \
+   has permanent permission to use the specified domain for sending your users' emails.\n"]
 
-module StartMailboxExportJob : sig
+module PutRetentionPolicy : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
     | `InvalidParameterException of invalid_parameter_exception
     | `LimitExceededException of limit_exceeded_exception
     | `OrganizationNotFoundException of organization_not_found_exception
@@ -2957,10 +721,9 @@ module StartMailboxExportJob : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    start_mailbox_export_job_request ->
-    ( start_mailbox_export_job_response,
+    put_retention_policy_request ->
+    ( put_retention_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `LimitExceededException of limit_exceeded_exception
       | `OrganizationNotFoundException of organization_not_found_exception
@@ -2969,10 +732,9 @@ module StartMailboxExportJob : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    start_mailbox_export_job_request ->
-    ( start_mailbox_export_job_response Smaws_Lib.Response.t,
+    put_retention_policy_request ->
+    ( put_retention_policy_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `LimitExceededException of limit_exceeded_exception
       | `OrganizationNotFoundException of organization_not_found_exception
@@ -2980,48 +742,114 @@ module StartMailboxExportJob : sig
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc
-  "Starts a mailbox export job to export MIME-format email messages and calendar items from the \
-   specified mailbox to the specified Amazon Simple Storage Service (Amazon S3) bucket. For more \
-   information, see \
-   {{:https://docs.aws.amazon.com/workmail/latest/adminguide/mail-export.html}Exporting mailbox \
-   content} in the {i WorkMail Administrator Guide}.\n"]
+[@@ocaml.doc "Puts a retention policy to the specified organization.\n"]
 
-module TagResource : sig
+module PutMobileDeviceAccessOverride : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
     | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `TooManyTagsException of too_many_tags_exception ] ->
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    tag_resource_request ->
-    ( tag_resource_response,
+    put_mobile_device_access_override_request ->
+    ( put_mobile_device_access_override_response,
       [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    tag_resource_request ->
-    ( tag_resource_response Smaws_Lib.Response.t,
+    put_mobile_device_access_override_request ->
+    ( put_mobile_device_access_override_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyTagsException of too_many_tags_exception ]
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc "Applies the specified tags to the specified WorkMailorganization resource.\n"]
+[@@ocaml.doc
+  "Creates or updates a mobile device access override for the given WorkMail organization, user, \
+   and device.\n"]
 
-module TestAvailabilityConfiguration : sig
+module PutMailboxPermissions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    put_mailbox_permissions_request ->
+    ( put_mailbox_permissions_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_mailbox_permissions_request ->
+    ( put_mailbox_permissions_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Sets permissions for a user, group, or resource. This replaces any pre-existing permissions.\n"]
+
+module PutInboundDmarcSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    put_inbound_dmarc_settings_request ->
+    ( put_inbound_dmarc_settings_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_inbound_dmarc_settings_request ->
+    ( put_inbound_dmarc_settings_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Enables or disables a DMARC policy for a given organization.\n"]
+
+module PutIdentityProviderConfiguration : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `InvalidParameterException of invalid_parameter_exception
@@ -3032,8 +860,8 @@ module TestAvailabilityConfiguration : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    test_availability_configuration_request ->
-    ( test_availability_configuration_response,
+    put_identity_provider_configuration_request ->
+    ( put_identity_provider_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
@@ -3043,8 +871,8 @@ module TestAvailabilityConfiguration : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    test_availability_configuration_request ->
-    ( test_availability_configuration_response Smaws_Lib.Response.t,
+    put_identity_provider_configuration_request ->
+    ( put_identity_provider_configuration_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
@@ -3054,121 +882,1884 @@ module TestAvailabilityConfiguration : sig
     result
 end
 [@@ocaml.doc
-  "Performs a test on an availability provider to ensure that access is allowed. For EWS, it \
-   verifies the provided credentials can be used to successfully log in. For Lambda, it verifies \
-   that the Lambda function can be invoked and that the resource access policy was configured to \
-   deny anonymous access. An anonymous invocation is one done without providing either a \
-   [SourceArn] or [SourceAccount] header.\n\n\
-  \  The request must contain either one provider definition ([EwsProvider] or [LambdaProvider]) \
-   or the [DomainName] parameter. If the [DomainName] parameter is provided, the configuration \
-   stored under the [DomainName] will be tested.\n\
+  " Enables integration between IAM Identity Center (IdC) and WorkMail to proxy authentication \
+   requests for mailbox users. You can connect your IdC directory or your external directory to \
+   WorkMail through IdC and manage access to WorkMail mailboxes in a single place. For enhanced \
+   protection, you could enable Multifactor Authentication (MFA) and Personal Access Tokens. \n"]
+
+module PutEmailMonitoringConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    put_email_monitoring_configuration_request ->
+    ( put_email_monitoring_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_email_monitoring_configuration_request ->
+    ( put_email_monitoring_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates or updates the email monitoring configuration for a specified organization.\n"]
+
+module PutAccessControlRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    put_access_control_rule_request ->
+    ( put_access_control_rule_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_access_control_rule_request ->
+    ( put_access_control_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds a new access control rule for the specified organization. The rule allows or denies access \
+   to the organization for the specified IPv4 addresses, access protocol actions, user IDs and \
+   impersonation IDs. Adding a new rule with the same name as an existing rule replaces the older \
+   rule.\n"]
+
+module ListUsers : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_users_request ->
+    ( list_users_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_users_request ->
+    ( list_users_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns summaries of the organization's users.\n"]
+
+module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists the tags applied to an WorkMail organization resource.\n"]
+
+module ListResources : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_resources_request ->
+    ( list_resources_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_resources_request ->
+    ( list_resources_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns summaries of the organization's resources.\n"]
+
+module ListResourceDelegates : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_resource_delegates_request ->
+    ( list_resource_delegates_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_resource_delegates_request ->
+    ( list_resource_delegates_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the delegates associated with a resource. Users and groups can be resource delegates and \
+   answer requests on behalf of the resource.\n"]
+
+module ListPersonalAccessTokens : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_personal_access_tokens_request ->
+    ( list_personal_access_tokens_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_personal_access_tokens_request ->
+    ( list_personal_access_tokens_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Returns a summary of your Personal Access Tokens. \n"]
+
+module ListOrganizations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidParameterException of invalid_parameter_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_organizations_request ->
+    ( list_organizations_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_organizations_request ->
+    ( list_organizations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns summaries of the customer's organizations.\n"]
+
+module ListMobileDeviceAccessRules : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_mobile_device_access_rules_request ->
+    ( list_mobile_device_access_rules_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_mobile_device_access_rules_request ->
+    ( list_mobile_device_access_rules_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists the mobile device access rules for the specified WorkMail organization.\n"]
+
+module ListMobileDeviceAccessOverrides : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_mobile_device_access_overrides_request ->
+    ( list_mobile_device_access_overrides_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_mobile_device_access_overrides_request ->
+    ( list_mobile_device_access_overrides_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists all the mobile device access overrides for any given combination of WorkMail \
+   organization, user, or device.\n"]
+
+module ListMailboxPermissions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_mailbox_permissions_request ->
+    ( list_mailbox_permissions_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_mailbox_permissions_request ->
+    ( list_mailbox_permissions_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists the mailbox permissions associated with a user, group, or resource mailbox.\n"]
+
+module ListMailboxExportJobs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_mailbox_export_jobs_request ->
+    ( list_mailbox_export_jobs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_mailbox_export_jobs_request ->
+    ( list_mailbox_export_jobs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the mailbox export jobs started for the specified organization within the last seven days.\n"]
+
+module ListMailDomains : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_mail_domains_request ->
+    ( list_mail_domains_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_mail_domains_request ->
+    ( list_mail_domains_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists the mail domains in a given WorkMail organization.\n"]
+
+module ListImpersonationRoles : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_impersonation_roles_request ->
+    ( list_impersonation_roles_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_impersonation_roles_request ->
+    ( list_impersonation_roles_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists all the impersonation roles for the given WorkMail organization.\n"]
+
+module ListGroupsForEntity : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_groups_for_entity_request ->
+    ( list_groups_for_entity_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_groups_for_entity_request ->
+    ( list_groups_for_entity_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns all the groups to which an entity belongs.\n"]
+
+module ListGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_groups_request ->
+    ( list_groups_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_groups_request ->
+    ( list_groups_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns summaries of the organization's groups.\n"]
+
+module ListGroupMembers : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_group_members_request ->
+    ( list_group_members_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_group_members_request ->
+    ( list_group_members_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns an overview of the members of a group. Users and groups can be members of a group.\n"]
+
+module ListAvailabilityConfigurations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_availability_configurations_request ->
+    ( list_availability_configurations_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_availability_configurations_request ->
+    ( list_availability_configurations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "List all the [AvailabilityConfiguration]'s for the given WorkMail organization.\n"]
+
+module ListAliases : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_aliases_request ->
+    ( list_aliases_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_aliases_request ->
+    ( list_aliases_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Creates a paginated call to list the aliases associated with a given entity.\n"]
+
+module ListAccessControlRules : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_access_control_rules_request ->
+    ( list_access_control_rules_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_access_control_rules_request ->
+    ( list_access_control_rules_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists the access control rules for the specified organization.\n"]
+
+module GetPersonalAccessTokenMetadata : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_personal_access_token_metadata_request ->
+    ( get_personal_access_token_metadata_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_personal_access_token_metadata_request ->
+    ( get_personal_access_token_metadata_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Requests details of a specific Personal Access Token within the WorkMail organization. \n"]
+
+module GetMobileDeviceAccessOverride : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_mobile_device_access_override_request ->
+    ( get_mobile_device_access_override_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_mobile_device_access_override_request ->
+    ( get_mobile_device_access_override_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets the mobile device access override for the given WorkMail organization, user, and device.\n"]
+
+module GetMobileDeviceAccessEffect : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_mobile_device_access_effect_request ->
+    ( get_mobile_device_access_effect_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_mobile_device_access_effect_request ->
+    ( get_mobile_device_access_effect_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Simulates the effect of the mobile device access rules for the given attributes of a sample \
+   access event. Use this method to test the effects of the current set of mobile device access \
+   rules for the WorkMail organization for a particular user's attributes.\n"]
+
+module GetMailboxDetails : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_mailbox_details_request ->
+    ( get_mailbox_details_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_mailbox_details_request ->
+    ( get_mailbox_details_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Requests a user's mailbox details for a specified organization and user.\n"]
+
+module GetMailDomain : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `MailDomainNotFoundException of mail_domain_not_found_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_mail_domain_request ->
+    ( get_mail_domain_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `MailDomainNotFoundException of mail_domain_not_found_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_mail_domain_request ->
+    ( get_mail_domain_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `MailDomainNotFoundException of mail_domain_not_found_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets details for a mail domain, including domain records required to configure your domain with \
+   recommended security.\n"]
+
+module GetImpersonationRoleEffect : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_impersonation_role_effect_request ->
+    ( get_impersonation_role_effect_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_impersonation_role_effect_request ->
+    ( get_impersonation_role_effect_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Tests whether the given impersonation role can impersonate a target user.\n"]
+
+module GetImpersonationRole : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_impersonation_role_request ->
+    ( get_impersonation_role_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_impersonation_role_request ->
+    ( get_impersonation_role_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets the impersonation role details for the given WorkMail organization.\n"]
+
+module GetDefaultRetentionPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_default_retention_policy_request ->
+    ( get_default_retention_policy_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_default_retention_policy_request ->
+    ( get_default_retention_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets the default retention policy details for the specified organization.\n"]
+
+module GetAccessControlEffect : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_access_control_effect_request ->
+    ( get_access_control_effect_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_access_control_effect_request ->
+    ( get_access_control_effect_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets the effects of an organization's access control rules as they apply to a specified IPv4 \
+   address, access protocol action, and user ID or impersonation role ID. You must provide either \
+   the user ID or impersonation role ID. Impersonation role ID can only be used with Action EWS.\n"]
+
+module DisassociateMemberFromGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryServiceAuthenticationFailedException of
+      directory_service_authentication_failed_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_member_from_group_request ->
+    ( disassociate_member_from_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_member_from_group_request ->
+    ( disassociate_member_from_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Removes a member from a group.\n"]
+
+module DisassociateDelegateFromResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_delegate_from_resource_request ->
+    ( disassociate_delegate_from_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_delegate_from_resource_request ->
+    ( disassociate_delegate_from_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Removes a member from the resource's set of delegates.\n"]
+
+module DescribeUser : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryServiceAuthenticationFailedException of
+      directory_service_authentication_failed_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_user_request ->
+    ( describe_user_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_user_request ->
+    ( describe_user_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Provides information regarding the user.\n"]
+
+module DescribeResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_resource_request ->
+    ( describe_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_resource_request ->
+    ( describe_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns the data available for the resource.\n"]
+
+module DescribeOrganization : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_organization_request ->
+    ( describe_organization_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_organization_request ->
+    ( describe_organization_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Provides more information regarding a given organization based on its identifier.\n"]
+
+module DescribeMailboxExportJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_mailbox_export_job_request ->
+    ( describe_mailbox_export_job_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_mailbox_export_job_request ->
+    ( describe_mailbox_export_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Describes the current status of a mailbox export job.\n"]
+
+module DescribeInboundDmarcSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_inbound_dmarc_settings_request ->
+    ( describe_inbound_dmarc_settings_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_inbound_dmarc_settings_request ->
+    ( describe_inbound_dmarc_settings_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists the settings in a DMARC policy for a specified organization.\n"]
+
+module DescribeIdentityProviderConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_identity_provider_configuration_request ->
+    ( describe_identity_provider_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_identity_provider_configuration_request ->
+    ( describe_identity_provider_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Returns detailed information on the current IdC setup for the WorkMail organization. \n"]
+
+module DescribeGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_group_request ->
+    ( describe_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_group_request ->
+    ( describe_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns the data available for the group.\n"]
+
+module DescribeEntity : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_entity_request ->
+    ( describe_entity_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_entity_request ->
+    ( describe_entity_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns basic details about an entity in WorkMail. \n"]
+
+module DescribeEmailMonitoringConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_email_monitoring_configuration_request ->
+    ( describe_email_monitoring_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_email_monitoring_configuration_request ->
+    ( describe_email_monitoring_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Describes the current email monitoring configuration for a specified organization.\n"]
+
+module DeregisterMailDomain : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidCustomSesConfigurationException of invalid_custom_ses_configuration_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `MailDomainInUseException of mail_domain_in_use_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_mail_domain_request ->
+    ( deregister_mail_domain_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidCustomSesConfigurationException of invalid_custom_ses_configuration_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `MailDomainInUseException of mail_domain_in_use_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_mail_domain_request ->
+    ( deregister_mail_domain_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidCustomSesConfigurationException of invalid_custom_ses_configuration_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `MailDomainInUseException of mail_domain_in_use_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Removes a domain from WorkMail, stops email routing to WorkMail, and removes the authorization \
+   allowing WorkMail use. SES keeps the domain because other applications may use it. You must \
+   first remove any email address used by WorkMail entities before you remove the domain.\n"]
+
+module DeregisterFromWorkMail : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_from_work_mail_request ->
+    ( deregister_from_work_mail_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_from_work_mail_request ->
+    ( deregister_from_work_mail_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Mark a user, group, or resource as no longer used in WorkMail. This action disassociates the \
+   mailbox and schedules it for clean-up. WorkMail keeps mailboxes for 30 days before they are \
+   permanently removed. The functionality in the console is {i Disable}.\n"]
+
+module DeleteUser : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryServiceAuthenticationFailedException of
+      directory_service_authentication_failed_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_user_request ->
+    ( delete_user_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_user_request ->
+    ( delete_user_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a user from WorkMail and all subsequent systems. Before you can delete a user, the user \
+   state must be [DISABLED]. Use the [DescribeUser] action to confirm the user state.\n\n\
+  \ Deleting a user is permanent and cannot be undone. WorkMail archives user mailboxes for 30 \
+   days before they are permanently removed.\n\
+  \ "]
+
+module DeleteRetentionPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_retention_policy_request ->
+    ( delete_retention_policy_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_retention_policy_request ->
+    ( delete_retention_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes the specified retention policy from the specified organization.\n"]
+
+module DeleteResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_request ->
+    ( delete_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_request ->
+    ( delete_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes the specified resource.\n"]
+
+module DeletePersonalAccessToken : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_personal_access_token_request ->
+    ( delete_personal_access_token_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_personal_access_token_request ->
+    ( delete_personal_access_token_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Deletes the Personal Access Token from the provided WorkMail Organization. \n"]
+
+module DeleteOrganization : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_organization_request ->
+    ( delete_organization_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_organization_request ->
+    ( delete_organization_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes an WorkMail organization and all underlying AWS resources managed by WorkMail as part \
+   of the organization. You can choose whether to delete the associated directory. For more \
+   information, see \
+   {{:https://docs.aws.amazon.com/workmail/latest/adminguide/remove_organization.html}Removing an \
+   organization} in the {i WorkMail Administrator Guide}.\n"]
+
+module DeleteMobileDeviceAccessRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_mobile_device_access_rule_request ->
+    ( delete_mobile_device_access_rule_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_mobile_device_access_rule_request ->
+    ( delete_mobile_device_access_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a mobile device access rule for the specified WorkMail organization.\n\n\
+  \  Deleting already deleted and non-existing rules does not produce an error. In those cases, \
+   the service sends back an HTTP 200 response with an empty HTTP body.\n\
   \  \n\
   \   "]
 
-module UntagResource : sig
+module DeleteMobileDeviceAccessOverride : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    untag_resource_request ->
-    ( untag_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    untag_resource_request ->
-    ( untag_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Untags the specified tags from the specified WorkMail organization resource.\n"]
-
-module UpdateAvailabilityConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
     | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_availability_configuration_request ->
-    ( update_availability_configuration_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_availability_configuration_request ->
-    ( update_availability_configuration_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Updates an existing [AvailabilityConfiguration] for the given WorkMail organization and domain.\n"]
-
-module UpdateDefaultMailDomain : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidParameterException of invalid_parameter_exception
-    | `MailDomainNotFoundException of mail_domain_not_found_exception
-    | `MailDomainStateException of mail_domain_state_exception
     | `OrganizationNotFoundException of organization_not_found_exception
     | `OrganizationStateException of organization_state_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    update_default_mail_domain_request ->
-    ( update_default_mail_domain_response,
+    delete_mobile_device_access_override_request ->
+    ( delete_mobile_device_access_override_response,
       [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `MailDomainNotFoundException of mail_domain_not_found_exception
-      | `MailDomainStateException of mail_domain_state_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    update_default_mail_domain_request ->
-    ( update_default_mail_domain_response Smaws_Lib.Response.t,
+    delete_mobile_device_access_override_request ->
+    ( delete_mobile_device_access_override_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `MailDomainNotFoundException of mail_domain_not_found_exception
-      | `MailDomainStateException of mail_domain_state_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Updates the default mail domain for an organization. The default mail domain is used by the \
-   WorkMail AWS Console to suggest an email address when enabling a mail user. You can only have \
-   one default domain.\n"]
+  "Deletes the mobile device access override for the given WorkMail organization, user, and \
+   device.\n\n\
+  \  Deleting already deleted and non-existing overrides does not produce an error. In those \
+   cases, the service sends back an HTTP 200 response with an empty HTTP body.\n\
+  \  \n\
+  \   "]
 
-module UpdateGroup : sig
+module DeleteMailboxPermissions : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_mailbox_permissions_request ->
+    ( delete_mailbox_permissions_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_mailbox_permissions_request ->
+    ( delete_mailbox_permissions_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes permissions granted to a member (user or group).\n"]
+
+module DeleteImpersonationRole : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_impersonation_role_request ->
+    ( delete_impersonation_role_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_impersonation_role_request ->
+    ( delete_impersonation_role_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes an impersonation role for the given WorkMail organization.\n"]
+
+module DeleteIdentityProviderConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_identity_provider_configuration_request ->
+    ( delete_identity_provider_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_identity_provider_configuration_request ->
+    ( delete_identity_provider_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Disables the integration between IdC and WorkMail. Authentication will continue with the \
+   directory as it was before the IdC integration. You might have to reset your directory \
+   passwords and reconfigure your desktop and mobile email clients. \n"]
+
+module DeleteIdentityCenterApplication : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_identity_center_application_request ->
+    ( delete_identity_center_application_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_identity_center_application_request ->
+    ( delete_identity_center_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Deletes the IAM Identity Center application from WorkMail. This action does not affect the \
+   authentication settings for any WorkMail organizations. \n"]
+
+module DeleteGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryServiceAuthenticationFailedException of
+      directory_service_authentication_failed_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
     | `EntityStateException of entity_state_exception
     | `InvalidParameterException of invalid_parameter_exception
     | `OrganizationNotFoundException of organization_not_found_exception
@@ -3178,10 +2769,12 @@ module UpdateGroup : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    update_group_request ->
-    ( update_group_response,
+    delete_group_request ->
+    ( delete_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
@@ -3191,10 +2784,12 @@ module UpdateGroup : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    update_group_request ->
-    ( update_group_response Smaws_Lib.Response.t,
+    delete_group_request ->
+    ( delete_group_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
@@ -3203,9 +2798,330 @@ module UpdateGroup : sig
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc "Updates attributes in a group.\n"]
+[@@ocaml.doc "Deletes a group from WorkMail.\n"]
 
-module UpdateImpersonationRole : sig
+module DeleteEmailMonitoringConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_email_monitoring_configuration_request ->
+    ( delete_email_monitoring_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_email_monitoring_configuration_request ->
+    ( delete_email_monitoring_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes the email monitoring configuration for a specified organization.\n"]
+
+module DeleteAvailabilityConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_availability_configuration_request ->
+    ( delete_availability_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_availability_configuration_request ->
+    ( delete_availability_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes the [AvailabilityConfiguration] for the given WorkMail organization and domain.\n"]
+
+module DeleteAlias : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_alias_request ->
+    ( delete_alias_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_alias_request ->
+    ( delete_alias_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Remove one or more specified aliases from a set of aliases for a given user.\n"]
+
+module DeleteAccessControlRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_access_control_rule_request ->
+    ( delete_access_control_rule_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_access_control_rule_request ->
+    ( delete_access_control_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes an access control rule for the specified WorkMail organization.\n\n\
+  \  Deleting already deleted and non-existing rules does not produce an error. In those cases, \
+   the service sends back an HTTP 200 response with an empty HTTP body.\n\
+  \  \n\
+  \   "]
+
+module CreateUser : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryServiceAuthenticationFailedException of
+      directory_service_authentication_failed_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidPasswordException of invalid_password_exception
+    | `NameAvailabilityException of name_availability_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ReservedNameException of reserved_name_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_user_request ->
+    ( create_user_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidPasswordException of invalid_password_exception
+      | `NameAvailabilityException of name_availability_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ReservedNameException of reserved_name_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_user_request ->
+    ( create_user_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidPasswordException of invalid_password_exception
+      | `NameAvailabilityException of name_availability_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ReservedNameException of reserved_name_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a user who can be used in WorkMail by calling the [RegisterToWorkMail] operation.\n"]
+
+module CreateResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryServiceAuthenticationFailedException of
+      directory_service_authentication_failed_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `NameAvailabilityException of name_availability_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ReservedNameException of reserved_name_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_resource_request ->
+    ( create_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NameAvailabilityException of name_availability_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ReservedNameException of reserved_name_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_resource_request ->
+    ( create_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NameAvailabilityException of name_availability_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ReservedNameException of reserved_name_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Creates a new WorkMail resource.\n"]
+
+module CreateOrganization : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryInUseException of directory_in_use_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NameAvailabilityException of name_availability_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_organization_request ->
+    ( create_organization_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryInUseException of directory_in_use_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NameAvailabilityException of name_availability_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_organization_request ->
+    ( create_organization_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryInUseException of directory_in_use_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NameAvailabilityException of name_availability_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a new WorkMail organization. Optionally, you can choose to associate an existing AWS \
+   Directory Service directory with your organization. If an AWS Directory Service directory ID is \
+   specified, the organization alias must match the directory alias. If you choose not to \
+   associate an existing directory with your organization, then we create a new WorkMail directory \
+   for you. For more information, see \
+   {{:https://docs.aws.amazon.com/workmail/latest/adminguide/add_new_organization.html}Adding an \
+   organization} in the {i WorkMail Administrator Guide}.\n\n\
+  \ You can associate multiple email domains with an organization, then choose your default email \
+   domain from the WorkMail console. You can also associate a domain that is managed in an Amazon \
+   Route 53 public hosted zone. For more information, see \
+   {{:https://docs.aws.amazon.com/workmail/latest/adminguide/add_domain.html}Adding a domain} and \
+   {{:https://docs.aws.amazon.com/workmail/latest/adminguide/default_domain.html}Choosing the \
+   default domain} in the {i WorkMail Administrator Guide}.\n\
+  \ \n\
+  \  Optionally, you can use a customer managed key from AWS Key Management Service (AWS KMS) to \
+   encrypt email for your organization. If you don't associate an AWS KMS key, WorkMail creates a \
+   default, AWS managed key for you.\n\
+  \  "]
+
+module CreateMobileDeviceAccessRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_mobile_device_access_rule_request ->
+    ( create_mobile_device_access_rule_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_mobile_device_access_rule_request ->
+    ( create_mobile_device_access_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Creates a new mobile device access rule for the specified WorkMail organization.\n"]
+
+module CreateImpersonationRole : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `EntityNotFoundException of entity_not_found_exception
@@ -3213,19 +3129,260 @@ module UpdateImpersonationRole : sig
     | `InvalidParameterException of invalid_parameter_exception
     | `LimitExceededException of limit_exceeded_exception
     | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_impersonation_role_request ->
+    ( create_impersonation_role_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_impersonation_role_request ->
+    ( create_impersonation_role_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates an impersonation role for the given WorkMail organization.\n\n\
+  \  {i Idempotency} ensures that an API request completes no more than one time. With an \
+   idempotent request, if the original request completes successfully, any subsequent retries also \
+   complete successfully without performing any further actions.\n\
+  \ "]
+
+module CreateIdentityCenterApplication : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidParameterException of invalid_parameter_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_identity_center_application_request ->
+    ( create_identity_center_application_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_identity_center_application_request ->
+    ( create_identity_center_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Creates the WorkMail application in IAM Identity Center that can be used later in the WorkMail \
+   - IdC integration. For more information, see PutIdentityProviderConfiguration. This action does \
+   not affect the authentication settings for any WorkMail organizations. \n"]
+
+module CreateGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DirectoryServiceAuthenticationFailedException of
+      directory_service_authentication_failed_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `NameAvailabilityException of name_availability_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `ReservedNameException of reserved_name_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_group_request ->
+    ( create_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NameAvailabilityException of name_availability_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ReservedNameException of reserved_name_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_group_request ->
+    ( create_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DirectoryServiceAuthenticationFailedException of
+        directory_service_authentication_failed_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NameAvailabilityException of name_availability_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `ReservedNameException of reserved_name_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a group that can be used in WorkMail by calling the [RegisterToWorkMail] operation.\n"]
+
+module CreateAvailabilityConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NameAvailabilityException of name_availability_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_availability_configuration_request ->
+    ( create_availability_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NameAvailabilityException of name_availability_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_availability_configuration_request ->
+    ( create_availability_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NameAvailabilityException of name_availability_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates an [AvailabilityConfiguration] for the given WorkMail organization and domain.\n"]
+
+module CreateAlias : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EmailAddressInUseException of email_address_in_use_exception
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `MailDomainNotFoundException of mail_domain_not_found_exception
+    | `MailDomainStateException of mail_domain_state_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_alias_request ->
+    ( create_alias_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EmailAddressInUseException of email_address_in_use_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `MailDomainNotFoundException of mail_domain_not_found_exception
+      | `MailDomainStateException of mail_domain_state_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_alias_request ->
+    ( create_alias_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EmailAddressInUseException of email_address_in_use_exception
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `MailDomainNotFoundException of mail_domain_not_found_exception
+      | `MailDomainStateException of mail_domain_state_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Adds an alias to the set of a given member (user or group) of WorkMail.\n"]
+
+module CancelMailboxExportJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_mailbox_export_job_request ->
+    ( cancel_mailbox_export_job_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_mailbox_export_job_request ->
+    ( cancel_mailbox_export_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Cancels a mailbox export job.\n\n\
+  \  If the mailbox export job is near completion, it might not be possible to cancel it.\n\
+  \  \n\
+  \   "]
+
+module AssumeImpersonationRole : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
     | `OrganizationStateException of organization_state_exception
     | `ResourceNotFoundException of resource_not_found_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    update_impersonation_role_request ->
-    ( update_impersonation_role_response,
+    assume_impersonation_role_request ->
+    ( assume_impersonation_role_response,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
@@ -3233,215 +3390,21 @@ module UpdateImpersonationRole : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    update_impersonation_role_request ->
-    ( update_impersonation_role_response Smaws_Lib.Response.t,
+    assume_impersonation_role_request ->
+    ( assume_impersonation_role_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
       | `ResourceNotFoundException of resource_not_found_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc "Updates an impersonation role for the given WorkMail organization.\n"]
-
-module UpdateMailboxQuota : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_mailbox_quota_request ->
-    ( update_mailbox_quota_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_mailbox_quota_request ->
-    ( update_mailbox_quota_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Updates a user's current mailbox quota for a specified organization and user.\n"]
-
-module UpdateMobileDeviceAccessRule : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EntityNotFoundException of entity_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_mobile_device_access_rule_request ->
-    ( update_mobile_device_access_rule_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_mobile_device_access_rule_request ->
-    ( update_mobile_device_access_rule_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EntityNotFoundException of entity_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Updates a mobile device access rule for the specified WorkMail organization.\n"]
-
-module UpdatePrimaryEmailAddress : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryServiceAuthenticationFailedException of
-      directory_service_authentication_failed_exception
-    | `DirectoryUnavailableException of directory_unavailable_exception
-    | `EmailAddressInUseException of email_address_in_use_exception
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `MailDomainNotFoundException of mail_domain_not_found_exception
-    | `MailDomainStateException of mail_domain_state_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_primary_email_address_request ->
-    ( update_primary_email_address_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EmailAddressInUseException of email_address_in_use_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `MailDomainNotFoundException of mail_domain_not_found_exception
-      | `MailDomainStateException of mail_domain_state_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_primary_email_address_request ->
-    ( update_primary_email_address_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryServiceAuthenticationFailedException of
-        directory_service_authentication_failed_exception
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EmailAddressInUseException of email_address_in_use_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `MailDomainNotFoundException of mail_domain_not_found_exception
-      | `MailDomainStateException of mail_domain_state_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
 [@@ocaml.doc
-  "Updates the primary email for a user, group, or resource. The current email is moved into the \
-   list of aliases (or swapped between an existing alias and the current primary email), and the \
-   email provided in the input is promoted as the primary.\n"]
+  "Assumes an impersonation role for the given WorkMail organization. This method returns an \
+   authentication token you can use to make impersonated calls.\n"]
 
-module UpdateResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `DirectoryUnavailableException of directory_unavailable_exception
-    | `EmailAddressInUseException of email_address_in_use_exception
-    | `EntityNotFoundException of entity_not_found_exception
-    | `EntityStateException of entity_state_exception
-    | `InvalidConfigurationException of invalid_configuration_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `MailDomainNotFoundException of mail_domain_not_found_exception
-    | `MailDomainStateException of mail_domain_state_exception
-    | `NameAvailabilityException of name_availability_exception
-    | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_resource_request ->
-    ( update_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EmailAddressInUseException of email_address_in_use_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidConfigurationException of invalid_configuration_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `MailDomainNotFoundException of mail_domain_not_found_exception
-      | `MailDomainStateException of mail_domain_state_exception
-      | `NameAvailabilityException of name_availability_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_resource_request ->
-    ( update_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `DirectoryUnavailableException of directory_unavailable_exception
-      | `EmailAddressInUseException of email_address_in_use_exception
-      | `EntityNotFoundException of entity_not_found_exception
-      | `EntityStateException of entity_state_exception
-      | `InvalidConfigurationException of invalid_configuration_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `MailDomainNotFoundException of mail_domain_not_found_exception
-      | `MailDomainStateException of mail_domain_state_exception
-      | `NameAvailabilityException of name_availability_exception
-      | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Updates data for the resource. To have the latest information, it must be preceded by a \
-   [DescribeResource] call. The dataset in the request should be the one expected when performing \
-   another [DescribeResource] call.\n"]
-
-module UpdateUser : sig
+module AssociateMemberToGroup : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `DirectoryServiceAuthenticationFailedException of
@@ -3457,8 +3420,8 @@ module UpdateUser : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    update_user_request ->
-    ( update_user_response,
+    associate_member_to_group_request ->
+    ( associate_member_to_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DirectoryServiceAuthenticationFailedException of
         directory_service_authentication_failed_exception
@@ -3473,8 +3436,8 @@ module UpdateUser : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    update_user_request ->
-    ( update_user_response Smaws_Lib.Response.t,
+    associate_member_to_group_request ->
+    ( associate_member_to_group_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DirectoryServiceAuthenticationFailedException of
         directory_service_authentication_failed_exception
@@ -3488,7 +3451,44 @@ module UpdateUser : sig
       * Smaws_Lib.Response.metadata )
     result
 end
-[@@ocaml.doc
-  "Updates data for the user. To have the latest information, it must be preceded by a \
-   [DescribeUser] call. The dataset in the request should be the one expected when performing \
-   another [DescribeUser] call.\n"]
+[@@ocaml.doc "Adds a member (user or group) to the group's set.\n"]
+
+module AssociateDelegateToResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EntityNotFoundException of entity_not_found_exception
+    | `EntityStateException of entity_state_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OrganizationNotFoundException of organization_not_found_exception
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    associate_delegate_to_resource_request ->
+    ( associate_delegate_to_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    associate_delegate_to_resource_request ->
+    ( associate_delegate_to_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EntityNotFoundException of entity_not_found_exception
+      | `EntityStateException of entity_state_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OrganizationNotFoundException of organization_not_found_exception
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Adds a member (user or group) to the resource's set of delegates.\n"]

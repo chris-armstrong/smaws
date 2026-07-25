@@ -1881,36 +1881,6 @@ end
   \   \n\
   \    "]
 
-module DeleteSSHPublicKey : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_ssh_public_key_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_ssh_public_key_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes the specified SSH public key.\n\n\
-  \ The SSH public key deleted by this operation is used only for authenticating the associated \
-   IAM user to an CodeCommit repository. For more information about using SSH keys to authenticate \
-   to an CodeCommit repository, see \
-   {{:https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html}Set \
-   up CodeCommit for SSH connections} in the {i CodeCommit User Guide}.\n\
-  \ "]
-
 module DeleteServerCertificate : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -2074,6 +2044,36 @@ end
    Amazon Web Services account. Consequently, you can use this operation to manage Amazon Web \
    Services account root user credentials even if the Amazon Web Services account has no \
    associated IAM users.\n\
+  \ "]
+
+module DeleteSSHPublicKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_ssh_public_key_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_ssh_public_key_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes the specified SSH public key.\n\n\
+  \ The SSH public key deleted by this operation is used only for authenticating the associated \
+   IAM user to an CodeCommit repository. For more information about using SSH keys to authenticate \
+   to an CodeCommit repository, see \
+   {{:https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html}Set \
+   up CodeCommit for SSH connections} in the {i CodeCommit User Guide}.\n\
   \ "]
 
 module DeleteUser : sig
@@ -3819,41 +3819,6 @@ end
   \  \n\
   \   "]
 
-module GetSSHPublicKey : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `NoSuchEntityException of no_such_entity_exception
-    | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_ssh_public_key_request ->
-    ( get_ssh_public_key_response,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `NoSuchEntityException of no_such_entity_exception
-      | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_ssh_public_key_request ->
-    ( get_ssh_public_key_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `NoSuchEntityException of no_such_entity_exception
-      | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves the specified SSH public key, including metadata about the key.\n\n\
-  \ The SSH public key retrieved by this operation is used only for authenticating the associated \
-   IAM user to an CodeCommit repository. For more information about using SSH keys to authenticate \
-   to an CodeCommit repository, see \
-   {{:https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html}Set \
-   up CodeCommit for SSH connections} in the {i CodeCommit User Guide}.\n\
-  \ "]
-
 module GetServerCertificate : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -4053,6 +4018,41 @@ end
    [GetServiceLinkedRoleDeletionStatus] to check the status of the deletion. If the deletion \
    fails, this operation returns the reason that it failed, if that information is returned by the \
    service.\n"]
+
+module GetSSHPublicKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `NoSuchEntityException of no_such_entity_exception
+    | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_ssh_public_key_request ->
+    ( get_ssh_public_key_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `NoSuchEntityException of no_such_entity_exception
+      | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_ssh_public_key_request ->
+    ( get_ssh_public_key_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `NoSuchEntityException of no_such_entity_exception
+      | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves the specified SSH public key, including metadata about the key.\n\n\
+  \ The SSH public key retrieved by this operation is used only for authenticating the associated \
+   IAM user to an CodeCommit repository. For more information about using SSH keys to authenticate \
+   to an CodeCommit repository, see \
+   {{:https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html}Set \
+   up CodeCommit for SSH connections} in the {i CodeCommit User Guide}.\n\
+  \ "]
 
 module GetUser : sig
   val error_to_string :
@@ -4511,38 +4511,6 @@ end
   \ You can paginate the results using the [MaxItems] and [Marker] parameters.\n\
   \ "]
 
-module ListInstanceProfileTags : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `NoSuchEntityException of no_such_entity_exception
-    | `ServiceFailureException of service_failure_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_instance_profile_tags_request ->
-    ( list_instance_profile_tags_response,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `NoSuchEntityException of no_such_entity_exception
-      | `ServiceFailureException of service_failure_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_instance_profile_tags_request ->
-    ( list_instance_profile_tags_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `NoSuchEntityException of no_such_entity_exception
-      | `ServiceFailureException of service_failure_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the tags that are attached to the specified IAM instance profile. The returned list of \
-   tags is sorted by tag key. For more information about tagging, see \
-   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html}Tagging IAM resources} in the \
-   {i IAM User Guide}.\n"]
-
 module ListInstanceProfiles : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ] ->
@@ -4611,38 +4579,35 @@ end
   \ You can paginate the results using the [MaxItems] and [Marker] parameters.\n\
   \ "]
 
-module ListMFADeviceTags : sig
+module ListInstanceProfileTags : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InvalidInputException of invalid_input_exception
     | `NoSuchEntityException of no_such_entity_exception
     | `ServiceFailureException of service_failure_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    list_mfa_device_tags_request ->
-    ( list_mfa_device_tags_response,
+    list_instance_profile_tags_request ->
+    ( list_instance_profile_tags_response,
       [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidInputException of invalid_input_exception
       | `NoSuchEntityException of no_such_entity_exception
       | `ServiceFailureException of service_failure_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    list_mfa_device_tags_request ->
-    ( list_mfa_device_tags_response Smaws_Lib.Response.t,
+    list_instance_profile_tags_request ->
+    ( list_instance_profile_tags_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidInputException of invalid_input_exception
       | `NoSuchEntityException of no_such_entity_exception
       | `ServiceFailureException of service_failure_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Lists the tags that are attached to the specified IAM virtual multi-factor authentication (MFA) \
-   device. The returned list of tags is sorted by tag key. For more information about tagging, see \
+  "Lists the tags that are attached to the specified IAM instance profile. The returned list of \
+   tags is sorted by tag key. For more information about tagging, see \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html}Tagging IAM resources} in the \
    {i IAM User Guide}.\n"]
 
@@ -4679,6 +4644,72 @@ end
    ID signing the request for this operation.\n\n\
   \ You can paginate the results using the [MaxItems] and [Marker] parameters.\n\
   \ "]
+
+module ListMFADeviceTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InvalidInputException of invalid_input_exception
+    | `NoSuchEntityException of no_such_entity_exception
+    | `ServiceFailureException of service_failure_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_mfa_device_tags_request ->
+    ( list_mfa_device_tags_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidInputException of invalid_input_exception
+      | `NoSuchEntityException of no_such_entity_exception
+      | `ServiceFailureException of service_failure_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_mfa_device_tags_request ->
+    ( list_mfa_device_tags_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidInputException of invalid_input_exception
+      | `NoSuchEntityException of no_such_entity_exception
+      | `ServiceFailureException of service_failure_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the tags that are attached to the specified IAM virtual multi-factor authentication (MFA) \
+   device. The returned list of tags is sorted by tag key. For more information about tagging, see \
+   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html}Tagging IAM resources} in the \
+   {i IAM User Guide}.\n"]
+
+module ListOpenIDConnectProviders : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_open_id_connect_providers_request ->
+    ( list_open_id_connect_providers_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_open_id_connect_providers_request ->
+    ( list_open_id_connect_providers_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists information about the IAM OpenID Connect (OIDC) provider resource objects defined in the \
+   Amazon Web Services account.\n\n\
+  \  IAM resource-listing operations return a subset of the available attributes for the resource. \
+   For example, this operation does not return tags, even though they are an attribute of the \
+   returned object. To view all of the information for an OIDC provider, see \
+   {{:https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetOpenIDConnectProvider.html}GetOpenIDConnectProvider}.\n\
+  \  \n\
+  \   "]
 
 module ListOpenIDConnectProviderTags : sig
   val error_to_string :
@@ -4718,37 +4749,6 @@ end
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html}Tagging IAM resources} in the \
    {i IAM User Guide}.\n\
   \ "]
-
-module ListOpenIDConnectProviders : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_open_id_connect_providers_request ->
-    ( list_open_id_connect_providers_response,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_open_id_connect_providers_request ->
-    ( list_open_id_connect_providers_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists information about the IAM OpenID Connect (OIDC) provider resource objects defined in the \
-   Amazon Web Services account.\n\n\
-  \  IAM resource-listing operations return a subset of the available attributes for the resource. \
-   For example, this operation does not return tags, even though they are an attribute of the \
-   returned object. To view all of the information for an OIDC provider, see \
-   {{:https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetOpenIDConnectProvider.html}GetOpenIDConnectProvider}.\n\
-  \  \n\
-  \   "]
 
 module ListOrganizationsFeatures : sig
   val error_to_string :
@@ -5014,38 +5014,6 @@ end
    inline policies embedded with the specified role, the operation returns an empty list.\n\
   \  "]
 
-module ListRoleTags : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `NoSuchEntityException of no_such_entity_exception
-    | `ServiceFailureException of service_failure_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_role_tags_request ->
-    ( list_role_tags_response,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `NoSuchEntityException of no_such_entity_exception
-      | `ServiceFailureException of service_failure_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_role_tags_request ->
-    ( list_role_tags_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `NoSuchEntityException of no_such_entity_exception
-      | `ServiceFailureException of service_failure_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the tags that are attached to the specified role. The returned list of tags is sorted by \
-   tag key. For more information about tagging, see \
-   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html}Tagging IAM resources} in the \
-   {i IAM User Guide}.\n"]
-
 module ListRoles : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ] ->
@@ -5093,6 +5061,70 @@ end
   \     You can paginate the results using the [MaxItems] and [Marker] parameters.\n\
   \     "]
 
+module ListRoleTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `NoSuchEntityException of no_such_entity_exception
+    | `ServiceFailureException of service_failure_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_role_tags_request ->
+    ( list_role_tags_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `NoSuchEntityException of no_such_entity_exception
+      | `ServiceFailureException of service_failure_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_role_tags_request ->
+    ( list_role_tags_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `NoSuchEntityException of no_such_entity_exception
+      | `ServiceFailureException of service_failure_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the tags that are attached to the specified role. The returned list of tags is sorted by \
+   tag key. For more information about tagging, see \
+   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html}Tagging IAM resources} in the \
+   {i IAM User Guide}.\n"]
+
+module ListSAMLProviders : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_saml_providers_request ->
+    ( list_saml_providers_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_saml_providers_request ->
+    ( list_saml_providers_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the SAML provider resource objects defined in IAM in the account. IAM resource-listing \
+   operations return a subset of the available attributes for the resource. For example, this \
+   operation does not return tags, even though they are an attribute of the returned object. To \
+   view all of the information for a SAML provider, see \
+   {{:https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetSAMLProvider.html}GetSAMLProvider}.\n\n\
+  \   This operation requires \
+   {{:https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html}Signature Version 4}.\n\
+  \  \n\
+  \   "]
+
 module ListSAMLProviderTags : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -5132,71 +5164,43 @@ end
    {i IAM User Guide}.\n\
   \ "]
 
-module ListSAMLProviders : sig
+module ListServerCertificates : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    list_saml_providers_request ->
-    ( list_saml_providers_response,
+    list_server_certificates_request ->
+    ( list_server_certificates_response,
       [> Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ]
     )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    list_saml_providers_request ->
-    ( list_saml_providers_response Smaws_Lib.Response.t,
+    list_server_certificates_request ->
+    ( list_server_certificates_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Lists the SAML provider resource objects defined in IAM in the account. IAM resource-listing \
-   operations return a subset of the available attributes for the resource. For example, this \
-   operation does not return tags, even though they are an attribute of the returned object. To \
-   view all of the information for a SAML provider, see \
-   {{:https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetSAMLProvider.html}GetSAMLProvider}.\n\n\
-  \   This operation requires \
-   {{:https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html}Signature Version 4}.\n\
-  \  \n\
-  \   "]
-
-module ListSSHPublicKeys : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_ssh_public_keys_request ->
-    ( list_ssh_public_keys_response,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_ssh_public_keys_request ->
-    ( list_ssh_public_keys_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the SSH public keys associated with the specified IAM user. If none \
-   exists, the operation returns an empty list.\n\n\
-  \ The SSH public keys returned by this operation are used only for authenticating the IAM user \
-   to an CodeCommit repository. For more information about using SSH keys to authenticate to an \
-   CodeCommit repository, see \
-   {{:https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html}Set \
-   up CodeCommit for SSH connections} in the {i CodeCommit User Guide}.\n\
+  "Lists the server certificates stored in IAM that have the specified path prefix. If none exist, \
+   the operation returns an empty list.\n\n\
+  \  You can paginate the results using the [MaxItems] and [Marker] parameters.\n\
   \ \n\
-  \  Although each user is limited to a small number of keys, you can still paginate the results \
-   using the [MaxItems] and [Marker] parameters.\n\
-  \  "]
+  \  For more information about working with server certificates, see \
+   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html}Working \
+   with server certificates} in the {i IAM User Guide}. This topic also includes a list of Amazon \
+   Web Services services that can use the server certificates that you manage with IAM.\n\
+  \  \n\
+  \    IAM resource-listing operations return a subset of the available attributes for the \
+   resource. For example, this operation does not return tags, even though they are an attribute \
+   of the returned object. To view all of the information for a servercertificate, see \
+   {{:https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetServerCertificate.html}GetServerCertificate}.\n\
+  \    \n\
+  \     "]
 
 module ListServerCertificateTags : sig
   val error_to_string :
@@ -5236,44 +5240,6 @@ end
    with server certificates} in the {i IAM User Guide}.\n\
   \  \n\
   \   "]
-
-module ListServerCertificates : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_server_certificates_request ->
-    ( list_server_certificates_response,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_server_certificates_request ->
-    ( list_server_certificates_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `ServiceFailureException of service_failure_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the server certificates stored in IAM that have the specified path prefix. If none exist, \
-   the operation returns an empty list.\n\n\
-  \  You can paginate the results using the [MaxItems] and [Marker] parameters.\n\
-  \ \n\
-  \  For more information about working with server certificates, see \
-   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html}Working \
-   with server certificates} in the {i IAM User Guide}. This topic also includes a list of Amazon \
-   Web Services services that can use the server certificates that you manage with IAM.\n\
-  \  \n\
-  \    IAM resource-listing operations return a subset of the available attributes for the \
-   resource. For example, this operation does not return tags, even though they are an attribute \
-   of the returned object. To view all of the information for a servercertificate, see \
-   {{:https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetServerCertificate.html}GetServerCertificate}.\n\
-  \    \n\
-  \     "]
 
 module ListServiceSpecificCredentials : sig
   val error_to_string :
@@ -5366,6 +5332,40 @@ end
    Services account has no associated users.\n\
   \  "]
 
+module ListSSHPublicKeys : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_ssh_public_keys_request ->
+    ( list_ssh_public_keys_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_ssh_public_keys_request ->
+    ( list_ssh_public_keys_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `NoSuchEntityException of no_such_entity_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the SSH public keys associated with the specified IAM user. If none \
+   exists, the operation returns an empty list.\n\n\
+  \ The SSH public keys returned by this operation are used only for authenticating the IAM user \
+   to an CodeCommit repository. For more information about using SSH keys to authenticate to an \
+   CodeCommit repository, see \
+   {{:https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html}Set \
+   up CodeCommit for SSH connections} in the {i CodeCommit User Guide}.\n\
+  \ \n\
+  \  Although each user is limited to a small number of keys, you can still paginate the results \
+   using the [MaxItems] and [Marker] parameters.\n\
+  \  "]
+
 module ListUserPolicies : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -5404,38 +5404,6 @@ end
   \  You can paginate the results using the [MaxItems] and [Marker] parameters. If there are no \
    inline policies embedded with the specified user, the operation returns an empty list.\n\
   \  "]
-
-module ListUserTags : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `NoSuchEntityException of no_such_entity_exception
-    | `ServiceFailureException of service_failure_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_user_tags_request ->
-    ( list_user_tags_response,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `NoSuchEntityException of no_such_entity_exception
-      | `ServiceFailureException of service_failure_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_user_tags_request ->
-    ( list_user_tags_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `NoSuchEntityException of no_such_entity_exception
-      | `ServiceFailureException of service_failure_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the tags that are attached to the specified IAM user. The returned list of tags is sorted \
-   by tag key. For more information about tagging, see \
-   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html}Tagging IAM resources} in the \
-   {i IAM User Guide}.\n"]
 
 module ListUsers : sig
   val error_to_string :
@@ -5479,6 +5447,38 @@ end
   \   \n\
   \     You can paginate the results using the [MaxItems] and [Marker] parameters.\n\
   \     "]
+
+module ListUserTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `NoSuchEntityException of no_such_entity_exception
+    | `ServiceFailureException of service_failure_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_user_tags_request ->
+    ( list_user_tags_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `NoSuchEntityException of no_such_entity_exception
+      | `ServiceFailureException of service_failure_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_user_tags_request ->
+    ( list_user_tags_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `NoSuchEntityException of no_such_entity_exception
+      | `ServiceFailureException of service_failure_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the tags that are attached to the specified IAM user. The returned list of tags is sorted \
+   by tag key. For more information about tagging, see \
+   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html}Tagging IAM resources} in the \
+   {i IAM User Guide}.\n"]
 
 module ListVirtualMFADevices : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
@@ -7602,43 +7602,6 @@ end
    provider. To rotate private keys, add your new private key and then remove the old key in a \
    separate request.\n"]
 
-module UpdateSSHPublicKey : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InvalidInputException of invalid_input_exception
-    | `NoSuchEntityException of no_such_entity_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_ssh_public_key_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidInputException of invalid_input_exception
-      | `NoSuchEntityException of no_such_entity_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_ssh_public_key_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidInputException of invalid_input_exception
-      | `NoSuchEntityException of no_such_entity_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Sets the status of an IAM user's SSH public key to active or inactive. SSH public keys that are \
-   inactive cannot be used for authentication. This operation can be used to disable a user's SSH \
-   public key as part of a key rotation work flow.\n\n\
-  \ The SSH public key affected by this operation is used only for authenticating the associated \
-   IAM user to an CodeCommit repository. For more information about using SSH keys to authenticate \
-   to an CodeCommit repository, see \
-   {{:https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html}Set \
-   up CodeCommit for SSH connections} in the {i CodeCommit User Guide}.\n\
-  \ "]
-
 module UpdateServerCertificate : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -7763,6 +7726,43 @@ end
    no associated users.\n\
   \ "]
 
+module UpdateSSHPublicKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InvalidInputException of invalid_input_exception
+    | `NoSuchEntityException of no_such_entity_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_ssh_public_key_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidInputException of invalid_input_exception
+      | `NoSuchEntityException of no_such_entity_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_ssh_public_key_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidInputException of invalid_input_exception
+      | `NoSuchEntityException of no_such_entity_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Sets the status of an IAM user's SSH public key to active or inactive. SSH public keys that are \
+   inactive cannot be used for authentication. This operation can be used to disable a user's SSH \
+   public key as part of a key rotation work flow.\n\n\
+  \ The SSH public key affected by this operation is used only for authenticating the associated \
+   IAM user to an CodeCommit repository. For more information about using SSH keys to authenticate \
+   to an CodeCommit repository, see \
+   {{:https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html}Set \
+   up CodeCommit for SSH connections} in the {i CodeCommit User Guide}.\n\
+  \ "]
+
 module UpdateUser : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -7818,50 +7818,6 @@ end
    policies}. \n\
   \     \n\
   \      "]
-
-module UploadSSHPublicKey : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `DuplicateSSHPublicKeyException of duplicate_ssh_public_key_exception
-    | `InvalidPublicKeyException of invalid_public_key_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NoSuchEntityException of no_such_entity_exception
-    | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    upload_ssh_public_key_request ->
-    ( upload_ssh_public_key_response,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DuplicateSSHPublicKeyException of duplicate_ssh_public_key_exception
-      | `InvalidPublicKeyException of invalid_public_key_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NoSuchEntityException of no_such_entity_exception
-      | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    upload_ssh_public_key_request ->
-    ( upload_ssh_public_key_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DuplicateSSHPublicKeyException of duplicate_ssh_public_key_exception
-      | `InvalidPublicKeyException of invalid_public_key_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NoSuchEntityException of no_such_entity_exception
-      | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Uploads an SSH public key and associates it with the specified IAM user.\n\n\
-  \ The SSH public key uploaded by this operation can be used only for authenticating the \
-   associated IAM user to an CodeCommit repository. For more information about using SSH keys to \
-   authenticate to an CodeCommit repository, see \
-   {{:https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html}Set \
-   up CodeCommit for SSH connections} in the {i CodeCommit User Guide}.\n\
-  \ "]
 
 module UploadServerCertificate : sig
   val error_to_string :
@@ -8002,3 +7958,47 @@ end
    requests} in the {i IAM User Guide}.\n\
   \    \n\
   \     "]
+
+module UploadSSHPublicKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `DuplicateSSHPublicKeyException of duplicate_ssh_public_key_exception
+    | `InvalidPublicKeyException of invalid_public_key_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NoSuchEntityException of no_such_entity_exception
+    | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    upload_ssh_public_key_request ->
+    ( upload_ssh_public_key_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DuplicateSSHPublicKeyException of duplicate_ssh_public_key_exception
+      | `InvalidPublicKeyException of invalid_public_key_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NoSuchEntityException of no_such_entity_exception
+      | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    upload_ssh_public_key_request ->
+    ( upload_ssh_public_key_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DuplicateSSHPublicKeyException of duplicate_ssh_public_key_exception
+      | `InvalidPublicKeyException of invalid_public_key_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NoSuchEntityException of no_such_entity_exception
+      | `UnrecognizedPublicKeyEncodingException of unrecognized_public_key_encoding_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Uploads an SSH public key and associates it with the specified IAM user.\n\n\
+  \ The SSH public key uploaded by this operation can be used only for authenticating the \
+   associated IAM user to an CodeCommit repository. For more information about using SSH keys to \
+   authenticate to an CodeCommit repository, see \
+   {{:https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-credentials-ssh.html}Set \
+   up CodeCommit for SSH connections} in the {i CodeCommit User Guide}.\n\
+  \ "]

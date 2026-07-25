@@ -1,44 +1,6 @@
 open Types
 open Service_metadata
 
-module AddTagsToResource = struct
-  let error_to_string = function
-    | `CloudHsmInternalException _ -> "com.amazonaws.cloudhsm#CloudHsmInternalException"
-    | `CloudHsmServiceException _ -> "com.amazonaws.cloudhsm#CloudHsmServiceException"
-    | `InvalidRequestException _ -> "com.amazonaws.cloudhsm#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "CloudHsmInternalException" ->
-          `CloudHsmInternalException
-            (Json_deserializers.cloud_hsm_internal_exception_of_yojson tree path)
-      | _, "CloudHsmServiceException" ->
-          `CloudHsmServiceException
-            (Json_deserializers.cloud_hsm_service_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_tags_to_resource_request) =
-    let input = Json_serializers.add_tags_to_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudHsmFrontendService.AddTagsToResource"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.add_tags_to_resource_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_to_resource_request) =
-    let input = Json_serializers.add_tags_to_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CloudHsmFrontendService.AddTagsToResource" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.add_tags_to_resource_response_of_yojson
-      ~error_deserializer
-end
-
 module CreateHapg = struct
   let error_to_string = function
     | `CloudHsmInternalException _ -> "com.amazonaws.cloudhsm#CloudHsmInternalException"
@@ -728,5 +690,43 @@ module RemoveTagsFromResource = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CloudHsmFrontendService.RemoveTagsFromResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.remove_tags_from_resource_response_of_yojson
+      ~error_deserializer
+end
+
+module AddTagsToResource = struct
+  let error_to_string = function
+    | `CloudHsmInternalException _ -> "com.amazonaws.cloudhsm#CloudHsmInternalException"
+    | `CloudHsmServiceException _ -> "com.amazonaws.cloudhsm#CloudHsmServiceException"
+    | `InvalidRequestException _ -> "com.amazonaws.cloudhsm#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "CloudHsmInternalException" ->
+          `CloudHsmInternalException
+            (Json_deserializers.cloud_hsm_internal_exception_of_yojson tree path)
+      | _, "CloudHsmServiceException" ->
+          `CloudHsmServiceException
+            (Json_deserializers.cloud_hsm_service_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_tags_to_resource_request) =
+    let input = Json_serializers.add_tags_to_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudHsmFrontendService.AddTagsToResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_tags_to_resource_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_resource_request) =
+    let input = Json_serializers.add_tags_to_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudHsmFrontendService.AddTagsToResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_tags_to_resource_response_of_yojson
       ~error_deserializer
 end

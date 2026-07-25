@@ -298,46 +298,6 @@ end
   \     \n\
   \      "]
 
-module DescribeEventTypes : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidPaginationToken of invalid_pagination_token
-    | `UnsupportedLocale of unsupported_locale ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_event_types_request ->
-    ( describe_event_types_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidPaginationToken of invalid_pagination_token
-      | `UnsupportedLocale of unsupported_locale ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_event_types_request ->
-    ( describe_event_types_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidPaginationToken of invalid_pagination_token
-      | `UnsupportedLocale of unsupported_locale ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the event types that meet the specified filter criteria. You can use this API operation \
-   to find information about the Health event, such as the category, Amazon Web Services service, \
-   and event code. The metadata for each event appears in the \
-   {{:https://docs.aws.amazon.com/health/latest/APIReference/API_EventType.html}EventType} object. \
-   \n\n\
-  \ If you don't specify a filter criteria, the API operation returns all event types, in no \
-   particular order. \n\
-  \ \n\
-  \   This API operation uses pagination. Specify the [nextToken] parameter in the next request to \
-   return more results.\n\
-  \   \n\
-  \    "]
-
 module DescribeEvents : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -454,6 +414,46 @@ end
    request to return more results.\n\
   \       \n\
   \        "]
+
+module DescribeEventTypes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidPaginationToken of invalid_pagination_token
+    | `UnsupportedLocale of unsupported_locale ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_event_types_request ->
+    ( describe_event_types_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidPaginationToken of invalid_pagination_token
+      | `UnsupportedLocale of unsupported_locale ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_event_types_request ->
+    ( describe_event_types_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidPaginationToken of invalid_pagination_token
+      | `UnsupportedLocale of unsupported_locale ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the event types that meet the specified filter criteria. You can use this API operation \
+   to find information about the Health event, such as the category, Amazon Web Services service, \
+   and event code. The metadata for each event appears in the \
+   {{:https://docs.aws.amazon.com/health/latest/APIReference/API_EventType.html}EventType} object. \
+   \n\n\
+  \ If you don't specify a filter criteria, the API operation returns all event types, in no \
+   particular order. \n\
+  \ \n\
+  \   This API operation uses pagination. Specify the [nextToken] parameter in the next request to \
+   return more results.\n\
+  \   \n\
+  \    "]
 
 module DescribeHealthServiceStatusForOrganization : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string

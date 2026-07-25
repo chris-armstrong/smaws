@@ -1,381 +1,5 @@
 open Types
 
-module AssociateApprovalRuleTemplateWithRepository : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ApprovalRuleTemplateDoesNotExistException of approval_rule_template_does_not_exist_exception
-    | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
-    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-    | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
-    | `InvalidRepositoryNameException of invalid_repository_name_exception
-    | `MaximumRuleTemplatesAssociatedWithRepositoryException of
-      maximum_rule_templates_associated_with_repository_exception
-    | `RepositoryDoesNotExistException of repository_does_not_exist_exception
-    | `RepositoryNameRequiredException of repository_name_required_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    associate_approval_rule_template_with_repository_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApprovalRuleTemplateDoesNotExistException of
-        approval_rule_template_does_not_exist_exception
-      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
-      | `InvalidRepositoryNameException of invalid_repository_name_exception
-      | `MaximumRuleTemplatesAssociatedWithRepositoryException of
-        maximum_rule_templates_associated_with_repository_exception
-      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
-      | `RepositoryNameRequiredException of repository_name_required_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    associate_approval_rule_template_with_repository_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApprovalRuleTemplateDoesNotExistException of
-        approval_rule_template_does_not_exist_exception
-      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
-      | `InvalidRepositoryNameException of invalid_repository_name_exception
-      | `MaximumRuleTemplatesAssociatedWithRepositoryException of
-        maximum_rule_templates_associated_with_repository_exception
-      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
-      | `RepositoryNameRequiredException of repository_name_required_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates an association between an approval rule template and a specified repository. Then, the \
-   next time a pull request is created in the repository where the destination reference (if \
-   specified) matches the destination reference (branch) for the pull request, an approval rule \
-   that matches the template conditions is automatically created for that pull request. If no \
-   destination references are specified in the template, an approval rule that matches the \
-   template contents is created for all pull requests in that repository.\n"]
-
-module BatchAssociateApprovalRuleTemplateWithRepositories : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ApprovalRuleTemplateDoesNotExistException of approval_rule_template_does_not_exist_exception
-    | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
-    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-    | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
-    | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
-    | `RepositoryNamesRequiredException of repository_names_required_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_associate_approval_rule_template_with_repositories_input ->
-    ( batch_associate_approval_rule_template_with_repositories_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApprovalRuleTemplateDoesNotExistException of
-        approval_rule_template_does_not_exist_exception
-      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
-      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
-      | `RepositoryNamesRequiredException of repository_names_required_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_associate_approval_rule_template_with_repositories_input ->
-    ( batch_associate_approval_rule_template_with_repositories_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApprovalRuleTemplateDoesNotExistException of
-        approval_rule_template_does_not_exist_exception
-      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
-      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
-      | `RepositoryNamesRequiredException of repository_names_required_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates an association between an approval rule template and one or more specified repositories. \n"]
-
-module BatchDescribeMergeConflicts : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `CommitDoesNotExistException of commit_does_not_exist_exception
-    | `CommitRequiredException of commit_required_exception
-    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-    | `InvalidCommitException of invalid_commit_exception
-    | `InvalidConflictDetailLevelException of invalid_conflict_detail_level_exception
-    | `InvalidConflictResolutionStrategyException of invalid_conflict_resolution_strategy_exception
-    | `InvalidContinuationTokenException of invalid_continuation_token_exception
-    | `InvalidMaxConflictFilesException of invalid_max_conflict_files_exception
-    | `InvalidMaxMergeHunksException of invalid_max_merge_hunks_exception
-    | `InvalidMergeOptionException of invalid_merge_option_exception
-    | `InvalidRepositoryNameException of invalid_repository_name_exception
-    | `MaximumFileContentToLoadExceededException of maximum_file_content_to_load_exceeded_exception
-    | `MaximumItemsToCompareExceededException of maximum_items_to_compare_exceeded_exception
-    | `MergeOptionRequiredException of merge_option_required_exception
-    | `RepositoryDoesNotExistException of repository_does_not_exist_exception
-    | `RepositoryNameRequiredException of repository_name_required_exception
-    | `TipsDivergenceExceededException of tips_divergence_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_describe_merge_conflicts_input ->
-    ( batch_describe_merge_conflicts_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `CommitDoesNotExistException of commit_does_not_exist_exception
-      | `CommitRequiredException of commit_required_exception
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidCommitException of invalid_commit_exception
-      | `InvalidConflictDetailLevelException of invalid_conflict_detail_level_exception
-      | `InvalidConflictResolutionStrategyException of
-        invalid_conflict_resolution_strategy_exception
-      | `InvalidContinuationTokenException of invalid_continuation_token_exception
-      | `InvalidMaxConflictFilesException of invalid_max_conflict_files_exception
-      | `InvalidMaxMergeHunksException of invalid_max_merge_hunks_exception
-      | `InvalidMergeOptionException of invalid_merge_option_exception
-      | `InvalidRepositoryNameException of invalid_repository_name_exception
-      | `MaximumFileContentToLoadExceededException of
-        maximum_file_content_to_load_exceeded_exception
-      | `MaximumItemsToCompareExceededException of maximum_items_to_compare_exceeded_exception
-      | `MergeOptionRequiredException of merge_option_required_exception
-      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
-      | `RepositoryNameRequiredException of repository_name_required_exception
-      | `TipsDivergenceExceededException of tips_divergence_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_describe_merge_conflicts_input ->
-    ( batch_describe_merge_conflicts_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `CommitDoesNotExistException of commit_does_not_exist_exception
-      | `CommitRequiredException of commit_required_exception
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidCommitException of invalid_commit_exception
-      | `InvalidConflictDetailLevelException of invalid_conflict_detail_level_exception
-      | `InvalidConflictResolutionStrategyException of
-        invalid_conflict_resolution_strategy_exception
-      | `InvalidContinuationTokenException of invalid_continuation_token_exception
-      | `InvalidMaxConflictFilesException of invalid_max_conflict_files_exception
-      | `InvalidMaxMergeHunksException of invalid_max_merge_hunks_exception
-      | `InvalidMergeOptionException of invalid_merge_option_exception
-      | `InvalidRepositoryNameException of invalid_repository_name_exception
-      | `MaximumFileContentToLoadExceededException of
-        maximum_file_content_to_load_exceeded_exception
-      | `MaximumItemsToCompareExceededException of maximum_items_to_compare_exceeded_exception
-      | `MergeOptionRequiredException of merge_option_required_exception
-      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
-      | `RepositoryNameRequiredException of repository_name_required_exception
-      | `TipsDivergenceExceededException of tips_divergence_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about one or more merge conflicts in the attempted merge of two commit \
-   specifiers using the squash or three-way merge strategy.\n"]
-
-module BatchDisassociateApprovalRuleTemplateFromRepositories : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ApprovalRuleTemplateDoesNotExistException of approval_rule_template_does_not_exist_exception
-    | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
-    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-    | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
-    | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
-    | `RepositoryNamesRequiredException of repository_names_required_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_disassociate_approval_rule_template_from_repositories_input ->
-    ( batch_disassociate_approval_rule_template_from_repositories_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApprovalRuleTemplateDoesNotExistException of
-        approval_rule_template_does_not_exist_exception
-      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
-      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
-      | `RepositoryNamesRequiredException of repository_names_required_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_disassociate_approval_rule_template_from_repositories_input ->
-    ( batch_disassociate_approval_rule_template_from_repositories_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ApprovalRuleTemplateDoesNotExistException of
-        approval_rule_template_does_not_exist_exception
-      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
-      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
-      | `RepositoryNamesRequiredException of repository_names_required_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Removes the association between an approval rule template and one or more specified \
-   repositories. \n"]
-
-module BatchGetCommits : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `CommitIdsLimitExceededException of commit_ids_limit_exceeded_exception
-    | `CommitIdsListRequiredException of commit_ids_list_required_exception
-    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-    | `InvalidRepositoryNameException of invalid_repository_name_exception
-    | `RepositoryDoesNotExistException of repository_does_not_exist_exception
-    | `RepositoryNameRequiredException of repository_name_required_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_commits_input ->
-    ( batch_get_commits_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `CommitIdsLimitExceededException of commit_ids_limit_exceeded_exception
-      | `CommitIdsListRequiredException of commit_ids_list_required_exception
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidRepositoryNameException of invalid_repository_name_exception
-      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
-      | `RepositoryNameRequiredException of repository_name_required_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_commits_input ->
-    ( batch_get_commits_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `CommitIdsLimitExceededException of commit_ids_limit_exceeded_exception
-      | `CommitIdsListRequiredException of commit_ids_list_required_exception
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidRepositoryNameException of invalid_repository_name_exception
-      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
-      | `RepositoryNameRequiredException of repository_name_required_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns information about the contents of one or more commits in a repository.\n"]
-
-module BatchGetRepositories : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-    | `InvalidRepositoryNameException of invalid_repository_name_exception
-    | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
-    | `RepositoryNamesRequiredException of repository_names_required_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_repositories_input ->
-    ( batch_get_repositories_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidRepositoryNameException of invalid_repository_name_exception
-      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
-      | `RepositoryNamesRequiredException of repository_names_required_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_repositories_input ->
-    ( batch_get_repositories_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
-      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
-      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
-      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
-      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
-      | `InvalidRepositoryNameException of invalid_repository_name_exception
-      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
-      | `RepositoryNamesRequiredException of repository_names_required_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about one or more repositories.\n\n\
-  \  The description field for a repository accepts all HTML characters and all valid Unicode \
-   characters. Applications that do not HTML-encode the description and display it in a webpage \
-   can expose users to potentially malicious code. Make sure that you HTML-encode the description \
-   field in any application that uses this API to display the repository description on a webpage.\n\
-  \  \n\
-  \   "]
-
 module CreateApprovalRuleTemplate : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -5421,3 +5045,379 @@ end
    the limits on repository names, see \
    {{:https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html}Quotas} in the \
    CodeCommit User Guide.\n"]
+
+module BatchGetRepositories : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+    | `InvalidRepositoryNameException of invalid_repository_name_exception
+    | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
+    | `RepositoryNamesRequiredException of repository_names_required_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_repositories_input ->
+    ( batch_get_repositories_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidRepositoryNameException of invalid_repository_name_exception
+      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
+      | `RepositoryNamesRequiredException of repository_names_required_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_repositories_input ->
+    ( batch_get_repositories_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidRepositoryNameException of invalid_repository_name_exception
+      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
+      | `RepositoryNamesRequiredException of repository_names_required_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about one or more repositories.\n\n\
+  \  The description field for a repository accepts all HTML characters and all valid Unicode \
+   characters. Applications that do not HTML-encode the description and display it in a webpage \
+   can expose users to potentially malicious code. Make sure that you HTML-encode the description \
+   field in any application that uses this API to display the repository description on a webpage.\n\
+  \  \n\
+  \   "]
+
+module BatchGetCommits : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `CommitIdsLimitExceededException of commit_ids_limit_exceeded_exception
+    | `CommitIdsListRequiredException of commit_ids_list_required_exception
+    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+    | `InvalidRepositoryNameException of invalid_repository_name_exception
+    | `RepositoryDoesNotExistException of repository_does_not_exist_exception
+    | `RepositoryNameRequiredException of repository_name_required_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_commits_input ->
+    ( batch_get_commits_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CommitIdsLimitExceededException of commit_ids_limit_exceeded_exception
+      | `CommitIdsListRequiredException of commit_ids_list_required_exception
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidRepositoryNameException of invalid_repository_name_exception
+      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
+      | `RepositoryNameRequiredException of repository_name_required_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_commits_input ->
+    ( batch_get_commits_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CommitIdsLimitExceededException of commit_ids_limit_exceeded_exception
+      | `CommitIdsListRequiredException of commit_ids_list_required_exception
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidRepositoryNameException of invalid_repository_name_exception
+      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
+      | `RepositoryNameRequiredException of repository_name_required_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns information about the contents of one or more commits in a repository.\n"]
+
+module BatchDisassociateApprovalRuleTemplateFromRepositories : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ApprovalRuleTemplateDoesNotExistException of approval_rule_template_does_not_exist_exception
+    | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
+    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+    | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
+    | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
+    | `RepositoryNamesRequiredException of repository_names_required_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_disassociate_approval_rule_template_from_repositories_input ->
+    ( batch_disassociate_approval_rule_template_from_repositories_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApprovalRuleTemplateDoesNotExistException of
+        approval_rule_template_does_not_exist_exception
+      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
+      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
+      | `RepositoryNamesRequiredException of repository_names_required_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_disassociate_approval_rule_template_from_repositories_input ->
+    ( batch_disassociate_approval_rule_template_from_repositories_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApprovalRuleTemplateDoesNotExistException of
+        approval_rule_template_does_not_exist_exception
+      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
+      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
+      | `RepositoryNamesRequiredException of repository_names_required_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Removes the association between an approval rule template and one or more specified \
+   repositories. \n"]
+
+module BatchDescribeMergeConflicts : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `CommitDoesNotExistException of commit_does_not_exist_exception
+    | `CommitRequiredException of commit_required_exception
+    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+    | `InvalidCommitException of invalid_commit_exception
+    | `InvalidConflictDetailLevelException of invalid_conflict_detail_level_exception
+    | `InvalidConflictResolutionStrategyException of invalid_conflict_resolution_strategy_exception
+    | `InvalidContinuationTokenException of invalid_continuation_token_exception
+    | `InvalidMaxConflictFilesException of invalid_max_conflict_files_exception
+    | `InvalidMaxMergeHunksException of invalid_max_merge_hunks_exception
+    | `InvalidMergeOptionException of invalid_merge_option_exception
+    | `InvalidRepositoryNameException of invalid_repository_name_exception
+    | `MaximumFileContentToLoadExceededException of maximum_file_content_to_load_exceeded_exception
+    | `MaximumItemsToCompareExceededException of maximum_items_to_compare_exceeded_exception
+    | `MergeOptionRequiredException of merge_option_required_exception
+    | `RepositoryDoesNotExistException of repository_does_not_exist_exception
+    | `RepositoryNameRequiredException of repository_name_required_exception
+    | `TipsDivergenceExceededException of tips_divergence_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_describe_merge_conflicts_input ->
+    ( batch_describe_merge_conflicts_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CommitDoesNotExistException of commit_does_not_exist_exception
+      | `CommitRequiredException of commit_required_exception
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidCommitException of invalid_commit_exception
+      | `InvalidConflictDetailLevelException of invalid_conflict_detail_level_exception
+      | `InvalidConflictResolutionStrategyException of
+        invalid_conflict_resolution_strategy_exception
+      | `InvalidContinuationTokenException of invalid_continuation_token_exception
+      | `InvalidMaxConflictFilesException of invalid_max_conflict_files_exception
+      | `InvalidMaxMergeHunksException of invalid_max_merge_hunks_exception
+      | `InvalidMergeOptionException of invalid_merge_option_exception
+      | `InvalidRepositoryNameException of invalid_repository_name_exception
+      | `MaximumFileContentToLoadExceededException of
+        maximum_file_content_to_load_exceeded_exception
+      | `MaximumItemsToCompareExceededException of maximum_items_to_compare_exceeded_exception
+      | `MergeOptionRequiredException of merge_option_required_exception
+      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
+      | `RepositoryNameRequiredException of repository_name_required_exception
+      | `TipsDivergenceExceededException of tips_divergence_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_describe_merge_conflicts_input ->
+    ( batch_describe_merge_conflicts_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CommitDoesNotExistException of commit_does_not_exist_exception
+      | `CommitRequiredException of commit_required_exception
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidCommitException of invalid_commit_exception
+      | `InvalidConflictDetailLevelException of invalid_conflict_detail_level_exception
+      | `InvalidConflictResolutionStrategyException of
+        invalid_conflict_resolution_strategy_exception
+      | `InvalidContinuationTokenException of invalid_continuation_token_exception
+      | `InvalidMaxConflictFilesException of invalid_max_conflict_files_exception
+      | `InvalidMaxMergeHunksException of invalid_max_merge_hunks_exception
+      | `InvalidMergeOptionException of invalid_merge_option_exception
+      | `InvalidRepositoryNameException of invalid_repository_name_exception
+      | `MaximumFileContentToLoadExceededException of
+        maximum_file_content_to_load_exceeded_exception
+      | `MaximumItemsToCompareExceededException of maximum_items_to_compare_exceeded_exception
+      | `MergeOptionRequiredException of merge_option_required_exception
+      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
+      | `RepositoryNameRequiredException of repository_name_required_exception
+      | `TipsDivergenceExceededException of tips_divergence_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about one or more merge conflicts in the attempted merge of two commit \
+   specifiers using the squash or three-way merge strategy.\n"]
+
+module BatchAssociateApprovalRuleTemplateWithRepositories : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ApprovalRuleTemplateDoesNotExistException of approval_rule_template_does_not_exist_exception
+    | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
+    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+    | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
+    | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
+    | `RepositoryNamesRequiredException of repository_names_required_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_associate_approval_rule_template_with_repositories_input ->
+    ( batch_associate_approval_rule_template_with_repositories_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApprovalRuleTemplateDoesNotExistException of
+        approval_rule_template_does_not_exist_exception
+      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
+      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
+      | `RepositoryNamesRequiredException of repository_names_required_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_associate_approval_rule_template_with_repositories_input ->
+    ( batch_associate_approval_rule_template_with_repositories_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApprovalRuleTemplateDoesNotExistException of
+        approval_rule_template_does_not_exist_exception
+      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
+      | `MaximumRepositoryNamesExceededException of maximum_repository_names_exceeded_exception
+      | `RepositoryNamesRequiredException of repository_names_required_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates an association between an approval rule template and one or more specified repositories. \n"]
+
+module AssociateApprovalRuleTemplateWithRepository : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ApprovalRuleTemplateDoesNotExistException of approval_rule_template_does_not_exist_exception
+    | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
+    | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+    | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+    | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+    | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+    | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+    | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
+    | `InvalidRepositoryNameException of invalid_repository_name_exception
+    | `MaximumRuleTemplatesAssociatedWithRepositoryException of
+      maximum_rule_templates_associated_with_repository_exception
+    | `RepositoryDoesNotExistException of repository_does_not_exist_exception
+    | `RepositoryNameRequiredException of repository_name_required_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    associate_approval_rule_template_with_repository_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApprovalRuleTemplateDoesNotExistException of
+        approval_rule_template_does_not_exist_exception
+      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
+      | `InvalidRepositoryNameException of invalid_repository_name_exception
+      | `MaximumRuleTemplatesAssociatedWithRepositoryException of
+        maximum_rule_templates_associated_with_repository_exception
+      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
+      | `RepositoryNameRequiredException of repository_name_required_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    associate_approval_rule_template_with_repository_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ApprovalRuleTemplateDoesNotExistException of
+        approval_rule_template_does_not_exist_exception
+      | `ApprovalRuleTemplateNameRequiredException of approval_rule_template_name_required_exception
+      | `EncryptionIntegrityChecksFailedException of encryption_integrity_checks_failed_exception
+      | `EncryptionKeyAccessDeniedException of encryption_key_access_denied_exception
+      | `EncryptionKeyDisabledException of encryption_key_disabled_exception
+      | `EncryptionKeyNotFoundException of encryption_key_not_found_exception
+      | `EncryptionKeyUnavailableException of encryption_key_unavailable_exception
+      | `InvalidApprovalRuleTemplateNameException of invalid_approval_rule_template_name_exception
+      | `InvalidRepositoryNameException of invalid_repository_name_exception
+      | `MaximumRuleTemplatesAssociatedWithRepositoryException of
+        maximum_rule_templates_associated_with_repository_exception
+      | `RepositoryDoesNotExistException of repository_does_not_exist_exception
+      | `RepositoryNameRequiredException of repository_name_required_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates an association between an approval rule template and a specified repository. Then, the \
+   next time a pull request is created in the repository where the destination reference (if \
+   specified) matches the destination reference (branch) for the pull request, an approval rule \
+   that matches the template conditions is automatically created for that pull request. If no \
+   destination references are specified in the template, an approval rule that matches the \
+   template contents is created for all pull requests in that repository.\n"]

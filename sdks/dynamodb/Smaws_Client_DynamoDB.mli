@@ -8,90 +8,41 @@ module Types = Types
 
 (** {1:builders Builders} *)
 
-val make_put_request : item:put_item_input_attribute_map -> unit -> put_request
-val make_delete_request : key:key -> unit -> delete_request
-
-val make_write_request :
-  ?delete_request:delete_request -> ?put_request:put_request -> unit -> write_request
-
-val make_warm_throughput :
-  ?write_units_per_second:long_object ->
-  ?read_units_per_second:long_object ->
+val make_archival_summary :
+  ?archival_date_time:date ->
+  ?archival_reason:archival_reason ->
+  ?archival_backup_arn:backup_arn ->
   unit ->
-  warm_throughput
+  archival_summary
 
-val make_time_to_live_specification :
-  attribute_name:time_to_live_attribute_name ->
-  enabled:time_to_live_enabled ->
+val make_attribute_definition :
+  attribute_name:key_schema_attribute_name ->
+  attribute_type:scalar_attribute_type ->
   unit ->
-  time_to_live_specification
+  attribute_definition
 
-val make_update_time_to_live_output :
-  ?time_to_live_specification:time_to_live_specification -> unit -> update_time_to_live_output
-
-val make_update_time_to_live_input :
-  time_to_live_specification:time_to_live_specification ->
-  table_name:table_arn ->
-  unit ->
-  update_time_to_live_input
+val make_attribute_value_update :
+  ?value:attribute_value -> ?action:attribute_action -> unit -> attribute_value_update
 
 val make_auto_scaling_target_tracking_scaling_policy_configuration_description :
-  ?scale_out_cooldown:integer_object ->
-  ?scale_in_cooldown:integer_object ->
   ?disable_scale_in:boolean_object ->
+  ?scale_in_cooldown:integer_object ->
+  ?scale_out_cooldown:integer_object ->
   target_value:double_object ->
   unit ->
   auto_scaling_target_tracking_scaling_policy_configuration_description
 
 val make_auto_scaling_policy_description :
+  ?policy_name:auto_scaling_policy_name ->
   ?target_tracking_scaling_policy_configuration:
     auto_scaling_target_tracking_scaling_policy_configuration_description ->
-  ?policy_name:auto_scaling_policy_name ->
   unit ->
   auto_scaling_policy_description
 
-val make_auto_scaling_settings_description :
-  ?scaling_policies:auto_scaling_policy_description_list ->
-  ?auto_scaling_role_arn:string_ ->
-  ?auto_scaling_disabled:boolean_object ->
-  ?maximum_units:positive_long_object ->
-  ?minimum_units:positive_long_object ->
-  unit ->
-  auto_scaling_settings_description
-
-val make_replica_global_secondary_index_auto_scaling_description :
-  ?provisioned_write_capacity_auto_scaling_settings:auto_scaling_settings_description ->
-  ?provisioned_read_capacity_auto_scaling_settings:auto_scaling_settings_description ->
-  ?index_status:index_status ->
-  ?index_name:index_name ->
-  unit ->
-  replica_global_secondary_index_auto_scaling_description
-
-val make_replica_auto_scaling_description :
-  ?replica_status:replica_status ->
-  ?replica_provisioned_write_capacity_auto_scaling_settings:auto_scaling_settings_description ->
-  ?replica_provisioned_read_capacity_auto_scaling_settings:auto_scaling_settings_description ->
-  ?global_secondary_indexes:replica_global_secondary_index_auto_scaling_description_list ->
-  ?region_name:region_name ->
-  unit ->
-  replica_auto_scaling_description
-
-val make_table_auto_scaling_description :
-  ?replicas:replica_auto_scaling_description_list ->
-  ?table_status:table_status ->
-  ?table_name:table_name ->
-  unit ->
-  table_auto_scaling_description
-
-val make_update_table_replica_auto_scaling_output :
-  ?table_auto_scaling_description:table_auto_scaling_description ->
-  unit ->
-  update_table_replica_auto_scaling_output
-
 val make_auto_scaling_target_tracking_scaling_policy_configuration_update :
-  ?scale_out_cooldown:integer_object ->
-  ?scale_in_cooldown:integer_object ->
   ?disable_scale_in:boolean_object ->
+  ?scale_in_cooldown:integer_object ->
+  ?scale_out_cooldown:integer_object ->
   target_value:double_object ->
   unit ->
   auto_scaling_target_tracking_scaling_policy_configuration_update
@@ -103,109 +54,37 @@ val make_auto_scaling_policy_update :
   unit ->
   auto_scaling_policy_update
 
-val make_auto_scaling_settings_update :
-  ?scaling_policy_update:auto_scaling_policy_update ->
-  ?auto_scaling_role_arn:auto_scaling_role_arn ->
-  ?auto_scaling_disabled:boolean_object ->
-  ?maximum_units:positive_long_object ->
+val make_auto_scaling_settings_description :
   ?minimum_units:positive_long_object ->
+  ?maximum_units:positive_long_object ->
+  ?auto_scaling_disabled:boolean_object ->
+  ?auto_scaling_role_arn:string_ ->
+  ?scaling_policies:auto_scaling_policy_description_list ->
+  unit ->
+  auto_scaling_settings_description
+
+val make_auto_scaling_settings_update :
+  ?minimum_units:positive_long_object ->
+  ?maximum_units:positive_long_object ->
+  ?auto_scaling_disabled:boolean_object ->
+  ?auto_scaling_role_arn:auto_scaling_role_arn ->
+  ?scaling_policy_update:auto_scaling_policy_update ->
   unit ->
   auto_scaling_settings_update
 
-val make_global_secondary_index_auto_scaling_update :
-  ?provisioned_write_capacity_auto_scaling_update:auto_scaling_settings_update ->
-  ?index_name:index_name ->
+val make_sse_description :
+  ?status:sse_status ->
+  ?sse_type:sse_type ->
+  ?kms_master_key_arn:kms_master_key_arn ->
+  ?inaccessible_encryption_date_time:date ->
   unit ->
-  global_secondary_index_auto_scaling_update
+  sse_description
 
-val make_replica_global_secondary_index_auto_scaling_update :
-  ?provisioned_read_capacity_auto_scaling_update:auto_scaling_settings_update ->
-  ?index_name:index_name ->
+val make_time_to_live_description :
+  ?time_to_live_status:time_to_live_status ->
+  ?attribute_name:time_to_live_attribute_name ->
   unit ->
-  replica_global_secondary_index_auto_scaling_update
-
-val make_replica_auto_scaling_update :
-  ?replica_provisioned_read_capacity_auto_scaling_update:auto_scaling_settings_update ->
-  ?replica_global_secondary_index_updates:replica_global_secondary_index_auto_scaling_update_list ->
-  region_name:region_name ->
-  unit ->
-  replica_auto_scaling_update
-
-val make_update_table_replica_auto_scaling_input :
-  ?replica_updates:replica_auto_scaling_update_list ->
-  ?provisioned_write_capacity_auto_scaling_update:auto_scaling_settings_update ->
-  ?global_secondary_index_updates:global_secondary_index_auto_scaling_update_list ->
-  table_name:table_arn ->
-  unit ->
-  update_table_replica_auto_scaling_input
-
-val make_attribute_definition :
-  attribute_type:scalar_attribute_type ->
-  attribute_name:key_schema_attribute_name ->
-  unit ->
-  attribute_definition
-
-val make_key_schema_element :
-  key_type:key_type -> attribute_name:key_schema_attribute_name -> unit -> key_schema_element
-
-val make_provisioned_throughput_description :
-  ?write_capacity_units:non_negative_long_object ->
-  ?read_capacity_units:non_negative_long_object ->
-  ?number_of_decreases_today:positive_long_object ->
-  ?last_decrease_date_time:date ->
-  ?last_increase_date_time:date ->
-  unit ->
-  provisioned_throughput_description
-
-val make_billing_mode_summary :
-  ?last_update_to_pay_per_request_date_time:date ->
-  ?billing_mode:billing_mode ->
-  unit ->
-  billing_mode_summary
-
-val make_projection :
-  ?non_key_attributes:non_key_attribute_name_list ->
-  ?projection_type:projection_type ->
-  unit ->
-  projection
-
-val make_local_secondary_index_description :
-  ?index_arn:string_ ->
-  ?item_count:long_object ->
-  ?index_size_bytes:long_object ->
-  ?projection:projection ->
-  ?key_schema:key_schema ->
-  ?index_name:index_name ->
-  unit ->
-  local_secondary_index_description
-
-val make_on_demand_throughput :
-  ?max_write_request_units:long_object ->
-  ?max_read_request_units:long_object ->
-  unit ->
-  on_demand_throughput
-
-val make_global_secondary_index_warm_throughput_description :
-  ?status:index_status ->
-  ?write_units_per_second:positive_long_object ->
-  ?read_units_per_second:positive_long_object ->
-  unit ->
-  global_secondary_index_warm_throughput_description
-
-val make_global_secondary_index_description :
-  ?warm_throughput:global_secondary_index_warm_throughput_description ->
-  ?on_demand_throughput:on_demand_throughput ->
-  ?index_arn:string_ ->
-  ?item_count:long_object ->
-  ?index_size_bytes:long_object ->
-  ?provisioned_throughput:provisioned_throughput_description ->
-  ?backfilling:backfilling ->
-  ?index_status:index_status ->
-  ?projection:projection ->
-  ?key_schema:key_schema ->
-  ?index_name:index_name ->
-  unit ->
-  global_secondary_index_description
+  time_to_live_description
 
 val make_stream_specification :
   ?stream_view_type:stream_view_type ->
@@ -213,215 +92,906 @@ val make_stream_specification :
   unit ->
   stream_specification
 
-val make_provisioned_throughput_override :
-  ?read_capacity_units:positive_long_object -> unit -> provisioned_throughput_override
+val make_on_demand_throughput :
+  ?max_read_request_units:long_object ->
+  ?max_write_request_units:long_object ->
+  unit ->
+  on_demand_throughput
+
+val make_provisioned_throughput :
+  read_capacity_units:positive_long_object ->
+  write_capacity_units:positive_long_object ->
+  unit ->
+  provisioned_throughput
+
+val make_projection :
+  ?projection_type:projection_type ->
+  ?non_key_attributes:non_key_attribute_name_list ->
+  unit ->
+  projection
+
+val make_key_schema_element :
+  attribute_name:key_schema_attribute_name -> key_type:key_type -> unit -> key_schema_element
+
+val make_global_secondary_index_info :
+  ?index_name:index_name ->
+  ?key_schema:key_schema ->
+  ?projection:projection ->
+  ?provisioned_throughput:provisioned_throughput ->
+  ?on_demand_throughput:on_demand_throughput ->
+  unit ->
+  global_secondary_index_info
+
+val make_local_secondary_index_info :
+  ?index_name:index_name ->
+  ?key_schema:key_schema ->
+  ?projection:projection ->
+  unit ->
+  local_secondary_index_info
+
+val make_source_table_feature_details :
+  ?local_secondary_indexes:local_secondary_indexes ->
+  ?global_secondary_indexes:global_secondary_indexes ->
+  ?stream_description:stream_specification ->
+  ?time_to_live_description:time_to_live_description ->
+  ?sse_description:sse_description ->
+  unit ->
+  source_table_feature_details
+
+val make_source_table_details :
+  ?table_arn:table_arn ->
+  ?table_size_bytes:long_object ->
+  ?on_demand_throughput:on_demand_throughput ->
+  ?item_count:item_count ->
+  ?billing_mode:billing_mode ->
+  table_name:table_name ->
+  table_id:table_id ->
+  key_schema:key_schema ->
+  table_creation_date_time:table_creation_date_time ->
+  provisioned_throughput:provisioned_throughput ->
+  unit ->
+  source_table_details
+
+val make_backup_details :
+  ?backup_size_bytes:backup_size_bytes ->
+  ?backup_expiry_date_time:date ->
+  backup_arn:backup_arn ->
+  backup_name:backup_name ->
+  backup_status:backup_status ->
+  backup_type:backup_type ->
+  backup_creation_date_time:backup_creation_date_time ->
+  unit ->
+  backup_details
+
+val make_backup_description :
+  ?backup_details:backup_details ->
+  ?source_table_details:source_table_details ->
+  ?source_table_feature_details:source_table_feature_details ->
+  unit ->
+  backup_description
+
+val make_backup_summary :
+  ?table_name:table_name ->
+  ?table_id:table_id ->
+  ?table_arn:table_arn ->
+  ?backup_arn:backup_arn ->
+  ?backup_name:backup_name ->
+  ?backup_creation_date_time:backup_creation_date_time ->
+  ?backup_expiry_date_time:date ->
+  ?backup_status:backup_status ->
+  ?backup_type:backup_type ->
+  ?backup_size_bytes:backup_size_bytes ->
+  unit ->
+  backup_summary
+
+val make_throttling_reason : ?reason:reason -> ?resource:resource -> unit -> throttling_reason
+
+val make_capacity :
+  ?read_capacity_units:consumed_capacity_units ->
+  ?write_capacity_units:consumed_capacity_units ->
+  ?capacity_units:consumed_capacity_units ->
+  unit ->
+  capacity
+
+val make_consumed_capacity :
+  ?table_name:table_arn ->
+  ?capacity_units:consumed_capacity_units ->
+  ?read_capacity_units:consumed_capacity_units ->
+  ?write_capacity_units:consumed_capacity_units ->
+  ?table:capacity ->
+  ?local_secondary_indexes:secondary_indexes_capacity_map ->
+  ?global_secondary_indexes:secondary_indexes_capacity_map ->
+  unit ->
+  consumed_capacity
+
+val make_batch_statement_error :
+  ?code:batch_statement_error_code_enum ->
+  ?message:string_ ->
+  ?item:attribute_map ->
+  unit ->
+  batch_statement_error
+
+val make_batch_statement_response :
+  ?error:batch_statement_error ->
+  ?table_name:table_name ->
+  ?item:attribute_map ->
+  unit ->
+  batch_statement_response
+
+val make_batch_execute_statement_output :
+  ?responses:parti_ql_batch_response ->
+  ?consumed_capacity:consumed_capacity_multiple ->
+  unit ->
+  batch_execute_statement_output
+
+val make_batch_statement_request :
+  ?parameters:prepared_statement_parameters ->
+  ?consistent_read:consistent_read ->
+  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
+  statement:parti_ql_statement ->
+  unit ->
+  batch_statement_request
+
+val make_batch_execute_statement_input :
+  ?return_consumed_capacity:return_consumed_capacity ->
+  statements:parti_ql_batch_request ->
+  unit ->
+  batch_execute_statement_input
+
+val make_keys_and_attributes :
+  ?attributes_to_get:attribute_name_list ->
+  ?consistent_read:consistent_read ->
+  ?projection_expression:projection_expression ->
+  ?expression_attribute_names:expression_attribute_name_map ->
+  keys:key_list ->
+  unit ->
+  keys_and_attributes
+
+val make_batch_get_item_output :
+  ?responses:batch_get_response_map ->
+  ?unprocessed_keys:batch_get_request_map ->
+  ?consumed_capacity:consumed_capacity_multiple ->
+  unit ->
+  batch_get_item_output
+
+val make_batch_get_item_input :
+  ?return_consumed_capacity:return_consumed_capacity ->
+  request_items:batch_get_request_map ->
+  unit ->
+  batch_get_item_input
+
+val make_item_collection_metrics :
+  ?item_collection_key:item_collection_key_attribute_map ->
+  ?size_estimate_range_g_b:item_collection_size_estimate_range ->
+  unit ->
+  item_collection_metrics
+
+val make_delete_request : key:key -> unit -> delete_request
+val make_put_request : item:put_item_input_attribute_map -> unit -> put_request
+
+val make_write_request :
+  ?put_request:put_request -> ?delete_request:delete_request -> unit -> write_request
+
+val make_batch_write_item_output :
+  ?unprocessed_items:batch_write_item_request_map ->
+  ?item_collection_metrics:item_collection_metrics_per_table ->
+  ?consumed_capacity:consumed_capacity_multiple ->
+  unit ->
+  batch_write_item_output
+
+val make_batch_write_item_input :
+  ?return_consumed_capacity:return_consumed_capacity ->
+  ?return_item_collection_metrics:return_item_collection_metrics ->
+  request_items:batch_write_item_request_map ->
+  unit ->
+  batch_write_item_input
+
+val make_billing_mode_summary :
+  ?billing_mode:billing_mode ->
+  ?last_update_to_pay_per_request_date_time:date ->
+  unit ->
+  billing_mode_summary
+
+val make_cancellation_reason :
+  ?item:attribute_map -> ?code:code -> ?message:error_message -> unit -> cancellation_reason
+
+val make_condition :
+  ?attribute_value_list:attribute_value_list ->
+  comparison_operator:comparison_operator ->
+  unit ->
+  condition
+
+val make_condition_check :
+  ?expression_attribute_names:expression_attribute_name_map ->
+  ?expression_attribute_values:expression_attribute_value_map ->
+  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
+  key:key ->
+  table_name:table_arn ->
+  condition_expression:condition_expression ->
+  unit ->
+  condition_check
+
+val make_point_in_time_recovery_description :
+  ?point_in_time_recovery_status:point_in_time_recovery_status ->
+  ?recovery_period_in_days:recovery_period_in_days ->
+  ?earliest_restorable_date_time:date ->
+  ?latest_restorable_date_time:date ->
+  unit ->
+  point_in_time_recovery_description
+
+val make_continuous_backups_description :
+  ?point_in_time_recovery_description:point_in_time_recovery_description ->
+  continuous_backups_status:continuous_backups_status ->
+  unit ->
+  continuous_backups_description
+
+val make_contributor_insights_summary :
+  ?table_name:table_name ->
+  ?index_name:index_name ->
+  ?contributor_insights_status:contributor_insights_status ->
+  ?contributor_insights_mode:contributor_insights_mode ->
+  unit ->
+  contributor_insights_summary
+
+val make_create_backup_output : ?backup_details:backup_details -> unit -> create_backup_output
+
+val make_create_backup_input :
+  table_name:table_arn -> backup_name:backup_name -> unit -> create_backup_input
+
+val make_warm_throughput :
+  ?read_units_per_second:long_object ->
+  ?write_units_per_second:long_object ->
+  unit ->
+  warm_throughput
+
+val make_create_global_secondary_index_action :
+  ?provisioned_throughput:provisioned_throughput ->
+  ?on_demand_throughput:on_demand_throughput ->
+  ?warm_throughput:warm_throughput ->
+  index_name:index_name ->
+  key_schema:key_schema ->
+  projection:projection ->
+  unit ->
+  create_global_secondary_index_action
+
+val make_table_class_summary :
+  ?table_class:table_class -> ?last_update_date_time:date -> unit -> table_class_summary
+
+val make_global_secondary_index_warm_throughput_description :
+  ?read_units_per_second:positive_long_object ->
+  ?write_units_per_second:positive_long_object ->
+  ?status:index_status ->
+  unit ->
+  global_secondary_index_warm_throughput_description
 
 val make_on_demand_throughput_override :
   ?max_read_request_units:long_object -> unit -> on_demand_throughput_override
 
-val make_table_warm_throughput_description :
-  ?status:table_status ->
-  ?write_units_per_second:positive_long_object ->
-  ?read_units_per_second:positive_long_object ->
-  unit ->
-  table_warm_throughput_description
+val make_provisioned_throughput_override :
+  ?read_capacity_units:positive_long_object -> unit -> provisioned_throughput_override
 
 val make_replica_global_secondary_index_description :
-  ?warm_throughput:global_secondary_index_warm_throughput_description ->
-  ?on_demand_throughput_override:on_demand_throughput_override ->
-  ?provisioned_throughput_override:provisioned_throughput_override ->
   ?index_name:index_name ->
+  ?provisioned_throughput_override:provisioned_throughput_override ->
+  ?on_demand_throughput_override:on_demand_throughput_override ->
+  ?warm_throughput:global_secondary_index_warm_throughput_description ->
   unit ->
   replica_global_secondary_index_description
 
-val make_table_class_summary :
-  ?last_update_date_time:date -> ?table_class:table_class -> unit -> table_class_summary
+val make_table_warm_throughput_description :
+  ?read_units_per_second:positive_long_object ->
+  ?write_units_per_second:positive_long_object ->
+  ?status:table_status ->
+  unit ->
+  table_warm_throughput_description
 
 val make_replica_description :
-  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
-  ?replica_table_class_summary:table_class_summary ->
-  ?replica_inaccessible_date_time:date ->
-  ?global_secondary_indexes:replica_global_secondary_index_description_list ->
-  ?warm_throughput:table_warm_throughput_description ->
-  ?on_demand_throughput_override:on_demand_throughput_override ->
-  ?provisioned_throughput_override:provisioned_throughput_override ->
-  ?kms_master_key_id:kms_master_key_id ->
-  ?replica_status_percent_progress:replica_status_percent_progress ->
-  ?replica_status_description:replica_status_description ->
-  ?replica_arn:string_ ->
-  ?replica_status:replica_status ->
   ?region_name:region_name ->
+  ?replica_status:replica_status ->
+  ?replica_arn:string_ ->
+  ?replica_status_description:replica_status_description ->
+  ?replica_status_percent_progress:replica_status_percent_progress ->
+  ?kms_master_key_id:kms_master_key_id ->
+  ?provisioned_throughput_override:provisioned_throughput_override ->
+  ?on_demand_throughput_override:on_demand_throughput_override ->
+  ?warm_throughput:table_warm_throughput_description ->
+  ?global_secondary_indexes:replica_global_secondary_index_description_list ->
+  ?replica_inaccessible_date_time:date ->
+  ?replica_table_class_summary:table_class_summary ->
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
   unit ->
   replica_description
 
-val make_global_table_witness_description :
-  ?witness_status:witness_status ->
-  ?region_name:region_name ->
-  unit ->
-  global_table_witness_description
-
-val make_restore_summary :
-  ?source_table_arn:table_arn ->
-  ?source_backup_arn:backup_arn ->
-  restore_in_progress:restore_in_progress ->
-  restore_date_time:date ->
-  unit ->
-  restore_summary
-
-val make_sse_description :
-  ?inaccessible_encryption_date_time:date ->
-  ?kms_master_key_arn:kms_master_key_arn ->
-  ?sse_type:sse_type ->
-  ?status:sse_status ->
-  unit ->
-  sse_description
-
-val make_archival_summary :
-  ?archival_backup_arn:backup_arn ->
-  ?archival_reason:archival_reason ->
-  ?archival_date_time:date ->
-  unit ->
-  archival_summary
-
-val make_table_description :
-  ?multi_region_consistency:multi_region_consistency ->
-  ?warm_throughput:table_warm_throughput_description ->
-  ?on_demand_throughput:on_demand_throughput ->
-  ?deletion_protection_enabled:deletion_protection_enabled ->
-  ?table_class_summary:table_class_summary ->
-  ?archival_summary:archival_summary ->
-  ?sse_description:sse_description ->
-  ?restore_summary:restore_summary ->
-  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
-  ?global_table_witnesses:global_table_witness_description_list ->
-  ?replicas:replica_description_list ->
-  ?global_table_version:string_ ->
-  ?latest_stream_arn:stream_arn ->
-  ?latest_stream_label:string_ ->
-  ?stream_specification:stream_specification ->
-  ?global_secondary_indexes:global_secondary_index_description_list ->
-  ?local_secondary_indexes:local_secondary_index_description_list ->
-  ?billing_mode_summary:billing_mode_summary ->
-  ?table_id:table_id ->
-  ?table_arn:string_ ->
-  ?item_count:long_object ->
-  ?table_size_bytes:long_object ->
-  ?provisioned_throughput:provisioned_throughput_description ->
+val make_global_table_description :
+  ?replication_group:replica_description_list ->
+  ?global_table_arn:global_table_arn_string ->
   ?creation_date_time:date ->
-  ?table_status:table_status ->
-  ?key_schema:key_schema ->
-  ?table_name:table_name ->
-  ?attribute_definitions:attribute_definitions ->
+  ?global_table_status:global_table_status ->
+  ?global_table_name:table_name ->
   unit ->
-  table_description
+  global_table_description
 
-val make_update_table_output : ?table_description:table_description -> unit -> update_table_output
+val make_create_global_table_output :
+  ?global_table_description:global_table_description -> unit -> create_global_table_output
 
-val make_provisioned_throughput :
-  write_capacity_units:positive_long_object ->
-  read_capacity_units:positive_long_object ->
+val make_replica : ?region_name:region_name -> unit -> replica
+
+val make_create_global_table_input :
+  global_table_name:table_name ->
+  replication_group:replica_list ->
   unit ->
-  provisioned_throughput
+  create_global_table_input
 
-val make_update_global_secondary_index_action :
-  ?warm_throughput:warm_throughput ->
-  ?on_demand_throughput:on_demand_throughput ->
-  ?provisioned_throughput:provisioned_throughput ->
-  index_name:index_name ->
-  unit ->
-  update_global_secondary_index_action
+val make_create_global_table_witness_group_member_action :
+  region_name:region_name -> unit -> create_global_table_witness_group_member_action
 
-val make_create_global_secondary_index_action :
-  ?warm_throughput:warm_throughput ->
-  ?on_demand_throughput:on_demand_throughput ->
-  ?provisioned_throughput:provisioned_throughput ->
-  projection:projection ->
-  key_schema:key_schema ->
-  index_name:index_name ->
-  unit ->
-  create_global_secondary_index_action
-
-val make_delete_global_secondary_index_action :
-  index_name:index_name -> unit -> delete_global_secondary_index_action
-
-val make_global_secondary_index_update :
-  ?delete:delete_global_secondary_index_action ->
-  ?create:create_global_secondary_index_action ->
-  ?update:update_global_secondary_index_action ->
-  unit ->
-  global_secondary_index_update
-
-val make_sse_specification :
-  ?kms_master_key_id:kms_master_key_id ->
-  ?sse_type:sse_type ->
-  ?enabled:sse_enabled ->
-  unit ->
-  sse_specification
+val make_create_replica_action : region_name:region_name -> unit -> create_replica_action
 
 val make_replica_global_secondary_index :
-  ?on_demand_throughput_override:on_demand_throughput_override ->
   ?provisioned_throughput_override:provisioned_throughput_override ->
+  ?on_demand_throughput_override:on_demand_throughput_override ->
   index_name:index_name ->
   unit ->
   replica_global_secondary_index
 
 val make_create_replication_group_member_action :
-  ?table_class_override:table_class ->
-  ?global_secondary_indexes:replica_global_secondary_index_list ->
-  ?on_demand_throughput_override:on_demand_throughput_override ->
-  ?provisioned_throughput_override:provisioned_throughput_override ->
   ?kms_master_key_id:kms_master_key_id ->
+  ?provisioned_throughput_override:provisioned_throughput_override ->
+  ?on_demand_throughput_override:on_demand_throughput_override ->
+  ?global_secondary_indexes:replica_global_secondary_index_list ->
+  ?table_class_override:table_class ->
   region_name:region_name ->
   unit ->
   create_replication_group_member_action
 
-val make_update_replication_group_member_action :
-  ?table_class_override:table_class ->
-  ?global_secondary_indexes:replica_global_secondary_index_list ->
-  ?on_demand_throughput_override:on_demand_throughput_override ->
-  ?provisioned_throughput_override:provisioned_throughput_override ->
+val make_restore_summary :
+  ?source_backup_arn:backup_arn ->
+  ?source_table_arn:table_arn ->
+  restore_date_time:date ->
+  restore_in_progress:restore_in_progress ->
+  unit ->
+  restore_summary
+
+val make_global_table_witness_description :
+  ?region_name:region_name ->
+  ?witness_status:witness_status ->
+  unit ->
+  global_table_witness_description
+
+val make_provisioned_throughput_description :
+  ?last_increase_date_time:date ->
+  ?last_decrease_date_time:date ->
+  ?number_of_decreases_today:positive_long_object ->
+  ?read_capacity_units:non_negative_long_object ->
+  ?write_capacity_units:non_negative_long_object ->
+  unit ->
+  provisioned_throughput_description
+
+val make_global_secondary_index_description :
+  ?index_name:index_name ->
+  ?key_schema:key_schema ->
+  ?projection:projection ->
+  ?index_status:index_status ->
+  ?backfilling:backfilling ->
+  ?provisioned_throughput:provisioned_throughput_description ->
+  ?index_size_bytes:long_object ->
+  ?item_count:long_object ->
+  ?index_arn:string_ ->
+  ?on_demand_throughput:on_demand_throughput ->
+  ?warm_throughput:global_secondary_index_warm_throughput_description ->
+  unit ->
+  global_secondary_index_description
+
+val make_local_secondary_index_description :
+  ?index_name:index_name ->
+  ?key_schema:key_schema ->
+  ?projection:projection ->
+  ?index_size_bytes:long_object ->
+  ?item_count:long_object ->
+  ?index_arn:string_ ->
+  unit ->
+  local_secondary_index_description
+
+val make_table_description :
+  ?attribute_definitions:attribute_definitions ->
+  ?table_name:table_name ->
+  ?key_schema:key_schema ->
+  ?table_status:table_status ->
+  ?creation_date_time:date ->
+  ?provisioned_throughput:provisioned_throughput_description ->
+  ?table_size_bytes:long_object ->
+  ?item_count:long_object ->
+  ?table_arn:string_ ->
+  ?table_id:table_id ->
+  ?billing_mode_summary:billing_mode_summary ->
+  ?local_secondary_indexes:local_secondary_index_description_list ->
+  ?global_secondary_indexes:global_secondary_index_description_list ->
+  ?stream_specification:stream_specification ->
+  ?latest_stream_label:string_ ->
+  ?latest_stream_arn:stream_arn ->
+  ?global_table_version:string_ ->
+  ?replicas:replica_description_list ->
+  ?global_table_witnesses:global_table_witness_description_list ->
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
+  ?restore_summary:restore_summary ->
+  ?sse_description:sse_description ->
+  ?archival_summary:archival_summary ->
+  ?table_class_summary:table_class_summary ->
+  ?deletion_protection_enabled:deletion_protection_enabled ->
+  ?on_demand_throughput:on_demand_throughput ->
+  ?warm_throughput:table_warm_throughput_description ->
+  ?multi_region_consistency:multi_region_consistency ->
+  unit ->
+  table_description
+
+val make_create_table_output : ?table_description:table_description -> unit -> create_table_output
+val make_tag : key:tag_key_string -> value:tag_value_string -> unit -> tag
+
+val make_sse_specification :
+  ?enabled:sse_enabled ->
+  ?sse_type:sse_type ->
   ?kms_master_key_id:kms_master_key_id ->
-  region_name:region_name ->
   unit ->
-  update_replication_group_member_action
+  sse_specification
 
-val make_delete_replication_group_member_action :
-  region_name:region_name -> unit -> delete_replication_group_member_action
-
-val make_replication_group_update :
-  ?delete:delete_replication_group_member_action ->
-  ?update:update_replication_group_member_action ->
-  ?create:create_replication_group_member_action ->
+val make_global_secondary_index :
+  ?provisioned_throughput:provisioned_throughput ->
+  ?on_demand_throughput:on_demand_throughput ->
+  ?warm_throughput:warm_throughput ->
+  index_name:index_name ->
+  key_schema:key_schema ->
+  projection:projection ->
   unit ->
-  replication_group_update
+  global_secondary_index
 
-val make_create_global_table_witness_group_member_action :
-  region_name:region_name -> unit -> create_global_table_witness_group_member_action
+val make_local_secondary_index :
+  index_name:index_name ->
+  key_schema:key_schema ->
+  projection:projection ->
+  unit ->
+  local_secondary_index
+
+val make_create_table_input :
+  ?attribute_definitions:attribute_definitions ->
+  ?key_schema:key_schema ->
+  ?local_secondary_indexes:local_secondary_index_list ->
+  ?global_secondary_indexes:global_secondary_index_list ->
+  ?billing_mode:billing_mode ->
+  ?provisioned_throughput:provisioned_throughput ->
+  ?stream_specification:stream_specification ->
+  ?sse_specification:sse_specification ->
+  ?tags:tag_list ->
+  ?table_class:table_class ->
+  ?deletion_protection_enabled:deletion_protection_enabled ->
+  ?warm_throughput:warm_throughput ->
+  ?resource_policy:resource_policy ->
+  ?on_demand_throughput:on_demand_throughput ->
+  ?global_table_source_arn:table_arn ->
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
+  table_name:table_arn ->
+  unit ->
+  create_table_input
+
+val make_csv_options :
+  ?delimiter:csv_delimiter -> ?header_list:csv_header_list -> unit -> csv_options
+
+val make_delete :
+  ?condition_expression:condition_expression ->
+  ?expression_attribute_names:expression_attribute_name_map ->
+  ?expression_attribute_values:expression_attribute_value_map ->
+  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
+  key:key ->
+  table_name:table_arn ->
+  unit ->
+  delete
+
+val make_delete_backup_output :
+  ?backup_description:backup_description -> unit -> delete_backup_output
+
+val make_delete_backup_input : backup_arn:backup_arn -> unit -> delete_backup_input
+
+val make_delete_global_secondary_index_action :
+  index_name:index_name -> unit -> delete_global_secondary_index_action
 
 val make_delete_global_table_witness_group_member_action :
   region_name:region_name -> unit -> delete_global_table_witness_group_member_action
 
+val make_delete_item_output :
+  ?attributes:attribute_map ->
+  ?consumed_capacity:consumed_capacity ->
+  ?item_collection_metrics:item_collection_metrics ->
+  unit ->
+  delete_item_output
+
+val make_expected_attribute_value :
+  ?value:attribute_value ->
+  ?exists:boolean_object ->
+  ?comparison_operator:comparison_operator ->
+  ?attribute_value_list:attribute_value_list ->
+  unit ->
+  expected_attribute_value
+
+val make_delete_item_input :
+  ?expected:expected_attribute_map ->
+  ?conditional_operator:conditional_operator ->
+  ?return_values:return_value ->
+  ?return_consumed_capacity:return_consumed_capacity ->
+  ?return_item_collection_metrics:return_item_collection_metrics ->
+  ?condition_expression:condition_expression ->
+  ?expression_attribute_names:expression_attribute_name_map ->
+  ?expression_attribute_values:expression_attribute_value_map ->
+  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
+  table_name:table_arn ->
+  key:key ->
+  unit ->
+  delete_item_input
+
+val make_delete_replica_action : region_name:region_name -> unit -> delete_replica_action
+
+val make_delete_replication_group_member_action :
+  region_name:region_name -> unit -> delete_replication_group_member_action
+
+val make_delete_resource_policy_output :
+  ?revision_id:policy_revision_id -> unit -> delete_resource_policy_output
+
+val make_delete_resource_policy_input :
+  ?expected_revision_id:policy_revision_id ->
+  resource_arn:resource_arn_string ->
+  unit ->
+  delete_resource_policy_input
+
+val make_delete_table_output : ?table_description:table_description -> unit -> delete_table_output
+val make_delete_table_input : table_name:table_arn -> unit -> delete_table_input
+
+val make_describe_backup_output :
+  ?backup_description:backup_description -> unit -> describe_backup_output
+
+val make_describe_backup_input : backup_arn:backup_arn -> unit -> describe_backup_input
+
+val make_describe_continuous_backups_output :
+  ?continuous_backups_description:continuous_backups_description ->
+  unit ->
+  describe_continuous_backups_output
+
+val make_describe_continuous_backups_input :
+  table_name:table_arn -> unit -> describe_continuous_backups_input
+
+val make_failure_exception :
+  ?exception_name:exception_name ->
+  ?exception_description:exception_description ->
+  unit ->
+  failure_exception
+
+val make_describe_contributor_insights_output :
+  ?table_name:table_name ->
+  ?index_name:index_name ->
+  ?contributor_insights_rule_list:contributor_insights_rule_list ->
+  ?contributor_insights_status:contributor_insights_status ->
+  ?last_update_date_time:last_update_date_time ->
+  ?failure_exception:failure_exception ->
+  ?contributor_insights_mode:contributor_insights_mode ->
+  unit ->
+  describe_contributor_insights_output
+
+val make_describe_contributor_insights_input :
+  ?index_name:index_name -> table_name:table_arn -> unit -> describe_contributor_insights_input
+
+val make_endpoint : address:string_ -> cache_period_in_minutes:long -> unit -> endpoint
+val make_describe_endpoints_response : endpoints:endpoints -> unit -> describe_endpoints_response
+val make_describe_endpoints_request : unit -> unit
+
+val make_incremental_export_specification :
+  ?export_from_time:export_from_time ->
+  ?export_to_time:export_to_time ->
+  ?export_view_type:export_view_type ->
+  unit ->
+  incremental_export_specification
+
+val make_export_description :
+  ?export_arn:export_arn ->
+  ?export_status:export_status ->
+  ?start_time:export_start_time ->
+  ?end_time:export_end_time ->
+  ?export_manifest:export_manifest ->
+  ?table_arn:table_arn ->
+  ?table_id:table_id ->
+  ?export_time:export_time ->
+  ?client_token:client_token ->
+  ?s3_bucket:s3_bucket ->
+  ?s3_bucket_owner:s3_bucket_owner ->
+  ?s3_prefix:s3_prefix ->
+  ?s3_sse_algorithm:s3_sse_algorithm ->
+  ?s3_sse_kms_key_id:s3_sse_kms_key_id ->
+  ?failure_code:failure_code ->
+  ?failure_message:failure_message ->
+  ?export_format:export_format ->
+  ?billed_size_bytes:billed_size_bytes ->
+  ?item_count:item_count ->
+  ?export_type:export_type ->
+  ?incremental_export_specification:incremental_export_specification ->
+  unit ->
+  export_description
+
+val make_describe_export_output :
+  ?export_description:export_description -> unit -> describe_export_output
+
+val make_describe_export_input : export_arn:export_arn -> unit -> describe_export_input
+
+val make_describe_global_table_output :
+  ?global_table_description:global_table_description -> unit -> describe_global_table_output
+
+val make_describe_global_table_input :
+  global_table_name:table_name -> unit -> describe_global_table_input
+
+val make_replica_global_secondary_index_settings_description :
+  ?index_status:index_status ->
+  ?provisioned_read_capacity_units:positive_long_object ->
+  ?provisioned_read_capacity_auto_scaling_settings:auto_scaling_settings_description ->
+  ?provisioned_write_capacity_units:positive_long_object ->
+  ?provisioned_write_capacity_auto_scaling_settings:auto_scaling_settings_description ->
+  index_name:index_name ->
+  unit ->
+  replica_global_secondary_index_settings_description
+
+val make_replica_settings_description :
+  ?replica_status:replica_status ->
+  ?replica_billing_mode_summary:billing_mode_summary ->
+  ?replica_provisioned_read_capacity_units:non_negative_long_object ->
+  ?replica_provisioned_read_capacity_auto_scaling_settings:auto_scaling_settings_description ->
+  ?replica_provisioned_write_capacity_units:non_negative_long_object ->
+  ?replica_provisioned_write_capacity_auto_scaling_settings:auto_scaling_settings_description ->
+  ?replica_global_secondary_index_settings:replica_global_secondary_index_settings_description_list ->
+  ?replica_table_class_summary:table_class_summary ->
+  region_name:region_name ->
+  unit ->
+  replica_settings_description
+
+val make_describe_global_table_settings_output :
+  ?global_table_name:table_name ->
+  ?replica_settings:replica_settings_description_list ->
+  unit ->
+  describe_global_table_settings_output
+
+val make_describe_global_table_settings_input :
+  global_table_name:table_name -> unit -> describe_global_table_settings_input
+
+val make_table_creation_parameters :
+  ?billing_mode:billing_mode ->
+  ?provisioned_throughput:provisioned_throughput ->
+  ?on_demand_throughput:on_demand_throughput ->
+  ?sse_specification:sse_specification ->
+  ?global_secondary_indexes:global_secondary_index_list ->
+  table_name:table_name ->
+  attribute_definitions:attribute_definitions ->
+  key_schema:key_schema ->
+  unit ->
+  table_creation_parameters
+
+val make_input_format_options : ?csv:csv_options -> unit -> input_format_options
+
+val make_s3_bucket_source :
+  ?s3_bucket_owner:s3_bucket_owner ->
+  ?s3_key_prefix:s3_prefix ->
+  s3_bucket:s3_bucket ->
+  unit ->
+  s3_bucket_source
+
+val make_import_table_description :
+  ?import_arn:import_arn ->
+  ?import_status:import_status ->
+  ?table_arn:table_arn ->
+  ?table_id:table_id ->
+  ?client_token:client_token ->
+  ?s3_bucket_source:s3_bucket_source ->
+  ?error_count:error_count ->
+  ?cloud_watch_log_group_arn:cloud_watch_log_group_arn ->
+  ?input_format:input_format ->
+  ?input_format_options:input_format_options ->
+  ?input_compression_type:input_compression_type ->
+  ?table_creation_parameters:table_creation_parameters ->
+  ?start_time:import_start_time ->
+  ?end_time:import_end_time ->
+  ?processed_size_bytes:long_object ->
+  ?processed_item_count:processed_item_count ->
+  ?imported_item_count:imported_item_count ->
+  ?failure_code:failure_code ->
+  ?failure_message:failure_message ->
+  unit ->
+  import_table_description
+
+val make_describe_import_output :
+  import_table_description:import_table_description -> unit -> describe_import_output
+
+val make_describe_import_input : import_arn:import_arn -> unit -> describe_import_input
+
+val make_kinesis_data_stream_destination :
+  ?stream_arn:stream_arn ->
+  ?destination_status:destination_status ->
+  ?destination_status_description:string_ ->
+  ?approximate_creation_date_time_precision:approximate_creation_date_time_precision ->
+  unit ->
+  kinesis_data_stream_destination
+
+val make_describe_kinesis_streaming_destination_output :
+  ?table_name:table_name ->
+  ?kinesis_data_stream_destinations:kinesis_data_stream_destinations ->
+  unit ->
+  describe_kinesis_streaming_destination_output
+
+val make_describe_kinesis_streaming_destination_input :
+  table_name:table_arn -> unit -> describe_kinesis_streaming_destination_input
+
+val make_describe_limits_output :
+  ?account_max_read_capacity_units:positive_long_object ->
+  ?account_max_write_capacity_units:positive_long_object ->
+  ?table_max_read_capacity_units:positive_long_object ->
+  ?table_max_write_capacity_units:positive_long_object ->
+  unit ->
+  describe_limits_output
+
+val make_describe_limits_input : unit -> unit
+val make_describe_table_output : ?table:table_description -> unit -> describe_table_output
+val make_describe_table_input : table_name:table_arn -> unit -> describe_table_input
+
+val make_replica_global_secondary_index_auto_scaling_description :
+  ?index_name:index_name ->
+  ?index_status:index_status ->
+  ?provisioned_read_capacity_auto_scaling_settings:auto_scaling_settings_description ->
+  ?provisioned_write_capacity_auto_scaling_settings:auto_scaling_settings_description ->
+  unit ->
+  replica_global_secondary_index_auto_scaling_description
+
+val make_replica_auto_scaling_description :
+  ?region_name:region_name ->
+  ?global_secondary_indexes:replica_global_secondary_index_auto_scaling_description_list ->
+  ?replica_provisioned_read_capacity_auto_scaling_settings:auto_scaling_settings_description ->
+  ?replica_provisioned_write_capacity_auto_scaling_settings:auto_scaling_settings_description ->
+  ?replica_status:replica_status ->
+  unit ->
+  replica_auto_scaling_description
+
+val make_table_auto_scaling_description :
+  ?table_name:table_name ->
+  ?table_status:table_status ->
+  ?replicas:replica_auto_scaling_description_list ->
+  unit ->
+  table_auto_scaling_description
+
+val make_describe_table_replica_auto_scaling_output :
+  ?table_auto_scaling_description:table_auto_scaling_description ->
+  unit ->
+  describe_table_replica_auto_scaling_output
+
+val make_describe_table_replica_auto_scaling_input :
+  table_name:table_arn -> unit -> describe_table_replica_auto_scaling_input
+
+val make_describe_time_to_live_output :
+  ?time_to_live_description:time_to_live_description -> unit -> describe_time_to_live_output
+
+val make_describe_time_to_live_input : table_name:table_arn -> unit -> describe_time_to_live_input
+
+val make_enable_kinesis_streaming_configuration :
+  ?approximate_creation_date_time_precision:approximate_creation_date_time_precision ->
+  unit ->
+  enable_kinesis_streaming_configuration
+
+val make_kinesis_streaming_destination_output :
+  ?table_name:table_name ->
+  ?stream_arn:stream_arn ->
+  ?destination_status:destination_status ->
+  ?enable_kinesis_streaming_configuration:enable_kinesis_streaming_configuration ->
+  unit ->
+  kinesis_streaming_destination_output
+
+val make_kinesis_streaming_destination_input :
+  ?enable_kinesis_streaming_configuration:enable_kinesis_streaming_configuration ->
+  table_name:table_arn ->
+  stream_arn:stream_arn ->
+  unit ->
+  kinesis_streaming_destination_input
+
+val make_time_to_live_specification :
+  enabled:time_to_live_enabled ->
+  attribute_name:time_to_live_attribute_name ->
+  unit ->
+  time_to_live_specification
+
+val make_update_time_to_live_output :
+  ?time_to_live_specification:time_to_live_specification -> unit -> update_time_to_live_output
+
+val make_update_time_to_live_input :
+  table_name:table_arn ->
+  time_to_live_specification:time_to_live_specification ->
+  unit ->
+  update_time_to_live_input
+
+val make_update_table_replica_auto_scaling_output :
+  ?table_auto_scaling_description:table_auto_scaling_description ->
+  unit ->
+  update_table_replica_auto_scaling_output
+
+val make_replica_global_secondary_index_auto_scaling_update :
+  ?index_name:index_name ->
+  ?provisioned_read_capacity_auto_scaling_update:auto_scaling_settings_update ->
+  unit ->
+  replica_global_secondary_index_auto_scaling_update
+
+val make_replica_auto_scaling_update :
+  ?replica_global_secondary_index_updates:replica_global_secondary_index_auto_scaling_update_list ->
+  ?replica_provisioned_read_capacity_auto_scaling_update:auto_scaling_settings_update ->
+  region_name:region_name ->
+  unit ->
+  replica_auto_scaling_update
+
+val make_global_secondary_index_auto_scaling_update :
+  ?index_name:index_name ->
+  ?provisioned_write_capacity_auto_scaling_update:auto_scaling_settings_update ->
+  unit ->
+  global_secondary_index_auto_scaling_update
+
+val make_update_table_replica_auto_scaling_input :
+  ?global_secondary_index_updates:global_secondary_index_auto_scaling_update_list ->
+  ?provisioned_write_capacity_auto_scaling_update:auto_scaling_settings_update ->
+  ?replica_updates:replica_auto_scaling_update_list ->
+  table_name:table_arn ->
+  unit ->
+  update_table_replica_auto_scaling_input
+
+val make_update_table_output : ?table_description:table_description -> unit -> update_table_output
+
 val make_global_table_witness_group_update :
-  ?delete:delete_global_table_witness_group_member_action ->
   ?create:create_global_table_witness_group_member_action ->
+  ?delete:delete_global_table_witness_group_member_action ->
   unit ->
   global_table_witness_group_update
 
-val make_update_table_input :
-  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
-  ?warm_throughput:warm_throughput ->
-  ?on_demand_throughput:on_demand_throughput ->
-  ?global_table_witness_updates:global_table_witness_group_update_list ->
-  ?multi_region_consistency:multi_region_consistency ->
-  ?deletion_protection_enabled:deletion_protection_enabled ->
-  ?table_class:table_class ->
-  ?replica_updates:replication_group_update_list ->
-  ?sse_specification:sse_specification ->
-  ?stream_specification:stream_specification ->
-  ?global_secondary_index_updates:global_secondary_index_update_list ->
+val make_update_replication_group_member_action :
+  ?kms_master_key_id:kms_master_key_id ->
+  ?provisioned_throughput_override:provisioned_throughput_override ->
+  ?on_demand_throughput_override:on_demand_throughput_override ->
+  ?global_secondary_indexes:replica_global_secondary_index_list ->
+  ?table_class_override:table_class ->
+  region_name:region_name ->
+  unit ->
+  update_replication_group_member_action
+
+val make_replication_group_update :
+  ?create:create_replication_group_member_action ->
+  ?update:update_replication_group_member_action ->
+  ?delete:delete_replication_group_member_action ->
+  unit ->
+  replication_group_update
+
+val make_update_global_secondary_index_action :
   ?provisioned_throughput:provisioned_throughput ->
-  ?billing_mode:billing_mode ->
+  ?on_demand_throughput:on_demand_throughput ->
+  ?warm_throughput:warm_throughput ->
+  index_name:index_name ->
+  unit ->
+  update_global_secondary_index_action
+
+val make_global_secondary_index_update :
+  ?update:update_global_secondary_index_action ->
+  ?create:create_global_secondary_index_action ->
+  ?delete:delete_global_secondary_index_action ->
+  unit ->
+  global_secondary_index_update
+
+val make_update_table_input :
   ?attribute_definitions:attribute_definitions ->
+  ?billing_mode:billing_mode ->
+  ?provisioned_throughput:provisioned_throughput ->
+  ?global_secondary_index_updates:global_secondary_index_update_list ->
+  ?stream_specification:stream_specification ->
+  ?sse_specification:sse_specification ->
+  ?replica_updates:replication_group_update_list ->
+  ?table_class:table_class ->
+  ?deletion_protection_enabled:deletion_protection_enabled ->
+  ?multi_region_consistency:multi_region_consistency ->
+  ?global_table_witness_updates:global_table_witness_group_update_list ->
+  ?on_demand_throughput:on_demand_throughput ->
+  ?warm_throughput:warm_throughput ->
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
   table_name:table_arn ->
   unit ->
   update_table_input
@@ -432,198 +1002,112 @@ val make_update_kinesis_streaming_configuration :
   update_kinesis_streaming_configuration
 
 val make_update_kinesis_streaming_destination_output :
-  ?update_kinesis_streaming_configuration:update_kinesis_streaming_configuration ->
-  ?destination_status:destination_status ->
-  ?stream_arn:stream_arn ->
   ?table_name:table_name ->
+  ?stream_arn:stream_arn ->
+  ?destination_status:destination_status ->
+  ?update_kinesis_streaming_configuration:update_kinesis_streaming_configuration ->
   unit ->
   update_kinesis_streaming_destination_output
 
 val make_update_kinesis_streaming_destination_input :
   ?update_kinesis_streaming_configuration:update_kinesis_streaming_configuration ->
-  stream_arn:stream_arn ->
   table_name:table_arn ->
+  stream_arn:stream_arn ->
   unit ->
   update_kinesis_streaming_destination_input
 
-val make_capacity :
-  ?capacity_units:consumed_capacity_units ->
-  ?write_capacity_units:consumed_capacity_units ->
-  ?read_capacity_units:consumed_capacity_units ->
-  unit ->
-  capacity
-
-val make_consumed_capacity :
-  ?global_secondary_indexes:secondary_indexes_capacity_map ->
-  ?local_secondary_indexes:secondary_indexes_capacity_map ->
-  ?table:capacity ->
-  ?write_capacity_units:consumed_capacity_units ->
-  ?read_capacity_units:consumed_capacity_units ->
-  ?capacity_units:consumed_capacity_units ->
-  ?table_name:table_arn ->
-  unit ->
-  consumed_capacity
-
-val make_item_collection_metrics :
-  ?size_estimate_range_g_b:item_collection_size_estimate_range ->
-  ?item_collection_key:item_collection_key_attribute_map ->
-  unit ->
-  item_collection_metrics
-
 val make_update_item_output :
-  ?item_collection_metrics:item_collection_metrics ->
-  ?consumed_capacity:consumed_capacity ->
   ?attributes:attribute_map ->
+  ?consumed_capacity:consumed_capacity ->
+  ?item_collection_metrics:item_collection_metrics ->
   unit ->
   update_item_output
 
-val make_attribute_value_update :
-  ?action:attribute_action -> ?value:attribute_value -> unit -> attribute_value_update
-
-val make_expected_attribute_value :
-  ?attribute_value_list:attribute_value_list ->
-  ?comparison_operator:comparison_operator ->
-  ?exists:boolean_object ->
-  ?value:attribute_value ->
-  unit ->
-  expected_attribute_value
-
 val make_update_item_input :
-  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
-  ?expression_attribute_values:expression_attribute_value_map ->
-  ?expression_attribute_names:expression_attribute_name_map ->
-  ?condition_expression:condition_expression ->
-  ?update_expression:update_expression ->
-  ?return_item_collection_metrics:return_item_collection_metrics ->
-  ?return_consumed_capacity:return_consumed_capacity ->
-  ?return_values:return_value ->
-  ?conditional_operator:conditional_operator ->
-  ?expected:expected_attribute_map ->
   ?attribute_updates:attribute_updates ->
-  key:key ->
+  ?expected:expected_attribute_map ->
+  ?conditional_operator:conditional_operator ->
+  ?return_values:return_value ->
+  ?return_consumed_capacity:return_consumed_capacity ->
+  ?return_item_collection_metrics:return_item_collection_metrics ->
+  ?update_expression:update_expression ->
+  ?condition_expression:condition_expression ->
+  ?expression_attribute_names:expression_attribute_name_map ->
+  ?expression_attribute_values:expression_attribute_value_map ->
+  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
   table_name:table_arn ->
+  key:key ->
   unit ->
   update_item_input
 
-val make_throttling_reason : ?resource:resource -> ?reason:reason -> unit -> throttling_reason
-
-val make_replica_global_secondary_index_settings_description :
-  ?provisioned_write_capacity_auto_scaling_settings:auto_scaling_settings_description ->
-  ?provisioned_write_capacity_units:positive_long_object ->
-  ?provisioned_read_capacity_auto_scaling_settings:auto_scaling_settings_description ->
-  ?provisioned_read_capacity_units:positive_long_object ->
-  ?index_status:index_status ->
-  index_name:index_name ->
-  unit ->
-  replica_global_secondary_index_settings_description
-
-val make_replica_settings_description :
-  ?replica_table_class_summary:table_class_summary ->
-  ?replica_global_secondary_index_settings:replica_global_secondary_index_settings_description_list ->
-  ?replica_provisioned_write_capacity_auto_scaling_settings:auto_scaling_settings_description ->
-  ?replica_provisioned_write_capacity_units:non_negative_long_object ->
-  ?replica_provisioned_read_capacity_auto_scaling_settings:auto_scaling_settings_description ->
-  ?replica_provisioned_read_capacity_units:non_negative_long_object ->
-  ?replica_billing_mode_summary:billing_mode_summary ->
-  ?replica_status:replica_status ->
-  region_name:region_name ->
-  unit ->
-  replica_settings_description
-
 val make_update_global_table_settings_output :
-  ?replica_settings:replica_settings_description_list ->
   ?global_table_name:table_name ->
+  ?replica_settings:replica_settings_description_list ->
   unit ->
   update_global_table_settings_output
 
-val make_global_table_global_secondary_index_settings_update :
-  ?provisioned_write_capacity_auto_scaling_settings_update:auto_scaling_settings_update ->
-  ?provisioned_write_capacity_units:positive_long_object ->
-  index_name:index_name ->
-  unit ->
-  global_table_global_secondary_index_settings_update
-
 val make_replica_global_secondary_index_settings_update :
-  ?provisioned_read_capacity_auto_scaling_settings_update:auto_scaling_settings_update ->
   ?provisioned_read_capacity_units:positive_long_object ->
+  ?provisioned_read_capacity_auto_scaling_settings_update:auto_scaling_settings_update ->
   index_name:index_name ->
   unit ->
   replica_global_secondary_index_settings_update
 
 val make_replica_settings_update :
-  ?replica_table_class:table_class ->
+  ?replica_provisioned_read_capacity_units:positive_long_object ->
+  ?replica_provisioned_read_capacity_auto_scaling_settings_update:auto_scaling_settings_update ->
   ?replica_global_secondary_index_settings_update:
     replica_global_secondary_index_settings_update_list ->
-  ?replica_provisioned_read_capacity_auto_scaling_settings_update:auto_scaling_settings_update ->
-  ?replica_provisioned_read_capacity_units:positive_long_object ->
+  ?replica_table_class:table_class ->
   region_name:region_name ->
   unit ->
   replica_settings_update
 
+val make_global_table_global_secondary_index_settings_update :
+  ?provisioned_write_capacity_units:positive_long_object ->
+  ?provisioned_write_capacity_auto_scaling_settings_update:auto_scaling_settings_update ->
+  index_name:index_name ->
+  unit ->
+  global_table_global_secondary_index_settings_update
+
 val make_update_global_table_settings_input :
-  ?replica_settings_update:replica_settings_update_list ->
+  ?global_table_billing_mode:billing_mode ->
+  ?global_table_provisioned_write_capacity_units:positive_long_object ->
+  ?global_table_provisioned_write_capacity_auto_scaling_settings_update:auto_scaling_settings_update ->
   ?global_table_global_secondary_index_settings_update:
     global_table_global_secondary_index_settings_update_list ->
-  ?global_table_provisioned_write_capacity_auto_scaling_settings_update:auto_scaling_settings_update ->
-  ?global_table_provisioned_write_capacity_units:positive_long_object ->
-  ?global_table_billing_mode:billing_mode ->
+  ?replica_settings_update:replica_settings_update_list ->
   global_table_name:table_name ->
   unit ->
   update_global_table_settings_input
 
-val make_global_table_description :
-  ?global_table_name:table_name ->
-  ?global_table_status:global_table_status ->
-  ?creation_date_time:date ->
-  ?global_table_arn:global_table_arn_string ->
-  ?replication_group:replica_description_list ->
-  unit ->
-  global_table_description
-
 val make_update_global_table_output :
   ?global_table_description:global_table_description -> unit -> update_global_table_output
 
-val make_create_replica_action : region_name:region_name -> unit -> create_replica_action
-val make_delete_replica_action : region_name:region_name -> unit -> delete_replica_action
-
 val make_replica_update :
-  ?delete:delete_replica_action -> ?create:create_replica_action -> unit -> replica_update
+  ?create:create_replica_action -> ?delete:delete_replica_action -> unit -> replica_update
 
 val make_update_global_table_input :
-  replica_updates:replica_update_list ->
   global_table_name:table_name ->
+  replica_updates:replica_update_list ->
   unit ->
   update_global_table_input
 
 val make_update_contributor_insights_output :
-  ?contributor_insights_mode:contributor_insights_mode ->
-  ?contributor_insights_status:contributor_insights_status ->
-  ?index_name:index_name ->
   ?table_name:table_name ->
+  ?index_name:index_name ->
+  ?contributor_insights_status:contributor_insights_status ->
+  ?contributor_insights_mode:contributor_insights_mode ->
   unit ->
   update_contributor_insights_output
 
 val make_update_contributor_insights_input :
-  ?contributor_insights_mode:contributor_insights_mode ->
   ?index_name:index_name ->
-  contributor_insights_action:contributor_insights_action ->
+  ?contributor_insights_mode:contributor_insights_mode ->
   table_name:table_arn ->
+  contributor_insights_action:contributor_insights_action ->
   unit ->
   update_contributor_insights_input
-
-val make_point_in_time_recovery_description :
-  ?latest_restorable_date_time:date ->
-  ?earliest_restorable_date_time:date ->
-  ?recovery_period_in_days:recovery_period_in_days ->
-  ?point_in_time_recovery_status:point_in_time_recovery_status ->
-  unit ->
-  point_in_time_recovery_description
-
-val make_continuous_backups_description :
-  ?point_in_time_recovery_description:point_in_time_recovery_description ->
-  continuous_backups_status:continuous_backups_status ->
-  unit ->
-  continuous_backups_description
 
 val make_update_continuous_backups_output :
   ?continuous_backups_description:continuous_backups_description ->
@@ -637,76 +1121,53 @@ val make_point_in_time_recovery_specification :
   point_in_time_recovery_specification
 
 val make_update_continuous_backups_input :
-  point_in_time_recovery_specification:point_in_time_recovery_specification ->
   table_name:table_arn ->
+  point_in_time_recovery_specification:point_in_time_recovery_specification ->
   unit ->
   update_continuous_backups_input
 
-val make_update :
-  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
-  ?expression_attribute_values:expression_attribute_value_map ->
-  ?expression_attribute_names:expression_attribute_name_map ->
-  ?condition_expression:condition_expression ->
-  table_name:table_arn ->
-  update_expression:update_expression ->
-  key:key ->
-  unit ->
-  update
-
 val make_untag_resource_input :
-  tag_keys:tag_key_list -> resource_arn:resource_arn_string -> unit -> untag_resource_input
-
-val make_cancellation_reason :
-  ?message:error_message -> ?code:code -> ?item:attribute_map -> unit -> cancellation_reason
+  resource_arn:resource_arn_string -> tag_keys:tag_key_list -> unit -> untag_resource_input
 
 val make_transact_write_items_output :
-  ?item_collection_metrics:item_collection_metrics_per_table ->
   ?consumed_capacity:consumed_capacity_multiple ->
+  ?item_collection_metrics:item_collection_metrics_per_table ->
   unit ->
   transact_write_items_output
 
-val make_condition_check :
-  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
-  ?expression_attribute_values:expression_attribute_value_map ->
+val make_update :
+  ?condition_expression:condition_expression ->
   ?expression_attribute_names:expression_attribute_name_map ->
-  condition_expression:condition_expression ->
-  table_name:table_arn ->
+  ?expression_attribute_values:expression_attribute_value_map ->
+  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
   key:key ->
+  update_expression:update_expression ->
+  table_name:table_arn ->
   unit ->
-  condition_check
+  update
 
 val make_put :
-  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
-  ?expression_attribute_values:expression_attribute_value_map ->
-  ?expression_attribute_names:expression_attribute_name_map ->
   ?condition_expression:condition_expression ->
-  table_name:table_arn ->
+  ?expression_attribute_names:expression_attribute_name_map ->
+  ?expression_attribute_values:expression_attribute_value_map ->
+  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
   item:put_item_input_attribute_map ->
+  table_name:table_arn ->
   unit ->
   put
 
-val make_delete :
-  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
-  ?expression_attribute_values:expression_attribute_value_map ->
-  ?expression_attribute_names:expression_attribute_name_map ->
-  ?condition_expression:condition_expression ->
-  table_name:table_arn ->
-  key:key ->
-  unit ->
-  delete
-
 val make_transact_write_item :
-  ?update:update ->
-  ?delete:delete ->
-  ?put:put ->
   ?condition_check:condition_check ->
+  ?put:put ->
+  ?delete:delete ->
+  ?update:update ->
   unit ->
   transact_write_item
 
 val make_transact_write_items_input :
-  ?client_request_token:client_request_token ->
-  ?return_item_collection_metrics:return_item_collection_metrics ->
   ?return_consumed_capacity:return_consumed_capacity ->
+  ?return_item_collection_metrics:return_item_collection_metrics ->
+  ?client_request_token:client_request_token ->
   transact_items:transact_write_item_list ->
   unit ->
   transact_write_items_input
@@ -714,16 +1175,16 @@ val make_transact_write_items_input :
 val make_item_response : ?item:attribute_map -> unit -> item_response
 
 val make_transact_get_items_output :
-  ?responses:item_response_list ->
   ?consumed_capacity:consumed_capacity_multiple ->
+  ?responses:item_response_list ->
   unit ->
   transact_get_items_output
 
 val make_get :
-  ?expression_attribute_names:expression_attribute_name_map ->
   ?projection_expression:projection_expression ->
-  table_name:table_arn ->
+  ?expression_attribute_names:expression_attribute_name_map ->
   key:key ->
+  table_name:table_arn ->
   unit ->
   get
 
@@ -735,141 +1196,52 @@ val make_transact_get_items_input :
   unit ->
   transact_get_items_input
 
-val make_time_to_live_description :
-  ?attribute_name:time_to_live_attribute_name ->
-  ?time_to_live_status:time_to_live_status ->
-  unit ->
-  time_to_live_description
-
-val make_tag : value:tag_value_string -> key:tag_key_string -> unit -> tag
-
 val make_tag_resource_input :
-  tags:tag_list -> resource_arn:resource_arn_string -> unit -> tag_resource_input
-
-val make_global_secondary_index :
-  ?warm_throughput:warm_throughput ->
-  ?on_demand_throughput:on_demand_throughput ->
-  ?provisioned_throughput:provisioned_throughput ->
-  projection:projection ->
-  key_schema:key_schema ->
-  index_name:index_name ->
-  unit ->
-  global_secondary_index
-
-val make_table_creation_parameters :
-  ?global_secondary_indexes:global_secondary_index_list ->
-  ?sse_specification:sse_specification ->
-  ?on_demand_throughput:on_demand_throughput ->
-  ?provisioned_throughput:provisioned_throughput ->
-  ?billing_mode:billing_mode ->
-  key_schema:key_schema ->
-  attribute_definitions:attribute_definitions ->
-  table_name:table_name ->
-  unit ->
-  table_creation_parameters
-
-val make_local_secondary_index_info :
-  ?projection:projection ->
-  ?key_schema:key_schema ->
-  ?index_name:index_name ->
-  unit ->
-  local_secondary_index_info
-
-val make_global_secondary_index_info :
-  ?on_demand_throughput:on_demand_throughput ->
-  ?provisioned_throughput:provisioned_throughput ->
-  ?projection:projection ->
-  ?key_schema:key_schema ->
-  ?index_name:index_name ->
-  unit ->
-  global_secondary_index_info
-
-val make_source_table_feature_details :
-  ?sse_description:sse_description ->
-  ?time_to_live_description:time_to_live_description ->
-  ?stream_description:stream_specification ->
-  ?global_secondary_indexes:global_secondary_indexes ->
-  ?local_secondary_indexes:local_secondary_indexes ->
-  unit ->
-  source_table_feature_details
-
-val make_source_table_details :
-  ?billing_mode:billing_mode ->
-  ?item_count:item_count ->
-  ?on_demand_throughput:on_demand_throughput ->
-  ?table_size_bytes:long_object ->
-  ?table_arn:table_arn ->
-  provisioned_throughput:provisioned_throughput ->
-  table_creation_date_time:table_creation_date_time ->
-  key_schema:key_schema ->
-  table_id:table_id ->
-  table_name:table_name ->
-  unit ->
-  source_table_details
+  resource_arn:resource_arn_string -> tags:tag_list -> unit -> tag_resource_input
 
 val make_scan_output :
-  ?consumed_capacity:consumed_capacity ->
-  ?last_evaluated_key:key ->
-  ?scanned_count:integer ->
-  ?count:integer ->
   ?items:item_list ->
+  ?count:integer ->
+  ?scanned_count:integer ->
+  ?last_evaluated_key:key ->
+  ?consumed_capacity:consumed_capacity ->
   unit ->
   scan_output
 
-val make_condition :
-  ?attribute_value_list:attribute_value_list ->
-  comparison_operator:comparison_operator ->
-  unit ->
-  condition
-
 val make_scan_input :
-  ?consistent_read:consistent_read ->
-  ?expression_attribute_values:expression_attribute_value_map ->
-  ?expression_attribute_names:expression_attribute_name_map ->
-  ?filter_expression:condition_expression ->
-  ?projection_expression:projection_expression ->
-  ?segment:scan_segment ->
-  ?total_segments:scan_total_segments ->
-  ?return_consumed_capacity:return_consumed_capacity ->
-  ?exclusive_start_key:key ->
-  ?conditional_operator:conditional_operator ->
-  ?scan_filter:filter_condition_map ->
-  ?select:select ->
-  ?limit:positive_integer_object ->
-  ?attributes_to_get:attribute_name_list ->
   ?index_name:index_name ->
+  ?attributes_to_get:attribute_name_list ->
+  ?limit:positive_integer_object ->
+  ?select:select ->
+  ?scan_filter:filter_condition_map ->
+  ?conditional_operator:conditional_operator ->
+  ?exclusive_start_key:key ->
+  ?return_consumed_capacity:return_consumed_capacity ->
+  ?total_segments:scan_total_segments ->
+  ?segment:scan_segment ->
+  ?projection_expression:projection_expression ->
+  ?filter_expression:condition_expression ->
+  ?expression_attribute_names:expression_attribute_name_map ->
+  ?expression_attribute_values:expression_attribute_value_map ->
+  ?consistent_read:consistent_read ->
   table_name:table_arn ->
   unit ->
   scan_input
 
-val make_s3_bucket_source :
-  ?s3_key_prefix:s3_prefix ->
-  ?s3_bucket_owner:s3_bucket_owner ->
-  s3_bucket:s3_bucket ->
-  unit ->
-  s3_bucket_source
-
 val make_restore_table_to_point_in_time_output :
   ?table_description:table_description -> unit -> restore_table_to_point_in_time_output
 
-val make_local_secondary_index :
-  projection:projection ->
-  key_schema:key_schema ->
-  index_name:index_name ->
-  unit ->
-  local_secondary_index
-
 val make_restore_table_to_point_in_time_input :
-  ?sse_specification_override:sse_specification ->
-  ?on_demand_throughput_override:on_demand_throughput ->
-  ?provisioned_throughput_override:provisioned_throughput ->
-  ?local_secondary_index_override:local_secondary_index_list ->
-  ?global_secondary_index_override:global_secondary_index_list ->
-  ?billing_mode_override:billing_mode ->
-  ?restore_date_time:date ->
-  ?use_latest_restorable_time:boolean_object ->
-  ?source_table_name:table_name ->
   ?source_table_arn:table_arn ->
+  ?source_table_name:table_name ->
+  ?use_latest_restorable_time:boolean_object ->
+  ?restore_date_time:date ->
+  ?billing_mode_override:billing_mode ->
+  ?global_secondary_index_override:global_secondary_index_list ->
+  ?local_secondary_index_override:local_secondary_index_list ->
+  ?provisioned_throughput_override:provisioned_throughput ->
+  ?on_demand_throughput_override:on_demand_throughput ->
+  ?sse_specification_override:sse_specification ->
   target_table_name:table_name ->
   unit ->
   restore_table_to_point_in_time_input
@@ -878,45 +1250,43 @@ val make_restore_table_from_backup_output :
   ?table_description:table_description -> unit -> restore_table_from_backup_output
 
 val make_restore_table_from_backup_input :
-  ?sse_specification_override:sse_specification ->
-  ?on_demand_throughput_override:on_demand_throughput ->
-  ?provisioned_throughput_override:provisioned_throughput ->
-  ?local_secondary_index_override:local_secondary_index_list ->
-  ?global_secondary_index_override:global_secondary_index_list ->
   ?billing_mode_override:billing_mode ->
-  backup_arn:backup_arn ->
+  ?global_secondary_index_override:global_secondary_index_list ->
+  ?local_secondary_index_override:local_secondary_index_list ->
+  ?provisioned_throughput_override:provisioned_throughput ->
+  ?on_demand_throughput_override:on_demand_throughput ->
+  ?sse_specification_override:sse_specification ->
   target_table_name:table_name ->
+  backup_arn:backup_arn ->
   unit ->
   restore_table_from_backup_input
 
-val make_replica : ?region_name:region_name -> unit -> replica
-
 val make_query_output :
-  ?consumed_capacity:consumed_capacity ->
-  ?last_evaluated_key:key ->
-  ?scanned_count:integer ->
-  ?count:integer ->
   ?items:item_list ->
+  ?count:integer ->
+  ?scanned_count:integer ->
+  ?last_evaluated_key:key ->
+  ?consumed_capacity:consumed_capacity ->
   unit ->
   query_output
 
 val make_query_input :
-  ?expression_attribute_values:expression_attribute_value_map ->
-  ?expression_attribute_names:expression_attribute_name_map ->
-  ?key_condition_expression:key_expression ->
-  ?filter_expression:condition_expression ->
-  ?projection_expression:projection_expression ->
-  ?return_consumed_capacity:return_consumed_capacity ->
-  ?exclusive_start_key:key ->
-  ?scan_index_forward:boolean_object ->
-  ?conditional_operator:conditional_operator ->
-  ?query_filter:filter_condition_map ->
-  ?key_conditions:key_conditions ->
-  ?consistent_read:consistent_read ->
-  ?limit:positive_integer_object ->
-  ?attributes_to_get:attribute_name_list ->
-  ?select:select ->
   ?index_name:index_name ->
+  ?select:select ->
+  ?attributes_to_get:attribute_name_list ->
+  ?limit:positive_integer_object ->
+  ?consistent_read:consistent_read ->
+  ?key_conditions:key_conditions ->
+  ?query_filter:filter_condition_map ->
+  ?conditional_operator:conditional_operator ->
+  ?scan_index_forward:boolean_object ->
+  ?exclusive_start_key:key ->
+  ?return_consumed_capacity:return_consumed_capacity ->
+  ?projection_expression:projection_expression ->
+  ?filter_expression:condition_expression ->
+  ?key_condition_expression:key_expression ->
+  ?expression_attribute_names:expression_attribute_name_map ->
+  ?expression_attribute_values:expression_attribute_value_map ->
   table_name:table_arn ->
   unit ->
   query_input
@@ -925,66 +1295,37 @@ val make_put_resource_policy_output :
   ?revision_id:policy_revision_id -> unit -> put_resource_policy_output
 
 val make_put_resource_policy_input :
-  ?confirm_remove_self_resource_access:confirm_remove_self_resource_access ->
   ?expected_revision_id:policy_revision_id ->
-  policy:resource_policy ->
+  ?confirm_remove_self_resource_access:confirm_remove_self_resource_access ->
   resource_arn:resource_arn_string ->
+  policy:resource_policy ->
   unit ->
   put_resource_policy_input
 
 val make_put_item_output :
-  ?item_collection_metrics:item_collection_metrics ->
-  ?consumed_capacity:consumed_capacity ->
   ?attributes:attribute_map ->
+  ?consumed_capacity:consumed_capacity ->
+  ?item_collection_metrics:item_collection_metrics ->
   unit ->
   put_item_output
 
 val make_put_item_input :
-  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
-  ?expression_attribute_values:expression_attribute_value_map ->
-  ?expression_attribute_names:expression_attribute_name_map ->
-  ?condition_expression:condition_expression ->
-  ?conditional_operator:conditional_operator ->
-  ?return_item_collection_metrics:return_item_collection_metrics ->
-  ?return_consumed_capacity:return_consumed_capacity ->
-  ?return_values:return_value ->
   ?expected:expected_attribute_map ->
-  item:put_item_input_attribute_map ->
+  ?return_values:return_value ->
+  ?return_consumed_capacity:return_consumed_capacity ->
+  ?return_item_collection_metrics:return_item_collection_metrics ->
+  ?conditional_operator:conditional_operator ->
+  ?condition_expression:condition_expression ->
+  ?expression_attribute_names:expression_attribute_name_map ->
+  ?expression_attribute_values:expression_attribute_value_map ->
+  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
   table_name:table_arn ->
+  item:put_item_input_attribute_map ->
   unit ->
   put_item_input
 
-val make_batch_statement_error :
-  ?item:attribute_map ->
-  ?message:string_ ->
-  ?code:batch_statement_error_code_enum ->
-  unit ->
-  batch_statement_error
-
-val make_batch_statement_response :
-  ?item:attribute_map ->
-  ?table_name:table_name ->
-  ?error:batch_statement_error ->
-  unit ->
-  batch_statement_response
-
-val make_batch_statement_request :
-  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
-  ?consistent_read:consistent_read ->
-  ?parameters:prepared_statement_parameters ->
-  statement:parti_ql_statement ->
-  unit ->
-  batch_statement_request
-
-val make_parameterized_statement :
-  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
-  ?parameters:prepared_statement_parameters ->
-  statement:parti_ql_statement ->
-  unit ->
-  parameterized_statement
-
 val make_list_tags_of_resource_output :
-  ?next_token:next_token_string -> ?tags:tag_list -> unit -> list_tags_of_resource_output
+  ?tags:tag_list -> ?next_token:next_token_string -> unit -> list_tags_of_resource_output
 
 val make_list_tags_of_resource_input :
   ?next_token:next_token_string ->
@@ -993,1784 +1334,194 @@ val make_list_tags_of_resource_input :
   list_tags_of_resource_input
 
 val make_list_tables_output :
-  ?last_evaluated_table_name:table_name ->
   ?table_names:table_name_list ->
+  ?last_evaluated_table_name:table_name ->
   unit ->
   list_tables_output
 
 val make_list_tables_input :
-  ?limit:list_tables_input_limit ->
   ?exclusive_start_table_name:table_name ->
+  ?limit:list_tables_input_limit ->
   unit ->
   list_tables_input
 
 val make_import_summary :
-  ?end_time:import_end_time ->
-  ?start_time:import_start_time ->
-  ?input_format:input_format ->
-  ?cloud_watch_log_group_arn:cloud_watch_log_group_arn ->
-  ?s3_bucket_source:s3_bucket_source ->
-  ?table_arn:table_arn ->
-  ?import_status:import_status ->
   ?import_arn:import_arn ->
+  ?import_status:import_status ->
+  ?table_arn:table_arn ->
+  ?s3_bucket_source:s3_bucket_source ->
+  ?cloud_watch_log_group_arn:cloud_watch_log_group_arn ->
+  ?input_format:input_format ->
+  ?start_time:import_start_time ->
+  ?end_time:import_end_time ->
   unit ->
   import_summary
 
 val make_list_imports_output :
-  ?next_token:import_next_token ->
   ?import_summary_list:import_summary_list ->
+  ?next_token:import_next_token ->
   unit ->
   list_imports_output
 
 val make_list_imports_input :
-  ?next_token:import_next_token ->
-  ?page_size:list_imports_max_limit ->
   ?table_arn:table_arn ->
+  ?page_size:list_imports_max_limit ->
+  ?next_token:import_next_token ->
   unit ->
   list_imports_input
 
 val make_global_table :
-  ?replication_group:replica_list -> ?global_table_name:table_name -> unit -> global_table
+  ?global_table_name:table_name -> ?replication_group:replica_list -> unit -> global_table
 
 val make_list_global_tables_output :
-  ?last_evaluated_global_table_name:table_name ->
   ?global_tables:global_table_list ->
+  ?last_evaluated_global_table_name:table_name ->
   unit ->
   list_global_tables_output
 
 val make_list_global_tables_input :
-  ?region_name:region_name ->
-  ?limit:positive_integer_object ->
   ?exclusive_start_global_table_name:table_name ->
+  ?limit:positive_integer_object ->
+  ?region_name:region_name ->
   unit ->
   list_global_tables_input
 
 val make_export_summary :
-  ?export_type:export_type ->
-  ?export_status:export_status ->
   ?export_arn:export_arn ->
+  ?export_status:export_status ->
+  ?export_type:export_type ->
   unit ->
   export_summary
 
 val make_list_exports_output :
-  ?next_token:export_next_token -> ?export_summaries:export_summaries -> unit -> list_exports_output
+  ?export_summaries:export_summaries -> ?next_token:export_next_token -> unit -> list_exports_output
 
 val make_list_exports_input :
-  ?next_token:export_next_token ->
-  ?max_results:list_exports_max_limit ->
   ?table_arn:table_arn ->
+  ?max_results:list_exports_max_limit ->
+  ?next_token:export_next_token ->
   unit ->
   list_exports_input
 
-val make_contributor_insights_summary :
-  ?contributor_insights_mode:contributor_insights_mode ->
-  ?contributor_insights_status:contributor_insights_status ->
-  ?index_name:index_name ->
-  ?table_name:table_name ->
-  unit ->
-  contributor_insights_summary
-
 val make_list_contributor_insights_output :
-  ?next_token:next_token_string ->
   ?contributor_insights_summaries:contributor_insights_summaries ->
+  ?next_token:next_token_string ->
   unit ->
   list_contributor_insights_output
 
 val make_list_contributor_insights_input :
-  ?max_results:list_contributor_insights_limit ->
-  ?next_token:next_token_string ->
   ?table_name:table_arn ->
+  ?next_token:next_token_string ->
+  ?max_results:list_contributor_insights_limit ->
   unit ->
   list_contributor_insights_input
 
-val make_backup_summary :
-  ?backup_size_bytes:backup_size_bytes ->
-  ?backup_type:backup_type ->
-  ?backup_status:backup_status ->
-  ?backup_expiry_date_time:date ->
-  ?backup_creation_date_time:backup_creation_date_time ->
-  ?backup_name:backup_name ->
-  ?backup_arn:backup_arn ->
-  ?table_arn:table_arn ->
-  ?table_id:table_id ->
-  ?table_name:table_name ->
-  unit ->
-  backup_summary
-
 val make_list_backups_output :
-  ?last_evaluated_backup_arn:backup_arn ->
   ?backup_summaries:backup_summaries ->
+  ?last_evaluated_backup_arn:backup_arn ->
   unit ->
   list_backups_output
 
 val make_list_backups_input :
-  ?backup_type:backup_type_filter ->
-  ?exclusive_start_backup_arn:backup_arn ->
-  ?time_range_upper_bound:time_range_upper_bound ->
-  ?time_range_lower_bound:time_range_lower_bound ->
-  ?limit:backups_input_limit ->
   ?table_name:table_arn ->
+  ?limit:backups_input_limit ->
+  ?time_range_lower_bound:time_range_lower_bound ->
+  ?time_range_upper_bound:time_range_upper_bound ->
+  ?exclusive_start_backup_arn:backup_arn ->
+  ?backup_type:backup_type_filter ->
   unit ->
   list_backups_input
-
-val make_enable_kinesis_streaming_configuration :
-  ?approximate_creation_date_time_precision:approximate_creation_date_time_precision ->
-  unit ->
-  enable_kinesis_streaming_configuration
-
-val make_kinesis_streaming_destination_output :
-  ?enable_kinesis_streaming_configuration:enable_kinesis_streaming_configuration ->
-  ?destination_status:destination_status ->
-  ?stream_arn:stream_arn ->
-  ?table_name:table_name ->
-  unit ->
-  kinesis_streaming_destination_output
-
-val make_kinesis_streaming_destination_input :
-  ?enable_kinesis_streaming_configuration:enable_kinesis_streaming_configuration ->
-  stream_arn:stream_arn ->
-  table_name:table_arn ->
-  unit ->
-  kinesis_streaming_destination_input
-
-val make_kinesis_data_stream_destination :
-  ?approximate_creation_date_time_precision:approximate_creation_date_time_precision ->
-  ?destination_status_description:string_ ->
-  ?destination_status:destination_status ->
-  ?stream_arn:stream_arn ->
-  unit ->
-  kinesis_data_stream_destination
-
-val make_keys_and_attributes :
-  ?expression_attribute_names:expression_attribute_name_map ->
-  ?projection_expression:projection_expression ->
-  ?consistent_read:consistent_read ->
-  ?attributes_to_get:attribute_name_list ->
-  keys:key_list ->
-  unit ->
-  keys_and_attributes
-
-val make_csv_options :
-  ?header_list:csv_header_list -> ?delimiter:csv_delimiter -> unit -> csv_options
-
-val make_input_format_options : ?csv:csv_options -> unit -> input_format_options
-
-val make_incremental_export_specification :
-  ?export_view_type:export_view_type ->
-  ?export_to_time:export_to_time ->
-  ?export_from_time:export_from_time ->
-  unit ->
-  incremental_export_specification
-
-val make_import_table_description :
-  ?failure_message:failure_message ->
-  ?failure_code:failure_code ->
-  ?imported_item_count:imported_item_count ->
-  ?processed_item_count:processed_item_count ->
-  ?processed_size_bytes:long_object ->
-  ?end_time:import_end_time ->
-  ?start_time:import_start_time ->
-  ?table_creation_parameters:table_creation_parameters ->
-  ?input_compression_type:input_compression_type ->
-  ?input_format_options:input_format_options ->
-  ?input_format:input_format ->
-  ?cloud_watch_log_group_arn:cloud_watch_log_group_arn ->
-  ?error_count:error_count ->
-  ?s3_bucket_source:s3_bucket_source ->
-  ?client_token:client_token ->
-  ?table_id:table_id ->
-  ?table_arn:table_arn ->
-  ?import_status:import_status ->
-  ?import_arn:import_arn ->
-  unit ->
-  import_table_description
 
 val make_import_table_output :
   import_table_description:import_table_description -> unit -> import_table_output
 
 val make_import_table_input :
-  ?input_compression_type:input_compression_type ->
-  ?input_format_options:input_format_options ->
   ?client_token:client_token ->
-  table_creation_parameters:table_creation_parameters ->
-  input_format:input_format ->
+  ?input_format_options:input_format_options ->
+  ?input_compression_type:input_compression_type ->
   s3_bucket_source:s3_bucket_source ->
+  input_format:input_format ->
+  table_creation_parameters:table_creation_parameters ->
   unit ->
   import_table_input
 
 val make_get_resource_policy_output :
-  ?revision_id:policy_revision_id -> ?policy:resource_policy -> unit -> get_resource_policy_output
+  ?policy:resource_policy -> ?revision_id:policy_revision_id -> unit -> get_resource_policy_output
 
 val make_get_resource_policy_input :
   resource_arn:resource_arn_string -> unit -> get_resource_policy_input
 
 val make_get_item_output :
-  ?consumed_capacity:consumed_capacity -> ?item:attribute_map -> unit -> get_item_output
+  ?item:attribute_map -> ?consumed_capacity:consumed_capacity -> unit -> get_item_output
 
 val make_get_item_input :
-  ?expression_attribute_names:expression_attribute_name_map ->
-  ?projection_expression:projection_expression ->
-  ?return_consumed_capacity:return_consumed_capacity ->
-  ?consistent_read:consistent_read ->
   ?attributes_to_get:attribute_name_list ->
-  key:key ->
+  ?consistent_read:consistent_read ->
+  ?return_consumed_capacity:return_consumed_capacity ->
+  ?projection_expression:projection_expression ->
+  ?expression_attribute_names:expression_attribute_name_map ->
   table_name:table_arn ->
+  key:key ->
   unit ->
   get_item_input
-
-val make_failure_exception :
-  ?exception_description:exception_description ->
-  ?exception_name:exception_name ->
-  unit ->
-  failure_exception
-
-val make_export_description :
-  ?incremental_export_specification:incremental_export_specification ->
-  ?export_type:export_type ->
-  ?item_count:item_count ->
-  ?billed_size_bytes:billed_size_bytes ->
-  ?export_format:export_format ->
-  ?failure_message:failure_message ->
-  ?failure_code:failure_code ->
-  ?s3_sse_kms_key_id:s3_sse_kms_key_id ->
-  ?s3_sse_algorithm:s3_sse_algorithm ->
-  ?s3_prefix:s3_prefix ->
-  ?s3_bucket_owner:s3_bucket_owner ->
-  ?s3_bucket:s3_bucket ->
-  ?client_token:client_token ->
-  ?export_time:export_time ->
-  ?table_id:table_id ->
-  ?table_arn:table_arn ->
-  ?export_manifest:export_manifest ->
-  ?end_time:export_end_time ->
-  ?start_time:export_start_time ->
-  ?export_status:export_status ->
-  ?export_arn:export_arn ->
-  unit ->
-  export_description
 
 val make_export_table_to_point_in_time_output :
   ?export_description:export_description -> unit -> export_table_to_point_in_time_output
 
 val make_export_table_to_point_in_time_input :
-  ?incremental_export_specification:incremental_export_specification ->
-  ?export_type:export_type ->
-  ?export_format:export_format ->
-  ?s3_sse_kms_key_id:s3_sse_kms_key_id ->
-  ?s3_sse_algorithm:s3_sse_algorithm ->
-  ?s3_prefix:s3_prefix ->
-  ?s3_bucket_owner:s3_bucket_owner ->
-  ?client_token:client_token ->
   ?export_time:export_time ->
-  s3_bucket:s3_bucket ->
+  ?client_token:client_token ->
+  ?s3_bucket_owner:s3_bucket_owner ->
+  ?s3_prefix:s3_prefix ->
+  ?s3_sse_algorithm:s3_sse_algorithm ->
+  ?s3_sse_kms_key_id:s3_sse_kms_key_id ->
+  ?export_format:export_format ->
+  ?export_type:export_type ->
+  ?incremental_export_specification:incremental_export_specification ->
   table_arn:table_arn ->
+  s3_bucket:s3_bucket ->
   unit ->
   export_table_to_point_in_time_input
 
 val make_execute_transaction_output :
-  ?consumed_capacity:consumed_capacity_multiple ->
   ?responses:item_response_list ->
+  ?consumed_capacity:consumed_capacity_multiple ->
   unit ->
   execute_transaction_output
 
+val make_parameterized_statement :
+  ?parameters:prepared_statement_parameters ->
+  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
+  statement:parti_ql_statement ->
+  unit ->
+  parameterized_statement
+
 val make_execute_transaction_input :
-  ?return_consumed_capacity:return_consumed_capacity ->
   ?client_request_token:client_request_token ->
+  ?return_consumed_capacity:return_consumed_capacity ->
   transact_statements:parameterized_statements ->
   unit ->
   execute_transaction_input
 
 val make_execute_statement_output :
-  ?last_evaluated_key:key ->
-  ?consumed_capacity:consumed_capacity ->
-  ?next_token:parti_ql_next_token ->
   ?items:item_list ->
+  ?next_token:parti_ql_next_token ->
+  ?consumed_capacity:consumed_capacity ->
+  ?last_evaluated_key:key ->
   unit ->
   execute_statement_output
 
 val make_execute_statement_input :
-  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
-  ?limit:positive_integer_object ->
-  ?return_consumed_capacity:return_consumed_capacity ->
-  ?next_token:parti_ql_next_token ->
-  ?consistent_read:consistent_read ->
   ?parameters:prepared_statement_parameters ->
+  ?consistent_read:consistent_read ->
+  ?next_token:parti_ql_next_token ->
+  ?return_consumed_capacity:return_consumed_capacity ->
+  ?limit:positive_integer_object ->
+  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
   statement:parti_ql_statement ->
   unit ->
   execute_statement_input
-
-val make_endpoint : cache_period_in_minutes:long -> address:string_ -> unit -> endpoint
-
-val make_describe_time_to_live_output :
-  ?time_to_live_description:time_to_live_description -> unit -> describe_time_to_live_output
-
-val make_describe_time_to_live_input : table_name:table_arn -> unit -> describe_time_to_live_input
-
-val make_describe_table_replica_auto_scaling_output :
-  ?table_auto_scaling_description:table_auto_scaling_description ->
-  unit ->
-  describe_table_replica_auto_scaling_output
-
-val make_describe_table_replica_auto_scaling_input :
-  table_name:table_arn -> unit -> describe_table_replica_auto_scaling_input
-
-val make_describe_table_output : ?table:table_description -> unit -> describe_table_output
-val make_describe_table_input : table_name:table_arn -> unit -> describe_table_input
-
-val make_describe_limits_output :
-  ?table_max_write_capacity_units:positive_long_object ->
-  ?table_max_read_capacity_units:positive_long_object ->
-  ?account_max_write_capacity_units:positive_long_object ->
-  ?account_max_read_capacity_units:positive_long_object ->
-  unit ->
-  describe_limits_output
-
-val make_describe_limits_input : unit -> unit
-
-val make_describe_kinesis_streaming_destination_output :
-  ?kinesis_data_stream_destinations:kinesis_data_stream_destinations ->
-  ?table_name:table_name ->
-  unit ->
-  describe_kinesis_streaming_destination_output
-
-val make_describe_kinesis_streaming_destination_input :
-  table_name:table_arn -> unit -> describe_kinesis_streaming_destination_input
-
-val make_describe_import_output :
-  import_table_description:import_table_description -> unit -> describe_import_output
-
-val make_describe_import_input : import_arn:import_arn -> unit -> describe_import_input
-
-val make_describe_global_table_settings_output :
-  ?replica_settings:replica_settings_description_list ->
-  ?global_table_name:table_name ->
-  unit ->
-  describe_global_table_settings_output
-
-val make_describe_global_table_settings_input :
-  global_table_name:table_name -> unit -> describe_global_table_settings_input
-
-val make_describe_global_table_output :
-  ?global_table_description:global_table_description -> unit -> describe_global_table_output
-
-val make_describe_global_table_input :
-  global_table_name:table_name -> unit -> describe_global_table_input
-
-val make_describe_export_output :
-  ?export_description:export_description -> unit -> describe_export_output
-
-val make_describe_export_input : export_arn:export_arn -> unit -> describe_export_input
-val make_describe_endpoints_response : endpoints:endpoints -> unit -> describe_endpoints_response
-val make_describe_endpoints_request : unit -> unit
-
-val make_describe_contributor_insights_output :
-  ?contributor_insights_mode:contributor_insights_mode ->
-  ?failure_exception:failure_exception ->
-  ?last_update_date_time:last_update_date_time ->
-  ?contributor_insights_status:contributor_insights_status ->
-  ?contributor_insights_rule_list:contributor_insights_rule_list ->
-  ?index_name:index_name ->
-  ?table_name:table_name ->
-  unit ->
-  describe_contributor_insights_output
-
-val make_describe_contributor_insights_input :
-  ?index_name:index_name -> table_name:table_arn -> unit -> describe_contributor_insights_input
-
-val make_describe_continuous_backups_output :
-  ?continuous_backups_description:continuous_backups_description ->
-  unit ->
-  describe_continuous_backups_output
-
-val make_describe_continuous_backups_input :
-  table_name:table_arn -> unit -> describe_continuous_backups_input
-
-val make_backup_details :
-  ?backup_expiry_date_time:date ->
-  ?backup_size_bytes:backup_size_bytes ->
-  backup_creation_date_time:backup_creation_date_time ->
-  backup_type:backup_type ->
-  backup_status:backup_status ->
-  backup_name:backup_name ->
-  backup_arn:backup_arn ->
-  unit ->
-  backup_details
-
-val make_backup_description :
-  ?source_table_feature_details:source_table_feature_details ->
-  ?source_table_details:source_table_details ->
-  ?backup_details:backup_details ->
-  unit ->
-  backup_description
-
-val make_describe_backup_output :
-  ?backup_description:backup_description -> unit -> describe_backup_output
-
-val make_describe_backup_input : backup_arn:backup_arn -> unit -> describe_backup_input
-val make_delete_table_output : ?table_description:table_description -> unit -> delete_table_output
-val make_delete_table_input : table_name:table_arn -> unit -> delete_table_input
-
-val make_delete_resource_policy_output :
-  ?revision_id:policy_revision_id -> unit -> delete_resource_policy_output
-
-val make_delete_resource_policy_input :
-  ?expected_revision_id:policy_revision_id ->
-  resource_arn:resource_arn_string ->
-  unit ->
-  delete_resource_policy_input
-
-val make_delete_item_output :
-  ?item_collection_metrics:item_collection_metrics ->
-  ?consumed_capacity:consumed_capacity ->
-  ?attributes:attribute_map ->
-  unit ->
-  delete_item_output
-
-val make_delete_item_input :
-  ?return_values_on_condition_check_failure:return_values_on_condition_check_failure ->
-  ?expression_attribute_values:expression_attribute_value_map ->
-  ?expression_attribute_names:expression_attribute_name_map ->
-  ?condition_expression:condition_expression ->
-  ?return_item_collection_metrics:return_item_collection_metrics ->
-  ?return_consumed_capacity:return_consumed_capacity ->
-  ?return_values:return_value ->
-  ?conditional_operator:conditional_operator ->
-  ?expected:expected_attribute_map ->
-  key:key ->
-  table_name:table_arn ->
-  unit ->
-  delete_item_input
-
-val make_delete_backup_output :
-  ?backup_description:backup_description -> unit -> delete_backup_output
-
-val make_delete_backup_input : backup_arn:backup_arn -> unit -> delete_backup_input
-val make_create_table_output : ?table_description:table_description -> unit -> create_table_output
-
-val make_create_table_input :
-  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
-  ?global_table_source_arn:table_arn ->
-  ?on_demand_throughput:on_demand_throughput ->
-  ?resource_policy:resource_policy ->
-  ?warm_throughput:warm_throughput ->
-  ?deletion_protection_enabled:deletion_protection_enabled ->
-  ?table_class:table_class ->
-  ?tags:tag_list ->
-  ?sse_specification:sse_specification ->
-  ?stream_specification:stream_specification ->
-  ?provisioned_throughput:provisioned_throughput ->
-  ?billing_mode:billing_mode ->
-  ?global_secondary_indexes:global_secondary_index_list ->
-  ?local_secondary_indexes:local_secondary_index_list ->
-  ?key_schema:key_schema ->
-  ?attribute_definitions:attribute_definitions ->
-  table_name:table_arn ->
-  unit ->
-  create_table_input
-
-val make_create_global_table_output :
-  ?global_table_description:global_table_description -> unit -> create_global_table_output
-
-val make_create_global_table_input :
-  replication_group:replica_list ->
-  global_table_name:table_name ->
-  unit ->
-  create_global_table_input
-
-val make_create_backup_output : ?backup_details:backup_details -> unit -> create_backup_output
-
-val make_create_backup_input :
-  backup_name:backup_name -> table_name:table_arn -> unit -> create_backup_input
-
-val make_batch_write_item_output :
-  ?consumed_capacity:consumed_capacity_multiple ->
-  ?item_collection_metrics:item_collection_metrics_per_table ->
-  ?unprocessed_items:batch_write_item_request_map ->
-  unit ->
-  batch_write_item_output
-
-val make_batch_write_item_input :
-  ?return_item_collection_metrics:return_item_collection_metrics ->
-  ?return_consumed_capacity:return_consumed_capacity ->
-  request_items:batch_write_item_request_map ->
-  unit ->
-  batch_write_item_input
-
-val make_batch_get_item_output :
-  ?consumed_capacity:consumed_capacity_multiple ->
-  ?unprocessed_keys:batch_get_request_map ->
-  ?responses:batch_get_response_map ->
-  unit ->
-  batch_get_item_output
-
-val make_batch_get_item_input :
-  ?return_consumed_capacity:return_consumed_capacity ->
-  request_items:batch_get_request_map ->
-  unit ->
-  batch_get_item_input
-
-val make_batch_execute_statement_output :
-  ?consumed_capacity:consumed_capacity_multiple ->
-  ?responses:parti_ql_batch_response ->
-  unit ->
-  batch_execute_statement_output
-
-val make_batch_execute_statement_input :
-  ?return_consumed_capacity:return_consumed_capacity ->
-  statements:parti_ql_batch_request ->
-  unit ->
-  batch_execute_statement_input
 (** {1:operations Operations} *)
-
-module BatchExecuteStatement : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `RequestLimitExceeded of request_limit_exceeded
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_execute_statement_input ->
-    ( batch_execute_statement_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_execute_statement_input ->
-    ( batch_execute_statement_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "This operation allows you to perform batch reads or writes on data stored in DynamoDB, using \
-   PartiQL. Each read statement in a [BatchExecuteStatement] must specify an equality condition on \
-   all key attributes. This enforces that each [SELECT] statement in a batch returns at most a \
-   single item. For more information, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ql-reference.multiplestatements.batching.html}Running \
-   batch operations with PartiQL for DynamoDB }.\n\n\
-  \  The entire batch must consist of either read statements or write statements, you cannot mix \
-   both in one batch.\n\
-  \  \n\
-  \     A HTTP 200 response does not mean that all statements in the BatchExecuteStatement \
-   succeeded. Error details for individual statements can be found under the \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchStatementResponse.html#DDB-Type-BatchStatementResponse-Error}Error} \
-   field of the [BatchStatementResponse] for each statement.\n\
-  \     \n\
-  \      "]
-
-module BatchGetItem : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-    | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_item_input ->
-    ( batch_get_item_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_item_input ->
-    ( batch_get_item_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [BatchGetItem] operation returns the attributes of one or more items from one or more \
-   tables. You identify requested items by primary key.\n\n\
-  \ A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. \
-   [BatchGetItem] returns a partial result if the response size limit is exceeded, the table's \
-   provisioned throughput is exceeded, more than 1MB per partition is requested, or an internal \
-   processing failure occurs. If a partial result is returned, the operation returns a value for \
-   [UnprocessedKeys]. You can use this value to retry the operation starting with the next item to \
-   get.\n\
-  \ \n\
-  \   If you request more than 100 items, [BatchGetItem] returns a [ValidationException] with the \
-   message \"Too many items requested for the BatchGetItem call.\"\n\
-  \   \n\
-  \     For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, \
-   the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an \
-   appropriate [UnprocessedKeys] value so you can get the next page of results. If desired, your \
-   application can include its own logic to assemble the pages of results into one dataset.\n\
-  \     \n\
-  \      If {i none} of the items can be processed due to insufficient provisioned throughput on \
-   all of the tables in the request, then [BatchGetItem] returns a \
-   [ProvisionedThroughputExceededException]. If {i at least one} of the items is successfully \
-   processed, then [BatchGetItem] completes successfully, while returning the keys of the unread \
-   items in [UnprocessedKeys].\n\
-  \      \n\
-  \        If DynamoDB returns any unprocessed items, you should retry the batch operation on \
-   those items. However, {i we strongly recommend that you use an exponential backoff algorithm}. \
-   If you retry the batch operation immediately, the underlying read or write requests can still \
-   fail due to throttling on the individual tables. If you delay the batch operation using \
-   exponential backoff, the individual requests in the batch are much more likely to succeed.\n\
-  \        \n\
-  \         For more information, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations}Batch \
-   Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n\
-  \         \n\
-  \           By default, [BatchGetItem] performs eventually consistent reads on every table in \
-   the request. If you want strongly consistent reads instead, you can set [ConsistentRead] to \
-   [true] for any or all tables.\n\
-  \           \n\
-  \            In order to minimize response latency, [BatchGetItem] may retrieve items in parallel.\n\
-  \            \n\
-  \             When designing your application, keep in mind that DynamoDB does not return items \
-   in any particular order. To help parse the response by item, include the primary key values for \
-   the items in your request in the [ProjectionExpression] parameter.\n\
-  \             \n\
-  \              If a requested item does not exist, it is not returned in the result. Requests \
-   for nonexistent items consume the minimum read capacity units according to the type of read. \
-   For more information, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations}Working \
-   with Tables} in the {i Amazon DynamoDB Developer Guide}.\n\
-  \              \n\
-  \                 [BatchGetItem] will result in a [ValidationException] if the same key is \
-   specified multiple times.\n\
-  \                \n\
-  \                 "]
-
-module BatchWriteItem : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-    | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_write_item_input ->
-    ( batch_write_item_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_write_item_input ->
-    ( batch_write_item_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [BatchWriteItem] operation puts or deletes multiple items in one or more tables. A single \
-   call to [BatchWriteItem] can transmit up to 16MB of data over the network, consisting of up to \
-   25 item put or delete operations. While individual items can be up to 400 KB once stored, it's \
-   important to note that an item's representation might be greater than 400KB while being sent in \
-   DynamoDB's JSON format for the API call. For more details on this distinction, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html}Naming \
-   Rules and Data Types}.\n\n\
-  \   [BatchWriteItem] cannot update items. If you perform a [BatchWriteItem] operation on an \
-   existing item, that item's values will be overwritten by the operation and it will appear like \
-   it was updated. To update items, we recommend you use the [UpdateItem] action.\n\
-  \  \n\
-  \    The individual [PutItem] and [DeleteItem] operations specified in [BatchWriteItem] are \
-   atomic; however [BatchWriteItem] as a whole is not. If any requested operations fail because \
-   the table's provisioned throughput is exceeded or an internal processing failure occurs, the \
-   failed operations are returned in the [UnprocessedItems] response parameter. You can \
-   investigate and optionally resend the requests. Typically, you would call [BatchWriteItem] in a \
-   loop. Each iteration would check for unprocessed items and submit a new [BatchWriteItem] \
-   request with those unprocessed items until all items have been processed.\n\
-  \    \n\
-  \     For tables and indexes with provisioned capacity, if none of the items can be processed \
-   due to insufficient provisioned throughput on all of the tables in the request, then \
-   [BatchWriteItem] returns a [ProvisionedThroughputExceededException]. For all tables and \
-   indexes, if none of the items can be processed due to other throttling scenarios (such as \
-   exceeding partition level limits), then [BatchWriteItem] returns a [ThrottlingException].\n\
-  \     \n\
-  \       If DynamoDB returns any unprocessed items, you should retry the batch operation on those \
-   items. However, {i we strongly recommend that you use an exponential backoff algorithm}. If you \
-   retry the batch operation immediately, the underlying read or write requests can still fail due \
-   to throttling on the individual tables. If you delay the batch operation using exponential \
-   backoff, the individual requests in the batch are much more likely to succeed.\n\
-  \       \n\
-  \        For more information, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#Programming.Errors.BatchOperations}Batch \
-   Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n\
-  \        \n\
-  \          With [BatchWriteItem], you can efficiently write or delete large amounts of data, \
-   such as from Amazon EMR, or copy data from another database into DynamoDB. In order to improve \
-   performance with these large-scale operations, [BatchWriteItem] does not behave in the same way \
-   as individual [PutItem] and [DeleteItem] calls would. For example, you cannot specify \
-   conditions on individual put and delete requests, and [BatchWriteItem] does not return deleted \
-   items in the response.\n\
-  \          \n\
-  \           If you use a programming language that supports concurrency, you can use threads to \
-   write items in parallel. Your application must include the necessary logic to manage the \
-   threads. With languages that don't support threading, you must update or delete the specified \
-   items one at a time. In both situations, [BatchWriteItem] performs the specified put and delete \
-   operations in parallel, giving you the power of the thread pool approach without having to \
-   introduce complexity into your application.\n\
-  \           \n\
-  \            Parallel processing reduces latency, but each specified put and delete request \
-   consumes the same number of write capacity units whether it is processed in parallel or not. \
-   Delete operations on nonexistent items consume one write capacity unit.\n\
-  \            \n\
-  \             If one or more of the following is true, DynamoDB rejects the entire batch write \
-   operation:\n\
-  \             \n\
-  \              {ul\n\
-  \                    {-  One or more tables specified in the [BatchWriteItem] request does not \
-   exist.\n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  Primary key attributes specified on an item in the request do not match \
-   those in the corresponding table's primary key schema.\n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  You try to perform multiple operations on the same item in the same \
-   [BatchWriteItem] request. For example, you cannot put and delete the same item in the same \
-   [BatchWriteItem] request. \n\
-  \                        \n\
-  \                         }\n\
-  \                    {-   Your request contains at least two items with identical hash and range \
-   keys (which essentially is two put operations). \n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  There are more than 25 requests in the batch.\n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  Any individual item in a batch exceeds 400 KB.\n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  The total request size exceeds 16 MB.\n\
-  \                        \n\
-  \                         }\n\
-  \                    {-  Any individual items with keys exceeding the key length limits. For a \
-   partition key, the limit is 2048 bytes and for a sort key, the limit is 1024 bytes.\n\
-  \                        \n\
-  \                         }\n\
-  \                    }\n\
-  \  "]
-
-module CreateBackup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BackupInUseException of backup_in_use_exception
-    | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `TableInUseException of table_in_use_exception
-    | `TableNotFoundException of table_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_backup_input ->
-    ( create_backup_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupInUseException of backup_in_use_exception
-      | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TableInUseException of table_in_use_exception
-      | `TableNotFoundException of table_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_backup_input ->
-    ( create_backup_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupInUseException of backup_in_use_exception
-      | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TableInUseException of table_in_use_exception
-      | `TableNotFoundException of table_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a backup for an existing table.\n\n\
-  \  Each time you create an on-demand backup, the entire table data is backed up. There is no \
-   limit to the number of on-demand backups that can be taken. \n\
-  \ \n\
-  \   When you create an on-demand backup, a time marker of the request is cataloged, and the \
-   backup is created asynchronously, by applying all changes until the time of the request to the \
-   last full table snapshot. Backup requests are processed instantaneously and become available \
-   for restore within minutes. \n\
-  \  \n\
-  \   You can call [CreateBackup] at a maximum rate of 50 times per second.\n\
-  \   \n\
-  \    All backups in DynamoDB work without consuming any provisioned throughput on the table.\n\
-  \    \n\
-  \      If you submit a backup request on 2018-12-14 at 14:25:00, the backup is guaranteed to \
-   contain all data committed to the table up to 14:24:00, and data committed after 14:26:00 will \
-   not be. The backup might contain data modifications made between 14:24:00 and 14:26:00. \
-   On-demand backup does not support causal consistency. \n\
-  \     \n\
-  \       Along with data, the following are also included on the backups: \n\
-  \      \n\
-  \       {ul\n\
-  \             {-  Global secondary indexes (GSIs)\n\
-  \                 \n\
-  \                  }\n\
-  \             {-  Local secondary indexes (LSIs)\n\
-  \                 \n\
-  \                  }\n\
-  \             {-  Streams\n\
-  \                 \n\
-  \                  }\n\
-  \             {-  Provisioned read and write capacity\n\
-  \                 \n\
-  \                  }\n\
-  \             }\n\
-  \  "]
-
-module CreateGlobalTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `TableNotFoundException of table_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_global_table_input ->
-    ( create_global_table_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TableNotFoundException of table_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_global_table_input ->
-    ( create_global_table_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `TableNotFoundException of table_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a global table from an existing table. A global table creates a replication \
-   relationship between two or more DynamoDB tables with the same table name in the provided \
-   Regions. \n\n\
-  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
-   avoided for new global tables. Customers should use \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
-   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
-   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
-  \  \n\
-  \   To determine which version you're using, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
-   the global table version you are using}. To update existing global tables from version \
-   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
-   global tables}.\n\
-  \   \n\
-  \     If you want to add a new replica table to a global table, each of the following conditions \
-   must be true:\n\
-  \     \n\
-  \      {ul\n\
-  \            {-  The table must have the same primary key as all of the other replicas.\n\
-  \                \n\
-  \                 }\n\
-  \            {-  The table must have the same name as all of the other replicas.\n\
-  \                \n\
-  \                 }\n\
-  \            {-  The table must have DynamoDB Streams enabled, with the stream containing both \
-   the new and the old images of the item.\n\
-  \                \n\
-  \                 }\n\
-  \            {-  None of the replica tables in the global table can contain any data.\n\
-  \                \n\
-  \                 }\n\
-  \            }\n\
-  \    If global secondary indexes are specified, then the following conditions must also be met: \n\
-  \   \n\
-  \    {ul\n\
-  \          {-   The global secondary indexes must have the same name. \n\
-  \              \n\
-  \               }\n\
-  \          {-   The global secondary indexes must have the same hash key and sort key (if \
-   present). \n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \    If local secondary indexes are specified, then the following conditions must also be met: \n\
-  \   \n\
-  \    {ul\n\
-  \          {-   The local secondary indexes must have the same name. \n\
-  \              \n\
-  \               }\n\
-  \          {-   The local secondary indexes must have the same hash key and sort key (if \
-   present). \n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \     Write capacity settings should be set consistently across your replica tables and \
-   secondary indexes. DynamoDB strongly recommends enabling auto scaling to manage the write \
-   capacity settings for all of your global tables replicas and indexes. \n\
-  \    \n\
-  \      If you prefer to manage write capacity settings manually, you should provision equal \
-   replicated write capacity units to your replica tables. You should also provision equal \
-   replicated write capacity units to matching secondary indexes across your global table. \n\
-  \     \n\
-  \      "]
-
-module CreateTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_table_input ->
-    ( create_table_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_table_input ->
-    ( create_table_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [CreateTable] operation adds a new table to your account. In an Amazon Web Services \
-   account, table names must be unique within each Region. That is, you can have two tables with \
-   same name if you create the tables in different Regions.\n\n\
-  \  [CreateTable] is an asynchronous operation. Upon receiving a [CreateTable] request, DynamoDB \
-   immediately returns a response with a [TableStatus] of [CREATING]. After the table is created, \
-   DynamoDB sets the [TableStatus] to [ACTIVE]. You can perform read and write operations only on \
-   an [ACTIVE] table. \n\
-  \ \n\
-  \  You can optionally define secondary indexes on the new table, as part of the [CreateTable] \
-   operation. If you want to create multiple tables with secondary indexes on them, you must \
-   create the tables sequentially. Only one table with secondary indexes can be in the [CREATING] \
-   state at any given time.\n\
-  \  \n\
-  \   You can use the [DescribeTable] action to check the table status.\n\
-  \   "]
-
-module DeleteBackup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BackupInUseException of backup_in_use_exception
-    | `BackupNotFoundException of backup_not_found_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_backup_input ->
-    ( delete_backup_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupInUseException of backup_in_use_exception
-      | `BackupNotFoundException of backup_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_backup_input ->
-    ( delete_backup_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupInUseException of backup_in_use_exception
-      | `BackupNotFoundException of backup_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes an existing backup of a table.\n\n\
-  \ You can call [DeleteBackup] at a maximum rate of 10 times per second.\n\
-  \ "]
-
-module DeleteItem : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConditionalCheckFailedException of conditional_check_failed_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-    | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `TransactionConflictException of transaction_conflict_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_item_input ->
-    ( delete_item_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConditionalCheckFailedException of conditional_check_failed_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `TransactionConflictException of transaction_conflict_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_item_input ->
-    ( delete_item_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConditionalCheckFailedException of conditional_check_failed_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
-      | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `TransactionConflictException of transaction_conflict_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a single item in a table by primary key. You can perform a conditional delete operation \
-   that deletes the item if it exists, or if it has an expected attribute value.\n\n\
-  \ In addition to deleting an item, you can also return the item's attribute values in the same \
-   operation, using the [ReturnValues] parameter.\n\
-  \ \n\
-  \  Unless you specify conditions, the [DeleteItem] is an idempotent operation; running it \
-   multiple times on the same item or attribute does {i not} result in an error response.\n\
-  \  \n\
-  \   Conditional deletes are useful for deleting items only if specific conditions are met. If \
-   those conditions are met, DynamoDB performs the delete. Otherwise, the item is not deleted.\n\
-  \   "]
-
-module DeleteResourcePolicy : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `PolicyNotFoundException of policy_not_found_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_resource_policy_input ->
-    ( delete_resource_policy_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `PolicyNotFoundException of policy_not_found_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_resource_policy_input ->
-    ( delete_resource_policy_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `PolicyNotFoundException of policy_not_found_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes the resource-based policy attached to the resource, which can be a table or stream.\n\n\
-  \  [DeleteResourcePolicy] is an idempotent operation; running it multiple times on the same \
-   resource {i doesn't} result in an error response, unless you specify an [ExpectedRevisionId], \
-   which will then return a [PolicyNotFoundException].\n\
-  \ \n\
-  \   To make sure that you don't inadvertently lock yourself out of your own resources, the root \
-   principal in your Amazon Web Services account can perform [DeleteResourcePolicy] requests, even \
-   if your resource-based policy explicitly denies the root principal's access. \n\
-  \   \n\
-  \       [DeleteResourcePolicy] is an asynchronous operation. If you issue a [GetResourcePolicy] \
-   request immediately after running the [DeleteResourcePolicy] request, DynamoDB might still \
-   return the deleted policy. This is because the policy for your resource might not have been \
-   deleted yet. Wait for a few seconds, and then try the [GetResourcePolicy] request again.\n\
-  \      \n\
-  \       "]
-
-module DeleteTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_table_input ->
-    ( delete_table_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_table_input ->
-    ( delete_table_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [DeleteTable] operation deletes a table and all of its items. After a [DeleteTable] \
-   request, the specified table is in the [DELETING] state until DynamoDB completes the deletion. \
-   If the table is in the [ACTIVE] state, you can delete it. If a table is in [CREATING] or \
-   [UPDATING] states, then DynamoDB returns a [ResourceInUseException]. If the specified table \
-   does not exist, DynamoDB returns a [ResourceNotFoundException]. If table is already in the \
-   [DELETING] state, no error is returned. \n\n\
-  \  DynamoDB might continue to accept data read and write operations, such as [GetItem] and \
-   [PutItem], on a table in the [DELETING] state until the table deletion is complete. For the \
-   full list of table states, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TableDescription.html#DDB-Type-TableDescription-TableStatus}TableStatus}.\n\
-  \  \n\
-  \    When you delete a table, any indexes on that table are also deleted.\n\
-  \    \n\
-  \     If you have DynamoDB Streams enabled on the table, then the corresponding stream on that \
-   table goes into the [DISABLED] state, and the stream is automatically deleted after 24 hours.\n\
-  \     \n\
-  \      Use the [DescribeTable] action to check the status of the table. \n\
-  \      "]
-
-module DescribeBackup : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BackupNotFoundException of backup_not_found_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_backup_input ->
-    ( describe_backup_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupNotFoundException of backup_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_backup_input ->
-    ( describe_backup_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BackupNotFoundException of backup_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Describes an existing backup of a table.\n\n\
-  \ You can call [DescribeBackup] at a maximum rate of 10 times per second.\n\
-  \ "]
-
-module DescribeContinuousBackups : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `TableNotFoundException of table_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_continuous_backups_input ->
-    ( describe_continuous_backups_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `TableNotFoundException of table_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_continuous_backups_input ->
-    ( describe_continuous_backups_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `TableNotFoundException of table_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Checks the status of continuous backups and point in time recovery on the specified table. \
-   Continuous backups are [ENABLED] on all tables at table creation. If point in time recovery is \
-   enabled, [PointInTimeRecoveryStatus] will be set to ENABLED.\n\n\
-  \  After continuous backups and point in time recovery are enabled, you can restore to any point \
-   in time within [EarliestRestorableDateTime] and [LatestRestorableDateTime]. \n\
-  \ \n\
-  \   [LatestRestorableDateTime] is typically 5 minutes before the current time. You can restore \
-   your table to any point in time in the last 35 days. You can set the recovery period to any \
-   value between 1 and 35 days. \n\
-  \  \n\
-  \   You can call [DescribeContinuousBackups] at a maximum rate of 10 times per second.\n\
-  \   "]
-
-module DescribeContributorInsights : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_contributor_insights_input ->
-    ( describe_contributor_insights_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_contributor_insights_input ->
-    ( describe_contributor_insights_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about contributor insights for a given table or global secondary index.\n"]
-
-module DescribeEndpoints : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_endpoints_request ->
-    (describe_endpoints_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_endpoints_request ->
-    ( describe_endpoints_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the regional endpoint information. For more information on policy permissions, please \
-   see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/inter-network-traffic-privacy.html#inter-network-traffic-DescribeEndpoints}Internetwork \
-   traffic privacy}.\n"]
-
-module DescribeExport : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ExportNotFoundException of export_not_found_exception
-    | `InternalServerError of internal_server_error
-    | `LimitExceededException of limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_export_input ->
-    ( describe_export_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ExportNotFoundException of export_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `LimitExceededException of limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_export_input ->
-    ( describe_export_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ExportNotFoundException of export_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `LimitExceededException of limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Describes an existing table export.\n"]
-
-module DescribeGlobalTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `GlobalTableNotFoundException of global_table_not_found_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_global_table_input ->
-    ( describe_global_table_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableNotFoundException of global_table_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_global_table_input ->
-    ( describe_global_table_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableNotFoundException of global_table_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the specified global table.\n\n\
-  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
-   avoided for new global tables. Customers should use \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
-   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
-   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
-  \  \n\
-  \   To determine which version you're using, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
-   the global table version you are using}. To update existing global tables from version \
-   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
-   global tables}.\n\
-  \   \n\
-  \    "]
-
-module DescribeGlobalTableSettings : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `GlobalTableNotFoundException of global_table_not_found_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_global_table_settings_input ->
-    ( describe_global_table_settings_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableNotFoundException of global_table_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_global_table_settings_input ->
-    ( describe_global_table_settings_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `GlobalTableNotFoundException of global_table_not_found_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Describes Region-specific settings for a global table.\n\n\
-  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
-   avoided for new global tables. Customers should use \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
-   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
-   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
-  \  \n\
-  \   To determine which version you're using, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
-   the global table version you are using}. To update existing global tables from version \
-   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
-   global tables}.\n\
-  \   \n\
-  \    "]
-
-module DescribeImport : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_import_input ->
-    ( describe_import_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_import_input ->
-    ( describe_import_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Represents the properties of the import. \n"]
-
-module DescribeKinesisStreamingDestination : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_kinesis_streaming_destination_input ->
-    ( describe_kinesis_streaming_destination_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_kinesis_streaming_destination_input ->
-    ( describe_kinesis_streaming_destination_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns information about the status of Kinesis streaming.\n"]
-
-module DescribeLimits : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_limits_input ->
-    ( describe_limits_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_limits_input ->
-    ( describe_limits_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the current provisioned-capacity quotas for your Amazon Web Services account in a \
-   Region, both for the Region as a whole and for any one DynamoDB table that you create there.\n\n\
-  \ When you establish an Amazon Web Services account, the account has initial quotas on the \
-   maximum read capacity units and write capacity units that you can provision across all of your \
-   DynamoDB tables in a given Region. Also, there are per-table quotas that apply when you create \
-   a table there. For more information, see \
-   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html}Service, \
-   Account, and Table Quotas} page in the {i Amazon DynamoDB Developer Guide}.\n\
-  \ \n\
-  \  Although you can increase these quotas by filing a case at \
-   {{:https://console.aws.amazon.com/support/home#/}Amazon Web Services Support Center}, obtaining \
-   the increase is not instantaneous. The [DescribeLimits] action lets you write code to compare \
-   the capacity you are currently using to those quotas imposed by your account so that you have \
-   enough time to apply for an increase before you hit a quota.\n\
-  \  \n\
-  \   For example, you could use one of the Amazon Web Services SDKs to do the following:\n\
-  \   \n\
-  \    {ol\n\
-  \          {-  Call [DescribeLimits] for a particular Region to obtain your current account \
-   quotas on provisioned capacity there.\n\
-  \              \n\
-  \               }\n\
-  \          {-  Create a variable to hold the aggregate read capacity units provisioned for all \
-   your tables in that Region, and one to hold the aggregate write capacity units. Zero them both.\n\
-  \              \n\
-  \               }\n\
-  \          {-  Call [ListTables] to obtain a list of all your DynamoDB tables.\n\
-  \              \n\
-  \               }\n\
-  \          {-  For each table name listed by [ListTables], do the following:\n\
-  \              \n\
-  \               {ul\n\
-  \                     {-  Call [DescribeTable] with the table name.\n\
-  \                         \n\
-  \                          }\n\
-  \                     {-  Use the data returned by [DescribeTable] to add the read capacity \
-   units and write capacity units provisioned for the table itself to your variables.\n\
-  \                         \n\
-  \                          }\n\
-  \                     {-  If the table has one or more global secondary indexes (GSIs), loop \
-   over these GSIs and add their provisioned capacity values to your variables as well.\n\
-  \                         \n\
-  \                          }\n\
-  \                     \n\
-  \           }\n\
-  \            }\n\
-  \          {-  Report the account quotas for that Region returned by [DescribeLimits], along \
-   with the total current provisioned capacity levels you have calculated.\n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \   This will let you see whether you are getting close to your account-level quotas.\n\
-  \   \n\
-  \    The per-table quotas apply only when you are creating a new table. They restrict the sum of \
-   the provisioned capacity of the new table itself and all its global secondary indexes.\n\
-  \    \n\
-  \     For existing tables and their GSIs, DynamoDB doesn't let you increase provisioned capacity \
-   extremely rapidly, but the only quota that applies is that the aggregate provisioned capacity \
-   over all your tables and GSIs cannot exceed either of the per-account quotas.\n\
-  \     \n\
-  \        [DescribeLimits] should only be called periodically. You can expect throttling errors \
-   if you call it more than once in a minute.\n\
-  \       \n\
-  \         The [DescribeLimits] Request element has no content.\n\
-  \         "]
-
-module DescribeTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_table_input ->
-    ( describe_table_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_table_input ->
-    ( describe_table_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the table, including the current status of the table, when it was \
-   created, the primary key schema, and any indexes on the table.\n\n\
-  \  If you issue a [DescribeTable] request immediately after a [CreateTable] request, DynamoDB \
-   might return a [ResourceNotFoundException]. This is because [DescribeTable] uses an eventually \
-   consistent query, and the metadata for your table might not be available at that moment. Wait \
-   for a few seconds, and then try the [DescribeTable] request again.\n\
-  \  \n\
-  \   "]
-
-module DescribeTableReplicaAutoScaling : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_table_replica_auto_scaling_input ->
-    ( describe_table_replica_auto_scaling_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_table_replica_auto_scaling_input ->
-    ( describe_table_replica_auto_scaling_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Describes auto scaling settings across replicas of the global table at once.\n"]
-
-module DescribeTimeToLive : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_time_to_live_input ->
-    ( describe_time_to_live_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_time_to_live_input ->
-    ( describe_time_to_live_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gives a description of the Time to Live (TTL) status on the specified table. \n"]
-
-module DisableKinesisStreamingDestination : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    kinesis_streaming_destination_input ->
-    ( kinesis_streaming_destination_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    kinesis_streaming_destination_input ->
-    ( kinesis_streaming_destination_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Stops replication from the DynamoDB table to the Kinesis data stream. This is done without \
-   deleting either of the resources.\n"]
 
 module EnableKinesisStreamingDestination : sig
   val error_to_string :
@@ -4521,7 +3272,6 @@ module UpdateTableReplicaAutoScaling : sig
 end
 [@@ocaml.doc "Updates auto scaling settings on your global tables at once.\n"]
 
-(** {1:Serialization and Deserialization} *)
 module UpdateTimeToLive : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -4585,6 +3335,1257 @@ end
    {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html}Time To Live} in \
    the Amazon DynamoDB Developer Guide. \n\
   \          "]
+
+module DisableKinesisStreamingDestination : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    kinesis_streaming_destination_input ->
+    ( kinesis_streaming_destination_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    kinesis_streaming_destination_input ->
+    ( kinesis_streaming_destination_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Stops replication from the DynamoDB table to the Kinesis data stream. This is done without \
+   deleting either of the resources.\n"]
+
+module DescribeTimeToLive : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_time_to_live_input ->
+    ( describe_time_to_live_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_time_to_live_input ->
+    ( describe_time_to_live_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gives a description of the Time to Live (TTL) status on the specified table. \n"]
+
+module DescribeTableReplicaAutoScaling : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_table_replica_auto_scaling_input ->
+    ( describe_table_replica_auto_scaling_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_table_replica_auto_scaling_input ->
+    ( describe_table_replica_auto_scaling_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Describes auto scaling settings across replicas of the global table at once.\n"]
+
+module DescribeTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_table_input ->
+    ( describe_table_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_table_input ->
+    ( describe_table_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the table, including the current status of the table, when it was \
+   created, the primary key schema, and any indexes on the table.\n\n\
+  \  If you issue a [DescribeTable] request immediately after a [CreateTable] request, DynamoDB \
+   might return a [ResourceNotFoundException]. This is because [DescribeTable] uses an eventually \
+   consistent query, and the metadata for your table might not be available at that moment. Wait \
+   for a few seconds, and then try the [DescribeTable] request again.\n\
+  \  \n\
+  \   "]
+
+module DescribeLimits : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_limits_input ->
+    ( describe_limits_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_limits_input ->
+    ( describe_limits_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the current provisioned-capacity quotas for your Amazon Web Services account in a \
+   Region, both for the Region as a whole and for any one DynamoDB table that you create there.\n\n\
+  \ When you establish an Amazon Web Services account, the account has initial quotas on the \
+   maximum read capacity units and write capacity units that you can provision across all of your \
+   DynamoDB tables in a given Region. Also, there are per-table quotas that apply when you create \
+   a table there. For more information, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html}Service, \
+   Account, and Table Quotas} page in the {i Amazon DynamoDB Developer Guide}.\n\
+  \ \n\
+  \  Although you can increase these quotas by filing a case at \
+   {{:https://console.aws.amazon.com/support/home#/}Amazon Web Services Support Center}, obtaining \
+   the increase is not instantaneous. The [DescribeLimits] action lets you write code to compare \
+   the capacity you are currently using to those quotas imposed by your account so that you have \
+   enough time to apply for an increase before you hit a quota.\n\
+  \  \n\
+  \   For example, you could use one of the Amazon Web Services SDKs to do the following:\n\
+  \   \n\
+  \    {ol\n\
+  \          {-  Call [DescribeLimits] for a particular Region to obtain your current account \
+   quotas on provisioned capacity there.\n\
+  \              \n\
+  \               }\n\
+  \          {-  Create a variable to hold the aggregate read capacity units provisioned for all \
+   your tables in that Region, and one to hold the aggregate write capacity units. Zero them both.\n\
+  \              \n\
+  \               }\n\
+  \          {-  Call [ListTables] to obtain a list of all your DynamoDB tables.\n\
+  \              \n\
+  \               }\n\
+  \          {-  For each table name listed by [ListTables], do the following:\n\
+  \              \n\
+  \               {ul\n\
+  \                     {-  Call [DescribeTable] with the table name.\n\
+  \                         \n\
+  \                          }\n\
+  \                     {-  Use the data returned by [DescribeTable] to add the read capacity \
+   units and write capacity units provisioned for the table itself to your variables.\n\
+  \                         \n\
+  \                          }\n\
+  \                     {-  If the table has one or more global secondary indexes (GSIs), loop \
+   over these GSIs and add their provisioned capacity values to your variables as well.\n\
+  \                         \n\
+  \                          }\n\
+  \                     \n\
+  \           }\n\
+  \            }\n\
+  \          {-  Report the account quotas for that Region returned by [DescribeLimits], along \
+   with the total current provisioned capacity levels you have calculated.\n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \   This will let you see whether you are getting close to your account-level quotas.\n\
+  \   \n\
+  \    The per-table quotas apply only when you are creating a new table. They restrict the sum of \
+   the provisioned capacity of the new table itself and all its global secondary indexes.\n\
+  \    \n\
+  \     For existing tables and their GSIs, DynamoDB doesn't let you increase provisioned capacity \
+   extremely rapidly, but the only quota that applies is that the aggregate provisioned capacity \
+   over all your tables and GSIs cannot exceed either of the per-account quotas.\n\
+  \     \n\
+  \        [DescribeLimits] should only be called periodically. You can expect throttling errors \
+   if you call it more than once in a minute.\n\
+  \       \n\
+  \         The [DescribeLimits] Request element has no content.\n\
+  \         "]
+
+module DescribeKinesisStreamingDestination : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_kinesis_streaming_destination_input ->
+    ( describe_kinesis_streaming_destination_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_kinesis_streaming_destination_input ->
+    ( describe_kinesis_streaming_destination_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns information about the status of Kinesis streaming.\n"]
+
+module DescribeImport : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_import_input ->
+    ( describe_import_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_import_input ->
+    ( describe_import_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Represents the properties of the import. \n"]
+
+module DescribeGlobalTableSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableNotFoundException of global_table_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_global_table_settings_input ->
+    ( describe_global_table_settings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableNotFoundException of global_table_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_global_table_settings_input ->
+    ( describe_global_table_settings_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableNotFoundException of global_table_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Describes Region-specific settings for a global table.\n\n\
+  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
+   avoided for new global tables. Customers should use \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
+   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
+   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
+  \  \n\
+  \   To determine which version you're using, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
+   the global table version you are using}. To update existing global tables from version \
+   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
+   global tables}.\n\
+  \   \n\
+  \    "]
+
+module DescribeGlobalTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableNotFoundException of global_table_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_global_table_input ->
+    ( describe_global_table_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableNotFoundException of global_table_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_global_table_input ->
+    ( describe_global_table_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableNotFoundException of global_table_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the specified global table.\n\n\
+  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
+   avoided for new global tables. Customers should use \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
+   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
+   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
+  \  \n\
+  \   To determine which version you're using, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
+   the global table version you are using}. To update existing global tables from version \
+   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
+   global tables}.\n\
+  \   \n\
+  \    "]
+
+module DescribeExport : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ExportNotFoundException of export_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_export_input ->
+    ( describe_export_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExportNotFoundException of export_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_export_input ->
+    ( describe_export_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExportNotFoundException of export_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Describes an existing table export.\n"]
+
+module DescribeEndpoints : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_endpoints_request ->
+    (describe_endpoints_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_endpoints_request ->
+    ( describe_endpoints_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the regional endpoint information. For more information on policy permissions, please \
+   see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/inter-network-traffic-privacy.html#inter-network-traffic-DescribeEndpoints}Internetwork \
+   traffic privacy}.\n"]
+
+module DescribeContributorInsights : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_contributor_insights_input ->
+    ( describe_contributor_insights_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_contributor_insights_input ->
+    ( describe_contributor_insights_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about contributor insights for a given table or global secondary index.\n"]
+
+module DescribeContinuousBackups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_continuous_backups_input ->
+    ( describe_continuous_backups_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `TableNotFoundException of table_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_continuous_backups_input ->
+    ( describe_continuous_backups_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Checks the status of continuous backups and point in time recovery on the specified table. \
+   Continuous backups are [ENABLED] on all tables at table creation. If point in time recovery is \
+   enabled, [PointInTimeRecoveryStatus] will be set to ENABLED.\n\n\
+  \  After continuous backups and point in time recovery are enabled, you can restore to any point \
+   in time within [EarliestRestorableDateTime] and [LatestRestorableDateTime]. \n\
+  \ \n\
+  \   [LatestRestorableDateTime] is typically 5 minutes before the current time. You can restore \
+   your table to any point in time in the last 35 days. You can set the recovery period to any \
+   value between 1 and 35 days. \n\
+  \  \n\
+  \   You can call [DescribeContinuousBackups] at a maximum rate of 10 times per second.\n\
+  \   "]
+
+module DescribeBackup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BackupNotFoundException of backup_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_backup_input ->
+    ( describe_backup_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupNotFoundException of backup_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_backup_input ->
+    ( describe_backup_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupNotFoundException of backup_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Describes an existing backup of a table.\n\n\
+  \ You can call [DescribeBackup] at a maximum rate of 10 times per second.\n\
+  \ "]
+
+module DeleteTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_input ->
+    ( delete_table_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_input ->
+    ( delete_table_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [DeleteTable] operation deletes a table and all of its items. After a [DeleteTable] \
+   request, the specified table is in the [DELETING] state until DynamoDB completes the deletion. \
+   If the table is in the [ACTIVE] state, you can delete it. If a table is in [CREATING] or \
+   [UPDATING] states, then DynamoDB returns a [ResourceInUseException]. If the specified table \
+   does not exist, DynamoDB returns a [ResourceNotFoundException]. If table is already in the \
+   [DELETING] state, no error is returned. \n\n\
+  \  DynamoDB might continue to accept data read and write operations, such as [GetItem] and \
+   [PutItem], on a table in the [DELETING] state until the table deletion is complete. For the \
+   full list of table states, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TableDescription.html#DDB-Type-TableDescription-TableStatus}TableStatus}.\n\
+  \  \n\
+  \    When you delete a table, any indexes on that table are also deleted.\n\
+  \    \n\
+  \     If you have DynamoDB Streams enabled on the table, then the corresponding stream on that \
+   table goes into the [DISABLED] state, and the stream is automatically deleted after 24 hours.\n\
+  \     \n\
+  \      Use the [DescribeTable] action to check the status of the table. \n\
+  \      "]
+
+module DeleteResourcePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `PolicyNotFoundException of policy_not_found_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_policy_input ->
+    ( delete_resource_policy_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `PolicyNotFoundException of policy_not_found_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_policy_input ->
+    ( delete_resource_policy_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `PolicyNotFoundException of policy_not_found_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes the resource-based policy attached to the resource, which can be a table or stream.\n\n\
+  \  [DeleteResourcePolicy] is an idempotent operation; running it multiple times on the same \
+   resource {i doesn't} result in an error response, unless you specify an [ExpectedRevisionId], \
+   which will then return a [PolicyNotFoundException].\n\
+  \ \n\
+  \   To make sure that you don't inadvertently lock yourself out of your own resources, the root \
+   principal in your Amazon Web Services account can perform [DeleteResourcePolicy] requests, even \
+   if your resource-based policy explicitly denies the root principal's access. \n\
+  \   \n\
+  \       [DeleteResourcePolicy] is an asynchronous operation. If you issue a [GetResourcePolicy] \
+   request immediately after running the [DeleteResourcePolicy] request, DynamoDB might still \
+   return the deleted policy. This is because the policy for your resource might not have been \
+   deleted yet. Wait for a few seconds, and then try the [GetResourcePolicy] request again.\n\
+  \      \n\
+  \       "]
+
+module DeleteItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConditionalCheckFailedException of conditional_check_failed_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `TransactionConflictException of transaction_conflict_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_item_input ->
+    ( delete_item_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConditionalCheckFailedException of conditional_check_failed_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `TransactionConflictException of transaction_conflict_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_item_input ->
+    ( delete_item_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConditionalCheckFailedException of conditional_check_failed_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `TransactionConflictException of transaction_conflict_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a single item in a table by primary key. You can perform a conditional delete operation \
+   that deletes the item if it exists, or if it has an expected attribute value.\n\n\
+  \ In addition to deleting an item, you can also return the item's attribute values in the same \
+   operation, using the [ReturnValues] parameter.\n\
+  \ \n\
+  \  Unless you specify conditions, the [DeleteItem] is an idempotent operation; running it \
+   multiple times on the same item or attribute does {i not} result in an error response.\n\
+  \  \n\
+  \   Conditional deletes are useful for deleting items only if specific conditions are met. If \
+   those conditions are met, DynamoDB performs the delete. Otherwise, the item is not deleted.\n\
+  \   "]
+
+module DeleteBackup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BackupInUseException of backup_in_use_exception
+    | `BackupNotFoundException of backup_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_backup_input ->
+    ( delete_backup_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupInUseException of backup_in_use_exception
+      | `BackupNotFoundException of backup_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_backup_input ->
+    ( delete_backup_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupInUseException of backup_in_use_exception
+      | `BackupNotFoundException of backup_not_found_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes an existing backup of a table.\n\n\
+  \ You can call [DeleteBackup] at a maximum rate of 10 times per second.\n\
+  \ "]
+
+module CreateTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_input ->
+    ( create_table_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_input ->
+    ( create_table_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [CreateTable] operation adds a new table to your account. In an Amazon Web Services \
+   account, table names must be unique within each Region. That is, you can have two tables with \
+   same name if you create the tables in different Regions.\n\n\
+  \  [CreateTable] is an asynchronous operation. Upon receiving a [CreateTable] request, DynamoDB \
+   immediately returns a response with a [TableStatus] of [CREATING]. After the table is created, \
+   DynamoDB sets the [TableStatus] to [ACTIVE]. You can perform read and write operations only on \
+   an [ACTIVE] table. \n\
+  \ \n\
+  \  You can optionally define secondary indexes on the new table, as part of the [CreateTable] \
+   operation. If you want to create multiple tables with secondary indexes on them, you must \
+   create the tables sequentially. Only one table with secondary indexes can be in the [CREATING] \
+   state at any given time.\n\
+  \  \n\
+  \   You can use the [DescribeTable] action to check the table status.\n\
+  \   "]
+
+module CreateGlobalTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_global_table_input ->
+    ( create_global_table_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TableNotFoundException of table_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_global_table_input ->
+    ( create_global_table_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a global table from an existing table. A global table creates a replication \
+   relationship between two or more DynamoDB tables with the same table name in the provided \
+   Regions. \n\n\
+  \  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be \
+   avoided for new global tables. Customers should use \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global \
+   Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, \
+   higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n\
+  \  \n\
+  \   To determine which version you're using, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining \
+   the global table version you are using}. To update existing global tables from version \
+   2017.11.29 (Legacy) to version 2019.11.21 (Current), see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading \
+   global tables}.\n\
+  \   \n\
+  \     If you want to add a new replica table to a global table, each of the following conditions \
+   must be true:\n\
+  \     \n\
+  \      {ul\n\
+  \            {-  The table must have the same primary key as all of the other replicas.\n\
+  \                \n\
+  \                 }\n\
+  \            {-  The table must have the same name as all of the other replicas.\n\
+  \                \n\
+  \                 }\n\
+  \            {-  The table must have DynamoDB Streams enabled, with the stream containing both \
+   the new and the old images of the item.\n\
+  \                \n\
+  \                 }\n\
+  \            {-  None of the replica tables in the global table can contain any data.\n\
+  \                \n\
+  \                 }\n\
+  \            }\n\
+  \    If global secondary indexes are specified, then the following conditions must also be met: \n\
+  \   \n\
+  \    {ul\n\
+  \          {-   The global secondary indexes must have the same name. \n\
+  \              \n\
+  \               }\n\
+  \          {-   The global secondary indexes must have the same hash key and sort key (if \
+   present). \n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \    If local secondary indexes are specified, then the following conditions must also be met: \n\
+  \   \n\
+  \    {ul\n\
+  \          {-   The local secondary indexes must have the same name. \n\
+  \              \n\
+  \               }\n\
+  \          {-   The local secondary indexes must have the same hash key and sort key (if \
+   present). \n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \     Write capacity settings should be set consistently across your replica tables and \
+   secondary indexes. DynamoDB strongly recommends enabling auto scaling to manage the write \
+   capacity settings for all of your global tables replicas and indexes. \n\
+  \    \n\
+  \      If you prefer to manage write capacity settings manually, you should provision equal \
+   replicated write capacity units to your replica tables. You should also provision equal \
+   replicated write capacity units to matching secondary indexes across your global table. \n\
+  \     \n\
+  \      "]
+
+module CreateBackup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BackupInUseException of backup_in_use_exception
+    | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TableInUseException of table_in_use_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_backup_input ->
+    ( create_backup_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupInUseException of backup_in_use_exception
+      | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TableInUseException of table_in_use_exception
+      | `TableNotFoundException of table_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_backup_input ->
+    ( create_backup_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BackupInUseException of backup_in_use_exception
+      | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `TableInUseException of table_in_use_exception
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a backup for an existing table.\n\n\
+  \  Each time you create an on-demand backup, the entire table data is backed up. There is no \
+   limit to the number of on-demand backups that can be taken. \n\
+  \ \n\
+  \   When you create an on-demand backup, a time marker of the request is cataloged, and the \
+   backup is created asynchronously, by applying all changes until the time of the request to the \
+   last full table snapshot. Backup requests are processed instantaneously and become available \
+   for restore within minutes. \n\
+  \  \n\
+  \   You can call [CreateBackup] at a maximum rate of 50 times per second.\n\
+  \   \n\
+  \    All backups in DynamoDB work without consuming any provisioned throughput on the table.\n\
+  \    \n\
+  \      If you submit a backup request on 2018-12-14 at 14:25:00, the backup is guaranteed to \
+   contain all data committed to the table up to 14:24:00, and data committed after 14:26:00 will \
+   not be. The backup might contain data modifications made between 14:24:00 and 14:26:00. \
+   On-demand backup does not support causal consistency. \n\
+  \     \n\
+  \       Along with data, the following are also included on the backups: \n\
+  \      \n\
+  \       {ul\n\
+  \             {-  Global secondary indexes (GSIs)\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  Local secondary indexes (LSIs)\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  Streams\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  Provisioned read and write capacity\n\
+  \                 \n\
+  \                  }\n\
+  \             }\n\
+  \  "]
+
+module BatchWriteItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_write_item_input ->
+    ( batch_write_item_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_write_item_input ->
+    ( batch_write_item_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [BatchWriteItem] operation puts or deletes multiple items in one or more tables. A single \
+   call to [BatchWriteItem] can transmit up to 16MB of data over the network, consisting of up to \
+   25 item put or delete operations. While individual items can be up to 400 KB once stored, it's \
+   important to note that an item's representation might be greater than 400KB while being sent in \
+   DynamoDB's JSON format for the API call. For more details on this distinction, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html}Naming \
+   Rules and Data Types}.\n\n\
+  \   [BatchWriteItem] cannot update items. If you perform a [BatchWriteItem] operation on an \
+   existing item, that item's values will be overwritten by the operation and it will appear like \
+   it was updated. To update items, we recommend you use the [UpdateItem] action.\n\
+  \  \n\
+  \    The individual [PutItem] and [DeleteItem] operations specified in [BatchWriteItem] are \
+   atomic; however [BatchWriteItem] as a whole is not. If any requested operations fail because \
+   the table's provisioned throughput is exceeded or an internal processing failure occurs, the \
+   failed operations are returned in the [UnprocessedItems] response parameter. You can \
+   investigate and optionally resend the requests. Typically, you would call [BatchWriteItem] in a \
+   loop. Each iteration would check for unprocessed items and submit a new [BatchWriteItem] \
+   request with those unprocessed items until all items have been processed.\n\
+  \    \n\
+  \     For tables and indexes with provisioned capacity, if none of the items can be processed \
+   due to insufficient provisioned throughput on all of the tables in the request, then \
+   [BatchWriteItem] returns a [ProvisionedThroughputExceededException]. For all tables and \
+   indexes, if none of the items can be processed due to other throttling scenarios (such as \
+   exceeding partition level limits), then [BatchWriteItem] returns a [ThrottlingException].\n\
+  \     \n\
+  \       If DynamoDB returns any unprocessed items, you should retry the batch operation on those \
+   items. However, {i we strongly recommend that you use an exponential backoff algorithm}. If you \
+   retry the batch operation immediately, the underlying read or write requests can still fail due \
+   to throttling on the individual tables. If you delay the batch operation using exponential \
+   backoff, the individual requests in the batch are much more likely to succeed.\n\
+  \       \n\
+  \        For more information, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#Programming.Errors.BatchOperations}Batch \
+   Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n\
+  \        \n\
+  \          With [BatchWriteItem], you can efficiently write or delete large amounts of data, \
+   such as from Amazon EMR, or copy data from another database into DynamoDB. In order to improve \
+   performance with these large-scale operations, [BatchWriteItem] does not behave in the same way \
+   as individual [PutItem] and [DeleteItem] calls would. For example, you cannot specify \
+   conditions on individual put and delete requests, and [BatchWriteItem] does not return deleted \
+   items in the response.\n\
+  \          \n\
+  \           If you use a programming language that supports concurrency, you can use threads to \
+   write items in parallel. Your application must include the necessary logic to manage the \
+   threads. With languages that don't support threading, you must update or delete the specified \
+   items one at a time. In both situations, [BatchWriteItem] performs the specified put and delete \
+   operations in parallel, giving you the power of the thread pool approach without having to \
+   introduce complexity into your application.\n\
+  \           \n\
+  \            Parallel processing reduces latency, but each specified put and delete request \
+   consumes the same number of write capacity units whether it is processed in parallel or not. \
+   Delete operations on nonexistent items consume one write capacity unit.\n\
+  \            \n\
+  \             If one or more of the following is true, DynamoDB rejects the entire batch write \
+   operation:\n\
+  \             \n\
+  \              {ul\n\
+  \                    {-  One or more tables specified in the [BatchWriteItem] request does not \
+   exist.\n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  Primary key attributes specified on an item in the request do not match \
+   those in the corresponding table's primary key schema.\n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  You try to perform multiple operations on the same item in the same \
+   [BatchWriteItem] request. For example, you cannot put and delete the same item in the same \
+   [BatchWriteItem] request. \n\
+  \                        \n\
+  \                         }\n\
+  \                    {-   Your request contains at least two items with identical hash and range \
+   keys (which essentially is two put operations). \n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  There are more than 25 requests in the batch.\n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  Any individual item in a batch exceeds 400 KB.\n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  The total request size exceeds 16 MB.\n\
+  \                        \n\
+  \                         }\n\
+  \                    {-  Any individual items with keys exceeding the key length limits. For a \
+   partition key, the limit is 2048 bytes and for a sort key, the limit is 1024 bytes.\n\
+  \                        \n\
+  \                         }\n\
+  \                    }\n\
+  \  "]
+
+module BatchGetItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_item_input ->
+    ( batch_get_item_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_item_input ->
+    ( batch_get_item_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [BatchGetItem] operation returns the attributes of one or more items from one or more \
+   tables. You identify requested items by primary key.\n\n\
+  \ A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. \
+   [BatchGetItem] returns a partial result if the response size limit is exceeded, the table's \
+   provisioned throughput is exceeded, more than 1MB per partition is requested, or an internal \
+   processing failure occurs. If a partial result is returned, the operation returns a value for \
+   [UnprocessedKeys]. You can use this value to retry the operation starting with the next item to \
+   get.\n\
+  \ \n\
+  \   If you request more than 100 items, [BatchGetItem] returns a [ValidationException] with the \
+   message \"Too many items requested for the BatchGetItem call.\"\n\
+  \   \n\
+  \     For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, \
+   the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an \
+   appropriate [UnprocessedKeys] value so you can get the next page of results. If desired, your \
+   application can include its own logic to assemble the pages of results into one dataset.\n\
+  \     \n\
+  \      If {i none} of the items can be processed due to insufficient provisioned throughput on \
+   all of the tables in the request, then [BatchGetItem] returns a \
+   [ProvisionedThroughputExceededException]. If {i at least one} of the items is successfully \
+   processed, then [BatchGetItem] completes successfully, while returning the keys of the unread \
+   items in [UnprocessedKeys].\n\
+  \      \n\
+  \        If DynamoDB returns any unprocessed items, you should retry the batch operation on \
+   those items. However, {i we strongly recommend that you use an exponential backoff algorithm}. \
+   If you retry the batch operation immediately, the underlying read or write requests can still \
+   fail due to throttling on the individual tables. If you delay the batch operation using \
+   exponential backoff, the individual requests in the batch are much more likely to succeed.\n\
+  \        \n\
+  \         For more information, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations}Batch \
+   Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n\
+  \         \n\
+  \           By default, [BatchGetItem] performs eventually consistent reads on every table in \
+   the request. If you want strongly consistent reads instead, you can set [ConsistentRead] to \
+   [true] for any or all tables.\n\
+  \           \n\
+  \            In order to minimize response latency, [BatchGetItem] may retrieve items in parallel.\n\
+  \            \n\
+  \             When designing your application, keep in mind that DynamoDB does not return items \
+   in any particular order. To help parse the response by item, include the primary key values for \
+   the items in your request in the [ProjectionExpression] parameter.\n\
+  \             \n\
+  \              If a requested item does not exist, it is not returned in the result. Requests \
+   for nonexistent items consume the minimum read capacity units according to the type of read. \
+   For more information, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations}Working \
+   with Tables} in the {i Amazon DynamoDB Developer Guide}.\n\
+  \              \n\
+  \                 [BatchGetItem] will result in a [ValidationException] if the same key is \
+   specified multiple times.\n\
+  \                \n\
+  \                 "]
+
+(** {1:Serialization and Deserialization} *)
+module BatchExecuteStatement : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_execute_statement_input ->
+    ( batch_execute_statement_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_execute_statement_input ->
+    ( batch_execute_statement_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "This operation allows you to perform batch reads or writes on data stored in DynamoDB, using \
+   PartiQL. Each read statement in a [BatchExecuteStatement] must specify an equality condition on \
+   all key attributes. This enforces that each [SELECT] statement in a batch returns at most a \
+   single item. For more information, see \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ql-reference.multiplestatements.batching.html}Running \
+   batch operations with PartiQL for DynamoDB }.\n\n\
+  \  The entire batch must consist of either read statements or write statements, you cannot mix \
+   both in one batch.\n\
+  \  \n\
+  \     A HTTP 200 response does not mean that all statements in the BatchExecuteStatement \
+   succeeded. Error details for individual statements can be found under the \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchStatementResponse.html#DDB-Type-BatchStatementResponse-Error}Error} \
+   field of the [BatchStatementResponse] for each statement.\n\
+  \     \n\
+  \      "]
 
 module Json_serializers = Json_serializers
 module Json_deserializers = Json_deserializers

@@ -8,28 +8,15 @@ module Types = Types
 
 (** {1:builders Builders} *)
 
-val make_vulnerable_package :
-  ?fixed_in_version:fixed_in_version ->
-  ?version:version ->
-  ?source_layer_hash:source_layer_hash ->
-  ?release:release ->
-  ?package_manager:package_manager ->
-  ?name:vulnerable_package_name ->
-  ?file_path:file_path ->
-  ?epoch:epoch ->
-  ?arch:arch ->
-  unit ->
-  vulnerable_package
-
 val make_validate_pull_through_cache_rule_response :
-  ?failure:ptc_validate_failure ->
-  ?is_valid:is_ptc_rule_valid ->
-  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
-  ?custom_role_arn:custom_role_arn ->
-  ?credential_arn:credential_arn ->
-  ?upstream_registry_url:url ->
-  ?registry_id:registry_id ->
   ?ecr_repository_prefix:pull_through_cache_rule_repository_prefix ->
+  ?registry_id:registry_id ->
+  ?upstream_registry_url:url ->
+  ?credential_arn:credential_arn ->
+  ?custom_role_arn:custom_role_arn ->
+  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
+  ?is_valid:is_ptc_rule_valid ->
+  ?failure:ptc_validate_failure ->
   unit ->
   validate_pull_through_cache_rule_response
 
@@ -40,22 +27,30 @@ val make_validate_pull_through_cache_rule_request :
   validate_pull_through_cache_rule_request
 
 val make_upload_layer_part_response :
-  ?last_byte_received:part_size ->
-  ?upload_id:upload_id ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?upload_id:upload_id ->
+  ?last_byte_received:part_size ->
   unit ->
   upload_layer_part_response
 
 val make_upload_layer_part_request :
   ?registry_id:registry_id ->
-  layer_part_blob:layer_part_blob ->
-  part_last_byte:part_size ->
-  part_first_byte:part_size ->
-  upload_id:upload_id ->
   repository_name:repository_name ->
+  upload_id:upload_id ->
+  part_first_byte:part_size ->
+  part_last_byte:part_size ->
+  layer_part_blob:layer_part_blob ->
   unit ->
   upload_layer_part_request
+
+val make_image_tag_mutability_exclusion_filter :
+  filter_type:image_tag_mutability_exclusion_filter_type ->
+  filter:image_tag_mutability_exclusion_filter_value ->
+  unit ->
+  image_tag_mutability_exclusion_filter
+
+val make_tag : key:tag_key -> value:tag_value -> unit -> tag
 
 val make_encryption_configuration_for_repository_creation_template :
   ?kms_key:kms_key_for_repository_creation_template ->
@@ -63,138 +58,147 @@ val make_encryption_configuration_for_repository_creation_template :
   unit ->
   encryption_configuration_for_repository_creation_template
 
-val make_tag : value:tag_value -> key:tag_key -> unit -> tag
-
-val make_image_tag_mutability_exclusion_filter :
-  filter:image_tag_mutability_exclusion_filter_value ->
-  filter_type:image_tag_mutability_exclusion_filter_type ->
-  unit ->
-  image_tag_mutability_exclusion_filter
-
 val make_repository_creation_template :
-  ?updated_at:date ->
-  ?created_at:date ->
-  ?custom_role_arn:custom_role_arn ->
-  ?applied_for:rct_applied_for_list ->
-  ?lifecycle_policy:lifecycle_policy_text_for_repository_creation_template ->
-  ?repository_policy:repository_policy_text ->
-  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
-  ?image_tag_mutability:image_tag_mutability ->
-  ?resource_tags:tag_list ->
-  ?encryption_configuration:encryption_configuration_for_repository_creation_template ->
-  ?description:repository_template_description ->
   ?prefix:prefix ->
+  ?description:repository_template_description ->
+  ?encryption_configuration:encryption_configuration_for_repository_creation_template ->
+  ?resource_tags:tag_list ->
+  ?image_tag_mutability:image_tag_mutability ->
+  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
+  ?repository_policy:repository_policy_text ->
+  ?lifecycle_policy:lifecycle_policy_text_for_repository_creation_template ->
+  ?applied_for:rct_applied_for_list ->
+  ?custom_role_arn:custom_role_arn ->
+  ?created_at:date ->
+  ?updated_at:date ->
   unit ->
   repository_creation_template
 
 val make_update_repository_creation_template_response :
-  ?repository_creation_template:repository_creation_template ->
   ?registry_id:registry_id ->
+  ?repository_creation_template:repository_creation_template ->
   unit ->
   update_repository_creation_template_response
 
 val make_update_repository_creation_template_request :
-  ?custom_role_arn:custom_role_arn ->
-  ?applied_for:rct_applied_for_list ->
-  ?lifecycle_policy:lifecycle_policy_text_for_repository_creation_template ->
-  ?repository_policy:repository_policy_text ->
-  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
-  ?image_tag_mutability:image_tag_mutability ->
-  ?resource_tags:tag_list ->
-  ?encryption_configuration:encryption_configuration_for_repository_creation_template ->
   ?description:repository_template_description ->
+  ?encryption_configuration:encryption_configuration_for_repository_creation_template ->
+  ?resource_tags:tag_list ->
+  ?image_tag_mutability:image_tag_mutability ->
+  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
+  ?repository_policy:repository_policy_text ->
+  ?lifecycle_policy:lifecycle_policy_text_for_repository_creation_template ->
+  ?applied_for:rct_applied_for_list ->
+  ?custom_role_arn:custom_role_arn ->
   prefix:prefix ->
   unit ->
   update_repository_creation_template_request
 
 val make_update_pull_through_cache_rule_response :
-  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
-  ?custom_role_arn:custom_role_arn ->
-  ?credential_arn:credential_arn ->
-  ?updated_at:updated_timestamp ->
-  ?registry_id:registry_id ->
   ?ecr_repository_prefix:pull_through_cache_rule_repository_prefix ->
+  ?registry_id:registry_id ->
+  ?updated_at:updated_timestamp ->
+  ?credential_arn:credential_arn ->
+  ?custom_role_arn:custom_role_arn ->
+  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
   unit ->
   update_pull_through_cache_rule_response
 
 val make_update_pull_through_cache_rule_request :
-  ?custom_role_arn:custom_role_arn ->
-  ?credential_arn:credential_arn ->
   ?registry_id:registry_id ->
+  ?credential_arn:credential_arn ->
+  ?custom_role_arn:custom_role_arn ->
   ecr_repository_prefix:pull_through_cache_rule_repository_prefix ->
   unit ->
   update_pull_through_cache_rule_request
 
 val make_image_identifier :
-  ?image_tag:image_tag -> ?image_digest:image_digest -> unit -> image_identifier
+  ?image_digest:image_digest -> ?image_tag:image_tag -> unit -> image_identifier
 
 val make_update_image_storage_class_response :
-  ?image_status:image_status ->
-  ?image_id:image_identifier ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?image_id:image_identifier ->
+  ?image_status:image_status ->
   unit ->
   update_image_storage_class_response
 
 val make_update_image_storage_class_request :
   ?registry_id:registry_id ->
-  target_storage_class:target_storage_class ->
-  image_id:image_identifier ->
   repository_name:repository_name ->
+  image_id:image_identifier ->
+  target_storage_class:target_storage_class ->
   unit ->
   update_image_storage_class_request
 
 val make_untag_resource_response : unit -> unit
 
 val make_untag_resource_request :
-  tag_keys:tag_key_list -> resource_arn:arn -> unit -> untag_resource_request
-
-val make_transitioning_image_total_count :
-  ?image_total_count:image_count ->
-  ?target_storage_class:lifecycle_policy_target_storage_class ->
-  unit ->
-  transitioning_image_total_count
+  resource_arn:arn -> tag_keys:tag_key_list -> unit -> untag_resource_request
 
 val make_tag_resource_response : unit -> unit
-val make_tag_resource_request : tags:tag_list -> resource_arn:arn -> unit -> tag_resource_request
-val make_subject_identifier : image_digest:image_digest -> unit -> subject_identifier
+val make_tag_resource_request : resource_arn:arn -> tags:tag_list -> unit -> tag_resource_request
 
 val make_start_lifecycle_policy_preview_response :
-  ?status:lifecycle_policy_preview_status ->
-  ?lifecycle_policy_text:lifecycle_policy_text ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?lifecycle_policy_text:lifecycle_policy_text ->
+  ?status:lifecycle_policy_preview_status ->
   unit ->
   start_lifecycle_policy_preview_response
 
 val make_start_lifecycle_policy_preview_request :
-  ?lifecycle_policy_text:lifecycle_policy_text ->
   ?registry_id:registry_id ->
+  ?lifecycle_policy_text:lifecycle_policy_text ->
   repository_name:repository_name ->
   unit ->
   start_lifecycle_policy_preview_request
 
 val make_image_scan_status :
-  ?description:scan_status_description -> ?status:scan_status -> unit -> image_scan_status
+  ?status:scan_status -> ?description:scan_status_description -> unit -> image_scan_status
 
 val make_start_image_scan_response :
-  ?image_scan_status:image_scan_status ->
-  ?image_id:image_identifier ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?image_id:image_identifier ->
+  ?image_scan_status:image_scan_status ->
   unit ->
   start_image_scan_response
 
 val make_start_image_scan_request :
   ?registry_id:registry_id ->
-  image_id:image_identifier ->
   repository_name:repository_name ->
+  image_id:image_identifier ->
   unit ->
   start_image_scan_request
 
+val make_set_repository_policy_response :
+  ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?policy_text:repository_policy_text ->
+  unit ->
+  set_repository_policy_response
+
+val make_set_repository_policy_request :
+  ?registry_id:registry_id ->
+  ?force:force_flag ->
+  repository_name:repository_name ->
+  policy_text:repository_policy_text ->
+  unit ->
+  set_repository_policy_request
+
+val make_register_pull_time_update_exclusion_response :
+  ?principal_arn:principal_arn ->
+  ?created_at:creation_timestamp ->
+  unit ->
+  register_pull_time_update_exclusion_response
+
+val make_register_pull_time_update_exclusion_request :
+  principal_arn:principal_arn -> unit -> register_pull_time_update_exclusion_request
+
 val make_signing_repository_filter :
-  filter_type:signing_repository_filter_type ->
   filter:signing_repository_filter_value ->
+  filter_type:signing_repository_filter_type ->
   unit ->
   signing_repository_filter
 
@@ -206,100 +210,17 @@ val make_signing_rule :
 
 val make_signing_configuration : rules:signing_rule_list -> unit -> signing_configuration
 
-val make_set_repository_policy_response :
-  ?policy_text:repository_policy_text ->
-  ?repository_name:repository_name ->
-  ?registry_id:registry_id ->
-  unit ->
-  set_repository_policy_response
+val make_put_signing_configuration_response :
+  ?signing_configuration:signing_configuration -> unit -> put_signing_configuration_response
 
-val make_set_repository_policy_request :
-  ?force:force_flag ->
-  ?registry_id:registry_id ->
-  policy_text:repository_policy_text ->
-  repository_name:repository_name ->
-  unit ->
-  set_repository_policy_request
-
-val make_cvss_score_adjustment : ?reason:reason -> ?metric:metric -> unit -> cvss_score_adjustment
-
-val make_cvss_score_details :
-  ?version:version ->
-  ?scoring_vector:scoring_vector ->
-  ?score_source:source ->
-  ?score:score ->
-  ?adjustments:cvss_score_adjustment_list ->
-  unit ->
-  cvss_score_details
-
-val make_score_details : ?cvss:cvss_score_details -> unit -> score_details
-
-val make_scanning_repository_filter :
-  filter_type:scanning_repository_filter_type ->
-  filter:scanning_repository_filter_value ->
-  unit ->
-  scanning_repository_filter
-
-val make_aws_ecr_container_image_details :
-  ?repository_name:repository_name ->
-  ?registry:registry_id ->
-  ?in_use_count:in_use_count ->
-  ?last_in_use_at:date ->
-  ?pushed_at:date ->
-  ?platform:platform ->
-  ?image_tags:image_tags_list ->
-  ?image_hash:image_digest ->
-  ?author:author ->
-  ?architecture:arch ->
-  unit ->
-  aws_ecr_container_image_details
-
-val make_resource_details :
-  ?aws_ecr_container_image:aws_ecr_container_image_details -> unit -> resource_details
-
-val make_resource :
-  ?type_:type_ -> ?tags:tags -> ?id:resource_id -> ?details:resource_details -> unit -> resource
-
-val make_repository_scanning_configuration :
-  ?applied_scan_filters:scanning_repository_filter_list ->
-  ?scan_frequency:scan_frequency ->
-  ?scan_on_push:scan_on_push_flag ->
-  ?repository_name:repository_name ->
-  ?repository_arn:arn ->
-  unit ->
-  repository_scanning_configuration
-
-val make_repository_scanning_configuration_failure :
-  ?failure_reason:scanning_configuration_failure_reason ->
-  ?failure_code:scanning_configuration_failure_code ->
-  ?repository_name:repository_name ->
-  unit ->
-  repository_scanning_configuration_failure
-
-val make_image_scanning_configuration :
-  ?scan_on_push:scan_on_push_flag -> unit -> image_scanning_configuration
-
-val make_encryption_configuration :
-  ?kms_key:kms_key -> encryption_type:encryption_type -> unit -> encryption_configuration
-
-val make_repository :
-  ?encryption_configuration:encryption_configuration ->
-  ?image_scanning_configuration:image_scanning_configuration ->
-  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
-  ?image_tag_mutability:image_tag_mutability ->
-  ?created_at:creation_timestamp ->
-  ?repository_uri:url ->
-  ?repository_name:repository_name ->
-  ?registry_id:registry_id ->
-  ?repository_arn:arn ->
-  unit ->
-  repository
+val make_put_signing_configuration_request :
+  signing_configuration:signing_configuration -> unit -> put_signing_configuration_request
 
 val make_repository_filter :
-  filter_type:repository_filter_type -> filter:repository_filter_value -> unit -> repository_filter
+  filter:repository_filter_value -> filter_type:repository_filter_type -> unit -> repository_filter
 
 val make_replication_destination :
-  registry_id:registry_id -> region:region -> unit -> replication_destination
+  region:region -> registry_id:registry_id -> unit -> replication_destination
 
 val make_replication_rule :
   ?repository_filters:repository_filter_list ->
@@ -309,36 +230,6 @@ val make_replication_rule :
 
 val make_replication_configuration :
   rules:replication_rule_list -> unit -> replication_configuration
-
-val make_recommendation : ?text:recommendation_text -> ?url:url -> unit -> recommendation
-val make_remediation : ?recommendation:recommendation -> unit -> remediation
-
-val make_registry_scanning_rule :
-  repository_filters:scanning_repository_filter_list ->
-  scan_frequency:scan_frequency ->
-  unit ->
-  registry_scanning_rule
-
-val make_registry_scanning_configuration :
-  ?rules:registry_scanning_rule_list ->
-  ?scan_type:scan_type ->
-  unit ->
-  registry_scanning_configuration
-
-val make_register_pull_time_update_exclusion_response :
-  ?created_at:creation_timestamp ->
-  ?principal_arn:principal_arn ->
-  unit ->
-  register_pull_time_update_exclusion_response
-
-val make_register_pull_time_update_exclusion_request :
-  principal_arn:principal_arn -> unit -> register_pull_time_update_exclusion_request
-
-val make_put_signing_configuration_response :
-  ?signing_configuration:signing_configuration -> unit -> put_signing_configuration_response
-
-val make_put_signing_configuration_request :
-  signing_configuration:signing_configuration -> unit -> put_signing_configuration_request
 
 val make_put_replication_configuration_response :
   ?replication_configuration:replication_configuration ->
@@ -350,20 +241,38 @@ val make_put_replication_configuration_request :
   unit ->
   put_replication_configuration_request
 
+val make_scanning_repository_filter :
+  filter:scanning_repository_filter_value ->
+  filter_type:scanning_repository_filter_type ->
+  unit ->
+  scanning_repository_filter
+
+val make_registry_scanning_rule :
+  scan_frequency:scan_frequency ->
+  repository_filters:scanning_repository_filter_list ->
+  unit ->
+  registry_scanning_rule
+
+val make_registry_scanning_configuration :
+  ?scan_type:scan_type ->
+  ?rules:registry_scanning_rule_list ->
+  unit ->
+  registry_scanning_configuration
+
 val make_put_registry_scanning_configuration_response :
   ?registry_scanning_configuration:registry_scanning_configuration ->
   unit ->
   put_registry_scanning_configuration_response
 
 val make_put_registry_scanning_configuration_request :
-  ?rules:registry_scanning_rule_list ->
   ?scan_type:scan_type ->
+  ?rules:registry_scanning_rule_list ->
   unit ->
   put_registry_scanning_configuration_request
 
 val make_put_registry_policy_response :
-  ?policy_text:registry_policy_text ->
   ?registry_id:registry_id ->
+  ?policy_text:registry_policy_text ->
   unit ->
   put_registry_policy_response
 
@@ -371,202 +280,142 @@ val make_put_registry_policy_request :
   policy_text:registry_policy_text -> unit -> put_registry_policy_request
 
 val make_put_lifecycle_policy_response :
-  ?lifecycle_policy_text:lifecycle_policy_text ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?lifecycle_policy_text:lifecycle_policy_text ->
   unit ->
   put_lifecycle_policy_response
 
 val make_put_lifecycle_policy_request :
   ?registry_id:registry_id ->
-  lifecycle_policy_text:lifecycle_policy_text ->
   repository_name:repository_name ->
+  lifecycle_policy_text:lifecycle_policy_text ->
   unit ->
   put_lifecycle_policy_request
 
 val make_put_image_tag_mutability_response :
-  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
-  ?image_tag_mutability:image_tag_mutability ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?image_tag_mutability:image_tag_mutability ->
+  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
   unit ->
   put_image_tag_mutability_response
 
 val make_put_image_tag_mutability_request :
-  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
   ?registry_id:registry_id ->
-  image_tag_mutability:image_tag_mutability ->
+  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
   repository_name:repository_name ->
+  image_tag_mutability:image_tag_mutability ->
   unit ->
   put_image_tag_mutability_request
 
+val make_image_scanning_configuration :
+  ?scan_on_push:scan_on_push_flag -> unit -> image_scanning_configuration
+
 val make_put_image_scanning_configuration_response :
-  ?image_scanning_configuration:image_scanning_configuration ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?image_scanning_configuration:image_scanning_configuration ->
   unit ->
   put_image_scanning_configuration_response
 
 val make_put_image_scanning_configuration_request :
   ?registry_id:registry_id ->
-  image_scanning_configuration:image_scanning_configuration ->
   repository_name:repository_name ->
+  image_scanning_configuration:image_scanning_configuration ->
   unit ->
   put_image_scanning_configuration_request
 
 val make_image :
-  ?image_manifest_media_type:media_type ->
-  ?image_manifest:image_manifest ->
-  ?image_id:image_identifier ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?image_id:image_identifier ->
+  ?image_manifest:image_manifest ->
+  ?image_manifest_media_type:media_type ->
   unit ->
   image
 
 val make_put_image_response : ?image:image -> unit -> put_image_response
 
 val make_put_image_request :
-  ?image_digest:image_digest ->
-  ?image_tag:image_tag ->
-  ?image_manifest_media_type:media_type ->
   ?registry_id:registry_id ->
-  image_manifest:image_manifest ->
+  ?image_manifest_media_type:media_type ->
+  ?image_tag:image_tag ->
+  ?image_digest:image_digest ->
   repository_name:repository_name ->
+  image_manifest:image_manifest ->
   unit ->
   put_image_request
 
 val make_put_account_setting_response :
-  ?value:account_setting_value -> ?name:account_setting_name -> unit -> put_account_setting_response
+  ?name:account_setting_name -> ?value:account_setting_value -> unit -> put_account_setting_response
 
 val make_put_account_setting_request :
-  value:account_setting_value -> name:account_setting_name -> unit -> put_account_setting_request
-
-val make_pull_through_cache_rule :
-  ?updated_at:updated_timestamp ->
-  ?upstream_registry:upstream_registry ->
-  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
-  ?custom_role_arn:custom_role_arn ->
-  ?credential_arn:credential_arn ->
-  ?registry_id:registry_id ->
-  ?created_at:creation_timestamp ->
-  ?upstream_registry_url:url ->
-  ?ecr_repository_prefix:pull_through_cache_rule_repository_prefix ->
-  unit ->
-  pull_through_cache_rule
-
-val make_cvss_score :
-  ?version:version ->
-  ?source:source ->
-  ?scoring_vector:scoring_vector ->
-  ?base_score:base_score ->
-  unit ->
-  cvss_score
-
-val make_package_vulnerability_details :
-  ?vulnerable_packages:vulnerable_packages_list ->
-  ?vulnerability_id:vulnerability_id ->
-  ?vendor_updated_at:date ->
-  ?vendor_severity:severity ->
-  ?vendor_created_at:date ->
-  ?source_url:url ->
-  ?source:source ->
-  ?related_vulnerabilities:related_vulnerabilities_list ->
-  ?reference_urls:reference_urls_list ->
-  ?cvss:cvss_score_list ->
-  unit ->
-  package_vulnerability_details
+  name:account_setting_name -> value:account_setting_value -> unit -> put_account_setting_request
 
 val make_list_tags_for_resource_response : ?tags:tag_list -> unit -> list_tags_for_resource_response
 val make_list_tags_for_resource_request : resource_arn:arn -> unit -> list_tags_for_resource_request
 
 val make_list_pull_time_update_exclusions_response :
-  ?next_token:next_token ->
   ?pull_time_update_exclusions:pull_time_update_exclusion_list ->
+  ?next_token:next_token ->
   unit ->
   list_pull_time_update_exclusions_response
 
 val make_list_pull_time_update_exclusions_request :
-  ?next_token:next_token ->
   ?max_results:max_results ->
+  ?next_token:next_token ->
   unit ->
   list_pull_time_update_exclusions_request
 
 val make_list_images_response :
-  ?next_token:next_token -> ?image_ids:image_identifier_list -> unit -> list_images_response
+  ?image_ids:image_identifier_list -> ?next_token:next_token -> unit -> list_images_response
 
 val make_list_images_filter :
-  ?image_status:image_status_filter -> ?tag_status:tag_status -> unit -> list_images_filter
+  ?tag_status:tag_status -> ?image_status:image_status_filter -> unit -> list_images_filter
 
 val make_list_images_request :
-  ?filter:list_images_filter ->
-  ?max_results:max_results ->
-  ?next_token:next_token ->
   ?registry_id:registry_id ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?filter:list_images_filter ->
   repository_name:repository_name ->
   unit ->
   list_images_request
 
 val make_image_referrer :
-  ?artifact_status:artifact_status ->
-  ?annotations:annotations ->
   ?artifact_type:artifact_type ->
-  size:image_size_in_bytes ->
-  media_type:media_type ->
+  ?annotations:annotations ->
+  ?artifact_status:artifact_status ->
   digest:image_digest ->
+  media_type:media_type ->
+  size:image_size_in_bytes ->
   unit ->
   image_referrer
 
 val make_list_image_referrers_response :
-  ?next_token:next_token -> ?referrers:image_referrer_list -> unit -> list_image_referrers_response
+  ?referrers:image_referrer_list -> ?next_token:next_token -> unit -> list_image_referrers_response
 
 val make_list_image_referrers_filter :
-  ?artifact_status:artifact_status_filter ->
   ?artifact_types:artifact_type_list ->
+  ?artifact_status:artifact_status_filter ->
   unit ->
   list_image_referrers_filter
 
+val make_subject_identifier : image_digest:image_digest -> unit -> subject_identifier
+
 val make_list_image_referrers_request :
-  ?max_results:fifty_max_results ->
-  ?next_token:next_token ->
-  ?filter:list_image_referrers_filter ->
   ?registry_id:registry_id ->
-  subject_id:subject_identifier ->
+  ?filter:list_image_referrers_filter ->
+  ?next_token:next_token ->
+  ?max_results:fifty_max_results ->
   repository_name:repository_name ->
+  subject_id:subject_identifier ->
   unit ->
   list_image_referrers_request
 
-val make_lifecycle_policy_rule_action :
-  ?target_storage_class:lifecycle_policy_target_storage_class ->
-  ?type_:image_action_type ->
-  unit ->
-  lifecycle_policy_rule_action
-
-val make_lifecycle_policy_preview_summary :
-  ?transitioning_image_total_counts:transitioning_image_total_counts ->
-  ?expiring_image_total_count:image_count ->
-  unit ->
-  lifecycle_policy_preview_summary
-
-val make_lifecycle_policy_preview_filter :
-  ?tag_status:tag_status -> unit -> lifecycle_policy_preview_filter
-
-val make_layer :
-  ?media_type:media_type ->
-  ?layer_size:layer_size_in_bytes ->
-  ?layer_availability:layer_availability ->
-  ?layer_digest:layer_digest ->
-  unit ->
-  layer
-
-val make_layer_failure :
-  ?failure_reason:layer_failure_reason ->
-  ?failure_code:layer_failure_code ->
-  ?layer_digest:batched_operation_layer_digest ->
-  unit ->
-  layer_failure
-
 val make_initiate_layer_upload_response :
-  ?part_size:part_size -> ?upload_id:upload_id -> unit -> initiate_layer_upload_response
+  ?upload_id:upload_id -> ?part_size:part_size -> unit -> initiate_layer_upload_response
 
 val make_initiate_layer_upload_request :
   ?registry_id:registry_id ->
@@ -574,108 +423,18 @@ val make_initiate_layer_upload_request :
   unit ->
   initiate_layer_upload_request
 
-val make_image_signing_status :
-  ?status:signing_status ->
-  ?failure_reason:signing_status_failure_reason ->
-  ?failure_code:signing_status_failure_code ->
-  ?signing_profile_arn:signing_profile_arn ->
-  unit ->
-  image_signing_status
-
-val make_image_scan_findings_summary :
-  ?finding_severity_counts:finding_severity_counts ->
-  ?vulnerability_source_updated_at:vulnerability_source_update_timestamp ->
-  ?image_scan_completed_at:scan_timestamp ->
-  unit ->
-  image_scan_findings_summary
-
-val make_attribute : ?value:attribute_value -> key:attribute_key -> unit -> attribute
-
-val make_image_scan_finding :
-  ?attributes:attribute_list ->
-  ?severity:finding_severity ->
-  ?uri:url ->
-  ?description:finding_description ->
-  ?name:finding_name ->
-  unit ->
-  image_scan_finding
-
-val make_enhanced_image_scan_finding :
-  ?exploit_available:exploit_available ->
-  ?fix_available:fix_available ->
-  ?updated_at:date ->
-  ?type_:type_ ->
-  ?title:title ->
-  ?status:status ->
-  ?severity:severity ->
-  ?score_details:score_details ->
-  ?score:score ->
-  ?resources:resource_list ->
-  ?remediation:remediation ->
-  ?package_vulnerability_details:package_vulnerability_details ->
-  ?last_observed_at:date ->
-  ?first_observed_at:date ->
-  ?finding_arn:finding_arn ->
-  ?description:finding_description ->
-  ?aws_account_id:registry_id ->
-  unit ->
-  enhanced_image_scan_finding
-
-val make_image_scan_findings :
-  ?enhanced_findings:enhanced_image_scan_finding_list ->
-  ?findings:image_scan_finding_list ->
-  ?finding_severity_counts:finding_severity_counts ->
-  ?vulnerability_source_updated_at:vulnerability_source_update_timestamp ->
-  ?image_scan_completed_at:scan_timestamp ->
-  unit ->
-  image_scan_findings
-
-val make_image_replication_status :
-  ?failure_code:replication_error ->
-  ?status:replication_status ->
-  ?registry_id:registry_id ->
-  ?region:region ->
-  unit ->
-  image_replication_status
-
-val make_image_failure :
-  ?failure_reason:image_failure_reason ->
-  ?failure_code:image_failure_code ->
-  ?image_id:image_identifier ->
-  unit ->
-  image_failure
-
-val make_image_detail :
-  ?last_activated_at:last_activated_at_timestamp ->
-  ?last_archived_at:last_archived_at_timestamp ->
-  ?image_status:image_status ->
-  ?subject_manifest_digest:image_digest ->
-  ?last_recorded_pull_time:recorded_pull_timestamp ->
-  ?artifact_media_type:media_type ->
-  ?image_manifest_media_type:media_type ->
-  ?image_scan_findings_summary:image_scan_findings_summary ->
-  ?image_scan_status:image_scan_status ->
-  ?image_pushed_at:push_timestamp ->
-  ?image_size_in_bytes:image_size_in_bytes ->
-  ?image_tags:image_tag_list ->
-  ?image_digest:image_digest ->
-  ?repository_name:repository_name ->
-  ?registry_id:registry_id ->
-  unit ->
-  image_detail
-
 val make_get_signing_configuration_response :
-  ?signing_configuration:signing_configuration ->
   ?registry_id:registry_id ->
+  ?signing_configuration:signing_configuration ->
   unit ->
   get_signing_configuration_response
 
 val make_get_signing_configuration_request : unit -> unit
 
 val make_get_repository_policy_response :
-  ?policy_text:repository_policy_text ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?policy_text:repository_policy_text ->
   unit ->
   get_repository_policy_response
 
@@ -686,26 +445,68 @@ val make_get_repository_policy_request :
   get_repository_policy_request
 
 val make_get_registry_scanning_configuration_response :
-  ?scanning_configuration:registry_scanning_configuration ->
   ?registry_id:registry_id ->
+  ?scanning_configuration:registry_scanning_configuration ->
   unit ->
   get_registry_scanning_configuration_response
 
 val make_get_registry_scanning_configuration_request : unit -> unit
 
 val make_get_registry_policy_response :
-  ?policy_text:registry_policy_text ->
   ?registry_id:registry_id ->
+  ?policy_text:registry_policy_text ->
   unit ->
   get_registry_policy_response
 
 val make_get_registry_policy_request : unit -> unit
 
-val make_get_lifecycle_policy_response :
-  ?last_evaluated_at:evaluation_timestamp ->
-  ?lifecycle_policy_text:lifecycle_policy_text ->
-  ?repository_name:repository_name ->
+val make_transitioning_image_total_count :
+  ?target_storage_class:lifecycle_policy_target_storage_class ->
+  ?image_total_count:image_count ->
+  unit ->
+  transitioning_image_total_count
+
+val make_lifecycle_policy_preview_summary :
+  ?expiring_image_total_count:image_count ->
+  ?transitioning_image_total_counts:transitioning_image_total_counts ->
+  unit ->
+  lifecycle_policy_preview_summary
+
+val make_lifecycle_policy_rule_action :
+  ?type_:image_action_type ->
+  ?target_storage_class:lifecycle_policy_target_storage_class ->
+  unit ->
+  lifecycle_policy_rule_action
+
+val make_get_lifecycle_policy_preview_response :
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?lifecycle_policy_text:lifecycle_policy_text ->
+  ?status:lifecycle_policy_preview_status ->
+  ?next_token:next_token ->
+  ?preview_results:lifecycle_policy_preview_result_list ->
+  ?summary:lifecycle_policy_preview_summary ->
+  unit ->
+  get_lifecycle_policy_preview_response
+
+val make_lifecycle_policy_preview_filter :
+  ?tag_status:tag_status -> unit -> lifecycle_policy_preview_filter
+
+val make_get_lifecycle_policy_preview_request :
+  ?registry_id:registry_id ->
+  ?image_ids:image_identifier_list ->
+  ?next_token:next_token ->
+  ?max_results:lifecycle_preview_max_results ->
+  ?filter:lifecycle_policy_preview_filter ->
+  repository_name:repository_name ->
+  unit ->
+  get_lifecycle_policy_preview_request
+
+val make_get_lifecycle_policy_response :
+  ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?lifecycle_policy_text:lifecycle_policy_text ->
+  ?last_evaluated_at:evaluation_timestamp ->
   unit ->
   get_lifecycle_policy_response
 
@@ -715,41 +516,20 @@ val make_get_lifecycle_policy_request :
   unit ->
   get_lifecycle_policy_request
 
-val make_get_lifecycle_policy_preview_response :
-  ?summary:lifecycle_policy_preview_summary ->
-  ?preview_results:lifecycle_policy_preview_result_list ->
-  ?next_token:next_token ->
-  ?status:lifecycle_policy_preview_status ->
-  ?lifecycle_policy_text:lifecycle_policy_text ->
-  ?repository_name:repository_name ->
-  ?registry_id:registry_id ->
-  unit ->
-  get_lifecycle_policy_preview_response
-
-val make_get_lifecycle_policy_preview_request :
-  ?filter:lifecycle_policy_preview_filter ->
-  ?max_results:lifecycle_preview_max_results ->
-  ?next_token:next_token ->
-  ?image_ids:image_identifier_list ->
-  ?registry_id:registry_id ->
-  repository_name:repository_name ->
-  unit ->
-  get_lifecycle_policy_preview_request
-
 val make_get_download_url_for_layer_response :
-  ?layer_digest:layer_digest -> ?download_url:url -> unit -> get_download_url_for_layer_response
+  ?download_url:url -> ?layer_digest:layer_digest -> unit -> get_download_url_for_layer_response
 
 val make_get_download_url_for_layer_request :
   ?registry_id:registry_id ->
-  layer_digest:layer_digest ->
   repository_name:repository_name ->
+  layer_digest:layer_digest ->
   unit ->
   get_download_url_for_layer_request
 
 val make_authorization_data :
-  ?proxy_endpoint:proxy_endpoint ->
-  ?expires_at:expiration_timestamp ->
   ?authorization_token:base64 ->
+  ?expires_at:expiration_timestamp ->
+  ?proxy_endpoint:proxy_endpoint ->
   unit ->
   authorization_data
 
@@ -760,119 +540,302 @@ val make_get_authorization_token_request :
   ?registry_ids:get_authorization_token_registry_id_list -> unit -> get_authorization_token_request
 
 val make_get_account_setting_response :
-  ?value:account_setting_name -> ?name:account_setting_name -> unit -> get_account_setting_response
+  ?name:account_setting_name -> ?value:account_setting_name -> unit -> get_account_setting_response
 
 val make_get_account_setting_request :
   name:account_setting_name -> unit -> get_account_setting_request
 
 val make_describe_repository_creation_templates_response :
-  ?next_token:next_token ->
-  ?repository_creation_templates:repository_creation_template_list ->
   ?registry_id:registry_id ->
+  ?repository_creation_templates:repository_creation_template_list ->
+  ?next_token:next_token ->
   unit ->
   describe_repository_creation_templates_response
 
 val make_describe_repository_creation_templates_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
   ?prefixes:prefix_list ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
   unit ->
   describe_repository_creation_templates_request
 
+val make_encryption_configuration :
+  ?kms_key:kms_key -> encryption_type:encryption_type -> unit -> encryption_configuration
+
+val make_repository :
+  ?repository_arn:arn ->
+  ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?repository_uri:url ->
+  ?created_at:creation_timestamp ->
+  ?image_tag_mutability:image_tag_mutability ->
+  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
+  ?image_scanning_configuration:image_scanning_configuration ->
+  ?encryption_configuration:encryption_configuration ->
+  unit ->
+  repository
+
 val make_describe_repositories_response :
-  ?next_token:next_token -> ?repositories:repository_list -> unit -> describe_repositories_response
+  ?repositories:repository_list -> ?next_token:next_token -> unit -> describe_repositories_response
 
 val make_describe_repositories_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  ?repository_names:repository_name_list ->
   ?registry_id:registry_id ->
+  ?repository_names:repository_name_list ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
   unit ->
   describe_repositories_request
 
 val make_describe_registry_response :
-  ?replication_configuration:replication_configuration ->
   ?registry_id:registry_id ->
+  ?replication_configuration:replication_configuration ->
   unit ->
   describe_registry_response
 
 val make_describe_registry_request : unit -> unit
 
+val make_pull_through_cache_rule :
+  ?ecr_repository_prefix:pull_through_cache_rule_repository_prefix ->
+  ?upstream_registry_url:url ->
+  ?created_at:creation_timestamp ->
+  ?registry_id:registry_id ->
+  ?credential_arn:credential_arn ->
+  ?custom_role_arn:custom_role_arn ->
+  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
+  ?upstream_registry:upstream_registry ->
+  ?updated_at:updated_timestamp ->
+  unit ->
+  pull_through_cache_rule
+
 val make_describe_pull_through_cache_rules_response :
-  ?next_token:next_token ->
   ?pull_through_cache_rules:pull_through_cache_rule_list ->
+  ?next_token:next_token ->
   unit ->
   describe_pull_through_cache_rules_response
 
 val make_describe_pull_through_cache_rules_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  ?ecr_repository_prefixes:pull_through_cache_rule_repository_prefix_list ->
   ?registry_id:registry_id ->
+  ?ecr_repository_prefixes:pull_through_cache_rule_repository_prefix_list ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
   unit ->
   describe_pull_through_cache_rules_request
 
-val make_describe_images_response :
-  ?next_token:next_token -> ?image_details:image_detail_list -> unit -> describe_images_response
-
-val make_describe_images_filter :
-  ?image_status:image_status_filter -> ?tag_status:tag_status -> unit -> describe_images_filter
-
-val make_describe_images_request :
-  ?filter:describe_images_filter ->
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  ?image_ids:image_identifier_list ->
-  ?registry_id:registry_id ->
-  repository_name:repository_name ->
+val make_image_signing_status :
+  ?signing_profile_arn:signing_profile_arn ->
+  ?failure_code:signing_status_failure_code ->
+  ?failure_reason:signing_status_failure_reason ->
+  ?status:signing_status ->
   unit ->
-  describe_images_request
+  image_signing_status
 
 val make_describe_image_signing_status_response :
-  ?signing_statuses:image_signing_status_list ->
-  ?registry_id:registry_id ->
-  ?image_id:image_identifier ->
   ?repository_name:repository_name ->
+  ?image_id:image_identifier ->
+  ?registry_id:registry_id ->
+  ?signing_statuses:image_signing_status_list ->
   unit ->
   describe_image_signing_status_response
 
 val make_describe_image_signing_status_request :
   ?registry_id:registry_id ->
-  image_id:image_identifier ->
   repository_name:repository_name ->
+  image_id:image_identifier ->
   unit ->
   describe_image_signing_status_request
 
-val make_describe_image_scan_findings_response :
-  ?next_token:next_token ->
-  ?image_scan_findings:image_scan_findings ->
-  ?image_scan_status:image_scan_status ->
-  ?image_id:image_identifier ->
+val make_cvss_score_adjustment : ?metric:metric -> ?reason:reason -> unit -> cvss_score_adjustment
+
+val make_cvss_score_details :
+  ?adjustments:cvss_score_adjustment_list ->
+  ?score:score ->
+  ?score_source:source ->
+  ?scoring_vector:scoring_vector ->
+  ?version:version ->
+  unit ->
+  cvss_score_details
+
+val make_score_details : ?cvss:cvss_score_details -> unit -> score_details
+
+val make_aws_ecr_container_image_details :
+  ?architecture:arch ->
+  ?author:author ->
+  ?image_hash:image_digest ->
+  ?image_tags:image_tags_list ->
+  ?platform:platform ->
+  ?pushed_at:date ->
+  ?last_in_use_at:date ->
+  ?in_use_count:in_use_count ->
+  ?registry:registry_id ->
   ?repository_name:repository_name ->
+  unit ->
+  aws_ecr_container_image_details
+
+val make_resource_details :
+  ?aws_ecr_container_image:aws_ecr_container_image_details -> unit -> resource_details
+
+val make_resource :
+  ?details:resource_details -> ?id:resource_id -> ?tags:tags -> ?type_:type_ -> unit -> resource
+
+val make_recommendation : ?url:url -> ?text:recommendation_text -> unit -> recommendation
+val make_remediation : ?recommendation:recommendation -> unit -> remediation
+
+val make_vulnerable_package :
+  ?arch:arch ->
+  ?epoch:epoch ->
+  ?file_path:file_path ->
+  ?name:vulnerable_package_name ->
+  ?package_manager:package_manager ->
+  ?release:release ->
+  ?source_layer_hash:source_layer_hash ->
+  ?version:version ->
+  ?fixed_in_version:fixed_in_version ->
+  unit ->
+  vulnerable_package
+
+val make_cvss_score :
+  ?base_score:base_score ->
+  ?scoring_vector:scoring_vector ->
+  ?source:source ->
+  ?version:version ->
+  unit ->
+  cvss_score
+
+val make_package_vulnerability_details :
+  ?cvss:cvss_score_list ->
+  ?reference_urls:reference_urls_list ->
+  ?related_vulnerabilities:related_vulnerabilities_list ->
+  ?source:source ->
+  ?source_url:url ->
+  ?vendor_created_at:date ->
+  ?vendor_severity:severity ->
+  ?vendor_updated_at:date ->
+  ?vulnerability_id:vulnerability_id ->
+  ?vulnerable_packages:vulnerable_packages_list ->
+  unit ->
+  package_vulnerability_details
+
+val make_enhanced_image_scan_finding :
+  ?aws_account_id:registry_id ->
+  ?description:finding_description ->
+  ?finding_arn:finding_arn ->
+  ?first_observed_at:date ->
+  ?last_observed_at:date ->
+  ?package_vulnerability_details:package_vulnerability_details ->
+  ?remediation:remediation ->
+  ?resources:resource_list ->
+  ?score:score ->
+  ?score_details:score_details ->
+  ?severity:severity ->
+  ?status:status ->
+  ?title:title ->
+  ?type_:type_ ->
+  ?updated_at:date ->
+  ?fix_available:fix_available ->
+  ?exploit_available:exploit_available ->
+  unit ->
+  enhanced_image_scan_finding
+
+val make_attribute : ?value:attribute_value -> key:attribute_key -> unit -> attribute
+
+val make_image_scan_finding :
+  ?name:finding_name ->
+  ?description:finding_description ->
+  ?uri:url ->
+  ?severity:finding_severity ->
+  ?attributes:attribute_list ->
+  unit ->
+  image_scan_finding
+
+val make_image_scan_findings :
+  ?image_scan_completed_at:scan_timestamp ->
+  ?vulnerability_source_updated_at:vulnerability_source_update_timestamp ->
+  ?finding_severity_counts:finding_severity_counts ->
+  ?findings:image_scan_finding_list ->
+  ?enhanced_findings:enhanced_image_scan_finding_list ->
+  unit ->
+  image_scan_findings
+
+val make_describe_image_scan_findings_response :
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?image_id:image_identifier ->
+  ?image_scan_status:image_scan_status ->
+  ?image_scan_findings:image_scan_findings ->
+  ?next_token:next_token ->
   unit ->
   describe_image_scan_findings_response
 
 val make_describe_image_scan_findings_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
   ?registry_id:registry_id ->
-  image_id:image_identifier ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
   repository_name:repository_name ->
+  image_id:image_identifier ->
   unit ->
   describe_image_scan_findings_request
 
-val make_describe_image_replication_status_response :
-  ?replication_statuses:image_replication_status_list ->
-  ?image_id:image_identifier ->
+val make_image_scan_findings_summary :
+  ?image_scan_completed_at:scan_timestamp ->
+  ?vulnerability_source_updated_at:vulnerability_source_update_timestamp ->
+  ?finding_severity_counts:finding_severity_counts ->
+  unit ->
+  image_scan_findings_summary
+
+val make_image_detail :
+  ?registry_id:registry_id ->
   ?repository_name:repository_name ->
+  ?image_digest:image_digest ->
+  ?image_tags:image_tag_list ->
+  ?image_size_in_bytes:image_size_in_bytes ->
+  ?image_pushed_at:push_timestamp ->
+  ?image_scan_status:image_scan_status ->
+  ?image_scan_findings_summary:image_scan_findings_summary ->
+  ?image_manifest_media_type:media_type ->
+  ?artifact_media_type:media_type ->
+  ?last_recorded_pull_time:recorded_pull_timestamp ->
+  ?subject_manifest_digest:image_digest ->
+  ?image_status:image_status ->
+  ?last_archived_at:last_archived_at_timestamp ->
+  ?last_activated_at:last_activated_at_timestamp ->
+  unit ->
+  image_detail
+
+val make_describe_images_response :
+  ?image_details:image_detail_list -> ?next_token:next_token -> unit -> describe_images_response
+
+val make_describe_images_filter :
+  ?tag_status:tag_status -> ?image_status:image_status_filter -> unit -> describe_images_filter
+
+val make_describe_images_request :
+  ?registry_id:registry_id ->
+  ?image_ids:image_identifier_list ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?filter:describe_images_filter ->
+  repository_name:repository_name ->
+  unit ->
+  describe_images_request
+
+val make_image_replication_status :
+  ?region:region ->
+  ?registry_id:registry_id ->
+  ?status:replication_status ->
+  ?failure_code:replication_error ->
+  unit ->
+  image_replication_status
+
+val make_describe_image_replication_status_response :
+  ?repository_name:repository_name ->
+  ?image_id:image_identifier ->
+  ?replication_statuses:image_replication_status_list ->
   unit ->
   describe_image_replication_status_response
 
 val make_describe_image_replication_status_request :
   ?registry_id:registry_id ->
-  image_id:image_identifier ->
   repository_name:repository_name ->
+  image_id:image_identifier ->
   unit ->
   describe_image_replication_status_request
 
@@ -883,25 +846,17 @@ val make_deregister_pull_time_update_exclusion_request :
   principal_arn:principal_arn -> unit -> deregister_pull_time_update_exclusion_request
 
 val make_delete_signing_configuration_response :
-  ?signing_configuration:signing_configuration ->
   ?registry_id:registry_id ->
+  ?signing_configuration:signing_configuration ->
   unit ->
   delete_signing_configuration_response
 
 val make_delete_signing_configuration_request : unit -> unit
-val make_delete_repository_response : ?repository:repository -> unit -> delete_repository_response
-
-val make_delete_repository_request :
-  ?force:force_flag ->
-  ?registry_id:registry_id ->
-  repository_name:repository_name ->
-  unit ->
-  delete_repository_request
 
 val make_delete_repository_policy_response :
-  ?policy_text:repository_policy_text ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?policy_text:repository_policy_text ->
   unit ->
   delete_repository_policy_response
 
@@ -912,30 +867,39 @@ val make_delete_repository_policy_request :
   delete_repository_policy_request
 
 val make_delete_repository_creation_template_response :
-  ?repository_creation_template:repository_creation_template ->
   ?registry_id:registry_id ->
+  ?repository_creation_template:repository_creation_template ->
   unit ->
   delete_repository_creation_template_response
 
 val make_delete_repository_creation_template_request :
   prefix:prefix -> unit -> delete_repository_creation_template_request
 
-val make_delete_registry_policy_response :
-  ?policy_text:registry_policy_text ->
+val make_delete_repository_response : ?repository:repository -> unit -> delete_repository_response
+
+val make_delete_repository_request :
   ?registry_id:registry_id ->
+  ?force:force_flag ->
+  repository_name:repository_name ->
+  unit ->
+  delete_repository_request
+
+val make_delete_registry_policy_response :
+  ?registry_id:registry_id ->
+  ?policy_text:registry_policy_text ->
   unit ->
   delete_registry_policy_response
 
 val make_delete_registry_policy_request : unit -> unit
 
 val make_delete_pull_through_cache_rule_response :
-  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
-  ?custom_role_arn:custom_role_arn ->
-  ?credential_arn:credential_arn ->
-  ?registry_id:registry_id ->
-  ?created_at:creation_timestamp ->
-  ?upstream_registry_url:url ->
   ?ecr_repository_prefix:pull_through_cache_rule_repository_prefix ->
+  ?upstream_registry_url:url ->
+  ?created_at:creation_timestamp ->
+  ?registry_id:registry_id ->
+  ?credential_arn:credential_arn ->
+  ?custom_role_arn:custom_role_arn ->
+  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
   unit ->
   delete_pull_through_cache_rule_response
 
@@ -946,10 +910,10 @@ val make_delete_pull_through_cache_rule_request :
   delete_pull_through_cache_rule_request
 
 val make_delete_lifecycle_policy_response :
-  ?last_evaluated_at:evaluation_timestamp ->
-  ?lifecycle_policy_text:lifecycle_policy_text ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?lifecycle_policy_text:lifecycle_policy_text ->
+  ?last_evaluated_at:evaluation_timestamp ->
   unit ->
   delete_lifecycle_policy_response
 
@@ -959,81 +923,97 @@ val make_delete_lifecycle_policy_request :
   unit ->
   delete_lifecycle_policy_request
 
-val make_create_repository_response : ?repository:repository -> unit -> create_repository_response
-
-val make_create_repository_request :
-  ?encryption_configuration:encryption_configuration ->
-  ?image_scanning_configuration:image_scanning_configuration ->
-  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
-  ?image_tag_mutability:image_tag_mutability ->
-  ?tags:tag_list ->
-  ?registry_id:registry_id ->
-  repository_name:repository_name ->
-  unit ->
-  create_repository_request
-
 val make_create_repository_creation_template_response :
-  ?repository_creation_template:repository_creation_template ->
   ?registry_id:registry_id ->
+  ?repository_creation_template:repository_creation_template ->
   unit ->
   create_repository_creation_template_response
 
 val make_create_repository_creation_template_request :
-  ?custom_role_arn:custom_role_arn ->
-  ?lifecycle_policy:lifecycle_policy_text_for_repository_creation_template ->
-  ?repository_policy:repository_policy_text ->
-  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
-  ?image_tag_mutability:image_tag_mutability ->
-  ?resource_tags:tag_list ->
-  ?encryption_configuration:encryption_configuration_for_repository_creation_template ->
   ?description:repository_template_description ->
-  applied_for:rct_applied_for_list ->
+  ?encryption_configuration:encryption_configuration_for_repository_creation_template ->
+  ?resource_tags:tag_list ->
+  ?image_tag_mutability:image_tag_mutability ->
+  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
+  ?repository_policy:repository_policy_text ->
+  ?lifecycle_policy:lifecycle_policy_text_for_repository_creation_template ->
+  ?custom_role_arn:custom_role_arn ->
   prefix:prefix ->
+  applied_for:rct_applied_for_list ->
   unit ->
   create_repository_creation_template_request
 
-val make_create_pull_through_cache_rule_response :
-  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
-  ?custom_role_arn:custom_role_arn ->
-  ?credential_arn:credential_arn ->
-  ?upstream_registry:upstream_registry ->
+val make_create_repository_response : ?repository:repository -> unit -> create_repository_response
+
+val make_create_repository_request :
   ?registry_id:registry_id ->
-  ?created_at:creation_timestamp ->
-  ?upstream_registry_url:url ->
+  ?tags:tag_list ->
+  ?image_tag_mutability:image_tag_mutability ->
+  ?image_tag_mutability_exclusion_filters:image_tag_mutability_exclusion_filters ->
+  ?image_scanning_configuration:image_scanning_configuration ->
+  ?encryption_configuration:encryption_configuration ->
+  repository_name:repository_name ->
+  unit ->
+  create_repository_request
+
+val make_create_pull_through_cache_rule_response :
   ?ecr_repository_prefix:pull_through_cache_rule_repository_prefix ->
+  ?upstream_registry_url:url ->
+  ?created_at:creation_timestamp ->
+  ?registry_id:registry_id ->
+  ?upstream_registry:upstream_registry ->
+  ?credential_arn:credential_arn ->
+  ?custom_role_arn:custom_role_arn ->
+  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
   unit ->
   create_pull_through_cache_rule_response
 
 val make_create_pull_through_cache_rule_request :
-  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
-  ?custom_role_arn:custom_role_arn ->
-  ?credential_arn:credential_arn ->
-  ?upstream_registry:upstream_registry ->
   ?registry_id:registry_id ->
-  upstream_registry_url:url ->
+  ?upstream_registry:upstream_registry ->
+  ?credential_arn:credential_arn ->
+  ?custom_role_arn:custom_role_arn ->
+  ?upstream_repository_prefix:pull_through_cache_rule_repository_prefix ->
   ecr_repository_prefix:pull_through_cache_rule_repository_prefix ->
+  upstream_registry_url:url ->
   unit ->
   create_pull_through_cache_rule_request
 
 val make_complete_layer_upload_response :
-  ?layer_digest:layer_digest ->
-  ?upload_id:upload_id ->
-  ?repository_name:repository_name ->
   ?registry_id:registry_id ->
+  ?repository_name:repository_name ->
+  ?upload_id:upload_id ->
+  ?layer_digest:layer_digest ->
   unit ->
   complete_layer_upload_response
 
 val make_complete_layer_upload_request :
   ?registry_id:registry_id ->
-  layer_digests:layer_digest_list ->
-  upload_id:upload_id ->
   repository_name:repository_name ->
+  upload_id:upload_id ->
+  layer_digests:layer_digest_list ->
   unit ->
   complete_layer_upload_request
 
+val make_repository_scanning_configuration_failure :
+  ?repository_name:repository_name ->
+  ?failure_code:scanning_configuration_failure_code ->
+  ?failure_reason:scanning_configuration_failure_reason ->
+  unit ->
+  repository_scanning_configuration_failure
+
+val make_repository_scanning_configuration :
+  ?repository_arn:arn ->
+  ?repository_name:repository_name ->
+  ?scan_on_push:scan_on_push_flag ->
+  ?scan_frequency:scan_frequency ->
+  ?applied_scan_filters:scanning_repository_filter_list ->
+  unit ->
+  repository_scanning_configuration
+
 val make_batch_get_repository_scanning_configuration_response :
-  ?failures:repository_scanning_configuration_failure_list ->
   ?scanning_configurations:repository_scanning_configuration_list ->
+  ?failures:repository_scanning_configuration_failure_list ->
   unit ->
   batch_get_repository_scanning_configuration_response
 
@@ -1042,40 +1022,62 @@ val make_batch_get_repository_scanning_configuration_request :
   unit ->
   batch_get_repository_scanning_configuration_request
 
+val make_image_failure :
+  ?image_id:image_identifier ->
+  ?failure_code:image_failure_code ->
+  ?failure_reason:image_failure_reason ->
+  unit ->
+  image_failure
+
 val make_batch_get_image_response :
-  ?failures:image_failure_list -> ?images:image_list -> unit -> batch_get_image_response
+  ?images:image_list -> ?failures:image_failure_list -> unit -> batch_get_image_response
 
 val make_batch_get_image_request :
-  ?accepted_media_types:media_type_list ->
   ?registry_id:registry_id ->
-  image_ids:image_identifier_list ->
+  ?accepted_media_types:media_type_list ->
   repository_name:repository_name ->
+  image_ids:image_identifier_list ->
   unit ->
   batch_get_image_request
 
 val make_batch_delete_image_response :
-  ?failures:image_failure_list ->
   ?image_ids:image_identifier_list ->
+  ?failures:image_failure_list ->
   unit ->
   batch_delete_image_response
 
 val make_batch_delete_image_request :
   ?registry_id:registry_id ->
-  image_ids:image_identifier_list ->
   repository_name:repository_name ->
+  image_ids:image_identifier_list ->
   unit ->
   batch_delete_image_request
 
+val make_layer_failure :
+  ?layer_digest:batched_operation_layer_digest ->
+  ?failure_code:layer_failure_code ->
+  ?failure_reason:layer_failure_reason ->
+  unit ->
+  layer_failure
+
+val make_layer :
+  ?layer_digest:layer_digest ->
+  ?layer_availability:layer_availability ->
+  ?layer_size:layer_size_in_bytes ->
+  ?media_type:media_type ->
+  unit ->
+  layer
+
 val make_batch_check_layer_availability_response :
-  ?failures:layer_failure_list ->
   ?layers:layer_list ->
+  ?failures:layer_failure_list ->
   unit ->
   batch_check_layer_availability_response
 
 val make_batch_check_layer_availability_request :
   ?registry_id:registry_id ->
-  layer_digests:batched_operation_layer_digest_list ->
   repository_name:repository_name ->
+  layer_digests:batched_operation_layer_digest_list ->
   unit ->
   batch_check_layer_availability_request
 (** {1:operations Operations} *)
@@ -1767,6 +1769,54 @@ module DescribeImageReplicationStatus : sig
 end
 [@@ocaml.doc "Returns the replication status for a specified image.\n"]
 
+module DescribeImages : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ImageNotFoundException of image_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `RepositoryNotFoundException of repository_not_found_exception
+    | `ServerException of server_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_images_request ->
+    ( describe_images_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ImageNotFoundException of image_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `RepositoryNotFoundException of repository_not_found_exception
+      | `ServerException of server_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_images_request ->
+    ( describe_images_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ImageNotFoundException of image_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `RepositoryNotFoundException of repository_not_found_exception
+      | `ServerException of server_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns metadata about the images in a repository.\n\n\
+  \  Starting with Docker version 1.9, the Docker client compresses image layers before pushing \
+   them to a V2 Docker registry. The output of the [docker images] command shows the uncompressed \
+   image size. Therefore, Docker might return a larger image than the image shown in the Amazon \
+   Web Services Management Console.\n\
+  \  \n\
+  \     The new version of Amazon ECR {i Basic Scanning} doesn't use the \
+   [ImageDetail$imageScanFindingsSummary] and [ImageDetail$imageScanStatus] attributes from the \
+   API response to return scan results. Use the [DescribeImageScanFindings] API instead. For more \
+   information about Amazon Web Services native basic scanning, see \
+   {{:https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html} Scan images for \
+   software vulnerabilities in Amazon ECR}.\n\
+  \     \n\
+  \      "]
+
 module DescribeImageScanFindings : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1849,54 +1899,6 @@ end
    {{:https://docs.aws.amazon.com/AmazonECR/latest/userguide/managed-signing.html}Managed signing} \
    in the {i Amazon Elastic Container Registry User Guide}.\n\
   \ "]
-
-module DescribeImages : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ImageNotFoundException of image_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `RepositoryNotFoundException of repository_not_found_exception
-    | `ServerException of server_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_images_request ->
-    ( describe_images_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ImageNotFoundException of image_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `RepositoryNotFoundException of repository_not_found_exception
-      | `ServerException of server_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_images_request ->
-    ( describe_images_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ImageNotFoundException of image_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `RepositoryNotFoundException of repository_not_found_exception
-      | `ServerException of server_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns metadata about the images in a repository.\n\n\
-  \  Starting with Docker version 1.9, the Docker client compresses image layers before pushing \
-   them to a V2 Docker registry. The output of the [docker images] command shows the uncompressed \
-   image size. Therefore, Docker might return a larger image than the image shown in the Amazon \
-   Web Services Management Console.\n\
-  \  \n\
-  \     The new version of Amazon ECR {i Basic Scanning} doesn't use the \
-   [ImageDetail$imageScanFindingsSummary] and [ImageDetail$imageScanStatus] attributes from the \
-   API response to return scan results. Use the [DescribeImageScanFindings] API instead. For more \
-   information about Amazon Web Services native basic scanning, see \
-   {{:https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html} Scan images for \
-   software vulnerabilities in Amazon ECR}.\n\
-  \     \n\
-  \      "]
 
 module DescribePullThroughCacheRules : sig
   val error_to_string :

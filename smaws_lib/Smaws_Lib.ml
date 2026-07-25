@@ -3,6 +3,7 @@ module Context = Context
 module Config = Config
 module CoreTypes = CoreTypes
 module AwsErrors = AwsErrors
+module Http_bindings = Http_bindings
 module Ini = Ini
 module Http = Http
 module Json = Json

@@ -1,47 +1,6 @@
 open Types
 open Service_metadata
 
-module AddTags = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.machinelearning#InternalServerException"
-    | `InvalidInputException _ -> "com.amazonaws.machinelearning#InvalidInputException"
-    | `InvalidTagException _ -> "com.amazonaws.machinelearning#InvalidTagException"
-    | `ResourceNotFoundException _ -> "com.amazonaws.machinelearning#ResourceNotFoundException"
-    | `TagLimitExceededException _ -> "com.amazonaws.machinelearning#TagLimitExceededException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "InvalidTagException" ->
-          `InvalidTagException (Json_deserializers.invalid_tag_exception_of_yojson tree path)
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _, "TagLimitExceededException" ->
-          `TagLimitExceededException
-            (Json_deserializers.tag_limit_exceeded_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_tags_input) =
-    let input = Json_serializers.add_tags_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonML_20141212.AddTags" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.add_tags_output_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_input) =
-    let input = Json_serializers.add_tags_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonML_20141212.AddTags"
-      ~service ~context ~input ~output_deserializer:Json_deserializers.add_tags_output_of_yojson
-      ~error_deserializer
-end
-
 module CreateBatchPrediction = struct
   let error_to_string = function
     | `IdempotentParameterMismatchException _ ->
@@ -1009,4 +968,45 @@ module UpdateMLModel = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonML_20141212.UpdateMLModel"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_ml_model_output_of_yojson ~error_deserializer
+end
+
+module AddTags = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.machinelearning#InternalServerException"
+    | `InvalidInputException _ -> "com.amazonaws.machinelearning#InvalidInputException"
+    | `InvalidTagException _ -> "com.amazonaws.machinelearning#InvalidTagException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.machinelearning#ResourceNotFoundException"
+    | `TagLimitExceededException _ -> "com.amazonaws.machinelearning#TagLimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "InvalidTagException" ->
+          `InvalidTagException (Json_deserializers.invalid_tag_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "TagLimitExceededException" ->
+          `TagLimitExceededException
+            (Json_deserializers.tag_limit_exceeded_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_tags_input) =
+    let input = Json_serializers.add_tags_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonML_20141212.AddTags" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.add_tags_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_input) =
+    let input = Json_serializers.add_tags_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonML_20141212.AddTags"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.add_tags_output_of_yojson
+      ~error_deserializer
 end

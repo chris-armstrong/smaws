@@ -1,471 +1,5 @@
 open Types
 
-module CreateKeyspace : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_keyspace_request ->
-    ( create_keyspace_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_keyspace_request ->
-    ( create_keyspace_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [CreateKeyspace] operation adds a new keyspace to your account. In an Amazon Web Services \
-   account, keyspace names must be unique within each Region.\n\n\
-  \  [CreateKeyspace] is an asynchronous operation. You can monitor the creation status of the new \
-   keyspace by using the [GetKeyspace] operation.\n\
-  \ \n\
-  \  For more information, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/getting-started.keyspaces.html}Create \
-   a keyspace} in the {i Amazon Keyspaces Developer Guide}.\n\
-  \  "]
-
-module CreateTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_table_request ->
-    ( create_table_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_table_request ->
-    ( create_table_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [CreateTable] operation adds a new table to the specified keyspace. Within a keyspace, \
-   table names must be unique.\n\n\
-  \  [CreateTable] is an asynchronous operation. When the request is received, the status of the \
-   table is set to [CREATING]. You can monitor the creation status of the new table by using the \
-   [GetTable] operation, which returns the current [status] of the table. You can start using a \
-   table when the status is [ACTIVE].\n\
-  \ \n\
-  \  For more information, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/getting-started.tables.html}Create a \
-   table} in the {i Amazon Keyspaces Developer Guide}.\n\
-  \  "]
-
-module CreateType : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_type_request ->
-    ( create_type_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_type_request ->
-    ( create_type_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " The [CreateType] operation creates a new user-defined type in the specified keyspace. \n\n\
-  \ To configure the required permissions, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-create}Permissions \
-   to create a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
-  \ \n\
-  \  For more information, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/udts.html}User-defined types (UDTs)} \
-   in the {i Amazon Keyspaces Developer Guide}. \n\
-  \  "]
-
-module DeleteKeyspace : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_keyspace_request ->
-    ( delete_keyspace_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_keyspace_request ->
-    ( delete_keyspace_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "The [DeleteKeyspace] operation deletes a keyspace and all of its tables. \n"]
-
-module DeleteTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_table_request ->
-    ( delete_table_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_table_request ->
-    ( delete_table_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "The [DeleteTable] operation deletes a table and all of its data. After a [DeleteTable] request \
-   is received, the specified table is in the [DELETING] state until Amazon Keyspaces completes \
-   the deletion. If the table is in the [ACTIVE] state, you can delete it. If a table is either in \
-   the [CREATING] or [UPDATING] states, then Amazon Keyspaces returns a [ResourceInUseException]. \
-   If the specified table does not exist, Amazon Keyspaces returns a [ResourceNotFoundException]. \
-   If the table is already in the [DELETING] state, no error is returned.\n"]
-
-module DeleteType : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_type_request ->
-    ( delete_type_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_type_request ->
-    ( delete_type_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " The [DeleteType] operation deletes a user-defined type (UDT). You can only delete a type that \
-   is not used in a table or another UDT. \n\n\
-  \ To configure the required permissions, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-drop}Permissions \
-   to delete a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
-  \ "]
-
-module GetKeyspace : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_keyspace_request ->
-    ( get_keyspace_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_keyspace_request ->
-    ( get_keyspace_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the name of the specified keyspace, the Amazon Resource Name (ARN), the replication \
-   strategy, the Amazon Web Services Regions of a multi-Region keyspace, and the status of newly \
-   added Regions after an [UpdateKeyspace] operation.\n"]
-
-module GetTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_table_request ->
-    ( get_table_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_table_request ->
-    ( get_table_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the table, including the table's name and current status, the \
-   keyspace name, configuration settings, and metadata.\n\n\
-  \ To read table metadata using [GetTable], the IAM principal needs [Select] action permissions \
-   for the table and the system keyspace.\n\
-  \ "]
-
-module GetTableAutoScalingSettings : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_table_auto_scaling_settings_request ->
-    ( get_table_auto_scaling_settings_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_table_auto_scaling_settings_request ->
-    ( get_table_auto_scaling_settings_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns auto scaling related settings of the specified table in JSON format. If the table is a \
-   multi-Region table, the Amazon Web Services Region specific auto scaling settings of the table \
-   are included.\n\n\
-  \ Amazon Keyspaces auto scaling helps you provision throughput capacity for variable workloads \
-   efficiently by increasing and decreasing your table's read and write capacity automatically in \
-   response to application traffic. For more information, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/autoscaling.html}Managing throughput \
-   capacity automatically with Amazon Keyspaces auto scaling} in the {i Amazon Keyspaces Developer \
-   Guide}.\n\
-  \ \n\
-  \    [GetTableAutoScalingSettings] can't be used as an action in an IAM policy.\n\
-  \   \n\
-  \     To define permissions for [GetTableAutoScalingSettings], you must allow the following two \
-   actions in the IAM policy statement's [Action] element:\n\
-  \     \n\
-  \      {ul\n\
-  \            {-   [application-autoscaling:DescribeScalableTargets] \n\
-  \                \n\
-  \                 }\n\
-  \            {-   [application-autoscaling:DescribeScalingPolicies] \n\
-  \                \n\
-  \                 }\n\
-  \            }\n\
-  \  "]
-
-module GetType : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_type_request ->
-    ( get_type_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_type_request ->
-    ( get_type_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " The [GetType] operation returns information about the type, for example the field definitions, \
-   the timestamp when the type was last modified, the level of nesting, the status, and details \
-   about if the type is used in other types and tables. \n\n\
-  \ To read keyspace metadata using [GetType], the IAM principal needs [Select] action permissions \
-   for the system keyspace. To configure the required permissions, see \
-   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-view}Permissions \
-   to view a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
-  \ "]
-
 module ListKeyspaces : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -972,3 +506,469 @@ end
   "Adds new columns to the table or updates one of the table's settings, for example capacity \
    mode, auto scaling, encryption, point-in-time recovery, or ttl settings. Note that you can only \
    update one specific table setting per update operation.\n"]
+
+module GetType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_type_request ->
+    ( get_type_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_type_request ->
+    ( get_type_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " The [GetType] operation returns information about the type, for example the field definitions, \
+   the timestamp when the type was last modified, the level of nesting, the status, and details \
+   about if the type is used in other types and tables. \n\n\
+  \ To read keyspace metadata using [GetType], the IAM principal needs [Select] action permissions \
+   for the system keyspace. To configure the required permissions, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-view}Permissions \
+   to view a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \ "]
+
+module GetTableAutoScalingSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_table_auto_scaling_settings_request ->
+    ( get_table_auto_scaling_settings_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_table_auto_scaling_settings_request ->
+    ( get_table_auto_scaling_settings_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns auto scaling related settings of the specified table in JSON format. If the table is a \
+   multi-Region table, the Amazon Web Services Region specific auto scaling settings of the table \
+   are included.\n\n\
+  \ Amazon Keyspaces auto scaling helps you provision throughput capacity for variable workloads \
+   efficiently by increasing and decreasing your table's read and write capacity automatically in \
+   response to application traffic. For more information, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/autoscaling.html}Managing throughput \
+   capacity automatically with Amazon Keyspaces auto scaling} in the {i Amazon Keyspaces Developer \
+   Guide}.\n\
+  \ \n\
+  \    [GetTableAutoScalingSettings] can't be used as an action in an IAM policy.\n\
+  \   \n\
+  \     To define permissions for [GetTableAutoScalingSettings], you must allow the following two \
+   actions in the IAM policy statement's [Action] element:\n\
+  \     \n\
+  \      {ul\n\
+  \            {-   [application-autoscaling:DescribeScalableTargets] \n\
+  \                \n\
+  \                 }\n\
+  \            {-   [application-autoscaling:DescribeScalingPolicies] \n\
+  \                \n\
+  \                 }\n\
+  \            }\n\
+  \  "]
+
+module GetTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_table_request ->
+    ( get_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_table_request ->
+    ( get_table_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the table, including the table's name and current status, the \
+   keyspace name, configuration settings, and metadata.\n\n\
+  \ To read table metadata using [GetTable], the IAM principal needs [Select] action permissions \
+   for the table and the system keyspace.\n\
+  \ "]
+
+module GetKeyspace : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_keyspace_request ->
+    ( get_keyspace_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_keyspace_request ->
+    ( get_keyspace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the name of the specified keyspace, the Amazon Resource Name (ARN), the replication \
+   strategy, the Amazon Web Services Regions of a multi-Region keyspace, and the status of newly \
+   added Regions after an [UpdateKeyspace] operation.\n"]
+
+module DeleteType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_type_request ->
+    ( delete_type_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_type_request ->
+    ( delete_type_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " The [DeleteType] operation deletes a user-defined type (UDT). You can only delete a type that \
+   is not used in a table or another UDT. \n\n\
+  \ To configure the required permissions, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-drop}Permissions \
+   to delete a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \ "]
+
+module DeleteTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_request ->
+    ( delete_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_request ->
+    ( delete_table_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [DeleteTable] operation deletes a table and all of its data. After a [DeleteTable] request \
+   is received, the specified table is in the [DELETING] state until Amazon Keyspaces completes \
+   the deletion. If the table is in the [ACTIVE] state, you can delete it. If a table is either in \
+   the [CREATING] or [UPDATING] states, then Amazon Keyspaces returns a [ResourceInUseException]. \
+   If the specified table does not exist, Amazon Keyspaces returns a [ResourceNotFoundException]. \
+   If the table is already in the [DELETING] state, no error is returned.\n"]
+
+module DeleteKeyspace : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_keyspace_request ->
+    ( delete_keyspace_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_keyspace_request ->
+    ( delete_keyspace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "The [DeleteKeyspace] operation deletes a keyspace and all of its tables. \n"]
+
+module CreateType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_type_request ->
+    ( create_type_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_type_request ->
+    ( create_type_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " The [CreateType] operation creates a new user-defined type in the specified keyspace. \n\n\
+  \ To configure the required permissions, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-create}Permissions \
+   to create a UDT} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \ \n\
+  \  For more information, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/udts.html}User-defined types (UDTs)} \
+   in the {i Amazon Keyspaces Developer Guide}. \n\
+  \  "]
+
+module CreateTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_request ->
+    ( create_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_request ->
+    ( create_table_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [CreateTable] operation adds a new table to the specified keyspace. Within a keyspace, \
+   table names must be unique.\n\n\
+  \  [CreateTable] is an asynchronous operation. When the request is received, the status of the \
+   table is set to [CREATING]. You can monitor the creation status of the new table by using the \
+   [GetTable] operation, which returns the current [status] of the table. You can start using a \
+   table when the status is [ACTIVE].\n\
+  \ \n\
+  \  For more information, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/getting-started.tables.html}Create a \
+   table} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \  "]
+
+module CreateKeyspace : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_keyspace_request ->
+    ( create_keyspace_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_keyspace_request ->
+    ( create_keyspace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "The [CreateKeyspace] operation adds a new keyspace to your account. In an Amazon Web Services \
+   account, keyspace names must be unique within each Region.\n\n\
+  \  [CreateKeyspace] is an asynchronous operation. You can monitor the creation status of the new \
+   keyspace by using the [GetKeyspace] operation.\n\
+  \ \n\
+  \  For more information, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/getting-started.keyspaces.html}Create \
+   a keyspace} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \  "]

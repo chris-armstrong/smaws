@@ -1,699 +1,5 @@
 open Types
 
-module CreateBatchLoadTask : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_batch_load_task_request ->
-    ( create_batch_load_task_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_batch_load_task_request ->
-    ( create_batch_load_task_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a new Timestream batch load task. A batch load task processes data from a CSV source in \
-   an S3 location and writes to a Timestream table. A mapping from source to target is defined in \
-   a batch load task. Errors and events are written to a report at an S3 location. For the report, \
-   if the KMS key is not specified, the report will be encrypted with an S3 managed key when \
-   [SSE_S3] is the option. Otherwise an error is thrown. For more information, see \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
-   Web Services managed keys}. \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
-   apply}. For details, see \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.create-batch-load.html}code \
-   sample}.\n"]
-
-module CreateDatabase : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_database_request ->
-    ( create_database_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_database_request ->
-    ( create_database_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a new Timestream database. If the KMS key is not specified, the database will be \
-   encrypted with a Timestream managed KMS key located in your account. For more information, see \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
-   Web Services managed keys}. \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
-   apply}. For details, see \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.create-db.html}code \
-   sample}. \n"]
-
-module CreateTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_table_request ->
-    ( create_table_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_table_request ->
-    ( create_table_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds a new table to an existing database in your account. In an Amazon Web Services account, \
-   table names must be at least unique within each Region if they are in the same database. You \
-   might have identical table names in the same Region if the tables are in separate databases. \
-   While creating the table, you must specify the table name, database name, and the retention \
-   properties. \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
-   apply}. See \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.create-table.html}code \
-   sample} for details. \n"]
-
-module DeleteDatabase : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_database_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_database_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a given Timestream database. {i This is an irreversible operation. After a database is \
-   deleted, the time-series data from its tables cannot be recovered.} \n\n\
-  \  All tables in the database must be deleted first, or a ValidationException error will be \
-   thrown. \n\
-  \  \n\
-  \   Due to the nature of distributed retries, the operation can return either success or a \
-   ResourceNotFoundException. Clients should consider them equivalent.\n\
-  \   \n\
-  \     See \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.delete-db.html}code \
-   sample} for details.\n\
-  \     "]
-
-module DeleteTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_table_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_table_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a given Timestream table. This is an irreversible operation. After a Timestream \
-   database table is deleted, the time-series data stored in the table cannot be recovered. \n\n\
-  \  Due to the nature of distributed retries, the operation can return either success or a \
-   ResourceNotFoundException. Clients should consider them equivalent.\n\
-  \  \n\
-  \    See \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.delete-table.html}code \
-   sample} for details.\n\
-  \    "]
-
-module DescribeBatchLoadTask : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_batch_load_task_request ->
-    ( describe_batch_load_task_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_batch_load_task_request ->
-    ( describe_batch_load_task_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the batch load task, including configurations, mappings, progress, \
-   and other details. \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
-   apply}. See \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.describe-batch-load.html}code \
-   sample} for details.\n"]
-
-module DescribeDatabase : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_database_request ->
-    ( describe_database_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_database_request ->
-    ( describe_database_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the database, including the database name, time that the database was \
-   created, and the total number of tables found within the database. \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
-   apply}. See \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.describe-db.html}code \
-   sample} for details.\n"]
-
-module DescribeEndpoints : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_endpoints_request ->
-    ( describe_endpoints_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_endpoints_request ->
-    ( describe_endpoints_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns a list of available endpoints to make Timestream API calls against. This API operation \
-   is available through both the Write and Query APIs.\n\n\
-  \ Because the Timestream SDKs are designed to transparently work with the service\226\128\153s \
-   architecture, including the management and mapping of the service endpoints, {i we don't \
-   recommend that you use this API operation unless}:\n\
-  \ \n\
-  \  {ul\n\
-  \        {-  You are using \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/VPCEndpoints}VPC endpoints \
-   (Amazon Web Services PrivateLink) with Timestream} \n\
-  \            \n\
-  \             }\n\
-  \        {-  Your application uses a programming language that does not yet have SDK support\n\
-  \            \n\
-  \             }\n\
-  \        {-  You require better control over the client-side implementation\n\
-  \            \n\
-  \             }\n\
-  \        }\n\
-  \   For detailed information on how and when to use and implement DescribeEndpoints, see \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/Using.API.html#Using-API.endpoint-discovery}The \
-   Endpoint Discovery Pattern}.\n\
-  \   "]
-
-module DescribeTable : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_table_request ->
-    ( describe_table_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_table_request ->
-    ( describe_table_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the table, including the table name, database name, retention \
-   duration of the memory store and the magnetic store. \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
-   apply}. See \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.describe-table.html}code \
-   sample} for details. \n"]
-
-module ListBatchLoadTasks : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_batch_load_tasks_request ->
-    ( list_batch_load_tasks_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_batch_load_tasks_request ->
-    ( list_batch_load_tasks_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides a list of batch load tasks, along with the name, status, when the task is resumable \
-   until, and other details. See \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.list-batch-load-tasks.html}code \
-   sample} for details.\n"]
-
-module ListDatabases : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_databases_request ->
-    ( list_databases_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_databases_request ->
-    ( list_databases_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns a list of your Timestream databases. \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
-   apply}. See \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.list-db.html}code \
-   sample} for details. \n"]
-
-module ListTables : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_tables_request ->
-    ( list_tables_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_tables_request ->
-    ( list_tables_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides a list of tables, along with the name, status, and retention properties of each table. \
-   See \
-   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.list-table.html}code \
-   sample} for details. \n"]
-
-module ListTagsForResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_tags_for_resource_request ->
-    ( list_tags_for_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_tags_for_resource_request ->
-    ( list_tags_for_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Lists all tags on a Timestream resource. \n"]
-
-module ResumeBatchLoadTask : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    resume_batch_load_task_request ->
-    ( resume_batch_load_task_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    resume_batch_load_task_request ->
-    ( resume_batch_load_task_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " \n"]
-
-module TagResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidEndpointException of invalid_endpoint_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    tag_resource_request ->
-    ( tag_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    tag_resource_request ->
-    ( tag_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Associates a set of tags with a Timestream resource. You can then activate these user-defined \
-   tags so that they appear on the Billing and Cost Management console for cost allocation \
-   tracking. \n"]
-
 module UntagResource : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -914,3 +220,697 @@ end
    [Version] to [3]. Any further updates would need to send a version number greater than [3], or \
    the update requests would receive a [RejectedRecordsException]. \n\
   \      "]
+
+module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Associates a set of tags with a Timestream resource. You can then activate these user-defined \
+   tags so that they appear on the Billing and Cost Management console for cost allocation \
+   tracking. \n"]
+
+module ResumeBatchLoadTask : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    resume_batch_load_task_request ->
+    ( resume_batch_load_task_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    resume_batch_load_task_request ->
+    ( resume_batch_load_task_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " \n"]
+
+module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Lists all tags on a Timestream resource. \n"]
+
+module ListTables : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_tables_request ->
+    ( list_tables_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tables_request ->
+    ( list_tables_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides a list of tables, along with the name, status, and retention properties of each table. \
+   See \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.list-table.html}code \
+   sample} for details. \n"]
+
+module ListDatabases : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_databases_request ->
+    ( list_databases_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_databases_request ->
+    ( list_databases_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns a list of your Timestream databases. \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
+   apply}. See \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.list-db.html}code \
+   sample} for details. \n"]
+
+module ListBatchLoadTasks : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_batch_load_tasks_request ->
+    ( list_batch_load_tasks_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_batch_load_tasks_request ->
+    ( list_batch_load_tasks_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides a list of batch load tasks, along with the name, status, when the task is resumable \
+   until, and other details. See \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.list-batch-load-tasks.html}code \
+   sample} for details.\n"]
+
+module DescribeTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_table_request ->
+    ( describe_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_table_request ->
+    ( describe_table_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the table, including the table name, database name, retention \
+   duration of the memory store and the magnetic store. \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
+   apply}. See \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.describe-table.html}code \
+   sample} for details. \n"]
+
+module DescribeEndpoints : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_endpoints_request ->
+    ( describe_endpoints_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_endpoints_request ->
+    ( describe_endpoints_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns a list of available endpoints to make Timestream API calls against. This API operation \
+   is available through both the Write and Query APIs.\n\n\
+  \ Because the Timestream SDKs are designed to transparently work with the service\226\128\153s \
+   architecture, including the management and mapping of the service endpoints, {i we don't \
+   recommend that you use this API operation unless}:\n\
+  \ \n\
+  \  {ul\n\
+  \        {-  You are using \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/VPCEndpoints}VPC endpoints \
+   (Amazon Web Services PrivateLink) with Timestream} \n\
+  \            \n\
+  \             }\n\
+  \        {-  Your application uses a programming language that does not yet have SDK support\n\
+  \            \n\
+  \             }\n\
+  \        {-  You require better control over the client-side implementation\n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \   For detailed information on how and when to use and implement DescribeEndpoints, see \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/Using.API.html#Using-API.endpoint-discovery}The \
+   Endpoint Discovery Pattern}.\n\
+  \   "]
+
+module DescribeDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_database_request ->
+    ( describe_database_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_database_request ->
+    ( describe_database_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the database, including the database name, time that the database was \
+   created, and the total number of tables found within the database. \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
+   apply}. See \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.describe-db.html}code \
+   sample} for details.\n"]
+
+module DescribeBatchLoadTask : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_batch_load_task_request ->
+    ( describe_batch_load_task_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_batch_load_task_request ->
+    ( describe_batch_load_task_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the batch load task, including configurations, mappings, progress, \
+   and other details. \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
+   apply}. See \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.describe-batch-load.html}code \
+   sample} for details.\n"]
+
+module DeleteTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a given Timestream table. This is an irreversible operation. After a Timestream \
+   database table is deleted, the time-series data stored in the table cannot be recovered. \n\n\
+  \  Due to the nature of distributed retries, the operation can return either success or a \
+   ResourceNotFoundException. Clients should consider them equivalent.\n\
+  \  \n\
+  \    See \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.delete-table.html}code \
+   sample} for details.\n\
+  \    "]
+
+module DeleteDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_database_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_database_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a given Timestream database. {i This is an irreversible operation. After a database is \
+   deleted, the time-series data from its tables cannot be recovered.} \n\n\
+  \  All tables in the database must be deleted first, or a ValidationException error will be \
+   thrown. \n\
+  \  \n\
+  \   Due to the nature of distributed retries, the operation can return either success or a \
+   ResourceNotFoundException. Clients should consider them equivalent.\n\
+  \   \n\
+  \     See \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.delete-db.html}code \
+   sample} for details.\n\
+  \     "]
+
+module CreateTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_request ->
+    ( create_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_request ->
+    ( create_table_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds a new table to an existing database in your account. In an Amazon Web Services account, \
+   table names must be at least unique within each Region if they are in the same database. You \
+   might have identical table names in the same Region if the tables are in separate databases. \
+   While creating the table, you must specify the table name, database name, and the retention \
+   properties. \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
+   apply}. See \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.create-table.html}code \
+   sample} for details. \n"]
+
+module CreateDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_database_request ->
+    ( create_database_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_database_request ->
+    ( create_database_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a new Timestream database. If the KMS key is not specified, the database will be \
+   encrypted with a Timestream managed KMS key located in your account. For more information, see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+   Web Services managed keys}. \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
+   apply}. For details, see \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.create-db.html}code \
+   sample}. \n"]
+
+module CreateBatchLoadTask : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_batch_load_task_request ->
+    ( create_batch_load_task_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_batch_load_task_request ->
+    ( create_batch_load_task_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `InvalidEndpointException of invalid_endpoint_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a new Timestream batch load task. A batch load task processes data from a CSV source in \
+   an S3 location and writes to a Timestream table. A mapping from source to target is defined in \
+   a batch load task. Errors and events are written to a report at an S3 location. For the report, \
+   if the KMS key is not specified, the report will be encrypted with an S3 managed key when \
+   [SSE_S3] is the option. Otherwise an error is thrown. For more information, see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+   Web Services managed keys}. \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html}Service quotas \
+   apply}. For details, see \
+   {{:https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.create-batch-load.html}code \
+   sample}.\n"]

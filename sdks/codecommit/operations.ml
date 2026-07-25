@@ -1,522 +1,6 @@
 open Types
 open Service_metadata
 
-module AssociateApprovalRuleTemplateWithRepository = struct
-  let error_to_string = function
-    | `ApprovalRuleTemplateDoesNotExistException _ ->
-        "com.amazonaws.codecommit#ApprovalRuleTemplateDoesNotExistException"
-    | `ApprovalRuleTemplateNameRequiredException _ ->
-        "com.amazonaws.codecommit#ApprovalRuleTemplateNameRequiredException"
-    | `EncryptionIntegrityChecksFailedException _ ->
-        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
-    | `EncryptionKeyAccessDeniedException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
-    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
-    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
-    | `EncryptionKeyUnavailableException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
-    | `InvalidApprovalRuleTemplateNameException _ ->
-        "com.amazonaws.codecommit#InvalidApprovalRuleTemplateNameException"
-    | `InvalidRepositoryNameException _ -> "com.amazonaws.codecommit#InvalidRepositoryNameException"
-    | `MaximumRuleTemplatesAssociatedWithRepositoryException _ ->
-        "com.amazonaws.codecommit#MaximumRuleTemplatesAssociatedWithRepositoryException"
-    | `RepositoryDoesNotExistException _ ->
-        "com.amazonaws.codecommit#RepositoryDoesNotExistException"
-    | `RepositoryNameRequiredException _ ->
-        "com.amazonaws.codecommit#RepositoryNameRequiredException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ApprovalRuleTemplateDoesNotExistException" ->
-          `ApprovalRuleTemplateDoesNotExistException
-            (Json_deserializers.approval_rule_template_does_not_exist_exception_of_yojson tree path)
-      | _, "ApprovalRuleTemplateNameRequiredException" ->
-          `ApprovalRuleTemplateNameRequiredException
-            (Json_deserializers.approval_rule_template_name_required_exception_of_yojson tree path)
-      | _, "EncryptionIntegrityChecksFailedException" ->
-          `EncryptionIntegrityChecksFailedException
-            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
-      | _, "EncryptionKeyAccessDeniedException" ->
-          `EncryptionKeyAccessDeniedException
-            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
-      | _, "EncryptionKeyDisabledException" ->
-          `EncryptionKeyDisabledException
-            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
-      | _, "EncryptionKeyNotFoundException" ->
-          `EncryptionKeyNotFoundException
-            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
-      | _, "EncryptionKeyUnavailableException" ->
-          `EncryptionKeyUnavailableException
-            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
-      | _, "InvalidApprovalRuleTemplateNameException" ->
-          `InvalidApprovalRuleTemplateNameException
-            (Json_deserializers.invalid_approval_rule_template_name_exception_of_yojson tree path)
-      | _, "InvalidRepositoryNameException" ->
-          `InvalidRepositoryNameException
-            (Json_deserializers.invalid_repository_name_exception_of_yojson tree path)
-      | _, "MaximumRuleTemplatesAssociatedWithRepositoryException" ->
-          `MaximumRuleTemplatesAssociatedWithRepositoryException
-            (Json_deserializers
-             .maximum_rule_templates_associated_with_repository_exception_of_yojson tree path)
-      | _, "RepositoryDoesNotExistException" ->
-          `RepositoryDoesNotExistException
-            (Json_deserializers.repository_does_not_exist_exception_of_yojson tree path)
-      | _, "RepositoryNameRequiredException" ->
-          `RepositoryNameRequiredException
-            (Json_deserializers.repository_name_required_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : associate_approval_rule_template_with_repository_input) =
-    let input =
-      Json_serializers.associate_approval_rule_template_with_repository_input_to_yojson request
-    in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"CodeCommit_20150413.AssociateApprovalRuleTemplateWithRepository" ~service
-      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context
-      (request : associate_approval_rule_template_with_repository_input) =
-    let input =
-      Json_serializers.associate_approval_rule_template_with_repository_input_to_yojson request
-    in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeCommit_20150413.AssociateApprovalRuleTemplateWithRepository" ~service
-      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
-module BatchAssociateApprovalRuleTemplateWithRepositories = struct
-  let error_to_string = function
-    | `ApprovalRuleTemplateDoesNotExistException _ ->
-        "com.amazonaws.codecommit#ApprovalRuleTemplateDoesNotExistException"
-    | `ApprovalRuleTemplateNameRequiredException _ ->
-        "com.amazonaws.codecommit#ApprovalRuleTemplateNameRequiredException"
-    | `EncryptionIntegrityChecksFailedException _ ->
-        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
-    | `EncryptionKeyAccessDeniedException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
-    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
-    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
-    | `EncryptionKeyUnavailableException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
-    | `InvalidApprovalRuleTemplateNameException _ ->
-        "com.amazonaws.codecommit#InvalidApprovalRuleTemplateNameException"
-    | `MaximumRepositoryNamesExceededException _ ->
-        "com.amazonaws.codecommit#MaximumRepositoryNamesExceededException"
-    | `RepositoryNamesRequiredException _ ->
-        "com.amazonaws.codecommit#RepositoryNamesRequiredException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ApprovalRuleTemplateDoesNotExistException" ->
-          `ApprovalRuleTemplateDoesNotExistException
-            (Json_deserializers.approval_rule_template_does_not_exist_exception_of_yojson tree path)
-      | _, "ApprovalRuleTemplateNameRequiredException" ->
-          `ApprovalRuleTemplateNameRequiredException
-            (Json_deserializers.approval_rule_template_name_required_exception_of_yojson tree path)
-      | _, "EncryptionIntegrityChecksFailedException" ->
-          `EncryptionIntegrityChecksFailedException
-            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
-      | _, "EncryptionKeyAccessDeniedException" ->
-          `EncryptionKeyAccessDeniedException
-            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
-      | _, "EncryptionKeyDisabledException" ->
-          `EncryptionKeyDisabledException
-            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
-      | _, "EncryptionKeyNotFoundException" ->
-          `EncryptionKeyNotFoundException
-            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
-      | _, "EncryptionKeyUnavailableException" ->
-          `EncryptionKeyUnavailableException
-            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
-      | _, "InvalidApprovalRuleTemplateNameException" ->
-          `InvalidApprovalRuleTemplateNameException
-            (Json_deserializers.invalid_approval_rule_template_name_exception_of_yojson tree path)
-      | _, "MaximumRepositoryNamesExceededException" ->
-          `MaximumRepositoryNamesExceededException
-            (Json_deserializers.maximum_repository_names_exceeded_exception_of_yojson tree path)
-      | _, "RepositoryNamesRequiredException" ->
-          `RepositoryNamesRequiredException
-            (Json_deserializers.repository_names_required_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_associate_approval_rule_template_with_repositories_input) =
-    let input =
-      Json_serializers.batch_associate_approval_rule_template_with_repositories_input_to_yojson
-        request
-    in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"CodeCommit_20150413.BatchAssociateApprovalRuleTemplateWithRepositories" ~service
-      ~context ~input
-      ~output_deserializer:
-        Json_deserializers.batch_associate_approval_rule_template_with_repositories_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context
-      (request : batch_associate_approval_rule_template_with_repositories_input) =
-    let input =
-      Json_serializers.batch_associate_approval_rule_template_with_repositories_input_to_yojson
-        request
-    in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeCommit_20150413.BatchAssociateApprovalRuleTemplateWithRepositories" ~service
-      ~context ~input
-      ~output_deserializer:
-        Json_deserializers.batch_associate_approval_rule_template_with_repositories_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchDescribeMergeConflicts = struct
-  let error_to_string = function
-    | `CommitDoesNotExistException _ -> "com.amazonaws.codecommit#CommitDoesNotExistException"
-    | `CommitRequiredException _ -> "com.amazonaws.codecommit#CommitRequiredException"
-    | `EncryptionIntegrityChecksFailedException _ ->
-        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
-    | `EncryptionKeyAccessDeniedException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
-    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
-    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
-    | `EncryptionKeyUnavailableException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
-    | `InvalidCommitException _ -> "com.amazonaws.codecommit#InvalidCommitException"
-    | `InvalidConflictDetailLevelException _ ->
-        "com.amazonaws.codecommit#InvalidConflictDetailLevelException"
-    | `InvalidConflictResolutionStrategyException _ ->
-        "com.amazonaws.codecommit#InvalidConflictResolutionStrategyException"
-    | `InvalidContinuationTokenException _ ->
-        "com.amazonaws.codecommit#InvalidContinuationTokenException"
-    | `InvalidMaxConflictFilesException _ ->
-        "com.amazonaws.codecommit#InvalidMaxConflictFilesException"
-    | `InvalidMaxMergeHunksException _ -> "com.amazonaws.codecommit#InvalidMaxMergeHunksException"
-    | `InvalidMergeOptionException _ -> "com.amazonaws.codecommit#InvalidMergeOptionException"
-    | `InvalidRepositoryNameException _ -> "com.amazonaws.codecommit#InvalidRepositoryNameException"
-    | `MaximumFileContentToLoadExceededException _ ->
-        "com.amazonaws.codecommit#MaximumFileContentToLoadExceededException"
-    | `MaximumItemsToCompareExceededException _ ->
-        "com.amazonaws.codecommit#MaximumItemsToCompareExceededException"
-    | `MergeOptionRequiredException _ -> "com.amazonaws.codecommit#MergeOptionRequiredException"
-    | `RepositoryDoesNotExistException _ ->
-        "com.amazonaws.codecommit#RepositoryDoesNotExistException"
-    | `RepositoryNameRequiredException _ ->
-        "com.amazonaws.codecommit#RepositoryNameRequiredException"
-    | `TipsDivergenceExceededException _ ->
-        "com.amazonaws.codecommit#TipsDivergenceExceededException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "CommitDoesNotExistException" ->
-          `CommitDoesNotExistException
-            (Json_deserializers.commit_does_not_exist_exception_of_yojson tree path)
-      | _, "CommitRequiredException" ->
-          `CommitRequiredException
-            (Json_deserializers.commit_required_exception_of_yojson tree path)
-      | _, "EncryptionIntegrityChecksFailedException" ->
-          `EncryptionIntegrityChecksFailedException
-            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
-      | _, "EncryptionKeyAccessDeniedException" ->
-          `EncryptionKeyAccessDeniedException
-            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
-      | _, "EncryptionKeyDisabledException" ->
-          `EncryptionKeyDisabledException
-            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
-      | _, "EncryptionKeyNotFoundException" ->
-          `EncryptionKeyNotFoundException
-            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
-      | _, "EncryptionKeyUnavailableException" ->
-          `EncryptionKeyUnavailableException
-            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
-      | _, "InvalidCommitException" ->
-          `InvalidCommitException (Json_deserializers.invalid_commit_exception_of_yojson tree path)
-      | _, "InvalidConflictDetailLevelException" ->
-          `InvalidConflictDetailLevelException
-            (Json_deserializers.invalid_conflict_detail_level_exception_of_yojson tree path)
-      | _, "InvalidConflictResolutionStrategyException" ->
-          `InvalidConflictResolutionStrategyException
-            (Json_deserializers.invalid_conflict_resolution_strategy_exception_of_yojson tree path)
-      | _, "InvalidContinuationTokenException" ->
-          `InvalidContinuationTokenException
-            (Json_deserializers.invalid_continuation_token_exception_of_yojson tree path)
-      | _, "InvalidMaxConflictFilesException" ->
-          `InvalidMaxConflictFilesException
-            (Json_deserializers.invalid_max_conflict_files_exception_of_yojson tree path)
-      | _, "InvalidMaxMergeHunksException" ->
-          `InvalidMaxMergeHunksException
-            (Json_deserializers.invalid_max_merge_hunks_exception_of_yojson tree path)
-      | _, "InvalidMergeOptionException" ->
-          `InvalidMergeOptionException
-            (Json_deserializers.invalid_merge_option_exception_of_yojson tree path)
-      | _, "InvalidRepositoryNameException" ->
-          `InvalidRepositoryNameException
-            (Json_deserializers.invalid_repository_name_exception_of_yojson tree path)
-      | _, "MaximumFileContentToLoadExceededException" ->
-          `MaximumFileContentToLoadExceededException
-            (Json_deserializers.maximum_file_content_to_load_exceeded_exception_of_yojson tree path)
-      | _, "MaximumItemsToCompareExceededException" ->
-          `MaximumItemsToCompareExceededException
-            (Json_deserializers.maximum_items_to_compare_exceeded_exception_of_yojson tree path)
-      | _, "MergeOptionRequiredException" ->
-          `MergeOptionRequiredException
-            (Json_deserializers.merge_option_required_exception_of_yojson tree path)
-      | _, "RepositoryDoesNotExistException" ->
-          `RepositoryDoesNotExistException
-            (Json_deserializers.repository_does_not_exist_exception_of_yojson tree path)
-      | _, "RepositoryNameRequiredException" ->
-          `RepositoryNameRequiredException
-            (Json_deserializers.repository_name_required_exception_of_yojson tree path)
-      | _, "TipsDivergenceExceededException" ->
-          `TipsDivergenceExceededException
-            (Json_deserializers.tips_divergence_exceeded_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_describe_merge_conflicts_input) =
-    let input = Json_serializers.batch_describe_merge_conflicts_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"CodeCommit_20150413.BatchDescribeMergeConflicts" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_describe_merge_conflicts_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_describe_merge_conflicts_input) =
-    let input = Json_serializers.batch_describe_merge_conflicts_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeCommit_20150413.BatchDescribeMergeConflicts" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_describe_merge_conflicts_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchDisassociateApprovalRuleTemplateFromRepositories = struct
-  let error_to_string = function
-    | `ApprovalRuleTemplateDoesNotExistException _ ->
-        "com.amazonaws.codecommit#ApprovalRuleTemplateDoesNotExistException"
-    | `ApprovalRuleTemplateNameRequiredException _ ->
-        "com.amazonaws.codecommit#ApprovalRuleTemplateNameRequiredException"
-    | `EncryptionIntegrityChecksFailedException _ ->
-        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
-    | `EncryptionKeyAccessDeniedException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
-    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
-    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
-    | `EncryptionKeyUnavailableException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
-    | `InvalidApprovalRuleTemplateNameException _ ->
-        "com.amazonaws.codecommit#InvalidApprovalRuleTemplateNameException"
-    | `MaximumRepositoryNamesExceededException _ ->
-        "com.amazonaws.codecommit#MaximumRepositoryNamesExceededException"
-    | `RepositoryNamesRequiredException _ ->
-        "com.amazonaws.codecommit#RepositoryNamesRequiredException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ApprovalRuleTemplateDoesNotExistException" ->
-          `ApprovalRuleTemplateDoesNotExistException
-            (Json_deserializers.approval_rule_template_does_not_exist_exception_of_yojson tree path)
-      | _, "ApprovalRuleTemplateNameRequiredException" ->
-          `ApprovalRuleTemplateNameRequiredException
-            (Json_deserializers.approval_rule_template_name_required_exception_of_yojson tree path)
-      | _, "EncryptionIntegrityChecksFailedException" ->
-          `EncryptionIntegrityChecksFailedException
-            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
-      | _, "EncryptionKeyAccessDeniedException" ->
-          `EncryptionKeyAccessDeniedException
-            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
-      | _, "EncryptionKeyDisabledException" ->
-          `EncryptionKeyDisabledException
-            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
-      | _, "EncryptionKeyNotFoundException" ->
-          `EncryptionKeyNotFoundException
-            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
-      | _, "EncryptionKeyUnavailableException" ->
-          `EncryptionKeyUnavailableException
-            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
-      | _, "InvalidApprovalRuleTemplateNameException" ->
-          `InvalidApprovalRuleTemplateNameException
-            (Json_deserializers.invalid_approval_rule_template_name_exception_of_yojson tree path)
-      | _, "MaximumRepositoryNamesExceededException" ->
-          `MaximumRepositoryNamesExceededException
-            (Json_deserializers.maximum_repository_names_exceeded_exception_of_yojson tree path)
-      | _, "RepositoryNamesRequiredException" ->
-          `RepositoryNamesRequiredException
-            (Json_deserializers.repository_names_required_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_disassociate_approval_rule_template_from_repositories_input)
-      =
-    let input =
-      Json_serializers.batch_disassociate_approval_rule_template_from_repositories_input_to_yojson
-        request
-    in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"CodeCommit_20150413.BatchDisassociateApprovalRuleTemplateFromRepositories"
-      ~service ~context ~input
-      ~output_deserializer:
-        Json_deserializers
-        .batch_disassociate_approval_rule_template_from_repositories_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context
-      (request : batch_disassociate_approval_rule_template_from_repositories_input) =
-    let input =
-      Json_serializers.batch_disassociate_approval_rule_template_from_repositories_input_to_yojson
-        request
-    in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeCommit_20150413.BatchDisassociateApprovalRuleTemplateFromRepositories"
-      ~service ~context ~input
-      ~output_deserializer:
-        Json_deserializers
-        .batch_disassociate_approval_rule_template_from_repositories_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetCommits = struct
-  let error_to_string = function
-    | `CommitIdsLimitExceededException _ ->
-        "com.amazonaws.codecommit#CommitIdsLimitExceededException"
-    | `CommitIdsListRequiredException _ -> "com.amazonaws.codecommit#CommitIdsListRequiredException"
-    | `EncryptionIntegrityChecksFailedException _ ->
-        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
-    | `EncryptionKeyAccessDeniedException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
-    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
-    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
-    | `EncryptionKeyUnavailableException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
-    | `InvalidRepositoryNameException _ -> "com.amazonaws.codecommit#InvalidRepositoryNameException"
-    | `RepositoryDoesNotExistException _ ->
-        "com.amazonaws.codecommit#RepositoryDoesNotExistException"
-    | `RepositoryNameRequiredException _ ->
-        "com.amazonaws.codecommit#RepositoryNameRequiredException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "CommitIdsLimitExceededException" ->
-          `CommitIdsLimitExceededException
-            (Json_deserializers.commit_ids_limit_exceeded_exception_of_yojson tree path)
-      | _, "CommitIdsListRequiredException" ->
-          `CommitIdsListRequiredException
-            (Json_deserializers.commit_ids_list_required_exception_of_yojson tree path)
-      | _, "EncryptionIntegrityChecksFailedException" ->
-          `EncryptionIntegrityChecksFailedException
-            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
-      | _, "EncryptionKeyAccessDeniedException" ->
-          `EncryptionKeyAccessDeniedException
-            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
-      | _, "EncryptionKeyDisabledException" ->
-          `EncryptionKeyDisabledException
-            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
-      | _, "EncryptionKeyNotFoundException" ->
-          `EncryptionKeyNotFoundException
-            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
-      | _, "EncryptionKeyUnavailableException" ->
-          `EncryptionKeyUnavailableException
-            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
-      | _, "InvalidRepositoryNameException" ->
-          `InvalidRepositoryNameException
-            (Json_deserializers.invalid_repository_name_exception_of_yojson tree path)
-      | _, "RepositoryDoesNotExistException" ->
-          `RepositoryDoesNotExistException
-            (Json_deserializers.repository_does_not_exist_exception_of_yojson tree path)
-      | _, "RepositoryNameRequiredException" ->
-          `RepositoryNameRequiredException
-            (Json_deserializers.repository_name_required_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_commits_input) =
-    let input = Json_serializers.batch_get_commits_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeCommit_20150413.BatchGetCommits" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.batch_get_commits_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_commits_input) =
-    let input = Json_serializers.batch_get_commits_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeCommit_20150413.BatchGetCommits" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_commits_output_of_yojson ~error_deserializer
-end
-
-module BatchGetRepositories = struct
-  let error_to_string = function
-    | `EncryptionIntegrityChecksFailedException _ ->
-        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
-    | `EncryptionKeyAccessDeniedException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
-    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
-    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
-    | `EncryptionKeyUnavailableException _ ->
-        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
-    | `InvalidRepositoryNameException _ -> "com.amazonaws.codecommit#InvalidRepositoryNameException"
-    | `MaximumRepositoryNamesExceededException _ ->
-        "com.amazonaws.codecommit#MaximumRepositoryNamesExceededException"
-    | `RepositoryNamesRequiredException _ ->
-        "com.amazonaws.codecommit#RepositoryNamesRequiredException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "EncryptionIntegrityChecksFailedException" ->
-          `EncryptionIntegrityChecksFailedException
-            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
-      | _, "EncryptionKeyAccessDeniedException" ->
-          `EncryptionKeyAccessDeniedException
-            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
-      | _, "EncryptionKeyDisabledException" ->
-          `EncryptionKeyDisabledException
-            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
-      | _, "EncryptionKeyNotFoundException" ->
-          `EncryptionKeyNotFoundException
-            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
-      | _, "EncryptionKeyUnavailableException" ->
-          `EncryptionKeyUnavailableException
-            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
-      | _, "InvalidRepositoryNameException" ->
-          `InvalidRepositoryNameException
-            (Json_deserializers.invalid_repository_name_exception_of_yojson tree path)
-      | _, "MaximumRepositoryNamesExceededException" ->
-          `MaximumRepositoryNamesExceededException
-            (Json_deserializers.maximum_repository_names_exceeded_exception_of_yojson tree path)
-      | _, "RepositoryNamesRequiredException" ->
-          `RepositoryNamesRequiredException
-            (Json_deserializers.repository_names_required_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_repositories_input) =
-    let input = Json_serializers.batch_get_repositories_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeCommit_20150413.BatchGetRepositories"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_repositories_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_repositories_input) =
-    let input = Json_serializers.batch_get_repositories_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeCommit_20150413.BatchGetRepositories" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_repositories_output_of_yojson
-      ~error_deserializer
-end
-
 module CreateApprovalRuleTemplate = struct
   let error_to_string = function
     | `ApprovalRuleTemplateContentRequiredException _ ->
@@ -7035,5 +6519,521 @@ module UpdateRepositoryName = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CodeCommit_20150413.UpdateRepositoryName" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module BatchGetRepositories = struct
+  let error_to_string = function
+    | `EncryptionIntegrityChecksFailedException _ ->
+        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
+    | `EncryptionKeyAccessDeniedException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
+    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
+    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
+    | `EncryptionKeyUnavailableException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
+    | `InvalidRepositoryNameException _ -> "com.amazonaws.codecommit#InvalidRepositoryNameException"
+    | `MaximumRepositoryNamesExceededException _ ->
+        "com.amazonaws.codecommit#MaximumRepositoryNamesExceededException"
+    | `RepositoryNamesRequiredException _ ->
+        "com.amazonaws.codecommit#RepositoryNamesRequiredException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "EncryptionIntegrityChecksFailedException" ->
+          `EncryptionIntegrityChecksFailedException
+            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
+      | _, "EncryptionKeyAccessDeniedException" ->
+          `EncryptionKeyAccessDeniedException
+            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
+      | _, "EncryptionKeyDisabledException" ->
+          `EncryptionKeyDisabledException
+            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
+      | _, "EncryptionKeyNotFoundException" ->
+          `EncryptionKeyNotFoundException
+            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
+      | _, "EncryptionKeyUnavailableException" ->
+          `EncryptionKeyUnavailableException
+            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
+      | _, "InvalidRepositoryNameException" ->
+          `InvalidRepositoryNameException
+            (Json_deserializers.invalid_repository_name_exception_of_yojson tree path)
+      | _, "MaximumRepositoryNamesExceededException" ->
+          `MaximumRepositoryNamesExceededException
+            (Json_deserializers.maximum_repository_names_exceeded_exception_of_yojson tree path)
+      | _, "RepositoryNamesRequiredException" ->
+          `RepositoryNamesRequiredException
+            (Json_deserializers.repository_names_required_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_repositories_input) =
+    let input = Json_serializers.batch_get_repositories_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeCommit_20150413.BatchGetRepositories"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_repositories_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_repositories_input) =
+    let input = Json_serializers.batch_get_repositories_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeCommit_20150413.BatchGetRepositories" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_repositories_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetCommits = struct
+  let error_to_string = function
+    | `CommitIdsLimitExceededException _ ->
+        "com.amazonaws.codecommit#CommitIdsLimitExceededException"
+    | `CommitIdsListRequiredException _ -> "com.amazonaws.codecommit#CommitIdsListRequiredException"
+    | `EncryptionIntegrityChecksFailedException _ ->
+        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
+    | `EncryptionKeyAccessDeniedException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
+    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
+    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
+    | `EncryptionKeyUnavailableException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
+    | `InvalidRepositoryNameException _ -> "com.amazonaws.codecommit#InvalidRepositoryNameException"
+    | `RepositoryDoesNotExistException _ ->
+        "com.amazonaws.codecommit#RepositoryDoesNotExistException"
+    | `RepositoryNameRequiredException _ ->
+        "com.amazonaws.codecommit#RepositoryNameRequiredException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "CommitIdsLimitExceededException" ->
+          `CommitIdsLimitExceededException
+            (Json_deserializers.commit_ids_limit_exceeded_exception_of_yojson tree path)
+      | _, "CommitIdsListRequiredException" ->
+          `CommitIdsListRequiredException
+            (Json_deserializers.commit_ids_list_required_exception_of_yojson tree path)
+      | _, "EncryptionIntegrityChecksFailedException" ->
+          `EncryptionIntegrityChecksFailedException
+            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
+      | _, "EncryptionKeyAccessDeniedException" ->
+          `EncryptionKeyAccessDeniedException
+            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
+      | _, "EncryptionKeyDisabledException" ->
+          `EncryptionKeyDisabledException
+            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
+      | _, "EncryptionKeyNotFoundException" ->
+          `EncryptionKeyNotFoundException
+            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
+      | _, "EncryptionKeyUnavailableException" ->
+          `EncryptionKeyUnavailableException
+            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
+      | _, "InvalidRepositoryNameException" ->
+          `InvalidRepositoryNameException
+            (Json_deserializers.invalid_repository_name_exception_of_yojson tree path)
+      | _, "RepositoryDoesNotExistException" ->
+          `RepositoryDoesNotExistException
+            (Json_deserializers.repository_does_not_exist_exception_of_yojson tree path)
+      | _, "RepositoryNameRequiredException" ->
+          `RepositoryNameRequiredException
+            (Json_deserializers.repository_name_required_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_commits_input) =
+    let input = Json_serializers.batch_get_commits_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeCommit_20150413.BatchGetCommits" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.batch_get_commits_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_commits_input) =
+    let input = Json_serializers.batch_get_commits_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeCommit_20150413.BatchGetCommits" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_commits_output_of_yojson ~error_deserializer
+end
+
+module BatchDisassociateApprovalRuleTemplateFromRepositories = struct
+  let error_to_string = function
+    | `ApprovalRuleTemplateDoesNotExistException _ ->
+        "com.amazonaws.codecommit#ApprovalRuleTemplateDoesNotExistException"
+    | `ApprovalRuleTemplateNameRequiredException _ ->
+        "com.amazonaws.codecommit#ApprovalRuleTemplateNameRequiredException"
+    | `EncryptionIntegrityChecksFailedException _ ->
+        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
+    | `EncryptionKeyAccessDeniedException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
+    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
+    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
+    | `EncryptionKeyUnavailableException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
+    | `InvalidApprovalRuleTemplateNameException _ ->
+        "com.amazonaws.codecommit#InvalidApprovalRuleTemplateNameException"
+    | `MaximumRepositoryNamesExceededException _ ->
+        "com.amazonaws.codecommit#MaximumRepositoryNamesExceededException"
+    | `RepositoryNamesRequiredException _ ->
+        "com.amazonaws.codecommit#RepositoryNamesRequiredException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ApprovalRuleTemplateDoesNotExistException" ->
+          `ApprovalRuleTemplateDoesNotExistException
+            (Json_deserializers.approval_rule_template_does_not_exist_exception_of_yojson tree path)
+      | _, "ApprovalRuleTemplateNameRequiredException" ->
+          `ApprovalRuleTemplateNameRequiredException
+            (Json_deserializers.approval_rule_template_name_required_exception_of_yojson tree path)
+      | _, "EncryptionIntegrityChecksFailedException" ->
+          `EncryptionIntegrityChecksFailedException
+            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
+      | _, "EncryptionKeyAccessDeniedException" ->
+          `EncryptionKeyAccessDeniedException
+            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
+      | _, "EncryptionKeyDisabledException" ->
+          `EncryptionKeyDisabledException
+            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
+      | _, "EncryptionKeyNotFoundException" ->
+          `EncryptionKeyNotFoundException
+            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
+      | _, "EncryptionKeyUnavailableException" ->
+          `EncryptionKeyUnavailableException
+            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
+      | _, "InvalidApprovalRuleTemplateNameException" ->
+          `InvalidApprovalRuleTemplateNameException
+            (Json_deserializers.invalid_approval_rule_template_name_exception_of_yojson tree path)
+      | _, "MaximumRepositoryNamesExceededException" ->
+          `MaximumRepositoryNamesExceededException
+            (Json_deserializers.maximum_repository_names_exceeded_exception_of_yojson tree path)
+      | _, "RepositoryNamesRequiredException" ->
+          `RepositoryNamesRequiredException
+            (Json_deserializers.repository_names_required_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_disassociate_approval_rule_template_from_repositories_input)
+      =
+    let input =
+      Json_serializers.batch_disassociate_approval_rule_template_from_repositories_input_to_yojson
+        request
+    in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CodeCommit_20150413.BatchDisassociateApprovalRuleTemplateFromRepositories"
+      ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers
+        .batch_disassociate_approval_rule_template_from_repositories_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context
+      (request : batch_disassociate_approval_rule_template_from_repositories_input) =
+    let input =
+      Json_serializers.batch_disassociate_approval_rule_template_from_repositories_input_to_yojson
+        request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeCommit_20150413.BatchDisassociateApprovalRuleTemplateFromRepositories"
+      ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers
+        .batch_disassociate_approval_rule_template_from_repositories_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchDescribeMergeConflicts = struct
+  let error_to_string = function
+    | `CommitDoesNotExistException _ -> "com.amazonaws.codecommit#CommitDoesNotExistException"
+    | `CommitRequiredException _ -> "com.amazonaws.codecommit#CommitRequiredException"
+    | `EncryptionIntegrityChecksFailedException _ ->
+        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
+    | `EncryptionKeyAccessDeniedException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
+    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
+    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
+    | `EncryptionKeyUnavailableException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
+    | `InvalidCommitException _ -> "com.amazonaws.codecommit#InvalidCommitException"
+    | `InvalidConflictDetailLevelException _ ->
+        "com.amazonaws.codecommit#InvalidConflictDetailLevelException"
+    | `InvalidConflictResolutionStrategyException _ ->
+        "com.amazonaws.codecommit#InvalidConflictResolutionStrategyException"
+    | `InvalidContinuationTokenException _ ->
+        "com.amazonaws.codecommit#InvalidContinuationTokenException"
+    | `InvalidMaxConflictFilesException _ ->
+        "com.amazonaws.codecommit#InvalidMaxConflictFilesException"
+    | `InvalidMaxMergeHunksException _ -> "com.amazonaws.codecommit#InvalidMaxMergeHunksException"
+    | `InvalidMergeOptionException _ -> "com.amazonaws.codecommit#InvalidMergeOptionException"
+    | `InvalidRepositoryNameException _ -> "com.amazonaws.codecommit#InvalidRepositoryNameException"
+    | `MaximumFileContentToLoadExceededException _ ->
+        "com.amazonaws.codecommit#MaximumFileContentToLoadExceededException"
+    | `MaximumItemsToCompareExceededException _ ->
+        "com.amazonaws.codecommit#MaximumItemsToCompareExceededException"
+    | `MergeOptionRequiredException _ -> "com.amazonaws.codecommit#MergeOptionRequiredException"
+    | `RepositoryDoesNotExistException _ ->
+        "com.amazonaws.codecommit#RepositoryDoesNotExistException"
+    | `RepositoryNameRequiredException _ ->
+        "com.amazonaws.codecommit#RepositoryNameRequiredException"
+    | `TipsDivergenceExceededException _ ->
+        "com.amazonaws.codecommit#TipsDivergenceExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "CommitDoesNotExistException" ->
+          `CommitDoesNotExistException
+            (Json_deserializers.commit_does_not_exist_exception_of_yojson tree path)
+      | _, "CommitRequiredException" ->
+          `CommitRequiredException
+            (Json_deserializers.commit_required_exception_of_yojson tree path)
+      | _, "EncryptionIntegrityChecksFailedException" ->
+          `EncryptionIntegrityChecksFailedException
+            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
+      | _, "EncryptionKeyAccessDeniedException" ->
+          `EncryptionKeyAccessDeniedException
+            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
+      | _, "EncryptionKeyDisabledException" ->
+          `EncryptionKeyDisabledException
+            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
+      | _, "EncryptionKeyNotFoundException" ->
+          `EncryptionKeyNotFoundException
+            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
+      | _, "EncryptionKeyUnavailableException" ->
+          `EncryptionKeyUnavailableException
+            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
+      | _, "InvalidCommitException" ->
+          `InvalidCommitException (Json_deserializers.invalid_commit_exception_of_yojson tree path)
+      | _, "InvalidConflictDetailLevelException" ->
+          `InvalidConflictDetailLevelException
+            (Json_deserializers.invalid_conflict_detail_level_exception_of_yojson tree path)
+      | _, "InvalidConflictResolutionStrategyException" ->
+          `InvalidConflictResolutionStrategyException
+            (Json_deserializers.invalid_conflict_resolution_strategy_exception_of_yojson tree path)
+      | _, "InvalidContinuationTokenException" ->
+          `InvalidContinuationTokenException
+            (Json_deserializers.invalid_continuation_token_exception_of_yojson tree path)
+      | _, "InvalidMaxConflictFilesException" ->
+          `InvalidMaxConflictFilesException
+            (Json_deserializers.invalid_max_conflict_files_exception_of_yojson tree path)
+      | _, "InvalidMaxMergeHunksException" ->
+          `InvalidMaxMergeHunksException
+            (Json_deserializers.invalid_max_merge_hunks_exception_of_yojson tree path)
+      | _, "InvalidMergeOptionException" ->
+          `InvalidMergeOptionException
+            (Json_deserializers.invalid_merge_option_exception_of_yojson tree path)
+      | _, "InvalidRepositoryNameException" ->
+          `InvalidRepositoryNameException
+            (Json_deserializers.invalid_repository_name_exception_of_yojson tree path)
+      | _, "MaximumFileContentToLoadExceededException" ->
+          `MaximumFileContentToLoadExceededException
+            (Json_deserializers.maximum_file_content_to_load_exceeded_exception_of_yojson tree path)
+      | _, "MaximumItemsToCompareExceededException" ->
+          `MaximumItemsToCompareExceededException
+            (Json_deserializers.maximum_items_to_compare_exceeded_exception_of_yojson tree path)
+      | _, "MergeOptionRequiredException" ->
+          `MergeOptionRequiredException
+            (Json_deserializers.merge_option_required_exception_of_yojson tree path)
+      | _, "RepositoryDoesNotExistException" ->
+          `RepositoryDoesNotExistException
+            (Json_deserializers.repository_does_not_exist_exception_of_yojson tree path)
+      | _, "RepositoryNameRequiredException" ->
+          `RepositoryNameRequiredException
+            (Json_deserializers.repository_name_required_exception_of_yojson tree path)
+      | _, "TipsDivergenceExceededException" ->
+          `TipsDivergenceExceededException
+            (Json_deserializers.tips_divergence_exceeded_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_describe_merge_conflicts_input) =
+    let input = Json_serializers.batch_describe_merge_conflicts_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CodeCommit_20150413.BatchDescribeMergeConflicts" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_describe_merge_conflicts_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_describe_merge_conflicts_input) =
+    let input = Json_serializers.batch_describe_merge_conflicts_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeCommit_20150413.BatchDescribeMergeConflicts" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_describe_merge_conflicts_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchAssociateApprovalRuleTemplateWithRepositories = struct
+  let error_to_string = function
+    | `ApprovalRuleTemplateDoesNotExistException _ ->
+        "com.amazonaws.codecommit#ApprovalRuleTemplateDoesNotExistException"
+    | `ApprovalRuleTemplateNameRequiredException _ ->
+        "com.amazonaws.codecommit#ApprovalRuleTemplateNameRequiredException"
+    | `EncryptionIntegrityChecksFailedException _ ->
+        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
+    | `EncryptionKeyAccessDeniedException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
+    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
+    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
+    | `EncryptionKeyUnavailableException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
+    | `InvalidApprovalRuleTemplateNameException _ ->
+        "com.amazonaws.codecommit#InvalidApprovalRuleTemplateNameException"
+    | `MaximumRepositoryNamesExceededException _ ->
+        "com.amazonaws.codecommit#MaximumRepositoryNamesExceededException"
+    | `RepositoryNamesRequiredException _ ->
+        "com.amazonaws.codecommit#RepositoryNamesRequiredException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ApprovalRuleTemplateDoesNotExistException" ->
+          `ApprovalRuleTemplateDoesNotExistException
+            (Json_deserializers.approval_rule_template_does_not_exist_exception_of_yojson tree path)
+      | _, "ApprovalRuleTemplateNameRequiredException" ->
+          `ApprovalRuleTemplateNameRequiredException
+            (Json_deserializers.approval_rule_template_name_required_exception_of_yojson tree path)
+      | _, "EncryptionIntegrityChecksFailedException" ->
+          `EncryptionIntegrityChecksFailedException
+            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
+      | _, "EncryptionKeyAccessDeniedException" ->
+          `EncryptionKeyAccessDeniedException
+            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
+      | _, "EncryptionKeyDisabledException" ->
+          `EncryptionKeyDisabledException
+            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
+      | _, "EncryptionKeyNotFoundException" ->
+          `EncryptionKeyNotFoundException
+            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
+      | _, "EncryptionKeyUnavailableException" ->
+          `EncryptionKeyUnavailableException
+            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
+      | _, "InvalidApprovalRuleTemplateNameException" ->
+          `InvalidApprovalRuleTemplateNameException
+            (Json_deserializers.invalid_approval_rule_template_name_exception_of_yojson tree path)
+      | _, "MaximumRepositoryNamesExceededException" ->
+          `MaximumRepositoryNamesExceededException
+            (Json_deserializers.maximum_repository_names_exceeded_exception_of_yojson tree path)
+      | _, "RepositoryNamesRequiredException" ->
+          `RepositoryNamesRequiredException
+            (Json_deserializers.repository_names_required_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_associate_approval_rule_template_with_repositories_input) =
+    let input =
+      Json_serializers.batch_associate_approval_rule_template_with_repositories_input_to_yojson
+        request
+    in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CodeCommit_20150413.BatchAssociateApprovalRuleTemplateWithRepositories" ~service
+      ~context ~input
+      ~output_deserializer:
+        Json_deserializers.batch_associate_approval_rule_template_with_repositories_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context
+      (request : batch_associate_approval_rule_template_with_repositories_input) =
+    let input =
+      Json_serializers.batch_associate_approval_rule_template_with_repositories_input_to_yojson
+        request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeCommit_20150413.BatchAssociateApprovalRuleTemplateWithRepositories" ~service
+      ~context ~input
+      ~output_deserializer:
+        Json_deserializers.batch_associate_approval_rule_template_with_repositories_output_of_yojson
+      ~error_deserializer
+end
+
+module AssociateApprovalRuleTemplateWithRepository = struct
+  let error_to_string = function
+    | `ApprovalRuleTemplateDoesNotExistException _ ->
+        "com.amazonaws.codecommit#ApprovalRuleTemplateDoesNotExistException"
+    | `ApprovalRuleTemplateNameRequiredException _ ->
+        "com.amazonaws.codecommit#ApprovalRuleTemplateNameRequiredException"
+    | `EncryptionIntegrityChecksFailedException _ ->
+        "com.amazonaws.codecommit#EncryptionIntegrityChecksFailedException"
+    | `EncryptionKeyAccessDeniedException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyAccessDeniedException"
+    | `EncryptionKeyDisabledException _ -> "com.amazonaws.codecommit#EncryptionKeyDisabledException"
+    | `EncryptionKeyNotFoundException _ -> "com.amazonaws.codecommit#EncryptionKeyNotFoundException"
+    | `EncryptionKeyUnavailableException _ ->
+        "com.amazonaws.codecommit#EncryptionKeyUnavailableException"
+    | `InvalidApprovalRuleTemplateNameException _ ->
+        "com.amazonaws.codecommit#InvalidApprovalRuleTemplateNameException"
+    | `InvalidRepositoryNameException _ -> "com.amazonaws.codecommit#InvalidRepositoryNameException"
+    | `MaximumRuleTemplatesAssociatedWithRepositoryException _ ->
+        "com.amazonaws.codecommit#MaximumRuleTemplatesAssociatedWithRepositoryException"
+    | `RepositoryDoesNotExistException _ ->
+        "com.amazonaws.codecommit#RepositoryDoesNotExistException"
+    | `RepositoryNameRequiredException _ ->
+        "com.amazonaws.codecommit#RepositoryNameRequiredException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ApprovalRuleTemplateDoesNotExistException" ->
+          `ApprovalRuleTemplateDoesNotExistException
+            (Json_deserializers.approval_rule_template_does_not_exist_exception_of_yojson tree path)
+      | _, "ApprovalRuleTemplateNameRequiredException" ->
+          `ApprovalRuleTemplateNameRequiredException
+            (Json_deserializers.approval_rule_template_name_required_exception_of_yojson tree path)
+      | _, "EncryptionIntegrityChecksFailedException" ->
+          `EncryptionIntegrityChecksFailedException
+            (Json_deserializers.encryption_integrity_checks_failed_exception_of_yojson tree path)
+      | _, "EncryptionKeyAccessDeniedException" ->
+          `EncryptionKeyAccessDeniedException
+            (Json_deserializers.encryption_key_access_denied_exception_of_yojson tree path)
+      | _, "EncryptionKeyDisabledException" ->
+          `EncryptionKeyDisabledException
+            (Json_deserializers.encryption_key_disabled_exception_of_yojson tree path)
+      | _, "EncryptionKeyNotFoundException" ->
+          `EncryptionKeyNotFoundException
+            (Json_deserializers.encryption_key_not_found_exception_of_yojson tree path)
+      | _, "EncryptionKeyUnavailableException" ->
+          `EncryptionKeyUnavailableException
+            (Json_deserializers.encryption_key_unavailable_exception_of_yojson tree path)
+      | _, "InvalidApprovalRuleTemplateNameException" ->
+          `InvalidApprovalRuleTemplateNameException
+            (Json_deserializers.invalid_approval_rule_template_name_exception_of_yojson tree path)
+      | _, "InvalidRepositoryNameException" ->
+          `InvalidRepositoryNameException
+            (Json_deserializers.invalid_repository_name_exception_of_yojson tree path)
+      | _, "MaximumRuleTemplatesAssociatedWithRepositoryException" ->
+          `MaximumRuleTemplatesAssociatedWithRepositoryException
+            (Json_deserializers
+             .maximum_rule_templates_associated_with_repository_exception_of_yojson tree path)
+      | _, "RepositoryDoesNotExistException" ->
+          `RepositoryDoesNotExistException
+            (Json_deserializers.repository_does_not_exist_exception_of_yojson tree path)
+      | _, "RepositoryNameRequiredException" ->
+          `RepositoryNameRequiredException
+            (Json_deserializers.repository_name_required_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : associate_approval_rule_template_with_repository_input) =
+    let input =
+      Json_serializers.associate_approval_rule_template_with_repository_input_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CodeCommit_20150413.AssociateApprovalRuleTemplateWithRepository" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context
+      (request : associate_approval_rule_template_with_repository_input) =
+    let input =
+      Json_serializers.associate_approval_rule_template_with_repository_input_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeCommit_20150413.AssociateApprovalRuleTemplateWithRepository" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end

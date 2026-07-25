@@ -1,58 +1,46 @@
-type nonrec truncated = bool [@@ocaml.doc ""]
-
-type nonrec included_details = bool [@@ocaml.doc ""]
-
-type nonrec version_weight = int [@@ocaml.doc ""]
-
-type nonrec version_description = string [@@ocaml.doc ""]
-
-type nonrec variable_value = string [@@ocaml.doc ""]
-
-type nonrec variable_name = string [@@ocaml.doc ""]
-
-type nonrec variable_name_list = variable_name list [@@ocaml.doc ""]
-
-type nonrec state_name = string [@@ocaml.doc ""]
-
-type nonrec variable_references = (state_name * variable_name_list) list [@@ocaml.doc ""]
-
 type nonrec validation_exception_reason =
-  | INVALID_ROUTING_CONFIGURATION [@ocaml.doc ""]
-  | CANNOT_UPDATE_COMPLETED_MAP_RUN [@ocaml.doc ""]
-  | MISSING_REQUIRED_PARAMETER [@ocaml.doc ""]
   | API_DOES_NOT_SUPPORT_LABELED_ARNS [@ocaml.doc ""]
+  | MISSING_REQUIRED_PARAMETER [@ocaml.doc ""]
+  | CANNOT_UPDATE_COMPLETED_MAP_RUN [@ocaml.doc ""]
+  | INVALID_ROUTING_CONFIGURATION [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec error_message = string [@@ocaml.doc ""]
 
 type nonrec validation_exception = {
+  message : error_message option; [@ocaml.doc ""]
   reason : validation_exception_reason option;
       [@ocaml.doc
         "The input does not satisfy the constraints specified by an Amazon Web Services service.\n"]
-  message : error_message option; [@ocaml.doc ""]
 }
 [@@ocaml.doc
   "The input does not satisfy the constraints specified by an Amazon Web Services service.\n"]
 
 type nonrec validate_state_machine_definition_truncated = bool [@@ocaml.doc ""]
 
-type nonrec validate_state_machine_definition_severity =
-  | WARNING [@ocaml.doc ""]
-  | ERROR [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec validate_state_machine_definition_result_code =
-  | FAIL [@ocaml.doc ""]
-  | OK [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec validate_state_machine_definition_code = string [@@ocaml.doc ""]
+type nonrec validate_state_machine_definition_location = string [@@ocaml.doc ""]
 
 type nonrec validate_state_machine_definition_message = string [@@ocaml.doc ""]
 
-type nonrec validate_state_machine_definition_location = string [@@ocaml.doc ""]
+type nonrec validate_state_machine_definition_code = string [@@ocaml.doc ""]
+
+type nonrec validate_state_machine_definition_severity =
+  | ERROR [@ocaml.doc ""]
+  | WARNING [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
 type nonrec validate_state_machine_definition_diagnostic = {
+  severity : validate_state_machine_definition_severity;
+      [@ocaml.doc
+        "A value of [ERROR] means that you cannot create or update a state machine with this \
+         definition.\n\n\
+        \  [WARNING] level diagnostics alert you to potential issues, but they will not prevent \
+         you from creating or updating your state machine.\n\
+        \ "]
+  code : validate_state_machine_definition_code;
+      [@ocaml.doc "Identifying code for the diagnostic.\n"]
+  message : validate_state_machine_definition_message;
+      [@ocaml.doc "Message describing the diagnostic condition.\n"]
   location : validate_state_machine_definition_location option;
       [@ocaml.doc
         "Location of the issue in the state machine, if available.\n\n\
@@ -61,17 +49,6 @@ type nonrec validate_state_machine_definition_diagnostic = {
         \ /States//\n\
         \ ]}\n\
         \ , for example: [/States/FailState/ErrorPath].\n\
-        \ "]
-  message : validate_state_machine_definition_message;
-      [@ocaml.doc "Message describing the diagnostic condition.\n"]
-  code : validate_state_machine_definition_code;
-      [@ocaml.doc "Identifying code for the diagnostic.\n"]
-  severity : validate_state_machine_definition_severity;
-      [@ocaml.doc
-        "A value of [ERROR] means that you cannot create or update a state machine with this \
-         definition.\n\n\
-        \  [WARNING] level diagnostics alert you to potential issues, but they will not prevent \
-         you from creating or updating your state machine.\n\
         \ "]
 }
 [@@ocaml.doc
@@ -139,32 +116,49 @@ type nonrec validate_state_machine_definition_diagnostic_list =
   validate_state_machine_definition_diagnostic list
 [@@ocaml.doc ""]
 
+type nonrec validate_state_machine_definition_result_code =
+  | OK [@ocaml.doc ""]
+  | FAIL [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
 type nonrec validate_state_machine_definition_output = {
-  truncated : validate_state_machine_definition_truncated option;
+  result_ : validate_state_machine_definition_result_code;
       [@ocaml.doc
-        "The result value will be [true] if the number of diagnostics found in the workflow \
-         definition exceeds [maxResults]. When all diagnostics results are returned, the value \
-         will be [false].\n"]
+        "The result value will be [OK] when no syntax errors are found, or [FAIL] if the workflow \
+         definition does not pass verification.\n"]
   diagnostics : validate_state_machine_definition_diagnostic_list;
       [@ocaml.doc
         "An array of diagnostic errors and warnings found during validation of the state machine \
          definition. Since {b warnings} do not prevent deploying your workflow definition, the {b \
          result} value could be [OK] even when warning diagnostics are present in the response.\n"]
-  result_ : validate_state_machine_definition_result_code;
+  truncated : validate_state_machine_definition_truncated option;
       [@ocaml.doc
-        "The result value will be [OK] when no syntax errors are found, or [FAIL] if the workflow \
-         definition does not pass verification.\n"]
+        "The result value will be [true] if the number of diagnostics found in the workflow \
+         definition exceeds [maxResults]. When all diagnostics results are returned, the value \
+         will be [false].\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec validate_state_machine_definition_max_result = int [@@ocaml.doc ""]
 
-type nonrec definition = string [@@ocaml.doc ""]
-
-type nonrec state_machine_type = EXPRESS [@ocaml.doc ""] | STANDARD [@ocaml.doc ""]
+type nonrec state_machine_type = STANDARD [@ocaml.doc ""] | EXPRESS [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
+type nonrec definition = string [@@ocaml.doc ""]
+
 type nonrec validate_state_machine_definition_input = {
+  definition : definition;
+      [@ocaml.doc
+        "The Amazon States Language definition of the state machine. For more information, see \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
+         States Language} (ASL).\n"]
+  type_ : state_machine_type option;
+      [@ocaml.doc
+        "The target type of state machine for this definition. The default is [STANDARD].\n"]
+  severity : validate_state_machine_definition_severity option;
+      [@ocaml.doc
+        "Minimum level of diagnostics to return. [ERROR] returns only [ERROR] diagnostics, whereas \
+         [WARNING] returns both [WARNING] and [ERROR] diagnostics. The default is [ERROR]. \n"]
   max_results : validate_state_machine_definition_max_result option;
       [@ocaml.doc
         "The maximum number of diagnostics that are returned per call. The default and maximum \
@@ -172,204 +166,17 @@ type nonrec validate_state_machine_definition_input = {
         \ If the number of diagnostics returned in the response exceeds [maxResults], the value of \
          the [truncated] field in the response will be set to [true].\n\
         \ "]
-  severity : validate_state_machine_definition_severity option;
-      [@ocaml.doc
-        "Minimum level of diagnostics to return. [ERROR] returns only [ERROR] diagnostics, whereas \
-         [WARNING] returns both [WARNING] and [ERROR] diagnostics. The default is [ERROR]. \n"]
-  type_ : state_machine_type option;
-      [@ocaml.doc
-        "The target type of state machine for this definition. The default is [STANDARD].\n"]
-  definition : definition;
-      [@ocaml.doc
-        "The Amazon States Language definition of the state machine. For more information, see \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
-         States Language} (ASL).\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec revision_id = string [@@ocaml.doc ""]
-
-type nonrec arn = string [@@ocaml.doc ""]
-
-type nonrec update_state_machine_output = {
-  state_machine_version_arn : arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the published state machine version.\n\n\
-        \ If the [publish] parameter isn't set to [true], this field returns null.\n\
-        \ "]
-  revision_id : revision_id option;
-      [@ocaml.doc "The revision identifier for the updated state machine.\n"]
-  update_date : timestamp; [@ocaml.doc "The date and time the state machine was updated.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec log_level =
-  | OFF [@ocaml.doc ""]
-  | FATAL [@ocaml.doc ""]
-  | ERROR [@ocaml.doc ""]
-  | ALL [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec include_execution_data = bool [@@ocaml.doc ""]
-
-type nonrec cloud_watch_logs_log_group = {
-  log_group_arn : arn option;
-      [@ocaml.doc
-        "The ARN of the the CloudWatch log group to which you want your logs emitted to. The ARN \
-         must end with [:*] \n"]
-}
-[@@ocaml.doc "\n"]
-
-type nonrec log_destination = {
-  cloud_watch_logs_log_group : cloud_watch_logs_log_group option;
-      [@ocaml.doc
-        "An object describing a CloudWatch log group. For more information, see \
-         {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html}AWS::Logs::LogGroup} \
-         in the CloudFormation User Guide.\n"]
-}
-[@@ocaml.doc "\n"]
-
-type nonrec log_destination_list = log_destination list [@@ocaml.doc ""]
-
-type nonrec logging_configuration = {
-  destinations : log_destination_list option;
-      [@ocaml.doc
-        "An array of objects that describes where your execution history events will be logged. \
-         Limited to size 1. Required, if your log level is not set to [OFF].\n"]
-  include_execution_data : include_execution_data option;
-      [@ocaml.doc
-        "Determines whether execution data is included in your log. When set to [false], data is \
-         excluded.\n"]
-  level : log_level option;
-      [@ocaml.doc "Defines which category of execution history events are logged.\n"]
-}
-[@@ocaml.doc "The [LoggingConfiguration] data type is used to set CloudWatch Logs options.\n"]
-
-type nonrec enabled = bool [@@ocaml.doc ""]
-
-type nonrec tracing_configuration = {
-  enabled : enabled option; [@ocaml.doc "When set to [true], X-Ray tracing is enabled.\n"]
-}
-[@@ocaml.doc
-  "Selects whether or not the state machine's X-Ray tracing is enabled. Default is [false] \n"]
-
-type nonrec publish = bool [@@ocaml.doc ""]
-
-type nonrec kms_key_id = string [@@ocaml.doc ""]
-
-type nonrec kms_data_key_reuse_period_seconds = int [@@ocaml.doc ""]
-
-type nonrec encryption_type =
-  | CUSTOMER_MANAGED_KMS_KEY [@ocaml.doc ""]
-  | AWS_OWNED_KEY [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec encryption_configuration = {
-  type_ : encryption_type; [@ocaml.doc "Encryption type\n"]
-  kms_data_key_reuse_period_seconds : kms_data_key_reuse_period_seconds option;
-      [@ocaml.doc
-        "Maximum duration that Step Functions will reuse data keys. When the period expires, Step \
-         Functions will call [GenerateDataKey]. Only applies to customer managed keys.\n"]
-  kms_key_id : kms_key_id option;
-      [@ocaml.doc
-        "An alias, alias ARN, key ID, or key ARN of a symmetric encryption KMS key to encrypt \
-         data. To specify a KMS key in a different Amazon Web Services account, you must use the \
-         key ARN or alias ARN.\n"]
-}
-[@@ocaml.doc
-  "Settings to configure server-side encryption. \n\n\
-  \  For additional control over security, you can encrypt your data using a {b customer-managed \
-   key} for Step Functions state machines and activities. You can configure a symmetric KMS key \
-   and data key reuse period when creating or updating a {b State Machine}, and when creating an \
-   {b Activity}. The execution history and state machine definition will be encrypted with the key \
-   applied to the State Machine. Activity inputs will be encrypted with the key applied to the \
-   Activity. \n\
-  \ \n\
-  \    Step Functions automatically enables encryption at rest using Amazon Web Services owned \
-   keys at no charge. However, KMS charges apply when using a customer managed key. For more \
-   information about pricing, see {{:https://aws.amazon.com/kms/pricing/}Key Management Service \
-   pricing}.\n\
-  \   \n\
-  \     For more information on KMS, see \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/overview.html}What is Key Management \
-   Service?} \n\
-  \     "]
-
-type nonrec update_state_machine_input = {
-  encryption_configuration : encryption_configuration option;
-      [@ocaml.doc "Settings to configure server-side encryption. \n"]
-  version_description : version_description option;
-      [@ocaml.doc
-        "An optional description of the state machine version to publish.\n\n\
-        \ You can only specify the [versionDescription] parameter if you've set [publish] to [true].\n\
-        \ "]
-  publish : publish option;
-      [@ocaml.doc
-        "Specifies whether the state machine version is published. The default is [false]. To \
-         publish a version after updating the state machine, set [publish] to [true].\n"]
-  tracing_configuration : tracing_configuration option;
-      [@ocaml.doc "Selects whether X-Ray tracing is enabled.\n"]
-  logging_configuration : logging_configuration option;
-      [@ocaml.doc "Use the [LoggingConfiguration] data type to set CloudWatch Logs options.\n"]
-  role_arn : arn option;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the IAM role of the state machine.\n"]
-  definition : definition option;
-      [@ocaml.doc
-        "The Amazon States Language definition of the state machine. See \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
-         States Language}.\n"]
-  state_machine_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec update_state_machine_alias_output = {
-  update_date : timestamp; [@ocaml.doc "The date and time the state machine alias was updated.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec alias_description = string [@@ocaml.doc ""]
-
-type nonrec routing_configuration_list_item = {
-  weight : version_weight;
-      [@ocaml.doc
-        "The percentage of traffic you want to route to a state machine version. The sum of the \
-         weights in the routing configuration must be equal to 100.\n"]
-  state_machine_version_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) that identifies one or two state machine versions defined \
-         in the routing configuration.\n\n\
-        \ If you specify the ARN of a second version, it must belong to the same state machine as \
-         the first version.\n\
-        \ "]
-}
-[@@ocaml.doc
-  "Contains details about the routing configuration of a state machine alias. In a routing \
-   configuration, you define an array of objects that specify up to two state machine versions. \
-   You also specify the percentage of traffic to be routed to each version.\n"]
-
-type nonrec routing_configuration_list = routing_configuration_list_item list [@@ocaml.doc ""]
-
-type nonrec update_state_machine_alias_input = {
-  routing_configuration : routing_configuration_list option;
-      [@ocaml.doc
-        "The routing configuration of the state machine alias.\n\n\
-        \ An array of [RoutingConfig] objects that specifies up to two state machine versions that \
-         the alias starts executions for.\n\
-        \ "]
-  description : alias_description option; [@ocaml.doc "A description of the state machine alias.\n"]
-  state_machine_alias_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine alias.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec state_machine_deleting = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc "The specified state machine is being deleted.\n"]
 
+type nonrec arn = string [@@ocaml.doc ""]
+
 type nonrec resource_not_found = {
-  resource_name : arn option; [@ocaml.doc ""]
   message : error_message option; [@ocaml.doc ""]
+  resource_name : arn option; [@ocaml.doc ""]
 }
 [@@ocaml.doc "Could not find the referenced resource.\n"]
 
@@ -383,6 +190,50 @@ type nonrec conflict_exception = { message : error_message option [@ocaml.doc ""
    [UpdateStateMachine] with the [publish] parameter set to [true].\n\n\
   \ HTTP Status Code: 409\n\
   \ "]
+
+type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec update_state_machine_alias_output = {
+  update_date : timestamp; [@ocaml.doc "The date and time the state machine alias was updated.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec version_weight = int [@@ocaml.doc ""]
+
+type nonrec routing_configuration_list_item = {
+  state_machine_version_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) that identifies one or two state machine versions defined \
+         in the routing configuration.\n\n\
+        \ If you specify the ARN of a second version, it must belong to the same state machine as \
+         the first version.\n\
+        \ "]
+  weight : version_weight;
+      [@ocaml.doc
+        "The percentage of traffic you want to route to a state machine version. The sum of the \
+         weights in the routing configuration must be equal to 100.\n"]
+}
+[@@ocaml.doc
+  "Contains details about the routing configuration of a state machine alias. In a routing \
+   configuration, you define an array of objects that specify up to two state machine versions. \
+   You also specify the percentage of traffic to be routed to each version.\n"]
+
+type nonrec routing_configuration_list = routing_configuration_list_item list [@@ocaml.doc ""]
+
+type nonrec alias_description = string [@@ocaml.doc ""]
+
+type nonrec update_state_machine_alias_input = {
+  state_machine_alias_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine alias.\n"]
+  description : alias_description option; [@ocaml.doc "A description of the state machine alias.\n"]
+  routing_configuration : routing_configuration_list option;
+      [@ocaml.doc
+        "The routing configuration of the state machine alias.\n\n\
+        \ An array of [RoutingConfig] objects that specifies up to two state machine versions that \
+         the alias starts executions for.\n\
+        \ "]
+}
+[@@ocaml.doc ""]
 
 type nonrec state_machine_does_not_exist = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc "The specified state machine does not exist.\n"]
@@ -421,26 +272,161 @@ type nonrec invalid_encryption_configuration = { message : error_message option 
 type nonrec invalid_definition = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc "The provided Amazon States Language definition is not valid.\n"]
 
+type nonrec revision_id = string [@@ocaml.doc ""]
+
+type nonrec update_state_machine_output = {
+  update_date : timestamp; [@ocaml.doc "The date and time the state machine was updated.\n"]
+  revision_id : revision_id option;
+      [@ocaml.doc "The revision identifier for the updated state machine.\n"]
+  state_machine_version_arn : arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the published state machine version.\n\n\
+        \ If the [publish] parameter isn't set to [true], this field returns null.\n\
+        \ "]
+}
+[@@ocaml.doc ""]
+
+type nonrec encryption_type =
+  | AWS_OWNED_KEY [@ocaml.doc ""]
+  | CUSTOMER_MANAGED_KMS_KEY [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec kms_data_key_reuse_period_seconds = int [@@ocaml.doc ""]
+
+type nonrec kms_key_id = string [@@ocaml.doc ""]
+
+type nonrec encryption_configuration = {
+  kms_key_id : kms_key_id option;
+      [@ocaml.doc
+        "An alias, alias ARN, key ID, or key ARN of a symmetric encryption KMS key to encrypt \
+         data. To specify a KMS key in a different Amazon Web Services account, you must use the \
+         key ARN or alias ARN.\n"]
+  kms_data_key_reuse_period_seconds : kms_data_key_reuse_period_seconds option;
+      [@ocaml.doc
+        "Maximum duration that Step Functions will reuse data keys. When the period expires, Step \
+         Functions will call [GenerateDataKey]. Only applies to customer managed keys.\n"]
+  type_ : encryption_type; [@ocaml.doc "Encryption type\n"]
+}
+[@@ocaml.doc
+  "Settings to configure server-side encryption. \n\n\
+  \  For additional control over security, you can encrypt your data using a {b customer-managed \
+   key} for Step Functions state machines and activities. You can configure a symmetric KMS key \
+   and data key reuse period when creating or updating a {b State Machine}, and when creating an \
+   {b Activity}. The execution history and state machine definition will be encrypted with the key \
+   applied to the State Machine. Activity inputs will be encrypted with the key applied to the \
+   Activity. \n\
+  \ \n\
+  \    Step Functions automatically enables encryption at rest using Amazon Web Services owned \
+   keys at no charge. However, KMS charges apply when using a customer managed key. For more \
+   information about pricing, see {{:https://aws.amazon.com/kms/pricing/}Key Management Service \
+   pricing}.\n\
+  \   \n\
+  \     For more information on KMS, see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/overview.html}What is Key Management \
+   Service?} \n\
+  \     "]
+
+type nonrec version_description = string [@@ocaml.doc ""]
+
+type nonrec publish = bool [@@ocaml.doc ""]
+
+type nonrec enabled = bool [@@ocaml.doc ""]
+
+type nonrec tracing_configuration = {
+  enabled : enabled option; [@ocaml.doc "When set to [true], X-Ray tracing is enabled.\n"]
+}
+[@@ocaml.doc
+  "Selects whether or not the state machine's X-Ray tracing is enabled. Default is [false] \n"]
+
+type nonrec cloud_watch_logs_log_group = {
+  log_group_arn : arn option;
+      [@ocaml.doc
+        "The ARN of the the CloudWatch log group to which you want your logs emitted to. The ARN \
+         must end with [:*] \n"]
+}
+[@@ocaml.doc "\n"]
+
+type nonrec log_destination = {
+  cloud_watch_logs_log_group : cloud_watch_logs_log_group option;
+      [@ocaml.doc
+        "An object describing a CloudWatch log group. For more information, see \
+         {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html}AWS::Logs::LogGroup} \
+         in the CloudFormation User Guide.\n"]
+}
+[@@ocaml.doc "\n"]
+
+type nonrec log_destination_list = log_destination list [@@ocaml.doc ""]
+
+type nonrec include_execution_data = bool [@@ocaml.doc ""]
+
+type nonrec log_level =
+  | ALL [@ocaml.doc ""]
+  | ERROR [@ocaml.doc ""]
+  | FATAL [@ocaml.doc ""]
+  | OFF [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec logging_configuration = {
+  level : log_level option;
+      [@ocaml.doc "Defines which category of execution history events are logged.\n"]
+  include_execution_data : include_execution_data option;
+      [@ocaml.doc
+        "Determines whether execution data is included in your log. When set to [false], data is \
+         excluded.\n"]
+  destinations : log_destination_list option;
+      [@ocaml.doc
+        "An array of objects that describes where your execution history events will be logged. \
+         Limited to size 1. Required, if your log level is not set to [OFF].\n"]
+}
+[@@ocaml.doc "The [LoggingConfiguration] data type is used to set CloudWatch Logs options.\n"]
+
+type nonrec update_state_machine_input = {
+  state_machine_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine.\n"]
+  definition : definition option;
+      [@ocaml.doc
+        "The Amazon States Language definition of the state machine. See \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
+         States Language}.\n"]
+  role_arn : arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the IAM role of the state machine.\n"]
+  logging_configuration : logging_configuration option;
+      [@ocaml.doc "Use the [LoggingConfiguration] data type to set CloudWatch Logs options.\n"]
+  tracing_configuration : tracing_configuration option;
+      [@ocaml.doc "Selects whether X-Ray tracing is enabled.\n"]
+  publish : publish option;
+      [@ocaml.doc
+        "Specifies whether the state machine version is published. The default is [false]. To \
+         publish a version after updating the state machine, set [publish] to [true].\n"]
+  version_description : version_description option;
+      [@ocaml.doc
+        "An optional description of the state machine version to publish.\n\n\
+        \ You can only specify the [versionDescription] parameter if you've set [publish] to [true].\n\
+        \ "]
+  encryption_configuration : encryption_configuration option;
+      [@ocaml.doc "Settings to configure server-side encryption. \n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec update_map_run_output = unit [@@ocaml.doc ""]
-
-type nonrec long_arn = string [@@ocaml.doc ""]
-
-type nonrec max_concurrency = int [@@ocaml.doc ""]
-
-type nonrec tolerated_failure_percentage = float [@@ocaml.doc ""]
 
 type nonrec tolerated_failure_count = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
+type nonrec tolerated_failure_percentage = float [@@ocaml.doc ""]
+
+type nonrec max_concurrency = int [@@ocaml.doc ""]
+
+type nonrec long_arn = string [@@ocaml.doc ""]
+
 type nonrec update_map_run_input = {
-  tolerated_failure_count : tolerated_failure_count option;
-      [@ocaml.doc "The maximum number of failed items before the Map Run fails.\n"]
-  tolerated_failure_percentage : tolerated_failure_percentage option;
-      [@ocaml.doc "The maximum percentage of failed items before the Map Run fails.\n"]
+  map_run_arn : long_arn; [@ocaml.doc "The Amazon Resource Name (ARN) of a Map Run.\n"]
   max_concurrency : max_concurrency option;
       [@ocaml.doc
         "The maximum number of child workflow executions that can be specified to run in parallel \
          for the Map Run at the same time.\n"]
-  map_run_arn : long_arn; [@ocaml.doc "The Amazon Resource Name (ARN) of a Map Run.\n"]
+  tolerated_failure_percentage : tolerated_failure_percentage option;
+      [@ocaml.doc "The maximum percentage of failed items before the Map Run fails.\n"]
+  tolerated_failure_count : tolerated_failure_count option;
+      [@ocaml.doc "The maximum number of failed items before the Map Run fails.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -451,154 +437,91 @@ type nonrec tag_key = string [@@ocaml.doc ""]
 type nonrec tag_key_list = tag_key list [@@ocaml.doc ""]
 
 type nonrec untag_resource_input = {
-  tag_keys : tag_key_list; [@ocaml.doc "The list of tags to remove from the resource.\n"]
   resource_arn : arn;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) for the Step Functions state machine or activity.\n"]
+  tag_keys : tag_key_list; [@ocaml.doc "The list of tags to remove from the resource.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec unsigned_long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
+type nonrec invalid_execution_input = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The provided JSON input data is not valid.\n"]
 
-type nonrec unsigned_integer = int [@@ocaml.doc ""]
+type nonrec test_execution_status =
+  | SUCCEEDED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | RETRIABLE [@ocaml.doc ""]
+  | CAUGHT_ERROR [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
-type nonrec ur_l = string [@@ocaml.doc ""]
+type nonrec state_name = string [@@ocaml.doc ""]
 
-type nonrec trace_header = string [@@ocaml.doc ""]
+type nonrec inspection_max_concurrency = int [@@ocaml.doc ""]
 
-type nonrec too_many_tags = {
-  resource_name : arn option; [@ocaml.doc ""]
-  message : error_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "You've exceeded the number of tags allowed for a resource. See the \
-   {{:https://docs.aws.amazon.com/step-functions/latest/dg/limits.html} Limits Topic} in the Step \
-   Functions Developer Guide.\n"]
+type nonrec inspection_tolerated_failure_percentage = float [@@ocaml.doc ""]
 
-type nonrec timeout_in_seconds = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
-
-type nonrec test_state_state_name = string [@@ocaml.doc ""]
+type nonrec inspection_tolerated_failure_count = int [@@ocaml.doc ""]
 
 type nonrec sensitive_data = string [@@ocaml.doc ""]
 
-type nonrec sensitive_error = string [@@ocaml.doc ""]
+type nonrec retry_backoff_interval_seconds = int [@@ocaml.doc ""]
 
-type nonrec sensitive_cause = string [@@ocaml.doc ""]
+type nonrec exception_handler_index = int [@@ocaml.doc ""]
 
-type nonrec http_protocol = string [@@ocaml.doc ""]
-
-type nonrec http_method = string [@@ocaml.doc ""]
-
-type nonrec http_headers = string [@@ocaml.doc ""]
+type nonrec inspection_error_details = {
+  catch_index : exception_handler_index option;
+      [@ocaml.doc "The array index of the Catch which handled the exception.\n"]
+  retry_index : exception_handler_index option;
+      [@ocaml.doc "The array index of the Retry which handled the exception.\n"]
+  retry_backoff_interval_seconds : retry_backoff_interval_seconds option;
+      [@ocaml.doc
+        "The duration in seconds of the backoff for a retry on a failed state invocation.\n"]
+}
+[@@ocaml.doc "An object containing data about a handled exception in the tested state.\n"]
 
 type nonrec http_body = string [@@ocaml.doc ""]
 
-type nonrec inspection_data_request = {
-  body : http_body option; [@ocaml.doc "The request body for the HTTP request.\n"]
-  headers : http_headers option;
-      [@ocaml.doc "The request headers associated with the HTTP request.\n"]
-  url : ur_l option; [@ocaml.doc "The API endpoint used for the HTTP request.\n"]
-  method_ : http_method option; [@ocaml.doc "The HTTP method used for the HTTP request.\n"]
-  protocol : http_protocol option; [@ocaml.doc "The protocol used to make the HTTP request.\n"]
-}
-[@@ocaml.doc
-  "Contains additional details about the state's execution, including its input and output data \
-   processing flow, and HTTP request information.\n"]
-
-type nonrec http_status_code = string [@@ocaml.doc ""]
+type nonrec http_headers = string [@@ocaml.doc ""]
 
 type nonrec http_status_message = string [@@ocaml.doc ""]
 
+type nonrec http_status_code = string [@@ocaml.doc ""]
+
+type nonrec http_protocol = string [@@ocaml.doc ""]
+
 type nonrec inspection_data_response = {
-  body : http_body option; [@ocaml.doc "The HTTP response returned.\n"]
-  headers : http_headers option;
-      [@ocaml.doc "The response headers associated with the HTTP response.\n"]
-  status_message : http_status_message option;
-      [@ocaml.doc "The message associated with the HTTP status code.\n"]
+  protocol : http_protocol option; [@ocaml.doc "The protocol used to return the HTTP response.\n"]
   status_code : http_status_code option;
       [@ocaml.doc "The HTTP response status code for the HTTP response.\n"]
-  protocol : http_protocol option; [@ocaml.doc "The protocol used to return the HTTP response.\n"]
+  status_message : http_status_message option;
+      [@ocaml.doc "The message associated with the HTTP status code.\n"]
+  headers : http_headers option;
+      [@ocaml.doc "The response headers associated with the HTTP response.\n"]
+  body : http_body option; [@ocaml.doc "The HTTP response returned.\n"]
 }
 [@@ocaml.doc
   "Contains additional details about the state's execution, including its input and output data \
    processing flow, and HTTP response information. The [inspectionLevel] request parameter \
    specifies which details are returned.\n"]
 
-type nonrec exception_handler_index = int [@@ocaml.doc ""]
+type nonrec ur_l = string [@@ocaml.doc ""]
 
-type nonrec retry_backoff_interval_seconds = int [@@ocaml.doc ""]
+type nonrec http_method = string [@@ocaml.doc ""]
 
-type nonrec inspection_error_details = {
-  retry_backoff_interval_seconds : retry_backoff_interval_seconds option;
-      [@ocaml.doc
-        "The duration in seconds of the backoff for a retry on a failed state invocation.\n"]
-  retry_index : exception_handler_index option;
-      [@ocaml.doc "The array index of the Retry which handled the exception.\n"]
-  catch_index : exception_handler_index option;
-      [@ocaml.doc "The array index of the Catch which handled the exception.\n"]
+type nonrec inspection_data_request = {
+  protocol : http_protocol option; [@ocaml.doc "The protocol used to make the HTTP request.\n"]
+  method_ : http_method option; [@ocaml.doc "The HTTP method used for the HTTP request.\n"]
+  url : ur_l option; [@ocaml.doc "The API endpoint used for the HTTP request.\n"]
+  headers : http_headers option;
+      [@ocaml.doc "The request headers associated with the HTTP request.\n"]
+  body : http_body option; [@ocaml.doc "The request body for the HTTP request.\n"]
 }
-[@@ocaml.doc "An object containing data about a handled exception in the tested state.\n"]
-
-type nonrec inspection_tolerated_failure_count = int [@@ocaml.doc ""]
-
-type nonrec inspection_tolerated_failure_percentage = float [@@ocaml.doc ""]
-
-type nonrec inspection_max_concurrency = int [@@ocaml.doc ""]
+[@@ocaml.doc
+  "Contains additional details about the state's execution, including its input and output data \
+   processing flow, and HTTP request information.\n"]
 
 type nonrec inspection_data = {
-  max_concurrency : inspection_max_concurrency option;
-      [@ocaml.doc "The max concurrency of the Map state.\n"]
-  tolerated_failure_percentage : inspection_tolerated_failure_percentage option;
-      [@ocaml.doc
-        "The tolerated failure threshold for a Map state as defined in percentage of Map state \
-         iterations.\n"]
-  tolerated_failure_count : inspection_tolerated_failure_count option;
-      [@ocaml.doc
-        "The tolerated failure threshold for a Map state as defined in number of Map state \
-         iterations.\n"]
-  after_items_pointer : sensitive_data option;
-      [@ocaml.doc "The effective input after the ItemsPointer filter is applied in a Map state.\n"]
-  after_item_batcher : sensitive_data option;
-      [@ocaml.doc "The effective input after the ItemBatcher filter is applied in a Map state.\n"]
-  after_item_selector : sensitive_data option;
-      [@ocaml.doc
-        "An array containing the inputs for each Map iteration, transformed by the ItemSelector \
-         specified in a Map state.\n"]
-  after_items_path : sensitive_data option;
-      [@ocaml.doc
-        "The effective input after the ItemsPath filter is applied. Not populated when the \
-         QueryLanguage is JSONata.\n"]
-  error_details : inspection_error_details option;
-      [@ocaml.doc "An object containing data about a handled exception in the tested state.\n"]
-  variables : sensitive_data option;
-      [@ocaml.doc
-        "JSON string that contains the set of workflow variables after execution of the state. The \
-         set will include variables assigned in the state and variables set up as test state input.\n"]
-  response : inspection_data_response option;
-      [@ocaml.doc "The raw HTTP response that is returned when you test an HTTP Task.\n"]
-  request : inspection_data_request option;
-      [@ocaml.doc "The raw HTTP request that is sent when you test an HTTP Task.\n"]
-  after_result_path : sensitive_data option;
-      [@ocaml.doc
-        "The effective result combined with the raw state input after Step Functions applies the \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultpath.html}ResultPath} \
-         filter. Not populated when QueryLanguage is JSONata.\n"]
-  after_result_selector : sensitive_data option;
-      [@ocaml.doc
-        "The effective result after Step Functions applies the \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector}ResultSelector} \
-         filter. Not populated when QueryLanguage is JSONata.\n"]
-  result_ : sensitive_data option; [@ocaml.doc "The state's raw result.\n"]
-  after_parameters : sensitive_data option;
-      [@ocaml.doc
-        "The effective input after Step Functions applies the \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-parameters}Parameters} \
-         filter. Not populated when QueryLanguage is JSONata.\n"]
-  after_input_path : sensitive_data option;
-      [@ocaml.doc
-        "The input after Step Functions applies the \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-inputpath}InputPath} \
-         filter. Not populated when QueryLanguage is JSONata.\n"]
+  input : sensitive_data option; [@ocaml.doc "The raw state input.\n"]
   after_arguments : sensitive_data option;
       [@ocaml.doc
         "The input after Step Functions applies an Arguments filter. This event will only be \
@@ -606,68 +529,139 @@ type nonrec inspection_data = {
          For more info, see \
          {{:https://docs.aws.amazon.com/step-functions/latest/dg/data-transform.html}Transforming \
          data with Step Functions}.\n"]
-  input : sensitive_data option; [@ocaml.doc "The raw state input.\n"]
+  after_input_path : sensitive_data option;
+      [@ocaml.doc
+        "The input after Step Functions applies the \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-inputpath}InputPath} \
+         filter. Not populated when QueryLanguage is JSONata.\n"]
+  after_parameters : sensitive_data option;
+      [@ocaml.doc
+        "The effective input after Step Functions applies the \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-parameters}Parameters} \
+         filter. Not populated when QueryLanguage is JSONata.\n"]
+  result_ : sensitive_data option; [@ocaml.doc "The state's raw result.\n"]
+  after_result_selector : sensitive_data option;
+      [@ocaml.doc
+        "The effective result after Step Functions applies the \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector}ResultSelector} \
+         filter. Not populated when QueryLanguage is JSONata.\n"]
+  after_result_path : sensitive_data option;
+      [@ocaml.doc
+        "The effective result combined with the raw state input after Step Functions applies the \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultpath.html}ResultPath} \
+         filter. Not populated when QueryLanguage is JSONata.\n"]
+  request : inspection_data_request option;
+      [@ocaml.doc "The raw HTTP request that is sent when you test an HTTP Task.\n"]
+  response : inspection_data_response option;
+      [@ocaml.doc "The raw HTTP response that is returned when you test an HTTP Task.\n"]
+  variables : sensitive_data option;
+      [@ocaml.doc
+        "JSON string that contains the set of workflow variables after execution of the state. The \
+         set will include variables assigned in the state and variables set up as test state input.\n"]
+  error_details : inspection_error_details option;
+      [@ocaml.doc "An object containing data about a handled exception in the tested state.\n"]
+  after_items_path : sensitive_data option;
+      [@ocaml.doc
+        "The effective input after the ItemsPath filter is applied. Not populated when the \
+         QueryLanguage is JSONata.\n"]
+  after_item_selector : sensitive_data option;
+      [@ocaml.doc
+        "An array containing the inputs for each Map iteration, transformed by the ItemSelector \
+         specified in a Map state.\n"]
+  after_item_batcher : sensitive_data option;
+      [@ocaml.doc "The effective input after the ItemBatcher filter is applied in a Map state.\n"]
+  after_items_pointer : sensitive_data option;
+      [@ocaml.doc "The effective input after the ItemsPointer filter is applied in a Map state.\n"]
+  tolerated_failure_count : inspection_tolerated_failure_count option;
+      [@ocaml.doc
+        "The tolerated failure threshold for a Map state as defined in number of Map state \
+         iterations.\n"]
+  tolerated_failure_percentage : inspection_tolerated_failure_percentage option;
+      [@ocaml.doc
+        "The tolerated failure threshold for a Map state as defined in percentage of Map state \
+         iterations.\n"]
+  max_concurrency : inspection_max_concurrency option;
+      [@ocaml.doc "The max concurrency of the Map state.\n"]
 }
 [@@ocaml.doc
   "Contains additional details about the state's execution, including its input and output data \
    processing flow, and HTTP request and response information.\n"]
 
-type nonrec test_execution_status =
-  | CAUGHT_ERROR [@ocaml.doc ""]
-  | RETRIABLE [@ocaml.doc ""]
-  | FAILED [@ocaml.doc ""]
-  | SUCCEEDED [@ocaml.doc ""]
-[@@ocaml.doc ""]
+type nonrec sensitive_cause = string [@@ocaml.doc ""]
+
+type nonrec sensitive_error = string [@@ocaml.doc ""]
 
 type nonrec test_state_output = {
-  status : test_execution_status option; [@ocaml.doc "The execution status of the state.\n"]
-  next_state : state_name option;
+  output : sensitive_data option;
       [@ocaml.doc
-        "The name of the next state to transition to. If you haven't defined a next state in your \
-         definition or if the execution of the state fails, this field doesn't contain a value.\n"]
+        "The JSON output data of the state. Length constraints apply to the payload size, and are \
+         expressed as bytes in UTF-8 encoding.\n"]
+  error : sensitive_error option;
+      [@ocaml.doc "The error returned when the execution of a state fails.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc
+        "A detailed explanation of the cause for the error when the execution of a state fails.\n"]
   inspection_data : inspection_data option;
       [@ocaml.doc
         "Returns additional details about the state's execution, including its input and output \
          data processing flow, and HTTP request and response information. The [inspectionLevel] \
          request parameter specifies which details are returned.\n"]
-  cause : sensitive_cause option;
+  next_state : state_name option;
       [@ocaml.doc
-        "A detailed explanation of the cause for the error when the execution of a state fails.\n"]
-  error : sensitive_error option;
-      [@ocaml.doc "The error returned when the execution of a state fails.\n"]
-  output : sensitive_data option;
-      [@ocaml.doc
-        "The JSON output data of the state. Length constraints apply to the payload size, and are \
-         expressed as bytes in UTF-8 encoding.\n"]
+        "The name of the next state to transition to. If you haven't defined a next state in your \
+         definition or if the execution of the state fails, this field doesn't contain a value.\n"]
+  status : test_execution_status option; [@ocaml.doc "The execution status of the state.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec inspection_level =
-  | TRACE [@ocaml.doc ""]
-  | DEBUG [@ocaml.doc ""]
-  | INFO [@ocaml.doc ""]
+type nonrec map_iteration_failure_count = int [@@ocaml.doc ""]
+
+type nonrec test_state_state_name = string [@@ocaml.doc ""]
+
+type nonrec retrier_retry_count = int [@@ocaml.doc ""]
+
+type nonrec test_state_configuration = {
+  retrier_retry_count : retrier_retry_count option;
+      [@ocaml.doc
+        "The number of retry attempts that have occurred for the state's Retry that applies to the \
+         mocked error.\n"]
+  error_caused_by_state : test_state_state_name option;
+      [@ocaml.doc
+        "The name of the state from which an error originates when an error is mocked for a Map or \
+         Parallel state.\n"]
+  map_iteration_failure_count : map_iteration_failure_count option;
+      [@ocaml.doc
+        "The number of Map state iterations that failed during the Map state invocation.\n"]
+  map_item_reader_data : sensitive_data option;
+      [@ocaml.doc
+        "The data read by ItemReader in Distributed Map states as found in its original source.\n"]
+}
+[@@ocaml.doc "Contains configurations for the tested state.\n"]
+
+type nonrec mock_response_validation_mode =
+  | STRICT [@ocaml.doc ""]
+  | PRESENT [@ocaml.doc ""]
+  | NONE [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec reveal_secrets = bool [@@ocaml.doc ""]
-
 type nonrec mock_error_output = {
-  cause : sensitive_cause option;
-      [@ocaml.doc
-        "A string containing the cause of the exception thrown when executing the state's logic.\n"]
   error : sensitive_error option;
       [@ocaml.doc
         "A string denoting the error code of the exception thrown when invoking the tested state. \
          This field is required if [mock.errorOutput] is specified.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc
+        "A string containing the cause of the exception thrown when executing the state's logic.\n"]
 }
 [@@ocaml.doc "A JSON object that contains a mocked error.\n"]
 
-type nonrec mock_response_validation_mode =
-  | NONE [@ocaml.doc ""]
-  | PRESENT [@ocaml.doc ""]
-  | STRICT [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
 type nonrec mock_input = {
+  result_ : sensitive_data option;
+      [@ocaml.doc "A JSON string containing the mocked result of the state invocation.\n"]
+  error_output : mock_error_output option;
+      [@ocaml.doc
+        "The mocked error output when calling TestState. When specified, the mocked response is \
+         returned as a JSON object that contains an [error] and [cause] field.\n"]
   field_validation_mode : mock_response_validation_mode option;
       [@ocaml.doc
         "Determines the level of strictness when validating mocked results against their \
@@ -686,73 +680,29 @@ type nonrec mock_input = {
         \       }\n\
         \   If no value is specified, the default value is [STRICT].\n\
         \   "]
-  error_output : mock_error_output option;
-      [@ocaml.doc
-        "The mocked error output when calling TestState. When specified, the mocked response is \
-         returned as a JSON object that contains an [error] and [cause] field.\n"]
-  result_ : sensitive_data option;
-      [@ocaml.doc "A JSON string containing the mocked result of the state invocation.\n"]
 }
 [@@ocaml.doc "A JSON object that contains a mocked [result] or [errorOutput].\n"]
 
-type nonrec retrier_retry_count = int [@@ocaml.doc ""]
+type nonrec reveal_secrets = bool [@@ocaml.doc ""]
 
-type nonrec map_iteration_failure_count = int [@@ocaml.doc ""]
-
-type nonrec test_state_configuration = {
-  map_item_reader_data : sensitive_data option;
-      [@ocaml.doc
-        "The data read by ItemReader in Distributed Map states as found in its original source.\n"]
-  map_iteration_failure_count : map_iteration_failure_count option;
-      [@ocaml.doc
-        "The number of Map state iterations that failed during the Map state invocation.\n"]
-  error_caused_by_state : test_state_state_name option;
-      [@ocaml.doc
-        "The name of the state from which an error originates when an error is mocked for a Map or \
-         Parallel state.\n"]
-  retrier_retry_count : retrier_retry_count option;
-      [@ocaml.doc
-        "The number of retry attempts that have occurred for the state's Retry that applies to the \
-         mocked error.\n"]
-}
-[@@ocaml.doc "Contains configurations for the tested state.\n"]
+type nonrec inspection_level =
+  | INFO [@ocaml.doc ""]
+  | DEBUG [@ocaml.doc ""]
+  | TRACE [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
 type nonrec test_state_input = {
-  state_configuration : test_state_configuration option;
-      [@ocaml.doc "Contains configurations for the state under test.\n"]
-  context : sensitive_data option;
+  definition : definition;
       [@ocaml.doc
-        "A JSON string representing a valid Context object for the state under test. This field \
-         may only be specified if a mock is specified in the same request.\n"]
-  mock : mock_input option;
+        "The \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
+         States Language} (ASL) definition of the state or state machine.\n"]
+  role_arn : arn option;
       [@ocaml.doc
-        "Defines a mocked result or error for the state under test.\n\n\
-        \ A mock can only be specified for Task, Map, or Parallel states. If it is specified for \
-         another state type, an exception will be thrown.\n\
-        \ "]
-  state_name : test_state_state_name option;
-      [@ocaml.doc
-        "Denotes the particular state within a state machine definition to be tested. If this \
-         field is specified, the [definition] must contain a fully-formed state machine definition.\n"]
-  variables : sensitive_data option;
-      [@ocaml.doc
-        "JSON object literal that sets variables used in the state under test. Object keys are the \
-         variable names and values are the variable values.\n"]
-  reveal_secrets : reveal_secrets option;
-      [@ocaml.doc
-        "Specifies whether or not to include secret information in the test result. For HTTP \
-         Tasks, a secret includes the data that an EventBridge connection adds to modify the HTTP \
-         request headers, query parameters, and body. Step Functions doesn't omit any information \
-         included in the state definition or the HTTP response.\n\n\
-        \ If you set [revealSecrets] to [true], you must make sure that the IAM user that calls \
-         the [TestState] API has permission for the [states:RevealSecrets] action. For an example \
-         of IAM policy that sets the [states:RevealSecrets] permission, see \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/test-state-isolation.html#test-state-permissions}IAM \
-         permissions to test a state}. Without this permission, Step Functions throws an access \
-         denied error.\n\
-        \ \n\
-        \  By default, [revealSecrets] is set to [false].\n\
-        \  "]
+        "The Amazon Resource Name (ARN) of the execution role with the required IAM permissions \
+         for the state.\n"]
+  input : sensitive_data option;
+      [@ocaml.doc "A string that contains the JSON input data for the state.\n"]
   inspection_level : inspection_level option;
       [@ocaml.doc
         "Determines the values to return when a state is tested. You can specify one of the \
@@ -774,144 +724,60 @@ type nonrec test_state_input = {
         \   Each of these levels also provide information about the status of the state execution \
          and the next state to transition to.\n\
         \   "]
-  input : sensitive_data option;
-      [@ocaml.doc "A string that contains the JSON input data for the state.\n"]
-  role_arn : arn option;
+  reveal_secrets : reveal_secrets option;
       [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the execution role with the required IAM permissions \
-         for the state.\n"]
-  definition : definition;
+        "Specifies whether or not to include secret information in the test result. For HTTP \
+         Tasks, a secret includes the data that an EventBridge connection adds to modify the HTTP \
+         request headers, query parameters, and body. Step Functions doesn't omit any information \
+         included in the state definition or the HTTP response.\n\n\
+        \ If you set [revealSecrets] to [true], you must make sure that the IAM user that calls \
+         the [TestState] API has permission for the [states:RevealSecrets] action. For an example \
+         of IAM policy that sets the [states:RevealSecrets] permission, see \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/test-state-isolation.html#test-state-permissions}IAM \
+         permissions to test a state}. Without this permission, Step Functions throws an access \
+         denied error.\n\
+        \ \n\
+        \  By default, [revealSecrets] is set to [false].\n\
+        \  "]
+  variables : sensitive_data option;
       [@ocaml.doc
-        "The \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
-         States Language} (ASL) definition of the state or state machine.\n"]
+        "JSON object literal that sets variables used in the state under test. Object keys are the \
+         variable names and values are the variable values.\n"]
+  state_name : test_state_state_name option;
+      [@ocaml.doc
+        "Denotes the particular state within a state machine definition to be tested. If this \
+         field is specified, the [definition] must contain a fully-formed state machine definition.\n"]
+  mock : mock_input option;
+      [@ocaml.doc
+        "Defines a mocked result or error for the state under test.\n\n\
+        \ A mock can only be specified for Task, Map, or Parallel states. If it is specified for \
+         another state type, an exception will be thrown.\n\
+        \ "]
+  context : sensitive_data option;
+      [@ocaml.doc
+        "A JSON string representing a valid Context object for the state under test. This field \
+         may only be specified if a mock is specified in the same request.\n"]
+  state_configuration : test_state_configuration option;
+      [@ocaml.doc "Contains configurations for the state under test.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec invalid_execution_input = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The provided JSON input data is not valid.\n"]
-
-type nonrec task_token = string [@@ocaml.doc ""]
-
-type nonrec name = string [@@ocaml.doc ""]
-
-type nonrec task_timed_out_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
-  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
+type nonrec too_many_tags = {
+  message : error_message option; [@ocaml.doc ""]
+  resource_name : arn option; [@ocaml.doc ""]
 }
-[@@ocaml.doc "Contains details about a resource timeout that occurred during an execution.\n"]
-
-type nonrec task_timed_out = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc
-  "The task token has either expired or the task associated with the token has already been closed.\n"]
-
-type nonrec history_event_execution_data_details = {
-  truncated : truncated option;
-      [@ocaml.doc
-        "Indicates whether input or output was truncated in the response. Always [false] for API \
-         calls. In CloudWatch logs, the value will be true if the data is truncated due to size \
-         limits.\n"]
-}
-[@@ocaml.doc "Provides details about input or output in an execution history event.\n"]
-
-type nonrec task_succeeded_event_details = {
-  output_details : history_event_execution_data_details option;
-      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
-  output : sensitive_data option;
-      [@ocaml.doc
-        "The full JSON response from a resource when a task has succeeded. This response becomes \
-         the output of the related task. Length constraints apply to the payload size, and are \
-         expressed as bytes in UTF-8 encoding.\n"]
-  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
-  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
-}
-[@@ocaml.doc "Contains details about the successful completion of a task state.\n"]
-
-type nonrec task_submitted_event_details = {
-  output_details : history_event_execution_data_details option;
-      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
-  output : sensitive_data option;
-      [@ocaml.doc
-        "The response from a resource when a task has started. Length constraints apply to the \
-         payload size, and are expressed as bytes in UTF-8 encoding.\n"]
-  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
-  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
-}
-[@@ocaml.doc "Contains details about a task submitted to a resource .\n"]
-
-type nonrec task_submit_failed_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
-  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
-}
-[@@ocaml.doc "Contains details about a task that failed to submit during an execution.\n"]
-
-type nonrec task_started_event_details = {
-  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
-  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
-}
-[@@ocaml.doc "Contains details about the start of a task during an execution.\n"]
-
-type nonrec task_start_failed_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
-  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
-}
-[@@ocaml.doc "Contains details about a task that failed to start during an execution.\n"]
-
-type nonrec connector_parameters = string [@@ocaml.doc ""]
-
-type nonrec task_credentials = {
-  role_arn : long_arn option;
-      [@ocaml.doc
-        "The ARN of an IAM role that Step Functions assumes for the task. The role can allow \
-         cross-account access to resources.\n"]
-}
-[@@ocaml.doc "Contains details about the credentials that Step Functions uses for a task.\n"]
-
-type nonrec task_scheduled_event_details = {
-  task_credentials : task_credentials option;
-      [@ocaml.doc "The credentials that Step Functions uses for the task.\n"]
-  heartbeat_in_seconds : timeout_in_seconds option;
-      [@ocaml.doc "The maximum allowed duration between two heartbeats for the task.\n"]
-  timeout_in_seconds : timeout_in_seconds option;
-      [@ocaml.doc "The maximum allowed duration of the task.\n"]
-  parameters : connector_parameters;
-      [@ocaml.doc
-        "The JSON data passed to the resource referenced in a task state. Length constraints apply \
-         to the payload size, and are expressed as bytes in UTF-8 encoding.\n"]
-  region : name; [@ocaml.doc "The region of the scheduled task\n"]
-  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
-  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
-}
-[@@ocaml.doc "Contains details about a task scheduled during an execution.\n"]
-
-type nonrec task_failed_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
-  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
-}
-[@@ocaml.doc "Contains details about a task failure event.\n"]
-
-type nonrec task_does_not_exist = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The activity does not exist.\n"]
-
-type nonrec tag_value = string [@@ocaml.doc ""]
+  "You've exceeded the number of tags allowed for a resource. See the \
+   {{:https://docs.aws.amazon.com/step-functions/latest/dg/limits.html} Limits Topic} in the Step \
+   Functions Developer Guide.\n"]
 
 type nonrec tag_resource_output = unit [@@ocaml.doc ""]
 
+type nonrec tag_value = string [@@ocaml.doc ""]
+
 type nonrec tag = {
-  value : tag_value option; [@ocaml.doc "The value of a tag.\n"]
   key : tag_key option; [@ocaml.doc "The key of a tag.\n"]
+  value : tag_value option; [@ocaml.doc "The value of a tag.\n"]
 }
 [@@ocaml.doc
   "Tags are key-value pairs that can be associated with Step Functions state machines and \
@@ -929,23 +795,37 @@ type nonrec tag = {
 type nonrec tag_list = tag list [@@ocaml.doc ""]
 
 type nonrec tag_resource_input = {
+  resource_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) for the Step Functions state machine or activity.\n"]
   tags : tag_list;
       [@ocaml.doc
         "The list of tags to add to a resource.\n\n\
         \ Tags may only contain Unicode letters, digits, white space, or these symbols: [_ . : / = \
          + - @].\n\
         \ "]
-  resource_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) for the Step Functions state machine or activity.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec sync_execution_status =
-  | TIMED_OUT [@ocaml.doc ""]
-  | FAILED [@ocaml.doc ""]
-  | SUCCEEDED [@ocaml.doc ""]
+type nonrec kms_key_state =
+  | DISABLED [@ocaml.doc ""]
+  | PENDING_DELETION [@ocaml.doc ""]
+  | PENDING_IMPORT [@ocaml.doc ""]
+  | UNAVAILABLE [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""]
 [@@ocaml.doc ""]
+
+type nonrec kms_invalid_state_exception = {
+  kms_key_state : kms_key_state option;
+      [@ocaml.doc
+        "Current status of the KMS; key. For example: [DISABLED], [PENDING_DELETION], \
+         [PENDING_IMPORT], [UNAVAILABLE], [CREATING].\n"]
+  message : error_message option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The KMS key is not in valid state, for example: Disabled or Deleted.\n"]
+
+type nonrec execution_does_not_exist = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The specified execution does not exist.\n"]
 
 type nonrec stop_execution_output = {
   stop_date : timestamp; [@ocaml.doc "The date the execution is stopped.\n"]
@@ -953,179 +833,34 @@ type nonrec stop_execution_output = {
 [@@ocaml.doc ""]
 
 type nonrec stop_execution_input = {
+  execution_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the execution to stop.\n"]
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
   cause : sensitive_cause option;
       [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-  execution_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the execution to stop.\n"]
 }
 [@@ocaml.doc ""]
-
-type nonrec kms_key_state =
-  | CREATING [@ocaml.doc ""]
-  | UNAVAILABLE [@ocaml.doc ""]
-  | PENDING_IMPORT [@ocaml.doc ""]
-  | PENDING_DELETION [@ocaml.doc ""]
-  | DISABLED [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec kms_invalid_state_exception = {
-  message : error_message option; [@ocaml.doc ""]
-  kms_key_state : kms_key_state option;
-      [@ocaml.doc
-        "Current status of the KMS; key. For example: [DISABLED], [PENDING_DELETION], \
-         [PENDING_IMPORT], [UNAVAILABLE], [CREATING].\n"]
-}
-[@@ocaml.doc "The KMS key is not in valid state, for example: Disabled or Deleted.\n"]
-
-type nonrec execution_does_not_exist = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The specified execution does not exist.\n"]
-
-type nonrec state_machine_version_list_item = {
-  creation_date : timestamp; [@ocaml.doc "The creation date of a state machine version.\n"]
-  state_machine_version_arn : long_arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) that identifies a state machine version. The version ARN \
-         is a combination of state machine ARN and the version number separated by a colon (:). \
-         For example, [stateMachineARN:1].\n"]
-}
-[@@ocaml.doc "Contains details about a specific state machine version.\n"]
-
-type nonrec state_machine_version_list = state_machine_version_list_item list [@@ocaml.doc ""]
 
 type nonrec state_machine_type_not_supported = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc "State machine type is not supported.\n"]
 
-type nonrec state_machine_status = DELETING [@ocaml.doc ""] | ACTIVE [@ocaml.doc ""]
-[@@ocaml.doc ""]
+type nonrec invalid_name = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The provided name is not valid.\n"]
 
-type nonrec state_machine_list_item = {
-  creation_date : timestamp; [@ocaml.doc "The date the state machine is created.\n"]
-  type_ : state_machine_type; [@ocaml.doc "\n"]
-  name : name;
-      [@ocaml.doc
-        "The name of the state machine.\n\n\
-        \ A name must {i not} contain:\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  white space\n\
-        \            \n\
-        \             }\n\
-        \        {-  brackets [< > { } \\[ \\]] \n\
-        \            \n\
-        \             }\n\
-        \        {-  wildcard characters [? *] \n\
-        \            \n\
-        \             }\n\
-        \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
-        \            \n\
-        \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
-        \            \n\
-        \             }\n\
-        \        {-  surrogates ([U+D800-DFFF])\n\
-        \            \n\
-        \             }\n\
-        \        {-  invalid characters ([ U+10FFFF])\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
-         and _.\n\
-        \   "]
-  state_machine_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the state machine.\n"]
+type nonrec billed_duration = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
+
+type nonrec billed_memory_used = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
+
+type nonrec billing_details = {
+  billed_memory_used_in_m_b : billed_memory_used option;
+      [@ocaml.doc "Billed memory consumption of your workflow, in MB.\n"]
+  billed_duration_in_milliseconds : billed_duration option;
+      [@ocaml.doc "Billed duration of your workflow, in milliseconds.\n"]
 }
-[@@ocaml.doc "Contains details about the state machine.\n"]
+[@@ocaml.doc "An object that describes workflow billing details.\n"]
 
-type nonrec state_machine_list = state_machine_list_item list [@@ocaml.doc ""]
+type nonrec trace_header = string [@@ocaml.doc ""]
 
-type nonrec state_machine_limit_exceeded = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The maximum number of state machines has been reached. Existing state machines must be deleted \
-   before a new state machine can be created.\n"]
-
-type nonrec state_machine_already_exists = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "A state machine with the same name but a different definition or role ARN already exists.\n"]
-
-type nonrec state_machine_alias_list_item = {
-  creation_date : timestamp; [@ocaml.doc "The creation date of a state machine alias.\n"]
-  state_machine_alias_arn : long_arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) that identifies a state machine alias. The alias ARN is a \
-         combination of state machine ARN and the alias name separated by a colon (:). For \
-         example, [stateMachineARN:PROD].\n"]
-}
-[@@ocaml.doc "Contains details about a specific state machine alias.\n"]
-
-type nonrec state_machine_alias_list = state_machine_alias_list_item list [@@ocaml.doc ""]
-
-type nonrec assigned_variables = (variable_name * variable_value) list [@@ocaml.doc ""]
-
-type nonrec assigned_variables_details = {
-  truncated : truncated option;
-      [@ocaml.doc
-        "Indicates whether assigned variables were truncated in the response. Always [false] for \
-         API calls. In CloudWatch logs, the value will be true if the data is truncated due to \
-         size limits.\n"]
-}
-[@@ocaml.doc "Provides details about assigned variables in an execution history event.\n"]
-
-type nonrec state_exited_event_details = {
-  assigned_variables_details : assigned_variables_details option;
-      [@ocaml.doc "Provides details about input or output in an execution history event.\n"]
-  assigned_variables : assigned_variables option;
-      [@ocaml.doc "Map of variable name and value as a serialized JSON representation.\n"]
-  output_details : history_event_execution_data_details option;
-      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
-  output : sensitive_data option;
-      [@ocaml.doc
-        "The JSON output data of the state. Length constraints apply to the payload size, and are \
-         expressed as bytes in UTF-8 encoding.\n"]
-  name : name;
-      [@ocaml.doc
-        "The name of the state.\n\n\
-        \ A name must {i not} contain:\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  white space\n\
-        \            \n\
-        \             }\n\
-        \        {-  brackets [< > { } \\[ \\]] \n\
-        \            \n\
-        \             }\n\
-        \        {-  wildcard characters [? *] \n\
-        \            \n\
-        \             }\n\
-        \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
-        \            \n\
-        \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
-        \            \n\
-        \             }\n\
-        \        {-  surrogates ([U+D800-DFFF])\n\
-        \            \n\
-        \             }\n\
-        \        {-  invalid characters ([ U+10FFFF])\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
-         and _.\n\
-        \   "]
-}
-[@@ocaml.doc "Contains details about an exit from a state during an execution.\n"]
-
-type nonrec state_entered_event_details = {
-  input_details : history_event_execution_data_details option;
-      [@ocaml.doc "Contains details about the input for an execution history event.\n"]
-  input : sensitive_data option;
-      [@ocaml.doc
-        "The string that contains the JSON input data for the state. Length constraints apply to \
-         the payload size, and are expressed as bytes in UTF-8 encoding.\n"]
-  name : name; [@ocaml.doc "The name of the state.\n"]
-}
-[@@ocaml.doc "Contains details about a state entered during an execution.\n"]
+type nonrec included_details = bool [@@ocaml.doc ""]
 
 type nonrec cloud_watch_events_execution_data_details = {
   included : included_details option;
@@ -1135,23 +870,41 @@ type nonrec cloud_watch_events_execution_data_details = {
 }
 [@@ocaml.doc "Provides details about execution input or output.\n"]
 
-type nonrec billed_memory_used = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
+type nonrec sync_execution_status =
+  | SUCCEEDED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | TIMED_OUT [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
-type nonrec billed_duration = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
-
-type nonrec billing_details = {
-  billed_duration_in_milliseconds : billed_duration option;
-      [@ocaml.doc "Billed duration of your workflow, in milliseconds.\n"]
-  billed_memory_used_in_m_b : billed_memory_used option;
-      [@ocaml.doc "Billed memory consumption of your workflow, in MB.\n"]
-}
-[@@ocaml.doc "An object that describes workflow billing details.\n"]
+type nonrec name = string [@@ocaml.doc ""]
 
 type nonrec start_sync_execution_output = {
-  billing_details : billing_details option;
+  execution_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the execution.\n"]
+  state_machine_arn : arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the state machine.\n"]
+  name : name option; [@ocaml.doc "The name of the execution.\n"]
+  start_date : timestamp; [@ocaml.doc "The date the execution is started.\n"]
+  stop_date : timestamp;
+      [@ocaml.doc "If the execution has already ended, the date the execution stopped.\n"]
+  status : sync_execution_status; [@ocaml.doc "The current status of the execution.\n"]
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+  input : sensitive_data option;
       [@ocaml.doc
-        "An object that describes workflow billing details, including billed duration and memory \
-         use.\n"]
+        "The string that contains the JSON input data of the execution. Length constraints apply \
+         to the payload size, and are expressed as bytes in UTF-8 encoding.\n"]
+  input_details : cloud_watch_events_execution_data_details option; [@ocaml.doc ""]
+  output : sensitive_data option;
+      [@ocaml.doc
+        "The JSON output data of the execution. Length constraints apply to the payload size, and \
+         are expressed as bytes in UTF-8 encoding.\n\n\
+        \  This field is set only if the execution succeeds. If the execution fails, this field is \
+         null.\n\
+        \  \n\
+        \   "]
+  output_details : cloud_watch_events_execution_data_details option; [@ocaml.doc ""]
   trace_header : trace_header option;
       [@ocaml.doc
         "The X-Ray trace header that was passed to the execution.\n\n\
@@ -1162,141 +915,71 @@ type nonrec start_sync_execution_output = {
          use the {b header value} (preferred) over the value in the request body. \n\
         \  \n\
         \   "]
-  output_details : cloud_watch_events_execution_data_details option; [@ocaml.doc ""]
-  output : sensitive_data option;
+  billing_details : billing_details option;
       [@ocaml.doc
-        "The JSON output data of the execution. Length constraints apply to the payload size, and \
-         are expressed as bytes in UTF-8 encoding.\n\n\
-        \  This field is set only if the execution succeeds. If the execution fails, this field is \
-         null.\n\
-        \  \n\
-        \   "]
-  input_details : cloud_watch_events_execution_data_details option; [@ocaml.doc ""]
-  input : sensitive_data option;
-      [@ocaml.doc
-        "The string that contains the JSON input data of the execution. Length constraints apply \
-         to the payload size, and are expressed as bytes in UTF-8 encoding.\n"]
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-  status : sync_execution_status; [@ocaml.doc "The current status of the execution.\n"]
-  stop_date : timestamp;
-      [@ocaml.doc "If the execution has already ended, the date the execution stopped.\n"]
-  start_date : timestamp; [@ocaml.doc "The date the execution is started.\n"]
-  name : name option; [@ocaml.doc "The name of the execution.\n"]
-  state_machine_arn : arn option;
-      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the state machine.\n"]
-  execution_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the execution.\n"]
+        "An object that describes workflow billing details, including billed duration and memory \
+         use.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec included_data = METADATA_ONLY [@ocaml.doc ""] | ALL_DATA [@ocaml.doc ""]
+type nonrec included_data = ALL_DATA [@ocaml.doc ""] | METADATA_ONLY [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec start_sync_execution_input = {
+  state_machine_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine to execute.\n"]
+  name : name option; [@ocaml.doc "The name of the execution.\n"]
+  input : sensitive_data option;
+      [@ocaml.doc
+        "The string that contains the JSON input data for the execution, for example:\n\n\
+        \  [\"{\\\"first_name\\\" : \\\"Alejandro\\\"}\"] \n\
+        \ \n\
+        \   If you don't include any JSON input data, you still must include the two braces, for \
+         example: [\"{}\"] \n\
+        \   \n\
+        \     Length constraints apply to the payload size, and are expressed as bytes in UTF-8 \
+         encoding.\n\
+        \     "]
+  trace_header : trace_header option;
+      [@ocaml.doc
+        "Passes the X-Ray trace header. The trace header can also be passed in the request \
+         payload.\n\n\
+        \   For X-Ray traces, all Amazon Web Services services use the [X-Amzn-Trace-Id] header \
+         from the HTTP request. Using the header is the preferred mechanism to identify a trace. \
+         [StartExecution] and [StartSyncExecution] API operations can also use [traceHeader] from \
+         the body of the request payload. If {b both} sources are provided, Step Functions will \
+         use the {b header value} (preferred) over the value in the request body. \n\
+        \  \n\
+        \   "]
   included_data : included_data option;
       [@ocaml.doc
         "If your state machine definition is encrypted with a KMS key, callers must have \
          [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call the API \
          with [includedData = METADATA_ONLY] to get a successful response without the encrypted \
          definition.\n"]
-  trace_header : trace_header option;
-      [@ocaml.doc
-        "Passes the X-Ray trace header. The trace header can also be passed in the request \
-         payload.\n\n\
-        \   For X-Ray traces, all Amazon Web Services services use the [X-Amzn-Trace-Id] header \
-         from the HTTP request. Using the header is the preferred mechanism to identify a trace. \
-         [StartExecution] and [StartSyncExecution] API operations can also use [traceHeader] from \
-         the body of the request payload. If {b both} sources are provided, Step Functions will \
-         use the {b header value} (preferred) over the value in the request body. \n\
-        \  \n\
-        \   "]
-  input : sensitive_data option;
-      [@ocaml.doc
-        "The string that contains the JSON input data for the execution, for example:\n\n\
-        \  [\"{\\\"first_name\\\" : \\\"Alejandro\\\"}\"] \n\
-        \ \n\
-        \   If you don't include any JSON input data, you still must include the two braces, for \
-         example: [\"{}\"] \n\
-        \   \n\
-        \     Length constraints apply to the payload size, and are expressed as bytes in UTF-8 \
-         encoding.\n\
-        \     "]
-  name : name option; [@ocaml.doc "The name of the execution.\n"]
-  state_machine_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine to execute.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec invalid_name = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The provided name is not valid.\n"]
+type nonrec execution_limit_exceeded = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The maximum number of running executions has been reached. Running executions must end or be \
+   stopped before a new execution can be started.\n"]
+
+type nonrec execution_already_exists = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The execution has the same [name] as another execution (but a different [input]).\n\n\
+  \  Executions with the same [name] and [input] are considered idempotent.\n\
+  \  \n\
+  \   "]
 
 type nonrec start_execution_output = {
+  execution_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the execution.\n"]
   start_date : timestamp; [@ocaml.doc "The date the execution is started.\n"]
-  execution_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the execution.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec start_execution_input = {
-  trace_header : trace_header option;
-      [@ocaml.doc
-        "Passes the X-Ray trace header. The trace header can also be passed in the request \
-         payload.\n\n\
-        \   For X-Ray traces, all Amazon Web Services services use the [X-Amzn-Trace-Id] header \
-         from the HTTP request. Using the header is the preferred mechanism to identify a trace. \
-         [StartExecution] and [StartSyncExecution] API operations can also use [traceHeader] from \
-         the body of the request payload. If {b both} sources are provided, Step Functions will \
-         use the {b header value} (preferred) over the value in the request body. \n\
-        \  \n\
-        \   "]
-  input : sensitive_data option;
-      [@ocaml.doc
-        "The string that contains the JSON input data for the execution, for example:\n\n\
-        \  [\"{\\\"first_name\\\" : \\\"Alejandro\\\"}\"] \n\
-        \ \n\
-        \   If you don't include any JSON input data, you still must include the two braces, for \
-         example: [\"{}\"] \n\
-        \   \n\
-        \     Length constraints apply to the payload size, and are expressed as bytes in UTF-8 \
-         encoding.\n\
-        \     "]
-  name : name option;
-      [@ocaml.doc
-        "Optional name of the execution. This name must be unique for your Amazon Web Services \
-         account, Region, and state machine for 90 days. For more information, see \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions} \
-         Limits Related to State Machine Executions} in the {i Step Functions Developer Guide}.\n\n\
-        \ If you don't provide a name for the execution, Step Functions automatically generates a \
-         universally unique identifier (UUID) as the execution name.\n\
-        \ \n\
-        \  A name must {i not} contain:\n\
-        \  \n\
-        \   {ul\n\
-        \         {-  white space\n\
-        \             \n\
-        \              }\n\
-        \         {-  brackets [< > { } \\[ \\]] \n\
-        \             \n\
-        \              }\n\
-        \         {-  wildcard characters [? *] \n\
-        \             \n\
-        \              }\n\
-        \         {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
-        \             \n\
-        \              }\n\
-        \         {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
-        \             \n\
-        \              }\n\
-        \         {-  surrogates ([U+D800-DFFF])\n\
-        \             \n\
-        \              }\n\
-        \         {-  invalid characters ([ U+10FFFF])\n\
-        \             \n\
-        \              }\n\
-        \         }\n\
-        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
-         and _.\n\
-        \   "]
   state_machine_arn : arn;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of the state machine to execute.\n\n\
@@ -1348,44 +1031,98 @@ type nonrec start_execution_input = {
         \               }\n\
         \        }\n\
         \  "]
+  name : name option;
+      [@ocaml.doc
+        "Optional name of the execution. This name must be unique for your Amazon Web Services \
+         account, Region, and state machine for 90 days. For more information, see \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions} \
+         Limits Related to State Machine Executions} in the {i Step Functions Developer Guide}.\n\n\
+        \ If you don't provide a name for the execution, Step Functions automatically generates a \
+         universally unique identifier (UUID) as the execution name.\n\
+        \ \n\
+        \  A name must {i not} contain:\n\
+        \  \n\
+        \   {ul\n\
+        \         {-  white space\n\
+        \             \n\
+        \              }\n\
+        \         {-  brackets [< > { } \\[ \\]] \n\
+        \             \n\
+        \              }\n\
+        \         {-  wildcard characters [? *] \n\
+        \             \n\
+        \              }\n\
+        \         {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
+        \             \n\
+        \              }\n\
+        \         {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \             \n\
+        \              }\n\
+        \         {-  surrogates ([U+D800-DFFF])\n\
+        \             \n\
+        \              }\n\
+        \         {-  invalid characters ([ U+10FFFF])\n\
+        \             \n\
+        \              }\n\
+        \         }\n\
+        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
+         and _.\n\
+        \   "]
+  input : sensitive_data option;
+      [@ocaml.doc
+        "The string that contains the JSON input data for the execution, for example:\n\n\
+        \  [\"{\\\"first_name\\\" : \\\"Alejandro\\\"}\"] \n\
+        \ \n\
+        \   If you don't include any JSON input data, you still must include the two braces, for \
+         example: [\"{}\"] \n\
+        \   \n\
+        \     Length constraints apply to the payload size, and are expressed as bytes in UTF-8 \
+         encoding.\n\
+        \     "]
+  trace_header : trace_header option;
+      [@ocaml.doc
+        "Passes the X-Ray trace header. The trace header can also be passed in the request \
+         payload.\n\n\
+        \   For X-Ray traces, all Amazon Web Services services use the [X-Amzn-Trace-Id] header \
+         from the HTTP request. Using the header is the preferred mechanism to identify a trace. \
+         [StartExecution] and [StartSyncExecution] API operations can also use [traceHeader] from \
+         the body of the request payload. If {b both} sources are provided, Step Functions will \
+         use the {b header value} (preferred) over the value in the request body. \n\
+        \  \n\
+        \   "]
 }
 [@@ocaml.doc ""]
 
-type nonrec execution_limit_exceeded = { message : error_message option [@ocaml.doc ""] }
+type nonrec task_timed_out = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc
-  "The maximum number of running executions has been reached. Running executions must end or be \
-   stopped before a new execution can be started.\n"]
+  "The task token has either expired or the task associated with the token has already been closed.\n"]
 
-type nonrec execution_already_exists = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The execution has the same [name] as another execution (but a different [input]).\n\n\
-  \  Executions with the same [name] and [input] are considered idempotent.\n\
-  \  \n\
-  \   "]
-
-type nonrec sensitive_data_job_input = string [@@ocaml.doc ""]
-
-type nonrec send_task_success_output = unit [@@ocaml.doc ""]
-
-type nonrec send_task_success_input = {
-  output : sensitive_data;
-      [@ocaml.doc
-        "The JSON output of the task. Length constraints apply to the payload size, and are \
-         expressed as bytes in UTF-8 encoding.\n"]
-  task_token : task_token;
-      [@ocaml.doc
-        "The token that represents this task. Task tokens are generated by Step Functions when \
-         tasks are assigned to a worker, or in the \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-contextobject.html}context \
-         object} when a workflow enters a task state. See [GetActivityTaskOutput$taskToken].\n"]
-}
-[@@ocaml.doc ""]
+type nonrec task_does_not_exist = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The activity does not exist.\n"]
 
 type nonrec invalid_token = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc "The provided token is not valid.\n"]
 
 type nonrec invalid_output = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc "The provided JSON output data is not valid.\n"]
+
+type nonrec send_task_success_output = unit [@@ocaml.doc ""]
+
+type nonrec task_token = string [@@ocaml.doc ""]
+
+type nonrec send_task_success_input = {
+  task_token : task_token;
+      [@ocaml.doc
+        "The token that represents this task. Task tokens are generated by Step Functions when \
+         tasks are assigned to a worker, or in the \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-contextobject.html}context \
+         object} when a workflow enters a task state. See [GetActivityTaskOutput$taskToken].\n"]
+  output : sensitive_data;
+      [@ocaml.doc
+        "The JSON output of the task. Length constraints apply to the payload size, and are \
+         expressed as bytes in UTF-8 encoding.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec send_task_heartbeat_output = unit [@@ocaml.doc ""]
 
@@ -1402,19 +1139,22 @@ type nonrec send_task_heartbeat_input = {
 type nonrec send_task_failure_output = unit [@@ocaml.doc ""]
 
 type nonrec send_task_failure_input = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
   task_token : task_token;
       [@ocaml.doc
         "The token that represents this task. Task tokens are generated by Step Functions when \
          tasks are assigned to a worker, or in the \
          {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-contextobject.html}context \
          object} when a workflow enters a task state. See [GetActivityTaskOutput$taskToken].\n"]
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec reverse_order = bool [@@ocaml.doc ""]
+type nonrec execution_not_redrivable = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The execution Amazon Resource Name (ARN) that you specified for [executionArn] cannot be \
+   redriven.\n"]
 
 type nonrec redrive_execution_output = {
   redrive_date : timestamp; [@ocaml.doc "The date the execution was last redriven.\n"]
@@ -1424,6 +1164,8 @@ type nonrec redrive_execution_output = {
 type nonrec client_token = string [@@ocaml.doc ""]
 
 type nonrec redrive_execution_input = {
+  execution_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the execution to be redriven.\n"]
   client_token : client_token option;
       [@ocaml.doc
         "A unique, case-sensitive identifier that you provide to ensure the idempotency of the \
@@ -1432,29 +1174,19 @@ type nonrec redrive_execution_input = {
          The API will return idempotent responses for the last 10 client tokens used to \
          successfully redrive the execution. These client tokens are valid for up to 15 minutes \
          after they are first used.\n"]
-  execution_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the execution to be redriven.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec execution_not_redrivable = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The execution Amazon Resource Name (ARN) that you specified for [executionArn] cannot be \
-   redriven.\n"]
-
-type nonrec redrive_count = int [@@ocaml.doc ""]
-
 type nonrec publish_state_machine_version_output = {
+  creation_date : timestamp; [@ocaml.doc "The date the version was created.\n"]
   state_machine_version_arn : arn;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) (ARN) that identifies the state machine version.\n"]
-  creation_date : timestamp; [@ocaml.doc "The date the version was created.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec publish_state_machine_version_input = {
-  description : version_description option;
-      [@ocaml.doc "An optional description of the state machine version.\n"]
+  state_machine_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine.\n"]
   revision_id : revision_id option;
       [@ocaml.doc
         "Only publish the state machine version if the current state machine's revision ID matches \
@@ -1469,171 +1201,10 @@ type nonrec publish_state_machine_version_input = {
          [CreateStateMachine] API action.\n\
         \   \n\
         \    "]
-  state_machine_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine.\n"]
+  description : version_description option;
+      [@ocaml.doc "An optional description of the state machine version.\n"]
 }
 [@@ocaml.doc ""]
-
-type nonrec page_token = string [@@ocaml.doc ""]
-
-type nonrec page_size = int [@@ocaml.doc ""]
-
-type nonrec map_state_started_event_details = {
-  length : unsigned_integer option; [@ocaml.doc "The size of the array for Map state iterations.\n"]
-}
-[@@ocaml.doc "Details about a Map state that was started.\n"]
-
-type nonrec map_run_status =
-  | ABORTED [@ocaml.doc ""]
-  | FAILED [@ocaml.doc ""]
-  | SUCCEEDED [@ocaml.doc ""]
-  | RUNNING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec map_run_started_event_details = {
-  map_run_arn : long_arn option;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of a Map Run that was started.\n"]
-}
-[@@ocaml.doc
-  "Contains details about a Map Run that was started during a state machine execution.\n"]
-
-type nonrec map_run_redriven_event_details = {
-  redrive_count : redrive_count option;
-      [@ocaml.doc
-        "The number of times the Map Run has been redriven at this point in the execution's \
-         history including this event. The redrive count for a redriven Map Run is always greater \
-         than 0.\n"]
-  map_run_arn : long_arn option;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of a Map Run that was redriven.\n"]
-}
-[@@ocaml.doc "Contains details about a Map Run that was redriven.\n"]
-
-type nonrec map_run_list_item = {
-  stop_date : timestamp option; [@ocaml.doc "The date on which the Map Run stopped.\n"]
-  start_date : timestamp; [@ocaml.doc "The date on which the Map Run started.\n"]
-  state_machine_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the executed state machine.\n"]
-  map_run_arn : long_arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the Map Run.\n"]
-  execution_arn : arn;
-      [@ocaml.doc "The [executionArn] of the execution from which the Map Run was started.\n"]
-}
-[@@ocaml.doc "Contains details about a specific Map Run.\n"]
-
-type nonrec map_run_list = map_run_list_item list [@@ocaml.doc ""]
-
-type nonrec map_run_label = string [@@ocaml.doc ""]
-
-type nonrec long_object = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
-
-type nonrec map_run_item_counts = {
-  pending_redrive : long_object option;
-      [@ocaml.doc
-        "The number of unsuccessful items in child workflow executions currently waiting to be \
-         redriven.\n"]
-  failures_not_redrivable : long_object option;
-      [@ocaml.doc
-        "The number of [FAILED], [ABORTED], or [TIMED_OUT] items in child workflow executions that \
-         cannot be redriven because the execution status of those child workflows is terminal. For \
-         example, child workflows with an execution status of [FAILED], [ABORTED], or [TIMED_OUT] \
-         and a [redriveStatus] of [NOT_REDRIVABLE].\n"]
-  results_written : unsigned_long;
-      [@ocaml.doc
-        "Returns the count of items whose results were written by [ResultWriter]. For more \
-         information, see \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultwriter.html}ResultWriter} \
-         in the {i Step Functions Developer Guide}.\n"]
-  total : unsigned_long;
-      [@ocaml.doc
-        "The total number of items processed in all the child workflow executions started by a Map \
-         Run.\n"]
-  aborted : unsigned_long;
-      [@ocaml.doc
-        "The total number of items processed in child workflow executions that were either stopped \
-         by the user or by Step Functions, because the Map Run failed.\n"]
-  timed_out : unsigned_long;
-      [@ocaml.doc
-        "The total number of items processed in child workflow executions that have timed out.\n"]
-  failed : unsigned_long;
-      [@ocaml.doc
-        "The total number of items processed in child workflow executions that have failed.\n"]
-  succeeded : unsigned_long;
-      [@ocaml.doc
-        "The total number of items processed in child workflow executions that have completed \
-         successfully.\n"]
-  running : unsigned_long;
-      [@ocaml.doc
-        "The total number of items being processed in child workflow executions that are currently \
-         in-progress.\n"]
-  pending : unsigned_long;
-      [@ocaml.doc
-        "The total number of items to process in child workflow executions that haven't started \
-         running yet.\n"]
-}
-[@@ocaml.doc
-  "Contains details about items that were processed in all of the child workflow executions that \
-   were started by a Map Run.\n"]
-
-type nonrec map_run_failed_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the Map Run failure.\n"]
-}
-[@@ocaml.doc
-  "Contains details about a Map Run failure event that occurred during a state machine execution.\n"]
-
-type nonrec map_run_execution_counts = {
-  pending_redrive : long_object option;
-      [@ocaml.doc
-        "The number of unsuccessful child workflow executions currently waiting to be redriven. \
-         The status of these child workflow executions could be [FAILED], [ABORTED], or \
-         [TIMED_OUT] in the original execution attempt or a previous redrive attempt.\n"]
-  failures_not_redrivable : long_object option;
-      [@ocaml.doc
-        "The number of [FAILED], [ABORTED], or [TIMED_OUT] child workflow executions that cannot \
-         be redriven because their execution status is terminal. For example, child workflows with \
-         an execution status of [FAILED], [ABORTED], or [TIMED_OUT] and a [redriveStatus] of \
-         [NOT_REDRIVABLE].\n"]
-  results_written : unsigned_long;
-      [@ocaml.doc
-        "Returns the count of child workflow executions whose results were written by \
-         [ResultWriter]. For more information, see \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultwriter.html}ResultWriter} \
-         in the {i Step Functions Developer Guide}.\n"]
-  total : unsigned_long;
-      [@ocaml.doc "The total number of child workflow executions that were started by a Map Run.\n"]
-  aborted : unsigned_long;
-      [@ocaml.doc
-        "The total number of child workflow executions that were started by a Map Run and were \
-         running, but were either stopped by the user or by Step Functions because the Map Run \
-         failed. \n"]
-  timed_out : unsigned_long;
-      [@ocaml.doc
-        "The total number of child workflow executions that were started by a Map Run and have \
-         timed out.\n"]
-  failed : unsigned_long;
-      [@ocaml.doc
-        "The total number of child workflow executions that were started by a Map Run, but have \
-         failed.\n"]
-  succeeded : unsigned_long;
-      [@ocaml.doc
-        "The total number of child workflow executions that were started by a Map Run and have \
-         completed successfully.\n"]
-  running : unsigned_long;
-      [@ocaml.doc
-        "The total number of child workflow executions that were started by a Map Run and are \
-         currently in-progress.\n"]
-  pending : unsigned_long;
-      [@ocaml.doc
-        "The total number of child workflow executions that were started by a Map Run, but haven't \
-         started executing yet. \n"]
-}
-[@@ocaml.doc "Contains details about all of the child workflow executions started by a Map Run.\n"]
-
-type nonrec map_iteration_event_details = {
-  index : unsigned_integer option;
-      [@ocaml.doc "The index of the array belonging to the Map state iteration.\n"]
-  name : name option; [@ocaml.doc "The name of the iteration\226\128\153s parent Map state.\n"]
-}
-[@@ocaml.doc "Contains details about an iteration of a Map state.\n"]
 
 type nonrec list_tags_for_resource_output = {
   tags : tag_list option; [@ocaml.doc "An array of tags associated with the resource.\n"]
@@ -1647,71 +1218,37 @@ type nonrec list_tags_for_resource_input = {
 }
 [@@ocaml.doc ""]
 
-type nonrec list_state_machines_output = {
-  next_token : page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
-  state_machines : state_machine_list; [@ocaml.doc ""]
-}
-[@@ocaml.doc ""]
+type nonrec page_token = string [@@ocaml.doc ""]
 
-type nonrec list_state_machines_input = {
-  next_token : page_token option;
+type nonrec state_machine_version_list_item = {
+  state_machine_version_arn : long_arn;
       [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
-  max_results : page_size option;
-      [@ocaml.doc
-        "The maximum number of results that are returned per call. You can use [nextToken] to \
-         obtain further pages of results. The default is 100 and the maximum allowed page size is \
-         1000. A value of 0 uses the default.\n\n\
-        \ This is only an upper limit. The actual number of results returned per call might be \
-         fewer than the specified maximum.\n\
-        \ "]
+        "The Amazon Resource Name (ARN) that identifies a state machine version. The version ARN \
+         is a combination of state machine ARN and the version number separated by a colon (:). \
+         For example, [stateMachineARN:1].\n"]
+  creation_date : timestamp; [@ocaml.doc "The creation date of a state machine version.\n"]
 }
-[@@ocaml.doc ""]
+[@@ocaml.doc "Contains details about a specific state machine version.\n"]
+
+type nonrec state_machine_version_list = state_machine_version_list_item list [@@ocaml.doc ""]
 
 type nonrec list_state_machine_versions_output = {
-  next_token : page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
   state_machine_versions : state_machine_version_list;
       [@ocaml.doc "Versions for the state machine.\n"]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec page_size = int [@@ocaml.doc ""]
 
 type nonrec list_state_machine_versions_input = {
-  max_results : page_size option;
-      [@ocaml.doc
-        "The maximum number of results that are returned per call. You can use [nextToken] to \
-         obtain further pages of results. The default is 100 and the maximum allowed page size is \
-         1000. A value of 0 uses the default.\n\n\
-        \ This is only an upper limit. The actual number of results returned per call might be \
-         fewer than the specified maximum.\n\
-        \ "]
-  next_token : page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
   state_machine_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_state_machine_aliases_output = {
   next_token : page_token option;
       [@ocaml.doc
         "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
@@ -1719,11 +1256,6 @@ type nonrec list_state_machine_aliases_output = {
          retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
          after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
          InvalidToken} error.\n"]
-  state_machine_aliases : state_machine_alias_list; [@ocaml.doc "Aliases for the state machine.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_state_machine_aliases_input = {
   max_results : page_size option;
       [@ocaml.doc
         "The maximum number of results that are returned per call. You can use [nextToken] to \
@@ -1732,758 +1264,12 @@ type nonrec list_state_machine_aliases_input = {
         \ This is only an upper limit. The actual number of results returned per call might be \
          fewer than the specified maximum.\n\
         \ "]
-  next_token : page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec state_machine_list_item = {
   state_machine_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the state machine for which you want to list aliases.\n\n\
-        \ If you specify a state machine version ARN, this API returns a list of aliases for that \
-         version.\n\
-        \ "]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_map_runs_output = {
-  next_token : page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
-  map_runs : map_run_list;
-      [@ocaml.doc
-        "An array that lists information related to a Map Run, such as the Amazon Resource Name \
-         (ARN) of the Map Run and the ARN of the state machine that started the Map Run.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_map_runs_input = {
-  next_token : page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
-  max_results : page_size option;
-      [@ocaml.doc
-        "The maximum number of results that are returned per call. You can use [nextToken] to \
-         obtain further pages of results. The default is 100 and the maximum allowed page size is \
-         1000. A value of 0 uses the default.\n\n\
-        \ This is only an upper limit. The actual number of results returned per call might be \
-         fewer than the specified maximum.\n\
-        \ "]
-  execution_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the execution for which the Map Runs must be listed.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_executions_page_token = string [@@ocaml.doc ""]
-
-type nonrec execution_status =
-  | PENDING_REDRIVE [@ocaml.doc ""]
-  | ABORTED [@ocaml.doc ""]
-  | TIMED_OUT [@ocaml.doc ""]
-  | FAILED [@ocaml.doc ""]
-  | SUCCEEDED [@ocaml.doc ""]
-  | RUNNING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec execution_list_item = {
-  redrive_date : timestamp option; [@ocaml.doc "The date the execution was last redriven.\n"]
-  redrive_count : redrive_count option;
-      [@ocaml.doc
-        "The number of times you've redriven an execution. If you have not yet redriven an \
-         execution, the [redriveCount] is 0. This count is only updated when you successfully \
-         redrive an execution.\n"]
-  state_machine_alias_arn : arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the state machine alias used to start an execution.\n\n\
-        \ If the state machine execution was started with an unqualified ARN or a version ARN, it \
-         returns null.\n\
-        \ "]
-  state_machine_version_arn : arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the state machine version associated with the \
-         execution.\n\n\
-        \ If the state machine execution was started with an unqualified ARN, it returns null.\n\
-        \ \n\
-        \  If the execution was started using a [stateMachineAliasArn], both the \
-         [stateMachineAliasArn] and [stateMachineVersionArn] parameters contain the respective \
-         values.\n\
-        \  "]
-  item_count : unsigned_integer option;
-      [@ocaml.doc
-        "The total number of items processed in a child workflow execution. This field is returned \
-         only if [mapRunArn] was specified in the [ListExecutions] API action. If \
-         [stateMachineArn] was specified in [ListExecutions], the [itemCount] field isn't returned.\n"]
-  map_run_arn : long_arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of a Map Run. This field is returned only if [mapRunArn] \
-         was specified in the [ListExecutions] API action. If [stateMachineArn] was specified in \
-         [ListExecutions], the [mapRunArn] isn't returned.\n"]
-  stop_date : timestamp option;
-      [@ocaml.doc "If the execution already ended, the date the execution stopped.\n"]
-  start_date : timestamp; [@ocaml.doc "The date the execution started.\n"]
-  status : execution_status; [@ocaml.doc "The current status of the execution.\n"]
-  name : name;
-      [@ocaml.doc
-        "The name of the execution.\n\n\
-        \ A name must {i not} contain:\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  white space\n\
-        \            \n\
-        \             }\n\
-        \        {-  brackets [< > { } \\[ \\]] \n\
-        \            \n\
-        \             }\n\
-        \        {-  wildcard characters [? *] \n\
-        \            \n\
-        \             }\n\
-        \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
-        \            \n\
-        \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
-        \            \n\
-        \             }\n\
-        \        {-  surrogates ([U+D800-DFFF])\n\
-        \            \n\
-        \             }\n\
-        \        {-  invalid characters ([ U+10FFFF])\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
-         and _.\n\
-        \   "]
-  state_machine_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine that ran the execution.\n"]
-  execution_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the execution.\n"]
-}
-[@@ocaml.doc "Contains details about an execution.\n"]
-
-type nonrec execution_list = execution_list_item list [@@ocaml.doc ""]
-
-type nonrec list_executions_output = {
-  next_token : list_executions_page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
-  executions : execution_list; [@ocaml.doc "The list of matching executions.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec execution_redrive_filter = NOT_REDRIVEN [@ocaml.doc ""] | REDRIVEN [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec list_executions_input = {
-  redrive_filter : execution_redrive_filter option;
-      [@ocaml.doc
-        "Sets a filter to list executions based on whether or not they have been redriven.\n\n\
-        \ For a Distributed Map, [redriveFilter] sets a filter to list child workflow executions \
-         based on whether or not they have been redriven.\n\
-        \ \n\
-        \  If you do not provide a [redriveFilter], Step Functions returns a list of both redriven \
-         and non-redriven executions.\n\
-        \  \n\
-        \   If you provide a state machine ARN in [redriveFilter], the API returns a validation \
-         exception.\n\
-        \   "]
-  map_run_arn : long_arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the Map Run that started the child workflow executions. \
-         If the [mapRunArn] field is specified, a list of all of the child workflow executions \
-         started by a Map Run is returned. For more information, see \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-examine-map-run.html}Examining \
-         Map Run} in the {i Step Functions Developer Guide}.\n\n\
-        \ You can specify either a [mapRunArn] or a [stateMachineArn], but not both.\n\
-        \ "]
-  next_token : list_executions_page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
-  max_results : page_size option;
-      [@ocaml.doc
-        "The maximum number of results that are returned per call. You can use [nextToken] to \
-         obtain further pages of results. The default is 100 and the maximum allowed page size is \
-         1000. A value of 0 uses the default.\n\n\
-        \ This is only an upper limit. The actual number of results returned per call might be \
-         fewer than the specified maximum.\n\
-        \ "]
-  status_filter : execution_status option;
-      [@ocaml.doc
-        "If specified, only list the executions whose current execution status matches the given \
-         filter.\n\n\
-        \ If you provide a [PENDING_REDRIVE] statusFilter, you must specify [mapRunArn]. For more \
-         information, see \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/redrive-map-run.html#redrive-child-workflow-behavior}Child \
-         workflow execution redrive behaviour} in the {i Step Functions Developer Guide}. \n\
-        \ \n\
-        \  If you provide a stateMachineArn and a [PENDING_REDRIVE] statusFilter, the API returns \
-         a validation exception.\n\
-        \  "]
-  state_machine_arn : arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the state machine whose executions is listed.\n\n\
-        \ You can specify either a [mapRunArn] or a [stateMachineArn], but not both.\n\
-        \ \n\
-        \  You can also return a list of executions associated with a specific \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-alias.html}alias} \
-         or \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-version.html}version}, \
-         by specifying an alias ARN or a version ARN in the [stateMachineArn] parameter.\n\
-        \  "]
-}
-[@@ocaml.doc ""]
-
-type nonrec activity_list_item = {
-  creation_date : timestamp; [@ocaml.doc "The date the activity is created.\n"]
-  name : name;
-      [@ocaml.doc
-        "The name of the activity.\n\n\
-        \ A name must {i not} contain:\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  white space\n\
-        \            \n\
-        \             }\n\
-        \        {-  brackets [< > { } \\[ \\]] \n\
-        \            \n\
-        \             }\n\
-        \        {-  wildcard characters [? *] \n\
-        \            \n\
-        \             }\n\
-        \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
-        \            \n\
-        \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
-        \            \n\
-        \             }\n\
-        \        {-  surrogates ([U+D800-DFFF])\n\
-        \            \n\
-        \             }\n\
-        \        {-  invalid characters ([ U+10FFFF])\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
-         and _.\n\
-        \   "]
-  activity_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the activity.\n"]
-}
-[@@ocaml.doc "Contains details about an activity.\n"]
-
-type nonrec activity_list = activity_list_item list [@@ocaml.doc ""]
-
-type nonrec list_activities_output = {
-  next_token : page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
-  activities : activity_list; [@ocaml.doc "The list of activities.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_activities_input = {
-  next_token : page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
-  max_results : page_size option;
-      [@ocaml.doc
-        "The maximum number of results that are returned per call. You can use [nextToken] to \
-         obtain further pages of results. The default is 100 and the maximum allowed page size is \
-         1000. A value of 0 uses the default.\n\n\
-        \ This is only an upper limit. The actual number of results returned per call might be \
-         fewer than the specified maximum.\n\
-        \ "]
-}
-[@@ocaml.doc ""]
-
-type nonrec lambda_function_timed_out_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the timeout.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc
-  "Contains details about a Lambda function timeout that occurred during an execution.\n"]
-
-type nonrec lambda_function_succeeded_event_details = {
-  output_details : history_event_execution_data_details option;
-      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
-  output : sensitive_data option;
-      [@ocaml.doc
-        "The JSON data output by the Lambda function. Length constraints apply to the payload \
-         size, and are expressed as bytes in UTF-8 encoding.\n"]
-}
-[@@ocaml.doc
-  "Contains details about a Lambda function that successfully terminated during an execution.\n"]
-
-type nonrec lambda_function_start_failed_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc "Contains details about a lambda function that failed to start during an execution.\n"]
-
-type nonrec lambda_function_scheduled_event_details = {
-  task_credentials : task_credentials option;
-      [@ocaml.doc "The credentials that Step Functions uses for the task.\n"]
-  timeout_in_seconds : timeout_in_seconds option;
-      [@ocaml.doc "The maximum allowed duration of the Lambda function.\n"]
-  input_details : history_event_execution_data_details option;
-      [@ocaml.doc "Contains details about input for an execution history event.\n"]
-  input : sensitive_data option;
-      [@ocaml.doc
-        "The JSON data input to the Lambda function. Length constraints apply to the payload size, \
-         and are expressed as bytes in UTF-8 encoding.\n"]
-  resource : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the scheduled Lambda function.\n"]
-}
-[@@ocaml.doc "Contains details about a Lambda function scheduled during an execution.\n"]
-
-type nonrec lambda_function_schedule_failed_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc
-  "Contains details about a failed Lambda function schedule event that occurred during an execution.\n"]
-
-type nonrec lambda_function_failed_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc "Contains details about a Lambda function that failed during an execution.\n"]
-
-type nonrec include_execution_data_get_execution_history = bool [@@ocaml.doc ""]
-
-type nonrec identity = string [@@ocaml.doc ""]
-
-type nonrec history_event_type =
-  | EvaluationFailed [@ocaml.doc ""]
-  | MapRunRedriven [@ocaml.doc ""]
-  | ExecutionRedriven [@ocaml.doc ""]
-  | MapRunSucceeded [@ocaml.doc ""]
-  | MapRunStarted [@ocaml.doc ""]
-  | MapRunFailed [@ocaml.doc ""]
-  | MapRunAborted [@ocaml.doc ""]
-  | WaitStateExited [@ocaml.doc ""]
-  | WaitStateEntered [@ocaml.doc ""]
-  | WaitStateAborted [@ocaml.doc ""]
-  | TaskTimedOut [@ocaml.doc ""]
-  | TaskSucceeded [@ocaml.doc ""]
-  | TaskSubmitted [@ocaml.doc ""]
-  | TaskSubmitFailed [@ocaml.doc ""]
-  | TaskStateExited [@ocaml.doc ""]
-  | TaskStateEntered [@ocaml.doc ""]
-  | TaskStateAborted [@ocaml.doc ""]
-  | TaskStartFailed [@ocaml.doc ""]
-  | TaskStarted [@ocaml.doc ""]
-  | TaskScheduled [@ocaml.doc ""]
-  | TaskFailed [@ocaml.doc ""]
-  | SucceedStateExited [@ocaml.doc ""]
-  | SucceedStateEntered [@ocaml.doc ""]
-  | PassStateExited [@ocaml.doc ""]
-  | PassStateEntered [@ocaml.doc ""]
-  | ParallelStateSucceeded [@ocaml.doc ""]
-  | ParallelStateStarted [@ocaml.doc ""]
-  | ParallelStateFailed [@ocaml.doc ""]
-  | ParallelStateExited [@ocaml.doc ""]
-  | ParallelStateEntered [@ocaml.doc ""]
-  | ParallelStateAborted [@ocaml.doc ""]
-  | MapStateSucceeded [@ocaml.doc ""]
-  | MapStateStarted [@ocaml.doc ""]
-  | MapStateFailed [@ocaml.doc ""]
-  | MapStateExited [@ocaml.doc ""]
-  | MapStateEntered [@ocaml.doc ""]
-  | MapStateAborted [@ocaml.doc ""]
-  | MapIterationSucceeded [@ocaml.doc ""]
-  | MapIterationStarted [@ocaml.doc ""]
-  | MapIterationFailed [@ocaml.doc ""]
-  | MapIterationAborted [@ocaml.doc ""]
-  | LambdaFunctionTimedOut [@ocaml.doc ""]
-  | LambdaFunctionSucceeded [@ocaml.doc ""]
-  | LambdaFunctionStartFailed [@ocaml.doc ""]
-  | LambdaFunctionStarted [@ocaml.doc ""]
-  | LambdaFunctionScheduleFailed [@ocaml.doc ""]
-  | LambdaFunctionScheduled [@ocaml.doc ""]
-  | LambdaFunctionFailed [@ocaml.doc ""]
-  | FailStateEntered [@ocaml.doc ""]
-  | ExecutionTimedOut [@ocaml.doc ""]
-  | ExecutionSucceeded [@ocaml.doc ""]
-  | ExecutionStarted [@ocaml.doc ""]
-  | ExecutionFailed [@ocaml.doc ""]
-  | ExecutionAborted [@ocaml.doc ""]
-  | ChoiceStateExited [@ocaml.doc ""]
-  | ChoiceStateEntered [@ocaml.doc ""]
-  | ActivityTimedOut [@ocaml.doc ""]
-  | ActivitySucceeded [@ocaml.doc ""]
-  | ActivityStarted [@ocaml.doc ""]
-  | ActivityScheduleFailed [@ocaml.doc ""]
-  | ActivityScheduled [@ocaml.doc ""]
-  | ActivityFailed [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec event_id = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
-
-type nonrec activity_failed_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc "Contains details about an activity that failed during an execution.\n"]
-
-type nonrec activity_schedule_failed_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc
-  "Contains details about an activity schedule failure that occurred during an execution.\n"]
-
-type nonrec activity_scheduled_event_details = {
-  heartbeat_in_seconds : timeout_in_seconds option;
-      [@ocaml.doc "The maximum allowed duration between two heartbeats for the activity task.\n"]
-  timeout_in_seconds : timeout_in_seconds option;
-      [@ocaml.doc "The maximum allowed duration of the activity task.\n"]
-  input_details : history_event_execution_data_details option;
-      [@ocaml.doc "Contains details about the input for an execution history event.\n"]
-  input : sensitive_data option;
-      [@ocaml.doc
-        "The JSON data input to the activity task. Length constraints apply to the payload size, \
-         and are expressed as bytes in UTF-8 encoding.\n"]
-  resource : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the scheduled activity.\n"]
-}
-[@@ocaml.doc "Contains details about an activity scheduled during an execution.\n"]
-
-type nonrec activity_started_event_details = {
-  worker_name : identity option;
-      [@ocaml.doc
-        "The name of the worker that the task is assigned to. These names are provided by the \
-         workers when calling [GetActivityTask].\n"]
-}
-[@@ocaml.doc "Contains details about the start of an activity during an execution.\n"]
-
-type nonrec activity_succeeded_event_details = {
-  output_details : history_event_execution_data_details option;
-      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
-  output : sensitive_data option;
-      [@ocaml.doc
-        "The JSON data output by the activity task. Length constraints apply to the payload size, \
-         and are expressed as bytes in UTF-8 encoding.\n"]
-}
-[@@ocaml.doc
-  "Contains details about an activity that successfully terminated during an execution.\n"]
-
-type nonrec activity_timed_out_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the timeout.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc "Contains details about an activity timeout that occurred during an execution.\n"]
-
-type nonrec execution_failed_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc "Contains details about an execution failure event.\n"]
-
-type nonrec execution_started_event_details = {
-  state_machine_version_arn : arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) that identifies a state machine version used for starting \
-         the state machine execution.\n"]
-  state_machine_alias_arn : arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) that identifies a state machine alias used for starting \
-         the state machine execution.\n"]
-  role_arn : arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the IAM role used for executing Lambda tasks.\n"]
-  input_details : history_event_execution_data_details option;
-      [@ocaml.doc "Contains details about the input for an execution history event.\n"]
-  input : sensitive_data option;
-      [@ocaml.doc
-        "The JSON data input to the execution. Length constraints apply to the payload size, and \
-         are expressed as bytes in UTF-8 encoding.\n"]
-}
-[@@ocaml.doc "Contains details about the start of the execution.\n"]
-
-type nonrec execution_succeeded_event_details = {
-  output_details : history_event_execution_data_details option;
-      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
-  output : sensitive_data option;
-      [@ocaml.doc
-        "The JSON data output by the execution. Length constraints apply to the payload size, and \
-         are expressed as bytes in UTF-8 encoding.\n"]
-}
-[@@ocaml.doc "Contains details about the successful termination of the execution.\n"]
-
-type nonrec execution_aborted_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc "Contains details about an abort of an execution.\n"]
-
-type nonrec execution_timed_out_event_details = {
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the timeout.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc "Contains details about the execution timeout that occurred during the execution.\n"]
-
-type nonrec execution_redriven_event_details = {
-  redrive_count : redrive_count option;
-      [@ocaml.doc
-        "The number of times you've redriven an execution. If you have not yet redriven an \
-         execution, the [redriveCount] is 0. This count is not updated for redrives that failed to \
-         start or are pending to be redriven.\n"]
-}
-[@@ocaml.doc "Contains details about a redriven execution.\n"]
-
-type nonrec evaluation_failure_location = string [@@ocaml.doc ""]
-
-type nonrec evaluation_failed_event_details = {
-  state : state_name; [@ocaml.doc "The name of the state in which the evaluation error occurred.\n"]
-  location : evaluation_failure_location option;
-      [@ocaml.doc
-        "The location of the field in the state in which the evaluation error occurred.\n"]
-  cause : sensitive_cause option;
-      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
-  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
-}
-[@@ocaml.doc
-  "Contains details about an evaluation failure that occurred while processing a state, for \
-   example, when a JSONata expression throws an error. This event will only be present in state \
-   machines that have {b  QueryLanguage} set to JSONata, or individual states set to JSONata.\n"]
-
-type nonrec history_event = {
-  evaluation_failed_event_details : evaluation_failed_event_details option;
-      [@ocaml.doc
-        "Contains details about an evaluation failure that occurred while processing a state.\n"]
-  map_run_redriven_event_details : map_run_redriven_event_details option;
-      [@ocaml.doc "Contains details about the redrive attempt of a Map Run.\n"]
-  map_run_failed_event_details : map_run_failed_event_details option;
-      [@ocaml.doc "Contains error and cause details about a Map Run that failed.\n"]
-  map_run_started_event_details : map_run_started_event_details option;
-      [@ocaml.doc
-        "Contains details, such as [mapRunArn], and the start date and time of a Map Run. \
-         [mapRunArn] is the Amazon Resource Name (ARN) of the Map Run that was started.\n"]
-  state_exited_event_details : state_exited_event_details option; [@ocaml.doc ""]
-  state_entered_event_details : state_entered_event_details option; [@ocaml.doc ""]
-  lambda_function_timed_out_event_details : lambda_function_timed_out_event_details option;
-      [@ocaml.doc ""]
-  lambda_function_succeeded_event_details : lambda_function_succeeded_event_details option;
-      [@ocaml.doc
-        "Contains details about a Lambda function that terminated successfully during an execution.\n"]
-  lambda_function_start_failed_event_details : lambda_function_start_failed_event_details option;
-      [@ocaml.doc
-        "Contains details about a lambda function that failed to start during an execution.\n"]
-  lambda_function_scheduled_event_details : lambda_function_scheduled_event_details option;
-      [@ocaml.doc ""]
-  lambda_function_schedule_failed_event_details :
-    lambda_function_schedule_failed_event_details option;
-      [@ocaml.doc ""]
-  lambda_function_failed_event_details : lambda_function_failed_event_details option;
-      [@ocaml.doc ""]
-  map_iteration_aborted_event_details : map_iteration_event_details option;
-      [@ocaml.doc "Contains details about an iteration of a Map state that was aborted.\n"]
-  map_iteration_failed_event_details : map_iteration_event_details option;
-      [@ocaml.doc "Contains details about an iteration of a Map state that failed.\n"]
-  map_iteration_succeeded_event_details : map_iteration_event_details option;
-      [@ocaml.doc "Contains details about an iteration of a Map state that succeeded.\n"]
-  map_iteration_started_event_details : map_iteration_event_details option;
-      [@ocaml.doc "Contains details about an iteration of a Map state that was started.\n"]
-  map_state_started_event_details : map_state_started_event_details option;
-      [@ocaml.doc "Contains details about Map state that was started.\n"]
-  execution_redriven_event_details : execution_redriven_event_details option;
-      [@ocaml.doc "Contains details about the redrive attempt of an execution.\n"]
-  execution_timed_out_event_details : execution_timed_out_event_details option; [@ocaml.doc ""]
-  execution_aborted_event_details : execution_aborted_event_details option; [@ocaml.doc ""]
-  execution_succeeded_event_details : execution_succeeded_event_details option; [@ocaml.doc ""]
-  execution_started_event_details : execution_started_event_details option; [@ocaml.doc ""]
-  execution_failed_event_details : execution_failed_event_details option; [@ocaml.doc ""]
-  task_timed_out_event_details : task_timed_out_event_details option;
-      [@ocaml.doc "Contains details about a task that timed out.\n"]
-  task_succeeded_event_details : task_succeeded_event_details option;
-      [@ocaml.doc "Contains details about a task that succeeded.\n"]
-  task_submitted_event_details : task_submitted_event_details option;
-      [@ocaml.doc "Contains details about a submitted task.\n"]
-  task_submit_failed_event_details : task_submit_failed_event_details option;
-      [@ocaml.doc "Contains details about a task that where the submit failed.\n"]
-  task_started_event_details : task_started_event_details option;
-      [@ocaml.doc "Contains details about a task that was started.\n"]
-  task_start_failed_event_details : task_start_failed_event_details option;
-      [@ocaml.doc "Contains details about a task that failed to start.\n"]
-  task_scheduled_event_details : task_scheduled_event_details option;
-      [@ocaml.doc "Contains details about a task that was scheduled.\n"]
-  task_failed_event_details : task_failed_event_details option;
-      [@ocaml.doc "Contains details about the failure of a task.\n"]
-  activity_timed_out_event_details : activity_timed_out_event_details option; [@ocaml.doc ""]
-  activity_succeeded_event_details : activity_succeeded_event_details option; [@ocaml.doc ""]
-  activity_started_event_details : activity_started_event_details option; [@ocaml.doc ""]
-  activity_scheduled_event_details : activity_scheduled_event_details option; [@ocaml.doc ""]
-  activity_schedule_failed_event_details : activity_schedule_failed_event_details option;
-      [@ocaml.doc
-        "Contains details about an activity schedule event that failed during an execution.\n"]
-  activity_failed_event_details : activity_failed_event_details option; [@ocaml.doc ""]
-  previous_event_id : event_id option; [@ocaml.doc "The id of the previous event.\n"]
-  id : event_id;
-      [@ocaml.doc "The id of the event. Events are numbered sequentially, starting at one.\n"]
-  type_ : history_event_type; [@ocaml.doc "The type of the event.\n"]
-  timestamp : timestamp;
-      [@ocaml.doc
-        "The date and time the event occurred, expressed in seconds and fractional milliseconds \
-         since the Unix epoch, which is defined as January 1, 1970, at 00:00:00 Coordinated \
-         Universal Time (UTC).\n"]
-}
-[@@ocaml.doc "Contains details about the events of an execution.\n"]
-
-type nonrec history_event_list = history_event list [@@ocaml.doc ""]
-
-type nonrec get_execution_history_output = {
-  next_token : page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
-  events : history_event_list; [@ocaml.doc "The list of events that occurred in the execution.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec get_execution_history_input = {
-  include_execution_data : include_execution_data_get_execution_history option;
-      [@ocaml.doc
-        "You can select whether execution data (input or output of a history event) is returned. \
-         The default is [true].\n"]
-  next_token : page_token option;
-      [@ocaml.doc
-        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
-         a unique pagination token for each page. Make the call again using the returned token to \
-         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
-         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
-         InvalidToken} error.\n"]
-  reverse_order : reverse_order option;
-      [@ocaml.doc "Lists events in descending order of their [timeStamp].\n"]
-  max_results : page_size option;
-      [@ocaml.doc
-        "The maximum number of results that are returned per call. You can use [nextToken] to \
-         obtain further pages of results. The default is 100 and the maximum allowed page size is \
-         1000. A value of 0 uses the default.\n\n\
-        \ This is only an upper limit. The actual number of results returned per call might be \
-         fewer than the specified maximum.\n\
-        \ "]
-  execution_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the execution.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec get_activity_task_output = {
-  input : sensitive_data_job_input option;
-      [@ocaml.doc
-        "The string that contains the JSON input data for the task. Length constraints apply to \
-         the payload size, and are expressed as bytes in UTF-8 encoding.\n"]
-  task_token : task_token option;
-      [@ocaml.doc
-        "A token that identifies the scheduled task. This token must be copied and included in \
-         subsequent calls to [SendTaskHeartbeat], [SendTaskSuccess] or [SendTaskFailure] in order \
-         to report the progress or completion of the task.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec get_activity_task_input = {
-  worker_name : name option;
-      [@ocaml.doc
-        "You can provide an arbitrary name in order to identify the worker that the task is \
-         assigned to. This name is used when it is logged in the execution history.\n"]
-  activity_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the activity to retrieve tasks from (assigned when you \
-         create the task using [CreateActivity].)\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec activity_worker_limit_exceeded = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The maximum number of workers concurrently polling for activity tasks has been reached.\n"]
-
-type nonrec activity_does_not_exist = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The specified activity does not exist.\n"]
-
-type nonrec execution_redrive_status =
-  | REDRIVABLE_BY_MAP_RUN [@ocaml.doc ""]
-  | NOT_REDRIVABLE [@ocaml.doc ""]
-  | REDRIVABLE [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec describe_state_machine_output = {
-  variable_references : variable_references option;
-      [@ocaml.doc
-        "A map of {b state name} to a list of variables referenced by that state. States that do \
-         not use variable references will not be shown in the response.\n"]
-  encryption_configuration : encryption_configuration option;
-      [@ocaml.doc "Settings to configure server-side encryption. \n"]
-  description : version_description option;
-      [@ocaml.doc "The description of the state machine version.\n"]
-  revision_id : revision_id option;
-      [@ocaml.doc
-        "The revision identifier for the state machine.\n\n\
-        \ Use the [revisionId] parameter to compare between versions of a state machine \
-         configuration used for executions without performing a diff of the properties, such as \
-         [definition] and [roleArn].\n\
-        \ "]
-  label : map_run_label option;
-      [@ocaml.doc
-        "A user-defined or an auto-generated string that identifies a [Map] state. This parameter \
-         is present only if the [stateMachineArn] specified in input is a qualified state machine \
-         ARN.\n"]
-  tracing_configuration : tracing_configuration option;
-      [@ocaml.doc "Selects whether X-Ray tracing is enabled.\n"]
-  logging_configuration : logging_configuration option; [@ocaml.doc ""]
-  creation_date : timestamp;
-      [@ocaml.doc
-        "The date the state machine is created.\n\n\
-        \ For a state machine version, [creationDate] is the date the version was created.\n\
-        \ "]
-  type_ : state_machine_type;
-      [@ocaml.doc "The [type] of the state machine ([STANDARD] or [EXPRESS]).\n"]
-  role_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the IAM role used when creating this state machine. \
-         (The IAM role maintains security by granting Step Functions access to Amazon Web Services \
-         resources.)\n"]
-  definition : definition;
-      [@ocaml.doc
-        "The Amazon States Language definition of the state machine. See \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
-         States Language}.\n\n\
-        \ If called with [includedData = METADATA_ONLY], the returned definition will be [{}].\n\
-        \ "]
-  status : state_machine_status option; [@ocaml.doc "The current status of the state machine.\n"]
+      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the state machine.\n"]
   name : name;
       [@ocaml.doc
         "The name of the state machine.\n\n\
@@ -2515,6 +1301,1109 @@ type nonrec describe_state_machine_output = {
         \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
          and _.\n\
         \   "]
+  type_ : state_machine_type; [@ocaml.doc "\n"]
+  creation_date : timestamp; [@ocaml.doc "The date the state machine is created.\n"]
+}
+[@@ocaml.doc "Contains details about the state machine.\n"]
+
+type nonrec state_machine_list = state_machine_list_item list [@@ocaml.doc ""]
+
+type nonrec list_state_machines_output = {
+  state_machines : state_machine_list; [@ocaml.doc ""]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_state_machines_input = {
+  max_results : page_size option;
+      [@ocaml.doc
+        "The maximum number of results that are returned per call. You can use [nextToken] to \
+         obtain further pages of results. The default is 100 and the maximum allowed page size is \
+         1000. A value of 0 uses the default.\n\n\
+        \ This is only an upper limit. The actual number of results returned per call might be \
+         fewer than the specified maximum.\n\
+        \ "]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec state_machine_alias_list_item = {
+  state_machine_alias_arn : long_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) that identifies a state machine alias. The alias ARN is a \
+         combination of state machine ARN and the alias name separated by a colon (:). For \
+         example, [stateMachineARN:PROD].\n"]
+  creation_date : timestamp; [@ocaml.doc "The creation date of a state machine alias.\n"]
+}
+[@@ocaml.doc "Contains details about a specific state machine alias.\n"]
+
+type nonrec state_machine_alias_list = state_machine_alias_list_item list [@@ocaml.doc ""]
+
+type nonrec list_state_machine_aliases_output = {
+  state_machine_aliases : state_machine_alias_list; [@ocaml.doc "Aliases for the state machine.\n"]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_state_machine_aliases_input = {
+  state_machine_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the state machine for which you want to list aliases.\n\n\
+        \ If you specify a state machine version ARN, this API returns a list of aliases for that \
+         version.\n\
+        \ "]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+  max_results : page_size option;
+      [@ocaml.doc
+        "The maximum number of results that are returned per call. You can use [nextToken] to \
+         obtain further pages of results. The default is 100 and the maximum allowed page size is \
+         1000. A value of 0 uses the default.\n\n\
+        \ This is only an upper limit. The actual number of results returned per call might be \
+         fewer than the specified maximum.\n\
+        \ "]
+}
+[@@ocaml.doc ""]
+
+type nonrec map_run_list_item = {
+  execution_arn : arn;
+      [@ocaml.doc "The [executionArn] of the execution from which the Map Run was started.\n"]
+  map_run_arn : long_arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the Map Run.\n"]
+  state_machine_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the executed state machine.\n"]
+  start_date : timestamp; [@ocaml.doc "The date on which the Map Run started.\n"]
+  stop_date : timestamp option; [@ocaml.doc "The date on which the Map Run stopped.\n"]
+}
+[@@ocaml.doc "Contains details about a specific Map Run.\n"]
+
+type nonrec map_run_list = map_run_list_item list [@@ocaml.doc ""]
+
+type nonrec list_map_runs_output = {
+  map_runs : map_run_list;
+      [@ocaml.doc
+        "An array that lists information related to a Map Run, such as the Amazon Resource Name \
+         (ARN) of the Map Run and the ARN of the state machine that started the Map Run.\n"]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_map_runs_input = {
+  execution_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the execution for which the Map Runs must be listed.\n"]
+  max_results : page_size option;
+      [@ocaml.doc
+        "The maximum number of results that are returned per call. You can use [nextToken] to \
+         obtain further pages of results. The default is 100 and the maximum allowed page size is \
+         1000. A value of 0 uses the default.\n\n\
+        \ This is only an upper limit. The actual number of results returned per call might be \
+         fewer than the specified maximum.\n\
+        \ "]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_executions_page_token = string [@@ocaml.doc ""]
+
+type nonrec redrive_count = int [@@ocaml.doc ""]
+
+type nonrec unsigned_integer = int [@@ocaml.doc ""]
+
+type nonrec execution_status =
+  | RUNNING [@ocaml.doc ""]
+  | SUCCEEDED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | TIMED_OUT [@ocaml.doc ""]
+  | ABORTED [@ocaml.doc ""]
+  | PENDING_REDRIVE [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec execution_list_item = {
+  execution_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the execution.\n"]
+  state_machine_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine that ran the execution.\n"]
+  name : name;
+      [@ocaml.doc
+        "The name of the execution.\n\n\
+        \ A name must {i not} contain:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-  white space\n\
+        \            \n\
+        \             }\n\
+        \        {-  brackets [< > { } \\[ \\]] \n\
+        \            \n\
+        \             }\n\
+        \        {-  wildcard characters [? *] \n\
+        \            \n\
+        \             }\n\
+        \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
+        \            \n\
+        \             }\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
+         and _.\n\
+        \   "]
+  status : execution_status; [@ocaml.doc "The current status of the execution.\n"]
+  start_date : timestamp; [@ocaml.doc "The date the execution started.\n"]
+  stop_date : timestamp option;
+      [@ocaml.doc "If the execution already ended, the date the execution stopped.\n"]
+  map_run_arn : long_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of a Map Run. This field is returned only if [mapRunArn] \
+         was specified in the [ListExecutions] API action. If [stateMachineArn] was specified in \
+         [ListExecutions], the [mapRunArn] isn't returned.\n"]
+  item_count : unsigned_integer option;
+      [@ocaml.doc
+        "The total number of items processed in a child workflow execution. This field is returned \
+         only if [mapRunArn] was specified in the [ListExecutions] API action. If \
+         [stateMachineArn] was specified in [ListExecutions], the [itemCount] field isn't returned.\n"]
+  state_machine_version_arn : arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the state machine version associated with the \
+         execution.\n\n\
+        \ If the state machine execution was started with an unqualified ARN, it returns null.\n\
+        \ \n\
+        \  If the execution was started using a [stateMachineAliasArn], both the \
+         [stateMachineAliasArn] and [stateMachineVersionArn] parameters contain the respective \
+         values.\n\
+        \  "]
+  state_machine_alias_arn : arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the state machine alias used to start an execution.\n\n\
+        \ If the state machine execution was started with an unqualified ARN or a version ARN, it \
+         returns null.\n\
+        \ "]
+  redrive_count : redrive_count option;
+      [@ocaml.doc
+        "The number of times you've redriven an execution. If you have not yet redriven an \
+         execution, the [redriveCount] is 0. This count is only updated when you successfully \
+         redrive an execution.\n"]
+  redrive_date : timestamp option; [@ocaml.doc "The date the execution was last redriven.\n"]
+}
+[@@ocaml.doc "Contains details about an execution.\n"]
+
+type nonrec execution_list = execution_list_item list [@@ocaml.doc ""]
+
+type nonrec list_executions_output = {
+  executions : execution_list; [@ocaml.doc "The list of matching executions.\n"]
+  next_token : list_executions_page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec execution_redrive_filter = REDRIVEN [@ocaml.doc ""] | NOT_REDRIVEN [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec list_executions_input = {
+  state_machine_arn : arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the state machine whose executions is listed.\n\n\
+        \ You can specify either a [mapRunArn] or a [stateMachineArn], but not both.\n\
+        \ \n\
+        \  You can also return a list of executions associated with a specific \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-alias.html}alias} \
+         or \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-version.html}version}, \
+         by specifying an alias ARN or a version ARN in the [stateMachineArn] parameter.\n\
+        \  "]
+  status_filter : execution_status option;
+      [@ocaml.doc
+        "If specified, only list the executions whose current execution status matches the given \
+         filter.\n\n\
+        \ If you provide a [PENDING_REDRIVE] statusFilter, you must specify [mapRunArn]. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/redrive-map-run.html#redrive-child-workflow-behavior}Child \
+         workflow execution redrive behaviour} in the {i Step Functions Developer Guide}. \n\
+        \ \n\
+        \  If you provide a stateMachineArn and a [PENDING_REDRIVE] statusFilter, the API returns \
+         a validation exception.\n\
+        \  "]
+  max_results : page_size option;
+      [@ocaml.doc
+        "The maximum number of results that are returned per call. You can use [nextToken] to \
+         obtain further pages of results. The default is 100 and the maximum allowed page size is \
+         1000. A value of 0 uses the default.\n\n\
+        \ This is only an upper limit. The actual number of results returned per call might be \
+         fewer than the specified maximum.\n\
+        \ "]
+  next_token : list_executions_page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+  map_run_arn : long_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the Map Run that started the child workflow executions. \
+         If the [mapRunArn] field is specified, a list of all of the child workflow executions \
+         started by a Map Run is returned. For more information, see \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-examine-map-run.html}Examining \
+         Map Run} in the {i Step Functions Developer Guide}.\n\n\
+        \ You can specify either a [mapRunArn] or a [stateMachineArn], but not both.\n\
+        \ "]
+  redrive_filter : execution_redrive_filter option;
+      [@ocaml.doc
+        "Sets a filter to list executions based on whether or not they have been redriven.\n\n\
+        \ For a Distributed Map, [redriveFilter] sets a filter to list child workflow executions \
+         based on whether or not they have been redriven.\n\
+        \ \n\
+        \  If you do not provide a [redriveFilter], Step Functions returns a list of both redriven \
+         and non-redriven executions.\n\
+        \  \n\
+        \   If you provide a state machine ARN in [redriveFilter], the API returns a validation \
+         exception.\n\
+        \   "]
+}
+[@@ocaml.doc ""]
+
+type nonrec activity_list_item = {
+  activity_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the activity.\n"]
+  name : name;
+      [@ocaml.doc
+        "The name of the activity.\n\n\
+        \ A name must {i not} contain:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-  white space\n\
+        \            \n\
+        \             }\n\
+        \        {-  brackets [< > { } \\[ \\]] \n\
+        \            \n\
+        \             }\n\
+        \        {-  wildcard characters [? *] \n\
+        \            \n\
+        \             }\n\
+        \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
+        \            \n\
+        \             }\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
+         and _.\n\
+        \   "]
+  creation_date : timestamp; [@ocaml.doc "The date the activity is created.\n"]
+}
+[@@ocaml.doc "Contains details about an activity.\n"]
+
+type nonrec activity_list = activity_list_item list [@@ocaml.doc ""]
+
+type nonrec list_activities_output = {
+  activities : activity_list; [@ocaml.doc "The list of activities.\n"]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_activities_input = {
+  max_results : page_size option;
+      [@ocaml.doc
+        "The maximum number of results that are returned per call. You can use [nextToken] to \
+         obtain further pages of results. The default is 100 and the maximum allowed page size is \
+         1000. A value of 0 uses the default.\n\n\
+        \ This is only an upper limit. The actual number of results returned per call might be \
+         fewer than the specified maximum.\n\
+        \ "]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec evaluation_failure_location = string [@@ocaml.doc ""]
+
+type nonrec evaluation_failed_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+  location : evaluation_failure_location option;
+      [@ocaml.doc
+        "The location of the field in the state in which the evaluation error occurred.\n"]
+  state : state_name; [@ocaml.doc "The name of the state in which the evaluation error occurred.\n"]
+}
+[@@ocaml.doc
+  "Contains details about an evaluation failure that occurred while processing a state, for \
+   example, when a JSONata expression throws an error. This event will only be present in state \
+   machines that have {b  QueryLanguage} set to JSONata, or individual states set to JSONata.\n"]
+
+type nonrec map_run_redriven_event_details = {
+  map_run_arn : long_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of a Map Run that was redriven.\n"]
+  redrive_count : redrive_count option;
+      [@ocaml.doc
+        "The number of times the Map Run has been redriven at this point in the execution's \
+         history including this event. The redrive count for a redriven Map Run is always greater \
+         than 0.\n"]
+}
+[@@ocaml.doc "Contains details about a Map Run that was redriven.\n"]
+
+type nonrec map_run_failed_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the Map Run failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc
+  "Contains details about a Map Run failure event that occurred during a state machine execution.\n"]
+
+type nonrec map_run_started_event_details = {
+  map_run_arn : long_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of a Map Run that was started.\n"]
+}
+[@@ocaml.doc
+  "Contains details about a Map Run that was started during a state machine execution.\n"]
+
+type nonrec truncated = bool [@@ocaml.doc ""]
+
+type nonrec assigned_variables_details = {
+  truncated : truncated option;
+      [@ocaml.doc
+        "Indicates whether assigned variables were truncated in the response. Always [false] for \
+         API calls. In CloudWatch logs, the value will be true if the data is truncated due to \
+         size limits.\n"]
+}
+[@@ocaml.doc "Provides details about assigned variables in an execution history event.\n"]
+
+type nonrec variable_value = string [@@ocaml.doc ""]
+
+type nonrec variable_name = string [@@ocaml.doc ""]
+
+type nonrec assigned_variables = (variable_name * variable_value) list [@@ocaml.doc ""]
+
+type nonrec history_event_execution_data_details = {
+  truncated : truncated option;
+      [@ocaml.doc
+        "Indicates whether input or output was truncated in the response. Always [false] for API \
+         calls. In CloudWatch logs, the value will be true if the data is truncated due to size \
+         limits.\n"]
+}
+[@@ocaml.doc "Provides details about input or output in an execution history event.\n"]
+
+type nonrec state_exited_event_details = {
+  name : name;
+      [@ocaml.doc
+        "The name of the state.\n\n\
+        \ A name must {i not} contain:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-  white space\n\
+        \            \n\
+        \             }\n\
+        \        {-  brackets [< > { } \\[ \\]] \n\
+        \            \n\
+        \             }\n\
+        \        {-  wildcard characters [? *] \n\
+        \            \n\
+        \             }\n\
+        \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
+        \            \n\
+        \             }\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
+         and _.\n\
+        \   "]
+  output : sensitive_data option;
+      [@ocaml.doc
+        "The JSON output data of the state. Length constraints apply to the payload size, and are \
+         expressed as bytes in UTF-8 encoding.\n"]
+  output_details : history_event_execution_data_details option;
+      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
+  assigned_variables : assigned_variables option;
+      [@ocaml.doc "Map of variable name and value as a serialized JSON representation.\n"]
+  assigned_variables_details : assigned_variables_details option;
+      [@ocaml.doc "Provides details about input or output in an execution history event.\n"]
+}
+[@@ocaml.doc "Contains details about an exit from a state during an execution.\n"]
+
+type nonrec state_entered_event_details = {
+  name : name; [@ocaml.doc "The name of the state.\n"]
+  input : sensitive_data option;
+      [@ocaml.doc
+        "The string that contains the JSON input data for the state. Length constraints apply to \
+         the payload size, and are expressed as bytes in UTF-8 encoding.\n"]
+  input_details : history_event_execution_data_details option;
+      [@ocaml.doc "Contains details about the input for an execution history event.\n"]
+}
+[@@ocaml.doc "Contains details about a state entered during an execution.\n"]
+
+type nonrec lambda_function_timed_out_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the timeout.\n"]
+}
+[@@ocaml.doc
+  "Contains details about a Lambda function timeout that occurred during an execution.\n"]
+
+type nonrec lambda_function_succeeded_event_details = {
+  output : sensitive_data option;
+      [@ocaml.doc
+        "The JSON data output by the Lambda function. Length constraints apply to the payload \
+         size, and are expressed as bytes in UTF-8 encoding.\n"]
+  output_details : history_event_execution_data_details option;
+      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
+}
+[@@ocaml.doc
+  "Contains details about a Lambda function that successfully terminated during an execution.\n"]
+
+type nonrec lambda_function_start_failed_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc "Contains details about a lambda function that failed to start during an execution.\n"]
+
+type nonrec task_credentials = {
+  role_arn : long_arn option;
+      [@ocaml.doc
+        "The ARN of an IAM role that Step Functions assumes for the task. The role can allow \
+         cross-account access to resources.\n"]
+}
+[@@ocaml.doc "Contains details about the credentials that Step Functions uses for a task.\n"]
+
+type nonrec timeout_in_seconds = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
+
+type nonrec lambda_function_scheduled_event_details = {
+  resource : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the scheduled Lambda function.\n"]
+  input : sensitive_data option;
+      [@ocaml.doc
+        "The JSON data input to the Lambda function. Length constraints apply to the payload size, \
+         and are expressed as bytes in UTF-8 encoding.\n"]
+  input_details : history_event_execution_data_details option;
+      [@ocaml.doc "Contains details about input for an execution history event.\n"]
+  timeout_in_seconds : timeout_in_seconds option;
+      [@ocaml.doc "The maximum allowed duration of the Lambda function.\n"]
+  task_credentials : task_credentials option;
+      [@ocaml.doc "The credentials that Step Functions uses for the task.\n"]
+}
+[@@ocaml.doc "Contains details about a Lambda function scheduled during an execution.\n"]
+
+type nonrec lambda_function_schedule_failed_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc
+  "Contains details about a failed Lambda function schedule event that occurred during an execution.\n"]
+
+type nonrec lambda_function_failed_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc "Contains details about a Lambda function that failed during an execution.\n"]
+
+type nonrec map_iteration_event_details = {
+  name : name option; [@ocaml.doc "The name of the iteration\226\128\153s parent Map state.\n"]
+  index : unsigned_integer option;
+      [@ocaml.doc "The index of the array belonging to the Map state iteration.\n"]
+}
+[@@ocaml.doc "Contains details about an iteration of a Map state.\n"]
+
+type nonrec map_state_started_event_details = {
+  length : unsigned_integer option; [@ocaml.doc "The size of the array for Map state iterations.\n"]
+}
+[@@ocaml.doc "Details about a Map state that was started.\n"]
+
+type nonrec execution_redriven_event_details = {
+  redrive_count : redrive_count option;
+      [@ocaml.doc
+        "The number of times you've redriven an execution. If you have not yet redriven an \
+         execution, the [redriveCount] is 0. This count is not updated for redrives that failed to \
+         start or are pending to be redriven.\n"]
+}
+[@@ocaml.doc "Contains details about a redriven execution.\n"]
+
+type nonrec execution_timed_out_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the timeout.\n"]
+}
+[@@ocaml.doc "Contains details about the execution timeout that occurred during the execution.\n"]
+
+type nonrec execution_aborted_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc "Contains details about an abort of an execution.\n"]
+
+type nonrec execution_succeeded_event_details = {
+  output : sensitive_data option;
+      [@ocaml.doc
+        "The JSON data output by the execution. Length constraints apply to the payload size, and \
+         are expressed as bytes in UTF-8 encoding.\n"]
+  output_details : history_event_execution_data_details option;
+      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
+}
+[@@ocaml.doc "Contains details about the successful termination of the execution.\n"]
+
+type nonrec execution_started_event_details = {
+  input : sensitive_data option;
+      [@ocaml.doc
+        "The JSON data input to the execution. Length constraints apply to the payload size, and \
+         are expressed as bytes in UTF-8 encoding.\n"]
+  input_details : history_event_execution_data_details option;
+      [@ocaml.doc "Contains details about the input for an execution history event.\n"]
+  role_arn : arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the IAM role used for executing Lambda tasks.\n"]
+  state_machine_alias_arn : arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) that identifies a state machine alias used for starting \
+         the state machine execution.\n"]
+  state_machine_version_arn : arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) that identifies a state machine version used for starting \
+         the state machine execution.\n"]
+}
+[@@ocaml.doc "Contains details about the start of the execution.\n"]
+
+type nonrec execution_failed_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc "Contains details about an execution failure event.\n"]
+
+type nonrec task_timed_out_event_details = {
+  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
+  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc "Contains details about a resource timeout that occurred during an execution.\n"]
+
+type nonrec task_succeeded_event_details = {
+  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
+  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
+  output : sensitive_data option;
+      [@ocaml.doc
+        "The full JSON response from a resource when a task has succeeded. This response becomes \
+         the output of the related task. Length constraints apply to the payload size, and are \
+         expressed as bytes in UTF-8 encoding.\n"]
+  output_details : history_event_execution_data_details option;
+      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
+}
+[@@ocaml.doc "Contains details about the successful completion of a task state.\n"]
+
+type nonrec task_submitted_event_details = {
+  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
+  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
+  output : sensitive_data option;
+      [@ocaml.doc
+        "The response from a resource when a task has started. Length constraints apply to the \
+         payload size, and are expressed as bytes in UTF-8 encoding.\n"]
+  output_details : history_event_execution_data_details option;
+      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
+}
+[@@ocaml.doc "Contains details about a task submitted to a resource .\n"]
+
+type nonrec task_submit_failed_event_details = {
+  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
+  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc "Contains details about a task that failed to submit during an execution.\n"]
+
+type nonrec task_started_event_details = {
+  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
+  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
+}
+[@@ocaml.doc "Contains details about the start of a task during an execution.\n"]
+
+type nonrec task_start_failed_event_details = {
+  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
+  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc "Contains details about a task that failed to start during an execution.\n"]
+
+type nonrec connector_parameters = string [@@ocaml.doc ""]
+
+type nonrec task_scheduled_event_details = {
+  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
+  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
+  region : name; [@ocaml.doc "The region of the scheduled task\n"]
+  parameters : connector_parameters;
+      [@ocaml.doc
+        "The JSON data passed to the resource referenced in a task state. Length constraints apply \
+         to the payload size, and are expressed as bytes in UTF-8 encoding.\n"]
+  timeout_in_seconds : timeout_in_seconds option;
+      [@ocaml.doc "The maximum allowed duration of the task.\n"]
+  heartbeat_in_seconds : timeout_in_seconds option;
+      [@ocaml.doc "The maximum allowed duration between two heartbeats for the task.\n"]
+  task_credentials : task_credentials option;
+      [@ocaml.doc "The credentials that Step Functions uses for the task.\n"]
+}
+[@@ocaml.doc "Contains details about a task scheduled during an execution.\n"]
+
+type nonrec task_failed_event_details = {
+  resource_type : name; [@ocaml.doc "The service name of the resource in a task state.\n"]
+  resource : name; [@ocaml.doc "The action of the resource called by a task state.\n"]
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc "Contains details about a task failure event.\n"]
+
+type nonrec activity_timed_out_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the timeout.\n"]
+}
+[@@ocaml.doc "Contains details about an activity timeout that occurred during an execution.\n"]
+
+type nonrec activity_succeeded_event_details = {
+  output : sensitive_data option;
+      [@ocaml.doc
+        "The JSON data output by the activity task. Length constraints apply to the payload size, \
+         and are expressed as bytes in UTF-8 encoding.\n"]
+  output_details : history_event_execution_data_details option;
+      [@ocaml.doc "Contains details about the output of an execution history event.\n"]
+}
+[@@ocaml.doc
+  "Contains details about an activity that successfully terminated during an execution.\n"]
+
+type nonrec identity = string [@@ocaml.doc ""]
+
+type nonrec activity_started_event_details = {
+  worker_name : identity option;
+      [@ocaml.doc
+        "The name of the worker that the task is assigned to. These names are provided by the \
+         workers when calling [GetActivityTask].\n"]
+}
+[@@ocaml.doc "Contains details about the start of an activity during an execution.\n"]
+
+type nonrec activity_scheduled_event_details = {
+  resource : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the scheduled activity.\n"]
+  input : sensitive_data option;
+      [@ocaml.doc
+        "The JSON data input to the activity task. Length constraints apply to the payload size, \
+         and are expressed as bytes in UTF-8 encoding.\n"]
+  input_details : history_event_execution_data_details option;
+      [@ocaml.doc "Contains details about the input for an execution history event.\n"]
+  timeout_in_seconds : timeout_in_seconds option;
+      [@ocaml.doc "The maximum allowed duration of the activity task.\n"]
+  heartbeat_in_seconds : timeout_in_seconds option;
+      [@ocaml.doc "The maximum allowed duration between two heartbeats for the activity task.\n"]
+}
+[@@ocaml.doc "Contains details about an activity scheduled during an execution.\n"]
+
+type nonrec activity_schedule_failed_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc
+  "Contains details about an activity schedule failure that occurred during an execution.\n"]
+
+type nonrec activity_failed_event_details = {
+  error : sensitive_error option; [@ocaml.doc "The error code of the failure.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"]
+}
+[@@ocaml.doc "Contains details about an activity that failed during an execution.\n"]
+
+type nonrec event_id = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
+
+type nonrec history_event_type =
+  | ActivityFailed [@ocaml.doc ""]
+  | ActivityScheduled [@ocaml.doc ""]
+  | ActivityScheduleFailed [@ocaml.doc ""]
+  | ActivityStarted [@ocaml.doc ""]
+  | ActivitySucceeded [@ocaml.doc ""]
+  | ActivityTimedOut [@ocaml.doc ""]
+  | ChoiceStateEntered [@ocaml.doc ""]
+  | ChoiceStateExited [@ocaml.doc ""]
+  | ExecutionAborted [@ocaml.doc ""]
+  | ExecutionFailed [@ocaml.doc ""]
+  | ExecutionStarted [@ocaml.doc ""]
+  | ExecutionSucceeded [@ocaml.doc ""]
+  | ExecutionTimedOut [@ocaml.doc ""]
+  | FailStateEntered [@ocaml.doc ""]
+  | LambdaFunctionFailed [@ocaml.doc ""]
+  | LambdaFunctionScheduled [@ocaml.doc ""]
+  | LambdaFunctionScheduleFailed [@ocaml.doc ""]
+  | LambdaFunctionStarted [@ocaml.doc ""]
+  | LambdaFunctionStartFailed [@ocaml.doc ""]
+  | LambdaFunctionSucceeded [@ocaml.doc ""]
+  | LambdaFunctionTimedOut [@ocaml.doc ""]
+  | MapIterationAborted [@ocaml.doc ""]
+  | MapIterationFailed [@ocaml.doc ""]
+  | MapIterationStarted [@ocaml.doc ""]
+  | MapIterationSucceeded [@ocaml.doc ""]
+  | MapStateAborted [@ocaml.doc ""]
+  | MapStateEntered [@ocaml.doc ""]
+  | MapStateExited [@ocaml.doc ""]
+  | MapStateFailed [@ocaml.doc ""]
+  | MapStateStarted [@ocaml.doc ""]
+  | MapStateSucceeded [@ocaml.doc ""]
+  | ParallelStateAborted [@ocaml.doc ""]
+  | ParallelStateEntered [@ocaml.doc ""]
+  | ParallelStateExited [@ocaml.doc ""]
+  | ParallelStateFailed [@ocaml.doc ""]
+  | ParallelStateStarted [@ocaml.doc ""]
+  | ParallelStateSucceeded [@ocaml.doc ""]
+  | PassStateEntered [@ocaml.doc ""]
+  | PassStateExited [@ocaml.doc ""]
+  | SucceedStateEntered [@ocaml.doc ""]
+  | SucceedStateExited [@ocaml.doc ""]
+  | TaskFailed [@ocaml.doc ""]
+  | TaskScheduled [@ocaml.doc ""]
+  | TaskStarted [@ocaml.doc ""]
+  | TaskStartFailed [@ocaml.doc ""]
+  | TaskStateAborted [@ocaml.doc ""]
+  | TaskStateEntered [@ocaml.doc ""]
+  | TaskStateExited [@ocaml.doc ""]
+  | TaskSubmitFailed [@ocaml.doc ""]
+  | TaskSubmitted [@ocaml.doc ""]
+  | TaskSucceeded [@ocaml.doc ""]
+  | TaskTimedOut [@ocaml.doc ""]
+  | WaitStateAborted [@ocaml.doc ""]
+  | WaitStateEntered [@ocaml.doc ""]
+  | WaitStateExited [@ocaml.doc ""]
+  | MapRunAborted [@ocaml.doc ""]
+  | MapRunFailed [@ocaml.doc ""]
+  | MapRunStarted [@ocaml.doc ""]
+  | MapRunSucceeded [@ocaml.doc ""]
+  | ExecutionRedriven [@ocaml.doc ""]
+  | MapRunRedriven [@ocaml.doc ""]
+  | EvaluationFailed [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec history_event = {
+  timestamp : timestamp;
+      [@ocaml.doc
+        "The date and time the event occurred, expressed in seconds and fractional milliseconds \
+         since the Unix epoch, which is defined as January 1, 1970, at 00:00:00 Coordinated \
+         Universal Time (UTC).\n"]
+  type_ : history_event_type; [@ocaml.doc "The type of the event.\n"]
+  id : event_id;
+      [@ocaml.doc "The id of the event. Events are numbered sequentially, starting at one.\n"]
+  previous_event_id : event_id option; [@ocaml.doc "The id of the previous event.\n"]
+  activity_failed_event_details : activity_failed_event_details option; [@ocaml.doc ""]
+  activity_schedule_failed_event_details : activity_schedule_failed_event_details option;
+      [@ocaml.doc
+        "Contains details about an activity schedule event that failed during an execution.\n"]
+  activity_scheduled_event_details : activity_scheduled_event_details option; [@ocaml.doc ""]
+  activity_started_event_details : activity_started_event_details option; [@ocaml.doc ""]
+  activity_succeeded_event_details : activity_succeeded_event_details option; [@ocaml.doc ""]
+  activity_timed_out_event_details : activity_timed_out_event_details option; [@ocaml.doc ""]
+  task_failed_event_details : task_failed_event_details option;
+      [@ocaml.doc "Contains details about the failure of a task.\n"]
+  task_scheduled_event_details : task_scheduled_event_details option;
+      [@ocaml.doc "Contains details about a task that was scheduled.\n"]
+  task_start_failed_event_details : task_start_failed_event_details option;
+      [@ocaml.doc "Contains details about a task that failed to start.\n"]
+  task_started_event_details : task_started_event_details option;
+      [@ocaml.doc "Contains details about a task that was started.\n"]
+  task_submit_failed_event_details : task_submit_failed_event_details option;
+      [@ocaml.doc "Contains details about a task that where the submit failed.\n"]
+  task_submitted_event_details : task_submitted_event_details option;
+      [@ocaml.doc "Contains details about a submitted task.\n"]
+  task_succeeded_event_details : task_succeeded_event_details option;
+      [@ocaml.doc "Contains details about a task that succeeded.\n"]
+  task_timed_out_event_details : task_timed_out_event_details option;
+      [@ocaml.doc "Contains details about a task that timed out.\n"]
+  execution_failed_event_details : execution_failed_event_details option; [@ocaml.doc ""]
+  execution_started_event_details : execution_started_event_details option; [@ocaml.doc ""]
+  execution_succeeded_event_details : execution_succeeded_event_details option; [@ocaml.doc ""]
+  execution_aborted_event_details : execution_aborted_event_details option; [@ocaml.doc ""]
+  execution_timed_out_event_details : execution_timed_out_event_details option; [@ocaml.doc ""]
+  execution_redriven_event_details : execution_redriven_event_details option;
+      [@ocaml.doc "Contains details about the redrive attempt of an execution.\n"]
+  map_state_started_event_details : map_state_started_event_details option;
+      [@ocaml.doc "Contains details about Map state that was started.\n"]
+  map_iteration_started_event_details : map_iteration_event_details option;
+      [@ocaml.doc "Contains details about an iteration of a Map state that was started.\n"]
+  map_iteration_succeeded_event_details : map_iteration_event_details option;
+      [@ocaml.doc "Contains details about an iteration of a Map state that succeeded.\n"]
+  map_iteration_failed_event_details : map_iteration_event_details option;
+      [@ocaml.doc "Contains details about an iteration of a Map state that failed.\n"]
+  map_iteration_aborted_event_details : map_iteration_event_details option;
+      [@ocaml.doc "Contains details about an iteration of a Map state that was aborted.\n"]
+  lambda_function_failed_event_details : lambda_function_failed_event_details option;
+      [@ocaml.doc ""]
+  lambda_function_schedule_failed_event_details :
+    lambda_function_schedule_failed_event_details option;
+      [@ocaml.doc ""]
+  lambda_function_scheduled_event_details : lambda_function_scheduled_event_details option;
+      [@ocaml.doc ""]
+  lambda_function_start_failed_event_details : lambda_function_start_failed_event_details option;
+      [@ocaml.doc
+        "Contains details about a lambda function that failed to start during an execution.\n"]
+  lambda_function_succeeded_event_details : lambda_function_succeeded_event_details option;
+      [@ocaml.doc
+        "Contains details about a Lambda function that terminated successfully during an execution.\n"]
+  lambda_function_timed_out_event_details : lambda_function_timed_out_event_details option;
+      [@ocaml.doc ""]
+  state_entered_event_details : state_entered_event_details option; [@ocaml.doc ""]
+  state_exited_event_details : state_exited_event_details option; [@ocaml.doc ""]
+  map_run_started_event_details : map_run_started_event_details option;
+      [@ocaml.doc
+        "Contains details, such as [mapRunArn], and the start date and time of a Map Run. \
+         [mapRunArn] is the Amazon Resource Name (ARN) of the Map Run that was started.\n"]
+  map_run_failed_event_details : map_run_failed_event_details option;
+      [@ocaml.doc "Contains error and cause details about a Map Run that failed.\n"]
+  map_run_redriven_event_details : map_run_redriven_event_details option;
+      [@ocaml.doc "Contains details about the redrive attempt of a Map Run.\n"]
+  evaluation_failed_event_details : evaluation_failed_event_details option;
+      [@ocaml.doc
+        "Contains details about an evaluation failure that occurred while processing a state.\n"]
+}
+[@@ocaml.doc "Contains details about the events of an execution.\n"]
+
+type nonrec history_event_list = history_event list [@@ocaml.doc ""]
+
+type nonrec get_execution_history_output = {
+  events : history_event_list; [@ocaml.doc "The list of events that occurred in the execution.\n"]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec include_execution_data_get_execution_history = bool [@@ocaml.doc ""]
+
+type nonrec reverse_order = bool [@@ocaml.doc ""]
+
+type nonrec get_execution_history_input = {
+  execution_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the execution.\n"]
+  max_results : page_size option;
+      [@ocaml.doc
+        "The maximum number of results that are returned per call. You can use [nextToken] to \
+         obtain further pages of results. The default is 100 and the maximum allowed page size is \
+         1000. A value of 0 uses the default.\n\n\
+        \ This is only an upper limit. The actual number of results returned per call might be \
+         fewer than the specified maximum.\n\
+        \ "]
+  reverse_order : reverse_order option;
+      [@ocaml.doc "Lists events in descending order of their [timeStamp].\n"]
+  next_token : page_token option;
+      [@ocaml.doc
+        "If [nextToken] is returned, there are more results available. The value of [nextToken] is \
+         a unique pagination token for each page. Make the call again using the returned token to \
+         retrieve the next page. Keep all other arguments unchanged. Each pagination token expires \
+         after 24 hours. Using an expired pagination token will return an {i HTTP 400 \
+         InvalidToken} error.\n"]
+  include_execution_data : include_execution_data_get_execution_history option;
+      [@ocaml.doc
+        "You can select whether execution data (input or output of a history event) is returned. \
+         The default is [true].\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec activity_worker_limit_exceeded = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The maximum number of workers concurrently polling for activity tasks has been reached.\n"]
+
+type nonrec activity_does_not_exist = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The specified activity does not exist.\n"]
+
+type nonrec sensitive_data_job_input = string [@@ocaml.doc ""]
+
+type nonrec get_activity_task_output = {
+  task_token : task_token option;
+      [@ocaml.doc
+        "A token that identifies the scheduled task. This token must be copied and included in \
+         subsequent calls to [SendTaskHeartbeat], [SendTaskSuccess] or [SendTaskFailure] in order \
+         to report the progress or completion of the task.\n"]
+  input : sensitive_data_job_input option;
+      [@ocaml.doc
+        "The string that contains the JSON input data for the task. Length constraints apply to \
+         the payload size, and are expressed as bytes in UTF-8 encoding.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_activity_task_input = {
+  activity_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the activity to retrieve tasks from (assigned when you \
+         create the task using [CreateActivity].)\n"]
+  worker_name : name option;
+      [@ocaml.doc
+        "You can provide an arbitrary name in order to identify the worker that the task is \
+         assigned to. This name is used when it is logged in the execution history.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec variable_name_list = variable_name list [@@ocaml.doc ""]
+
+type nonrec variable_references = (state_name * variable_name_list) list [@@ocaml.doc ""]
+
+type nonrec map_run_label = string [@@ocaml.doc ""]
+
+type nonrec describe_state_machine_for_execution_output = {
+  state_machine_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the state machine associated with the execution.\n"]
+  name : name; [@ocaml.doc "The name of the state machine associated with the execution.\n"]
+  definition : definition;
+      [@ocaml.doc
+        "The Amazon States Language definition of the state machine. See \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
+         States Language}.\n"]
+  role_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the IAM role of the State Machine for the execution. \n"]
+  update_date : timestamp;
+      [@ocaml.doc
+        "The date and time the state machine associated with an execution was updated. For a newly \
+         created state machine, this is the creation date.\n"]
+  logging_configuration : logging_configuration option; [@ocaml.doc ""]
+  tracing_configuration : tracing_configuration option;
+      [@ocaml.doc "Selects whether X-Ray tracing is enabled.\n"]
+  map_run_arn : long_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the Map Run that started the child workflow execution. \
+         This field is returned only if the [executionArn] is a child workflow execution that was \
+         started by a Distributed Map state.\n"]
+  label : map_run_label option;
+      [@ocaml.doc
+        "A user-defined or an auto-generated string that identifies a [Map] state. This field is \
+         returned only if the [executionArn] is a child workflow execution that was started by a \
+         Distributed Map state.\n"]
+  revision_id : revision_id option;
+      [@ocaml.doc
+        "The revision identifier for the state machine. The first revision ID when you create the \
+         state machine is null.\n\n\
+        \ Use the state machine [revisionId] parameter to compare the revision of a state machine \
+         with the configuration of the state machine used for executions without performing a diff \
+         of the properties, such as [definition] and [roleArn].\n\
+        \ "]
+  encryption_configuration : encryption_configuration option;
+      [@ocaml.doc "Settings to configure server-side encryption. \n"]
+  variable_references : variable_references option;
+      [@ocaml.doc
+        "A map of {b state name} to a list of variables referenced by that state. States that do \
+         not use variable references will not be shown in the response.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_state_machine_for_execution_input = {
+  execution_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the execution you want state machine information for.\n"]
+  included_data : included_data option;
+      [@ocaml.doc
+        "If your state machine definition is encrypted with a KMS key, callers must have \
+         [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call the API \
+         with [includedData = METADATA_ONLY] to get a successful response without the encrypted \
+         definition.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_state_machine_alias_output = {
+  state_machine_alias_arn : arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine alias.\n"]
+  name : name option; [@ocaml.doc "The name of the state machine alias.\n"]
+  description : alias_description option; [@ocaml.doc "A description of the alias.\n"]
+  routing_configuration : routing_configuration_list option;
+      [@ocaml.doc "The routing configuration of the alias.\n"]
+  creation_date : timestamp option; [@ocaml.doc "The date the state machine alias was created.\n"]
+  update_date : timestamp option;
+      [@ocaml.doc
+        "The date the state machine alias was last updated.\n\n\
+        \ For a newly created state machine, this is the same as the creation date.\n\
+        \ "]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_state_machine_alias_input = {
+  state_machine_alias_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine alias.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec state_machine_status = ACTIVE [@ocaml.doc ""] | DELETING [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec describe_state_machine_output = {
   state_machine_arn : arn;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) that identifies the state machine.\n\n\
@@ -2522,10 +2411,91 @@ type nonrec describe_state_machine_output = {
          version ARN. The version ARN is a combination of state machine ARN and the version number \
          separated by a colon (:). For example, [stateMachineARN:1].\n\
         \ "]
+  name : name;
+      [@ocaml.doc
+        "The name of the state machine.\n\n\
+        \ A name must {i not} contain:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-  white space\n\
+        \            \n\
+        \             }\n\
+        \        {-  brackets [< > { } \\[ \\]] \n\
+        \            \n\
+        \             }\n\
+        \        {-  wildcard characters [? *] \n\
+        \            \n\
+        \             }\n\
+        \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
+        \            \n\
+        \             }\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
+         and _.\n\
+        \   "]
+  status : state_machine_status option; [@ocaml.doc "The current status of the state machine.\n"]
+  definition : definition;
+      [@ocaml.doc
+        "The Amazon States Language definition of the state machine. See \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
+         States Language}.\n\n\
+        \ If called with [includedData = METADATA_ONLY], the returned definition will be [{}].\n\
+        \ "]
+  role_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the IAM role used when creating this state machine. \
+         (The IAM role maintains security by granting Step Functions access to Amazon Web Services \
+         resources.)\n"]
+  type_ : state_machine_type;
+      [@ocaml.doc "The [type] of the state machine ([STANDARD] or [EXPRESS]).\n"]
+  creation_date : timestamp;
+      [@ocaml.doc
+        "The date the state machine is created.\n\n\
+        \ For a state machine version, [creationDate] is the date the version was created.\n\
+        \ "]
+  logging_configuration : logging_configuration option; [@ocaml.doc ""]
+  tracing_configuration : tracing_configuration option;
+      [@ocaml.doc "Selects whether X-Ray tracing is enabled.\n"]
+  label : map_run_label option;
+      [@ocaml.doc
+        "A user-defined or an auto-generated string that identifies a [Map] state. This parameter \
+         is present only if the [stateMachineArn] specified in input is a qualified state machine \
+         ARN.\n"]
+  revision_id : revision_id option;
+      [@ocaml.doc
+        "The revision identifier for the state machine.\n\n\
+        \ Use the [revisionId] parameter to compare between versions of a state machine \
+         configuration used for executions without performing a diff of the properties, such as \
+         [definition] and [roleArn].\n\
+        \ "]
+  description : version_description option;
+      [@ocaml.doc "The description of the state machine version.\n"]
+  encryption_configuration : encryption_configuration option;
+      [@ocaml.doc "Settings to configure server-side encryption. \n"]
+  variable_references : variable_references option;
+      [@ocaml.doc
+        "A map of {b state name} to a list of variables referenced by that state. States that do \
+         not use variable references will not be shown in the response.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec describe_state_machine_input = {
+  state_machine_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the state machine for which you want the information.\n\n\
+        \ If you specify a state machine version ARN, this API returns details about that version. \
+         The version ARN is a combination of state machine ARN and the version number separated by \
+         a colon (:). For example, [stateMachineARN:1].\n\
+        \ "]
   included_data : included_data option;
       [@ocaml.doc
         "If your state machine definition is encrypted with a KMS key, callers must have \
@@ -2538,134 +2508,152 @@ type nonrec describe_state_machine_input = {
          In this case, the API caller needs to have [kms:Decrypt] permission. \n\
         \  \n\
         \   "]
-  state_machine_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the state machine for which you want the information.\n\n\
-        \ If you specify a state machine version ARN, this API returns details about that version. \
-         The version ARN is a combination of state machine ARN and the version number separated by \
-         a colon (:). For example, [stateMachineARN:1].\n\
-        \ "]
 }
 [@@ocaml.doc ""]
 
-type nonrec describe_state_machine_for_execution_output = {
-  variable_references : variable_references option;
-      [@ocaml.doc
-        "A map of {b state name} to a list of variables referenced by that state. States that do \
-         not use variable references will not be shown in the response.\n"]
-  encryption_configuration : encryption_configuration option;
-      [@ocaml.doc "Settings to configure server-side encryption. \n"]
-  revision_id : revision_id option;
-      [@ocaml.doc
-        "The revision identifier for the state machine. The first revision ID when you create the \
-         state machine is null.\n\n\
-        \ Use the state machine [revisionId] parameter to compare the revision of a state machine \
-         with the configuration of the state machine used for executions without performing a diff \
-         of the properties, such as [definition] and [roleArn].\n\
-        \ "]
-  label : map_run_label option;
-      [@ocaml.doc
-        "A user-defined or an auto-generated string that identifies a [Map] state. This field is \
-         returned only if the [executionArn] is a child workflow execution that was started by a \
-         Distributed Map state.\n"]
-  map_run_arn : long_arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the Map Run that started the child workflow execution. \
-         This field is returned only if the [executionArn] is a child workflow execution that was \
-         started by a Distributed Map state.\n"]
-  tracing_configuration : tracing_configuration option;
-      [@ocaml.doc "Selects whether X-Ray tracing is enabled.\n"]
-  logging_configuration : logging_configuration option; [@ocaml.doc ""]
-  update_date : timestamp;
-      [@ocaml.doc
-        "The date and time the state machine associated with an execution was updated. For a newly \
-         created state machine, this is the creation date.\n"]
-  role_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the IAM role of the State Machine for the execution. \n"]
-  definition : definition;
-      [@ocaml.doc
-        "The Amazon States Language definition of the state machine. See \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
-         States Language}.\n"]
-  name : name; [@ocaml.doc "The name of the state machine associated with the execution.\n"]
-  state_machine_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the state machine associated with the execution.\n"]
-}
-[@@ocaml.doc ""]
+type nonrec long_object = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
-type nonrec describe_state_machine_for_execution_input = {
-  included_data : included_data option;
-      [@ocaml.doc
-        "If your state machine definition is encrypted with a KMS key, callers must have \
-         [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call the API \
-         with [includedData = METADATA_ONLY] to get a successful response without the encrypted \
-         definition.\n"]
-  execution_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the execution you want state machine information for.\n"]
-}
-[@@ocaml.doc ""]
+type nonrec unsigned_long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
-type nonrec describe_state_machine_alias_output = {
-  update_date : timestamp option;
+type nonrec map_run_execution_counts = {
+  pending : unsigned_long;
       [@ocaml.doc
-        "The date the state machine alias was last updated.\n\n\
-        \ For a newly created state machine, this is the same as the creation date.\n\
-        \ "]
-  creation_date : timestamp option; [@ocaml.doc "The date the state machine alias was created.\n"]
-  routing_configuration : routing_configuration_list option;
-      [@ocaml.doc "The routing configuration of the alias.\n"]
-  description : alias_description option; [@ocaml.doc "A description of the alias.\n"]
-  name : name option; [@ocaml.doc "The name of the state machine alias.\n"]
-  state_machine_alias_arn : arn option;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine alias.\n"]
+        "The total number of child workflow executions that were started by a Map Run, but haven't \
+         started executing yet. \n"]
+  running : unsigned_long;
+      [@ocaml.doc
+        "The total number of child workflow executions that were started by a Map Run and are \
+         currently in-progress.\n"]
+  succeeded : unsigned_long;
+      [@ocaml.doc
+        "The total number of child workflow executions that were started by a Map Run and have \
+         completed successfully.\n"]
+  failed : unsigned_long;
+      [@ocaml.doc
+        "The total number of child workflow executions that were started by a Map Run, but have \
+         failed.\n"]
+  timed_out : unsigned_long;
+      [@ocaml.doc
+        "The total number of child workflow executions that were started by a Map Run and have \
+         timed out.\n"]
+  aborted : unsigned_long;
+      [@ocaml.doc
+        "The total number of child workflow executions that were started by a Map Run and were \
+         running, but were either stopped by the user or by Step Functions because the Map Run \
+         failed. \n"]
+  total : unsigned_long;
+      [@ocaml.doc "The total number of child workflow executions that were started by a Map Run.\n"]
+  results_written : unsigned_long;
+      [@ocaml.doc
+        "Returns the count of child workflow executions whose results were written by \
+         [ResultWriter]. For more information, see \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultwriter.html}ResultWriter} \
+         in the {i Step Functions Developer Guide}.\n"]
+  failures_not_redrivable : long_object option;
+      [@ocaml.doc
+        "The number of [FAILED], [ABORTED], or [TIMED_OUT] child workflow executions that cannot \
+         be redriven because their execution status is terminal. For example, child workflows with \
+         an execution status of [FAILED], [ABORTED], or [TIMED_OUT] and a [redriveStatus] of \
+         [NOT_REDRIVABLE].\n"]
+  pending_redrive : long_object option;
+      [@ocaml.doc
+        "The number of unsuccessful child workflow executions currently waiting to be redriven. \
+         The status of these child workflow executions could be [FAILED], [ABORTED], or \
+         [TIMED_OUT] in the original execution attempt or a previous redrive attempt.\n"]
 }
-[@@ocaml.doc ""]
+[@@ocaml.doc "Contains details about all of the child workflow executions started by a Map Run.\n"]
 
-type nonrec describe_state_machine_alias_input = {
-  state_machine_alias_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine alias.\n"]
+type nonrec map_run_item_counts = {
+  pending : unsigned_long;
+      [@ocaml.doc
+        "The total number of items to process in child workflow executions that haven't started \
+         running yet.\n"]
+  running : unsigned_long;
+      [@ocaml.doc
+        "The total number of items being processed in child workflow executions that are currently \
+         in-progress.\n"]
+  succeeded : unsigned_long;
+      [@ocaml.doc
+        "The total number of items processed in child workflow executions that have completed \
+         successfully.\n"]
+  failed : unsigned_long;
+      [@ocaml.doc
+        "The total number of items processed in child workflow executions that have failed.\n"]
+  timed_out : unsigned_long;
+      [@ocaml.doc
+        "The total number of items processed in child workflow executions that have timed out.\n"]
+  aborted : unsigned_long;
+      [@ocaml.doc
+        "The total number of items processed in child workflow executions that were either stopped \
+         by the user or by Step Functions, because the Map Run failed.\n"]
+  total : unsigned_long;
+      [@ocaml.doc
+        "The total number of items processed in all the child workflow executions started by a Map \
+         Run.\n"]
+  results_written : unsigned_long;
+      [@ocaml.doc
+        "Returns the count of items whose results were written by [ResultWriter]. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultwriter.html}ResultWriter} \
+         in the {i Step Functions Developer Guide}.\n"]
+  failures_not_redrivable : long_object option;
+      [@ocaml.doc
+        "The number of [FAILED], [ABORTED], or [TIMED_OUT] items in child workflow executions that \
+         cannot be redriven because the execution status of those child workflows is terminal. For \
+         example, child workflows with an execution status of [FAILED], [ABORTED], or [TIMED_OUT] \
+         and a [redriveStatus] of [NOT_REDRIVABLE].\n"]
+  pending_redrive : long_object option;
+      [@ocaml.doc
+        "The number of unsuccessful items in child workflow executions currently waiting to be \
+         redriven.\n"]
 }
+[@@ocaml.doc
+  "Contains details about items that were processed in all of the child workflow executions that \
+   were started by a Map Run.\n"]
+
+type nonrec map_run_status =
+  | RUNNING [@ocaml.doc ""]
+  | SUCCEEDED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | ABORTED [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec describe_map_run_output = {
-  redrive_date : timestamp option;
+  map_run_arn : long_arn; [@ocaml.doc "The Amazon Resource Name (ARN) that identifies a Map Run.\n"]
+  execution_arn : arn;
       [@ocaml.doc
-        "The date a Map Run was last redriven. If you have not yet redriven a Map Run, the \
-         [redriveDate] is null.\n"]
-  redrive_count : redrive_count option;
+        "The Amazon Resource Name (ARN) that identifies the execution in which the Map Run was \
+         started.\n"]
+  status : map_run_status; [@ocaml.doc "The current status of the Map Run.\n"]
+  start_date : timestamp; [@ocaml.doc "The date when the Map Run was started.\n"]
+  stop_date : timestamp option; [@ocaml.doc "The date when the Map Run was stopped.\n"]
+  max_concurrency : max_concurrency;
       [@ocaml.doc
-        "The number of times you've redriven a Map Run. If you have not yet redriven a Map Run, \
-         the [redriveCount] is 0. This count is only updated if you successfully redrive a Map Run.\n"]
+        "The maximum number of child workflow executions configured to run in parallel for the Map \
+         Run at the same time.\n"]
+  tolerated_failure_percentage : tolerated_failure_percentage;
+      [@ocaml.doc
+        "The maximum percentage of failed child workflow executions before the Map Run fails.\n"]
+  tolerated_failure_count : tolerated_failure_count;
+      [@ocaml.doc
+        "The maximum number of failed child workflow executions before the Map Run fails.\n"]
+  item_counts : map_run_item_counts;
+      [@ocaml.doc
+        "A JSON object that contains information about the total number of items, and the item \
+         count for each processing status, such as [pending] and [failed].\n"]
   execution_counts : map_run_execution_counts;
       [@ocaml.doc
         "A JSON object that contains information about the total number of child workflow \
          executions for the Map Run, and the count of child workflow executions for each status, \
          such as [failed] and [succeeded].\n"]
-  item_counts : map_run_item_counts;
+  redrive_count : redrive_count option;
       [@ocaml.doc
-        "A JSON object that contains information about the total number of items, and the item \
-         count for each processing status, such as [pending] and [failed].\n"]
-  tolerated_failure_count : tolerated_failure_count;
+        "The number of times you've redriven a Map Run. If you have not yet redriven a Map Run, \
+         the [redriveCount] is 0. This count is only updated if you successfully redrive a Map Run.\n"]
+  redrive_date : timestamp option;
       [@ocaml.doc
-        "The maximum number of failed child workflow executions before the Map Run fails.\n"]
-  tolerated_failure_percentage : tolerated_failure_percentage;
-      [@ocaml.doc
-        "The maximum percentage of failed child workflow executions before the Map Run fails.\n"]
-  max_concurrency : max_concurrency;
-      [@ocaml.doc
-        "The maximum number of child workflow executions configured to run in parallel for the Map \
-         Run at the same time.\n"]
-  stop_date : timestamp option; [@ocaml.doc "The date when the Map Run was stopped.\n"]
-  start_date : timestamp; [@ocaml.doc "The date when the Map Run was started.\n"]
-  status : map_run_status; [@ocaml.doc "The current status of the Map Run.\n"]
-  execution_arn : arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) that identifies the execution in which the Map Run was \
-         started.\n"]
-  map_run_arn : long_arn; [@ocaml.doc "The Amazon Resource Name (ARN) that identifies a Map Run.\n"]
+        "The date a Map Run was last redriven. If you have not yet redriven a Map Run, the \
+         [redriveDate] is null.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2674,7 +2662,136 @@ type nonrec describe_map_run_input = {
 }
 [@@ocaml.doc ""]
 
+type nonrec execution_redrive_status =
+  | REDRIVABLE [@ocaml.doc ""]
+  | NOT_REDRIVABLE [@ocaml.doc ""]
+  | REDRIVABLE_BY_MAP_RUN [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
 type nonrec describe_execution_output = {
+  execution_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the execution.\n"]
+  state_machine_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the executed stated machine.\n"]
+  name : name option;
+      [@ocaml.doc
+        "The name of the execution.\n\n\
+        \ A name must {i not} contain:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-  white space\n\
+        \            \n\
+        \             }\n\
+        \        {-  brackets [< > { } \\[ \\]] \n\
+        \            \n\
+        \             }\n\
+        \        {-  wildcard characters [? *] \n\
+        \            \n\
+        \             }\n\
+        \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
+        \            \n\
+        \             }\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
+         and _.\n\
+        \   "]
+  status : execution_status; [@ocaml.doc "The current status of the execution.\n"]
+  start_date : timestamp; [@ocaml.doc "The date the execution is started.\n"]
+  stop_date : timestamp option;
+      [@ocaml.doc "If the execution ended, the date the execution stopped.\n"]
+  input : sensitive_data option;
+      [@ocaml.doc
+        "The string that contains the JSON input data of the execution. Length constraints apply \
+         to the payload size, and are expressed as bytes in UTF-8 encoding.\n"]
+  input_details : cloud_watch_events_execution_data_details option; [@ocaml.doc ""]
+  output : sensitive_data option;
+      [@ocaml.doc
+        "The JSON output data of the execution. Length constraints apply to the payload size, and \
+         are expressed as bytes in UTF-8 encoding.\n\n\
+        \  This field is set only if the execution succeeds. If the execution fails, this field is \
+         null.\n\
+        \  \n\
+        \   "]
+  output_details : cloud_watch_events_execution_data_details option; [@ocaml.doc ""]
+  trace_header : trace_header option;
+      [@ocaml.doc
+        "The X-Ray trace header that was passed to the execution.\n\n\
+        \   For X-Ray traces, all Amazon Web Services services use the [X-Amzn-Trace-Id] header \
+         from the HTTP request. Using the header is the preferred mechanism to identify a trace. \
+         [StartExecution] and [StartSyncExecution] API operations can also use [traceHeader] from \
+         the body of the request payload. If {b both} sources are provided, Step Functions will \
+         use the {b header value} (preferred) over the value in the request body. \n\
+        \  \n\
+        \   "]
+  map_run_arn : long_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) that identifies a Map Run, which dispatched this execution.\n"]
+  error : sensitive_error option;
+      [@ocaml.doc "The error string if the state machine execution failed.\n"]
+  cause : sensitive_cause option;
+      [@ocaml.doc "The cause string if the state machine execution failed.\n"]
+  state_machine_version_arn : arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the state machine version associated with the \
+         execution. The version ARN is a combination of state machine ARN and the version number \
+         separated by a colon (:). For example, [stateMachineARN:1].\n\n\
+        \ If you start an execution from a [StartExecution] request without specifying a state \
+         machine version or alias ARN, Step Functions returns a null value.\n\
+        \ "]
+  state_machine_alias_arn : arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the state machine alias associated with the execution. \
+         The alias ARN is a combination of state machine ARN and the alias name separated by a \
+         colon (:). For example, [stateMachineARN:PROD].\n\n\
+        \ If you start an execution from a [StartExecution] request with a state machine version \
+         ARN, this field will be null.\n\
+        \ "]
+  redrive_count : redrive_count option;
+      [@ocaml.doc
+        "The number of times you've redriven an execution. If you have not yet redriven an \
+         execution, the [redriveCount] is 0. This count is only updated if you successfully \
+         redrive an execution.\n"]
+  redrive_date : timestamp option;
+      [@ocaml.doc
+        "The date the execution was last redriven. If you have not yet redriven an execution, the \
+         [redriveDate] is null.\n\n\
+        \ The [redriveDate] is unavailable if you redrive a Map Run that starts child workflow \
+         executions of type [EXPRESS].\n\
+        \ "]
+  redrive_status : execution_redrive_status option;
+      [@ocaml.doc
+        "Indicates whether or not an execution can be redriven at a given point in time.\n\n\
+        \ {ul\n\
+        \       {-  For executions of type [STANDARD], [redriveStatus] is [NOT_REDRIVABLE] if \
+         calling the [RedriveExecution] API action would return the [ExecutionNotRedrivable] error.\n\
+        \           \n\
+        \            }\n\
+        \       {-  For a Distributed Map that includes child workflows of type [STANDARD], \
+         [redriveStatus] indicates whether or not the Map Run can redrive child workflow \
+         executions.\n\
+        \           \n\
+        \            }\n\
+        \       {-  For a Distributed Map that includes child workflows of type [EXPRESS], \
+         [redriveStatus] indicates whether or not the Map Run can redrive child workflow \
+         executions.\n\
+        \           \n\
+        \            You can redrive failed or timed out [EXPRESS] workflows {i only if} they're a \
+         part of a Map Run. When you \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/redrive-map-run.html}redrive} the \
+         Map Run, these workflows are restarted using the [StartExecution] API action.\n\
+        \            \n\
+        \             }\n\
+        \       }\n\
+        \  "]
   redrive_status_reason : sensitive_data option;
       [@ocaml.doc
         "When [redriveStatus] is [NOT_REDRIVABLE], [redriveStatusReason] specifies the reason why \
@@ -2716,146 +2833,22 @@ type nonrec describe_execution_output = {
         \            }\n\
         \       }\n\
         \  "]
-  redrive_status : execution_redrive_status option;
-      [@ocaml.doc
-        "Indicates whether or not an execution can be redriven at a given point in time.\n\n\
-        \ {ul\n\
-        \       {-  For executions of type [STANDARD], [redriveStatus] is [NOT_REDRIVABLE] if \
-         calling the [RedriveExecution] API action would return the [ExecutionNotRedrivable] error.\n\
-        \           \n\
-        \            }\n\
-        \       {-  For a Distributed Map that includes child workflows of type [STANDARD], \
-         [redriveStatus] indicates whether or not the Map Run can redrive child workflow \
-         executions.\n\
-        \           \n\
-        \            }\n\
-        \       {-  For a Distributed Map that includes child workflows of type [EXPRESS], \
-         [redriveStatus] indicates whether or not the Map Run can redrive child workflow \
-         executions.\n\
-        \           \n\
-        \            You can redrive failed or timed out [EXPRESS] workflows {i only if} they're a \
-         part of a Map Run. When you \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/redrive-map-run.html}redrive} the \
-         Map Run, these workflows are restarted using the [StartExecution] API action.\n\
-        \            \n\
-        \             }\n\
-        \       }\n\
-        \  "]
-  redrive_date : timestamp option;
-      [@ocaml.doc
-        "The date the execution was last redriven. If you have not yet redriven an execution, the \
-         [redriveDate] is null.\n\n\
-        \ The [redriveDate] is unavailable if you redrive a Map Run that starts child workflow \
-         executions of type [EXPRESS].\n\
-        \ "]
-  redrive_count : redrive_count option;
-      [@ocaml.doc
-        "The number of times you've redriven an execution. If you have not yet redriven an \
-         execution, the [redriveCount] is 0. This count is only updated if you successfully \
-         redrive an execution.\n"]
-  state_machine_alias_arn : arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the state machine alias associated with the execution. \
-         The alias ARN is a combination of state machine ARN and the alias name separated by a \
-         colon (:). For example, [stateMachineARN:PROD].\n\n\
-        \ If you start an execution from a [StartExecution] request with a state machine version \
-         ARN, this field will be null.\n\
-        \ "]
-  state_machine_version_arn : arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the state machine version associated with the \
-         execution. The version ARN is a combination of state machine ARN and the version number \
-         separated by a colon (:). For example, [stateMachineARN:1].\n\n\
-        \ If you start an execution from a [StartExecution] request without specifying a state \
-         machine version or alias ARN, Step Functions returns a null value.\n\
-        \ "]
-  cause : sensitive_cause option;
-      [@ocaml.doc "The cause string if the state machine execution failed.\n"]
-  error : sensitive_error option;
-      [@ocaml.doc "The error string if the state machine execution failed.\n"]
-  map_run_arn : long_arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) that identifies a Map Run, which dispatched this execution.\n"]
-  trace_header : trace_header option;
-      [@ocaml.doc
-        "The X-Ray trace header that was passed to the execution.\n\n\
-        \   For X-Ray traces, all Amazon Web Services services use the [X-Amzn-Trace-Id] header \
-         from the HTTP request. Using the header is the preferred mechanism to identify a trace. \
-         [StartExecution] and [StartSyncExecution] API operations can also use [traceHeader] from \
-         the body of the request payload. If {b both} sources are provided, Step Functions will \
-         use the {b header value} (preferred) over the value in the request body. \n\
-        \  \n\
-        \   "]
-  output_details : cloud_watch_events_execution_data_details option; [@ocaml.doc ""]
-  output : sensitive_data option;
-      [@ocaml.doc
-        "The JSON output data of the execution. Length constraints apply to the payload size, and \
-         are expressed as bytes in UTF-8 encoding.\n\n\
-        \  This field is set only if the execution succeeds. If the execution fails, this field is \
-         null.\n\
-        \  \n\
-        \   "]
-  input_details : cloud_watch_events_execution_data_details option; [@ocaml.doc ""]
-  input : sensitive_data option;
-      [@ocaml.doc
-        "The string that contains the JSON input data of the execution. Length constraints apply \
-         to the payload size, and are expressed as bytes in UTF-8 encoding.\n"]
-  stop_date : timestamp option;
-      [@ocaml.doc "If the execution ended, the date the execution stopped.\n"]
-  start_date : timestamp; [@ocaml.doc "The date the execution is started.\n"]
-  status : execution_status; [@ocaml.doc "The current status of the execution.\n"]
-  name : name option;
-      [@ocaml.doc
-        "The name of the execution.\n\n\
-        \ A name must {i not} contain:\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  white space\n\
-        \            \n\
-        \             }\n\
-        \        {-  brackets [< > { } \\[ \\]] \n\
-        \            \n\
-        \             }\n\
-        \        {-  wildcard characters [? *] \n\
-        \            \n\
-        \             }\n\
-        \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
-        \            \n\
-        \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
-        \            \n\
-        \             }\n\
-        \        {-  surrogates ([U+D800-DFFF])\n\
-        \            \n\
-        \             }\n\
-        \        {-  invalid characters ([ U+10FFFF])\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
-         and _.\n\
-        \   "]
-  state_machine_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the executed stated machine.\n"]
-  execution_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the execution.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec describe_execution_input = {
+  execution_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the execution to describe.\n"]
   included_data : included_data option;
       [@ocaml.doc
         "If your state machine definition is encrypted with a KMS key, callers must have \
          [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call \
          DescribeStateMachine API with [includedData = METADATA_ONLY] to get a successful response \
          without the encrypted definition.\n"]
-  execution_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the execution to describe.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec describe_activity_output = {
-  encryption_configuration : encryption_configuration option;
-      [@ocaml.doc "Settings for configured server-side encryption.\n"]
-  creation_date : timestamp; [@ocaml.doc "The date the activity is created.\n"]
+  activity_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the activity.\n"]
   name : name;
       [@ocaml.doc
         "The name of the activity.\n\n\
@@ -2887,7 +2880,9 @@ type nonrec describe_activity_output = {
         \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
          and _.\n\
         \   "]
-  activity_arn : arn; [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the activity.\n"]
+  creation_date : timestamp; [@ocaml.doc "The date the activity is created.\n"]
+  encryption_configuration : encryption_configuration option;
+      [@ocaml.doc "Settings for configured server-side encryption.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2904,19 +2899,19 @@ type nonrec delete_state_machine_version_input = {
 }
 [@@ocaml.doc ""]
 
-type nonrec delete_state_machine_output = unit [@@ocaml.doc ""]
-
-type nonrec delete_state_machine_input = {
-  state_machine_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine to delete.\n"]
-}
-[@@ocaml.doc ""]
-
 type nonrec delete_state_machine_alias_output = unit [@@ocaml.doc ""]
 
 type nonrec delete_state_machine_alias_input = {
   state_machine_alias_arn : arn;
       [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine alias to delete.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec delete_state_machine_output = unit [@@ocaml.doc ""]
+
+type nonrec delete_state_machine_input = {
+  state_machine_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the state machine to delete.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2927,63 +2922,55 @@ type nonrec delete_activity_input = {
 }
 [@@ocaml.doc ""]
 
+type nonrec create_state_machine_alias_output = {
+  state_machine_alias_arn : arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) that identifies the created state machine alias.\n"]
+  creation_date : timestamp; [@ocaml.doc "The date the state machine alias was created.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec character_restricted_name = string [@@ocaml.doc ""]
+
+type nonrec create_state_machine_alias_input = {
+  description : alias_description option;
+      [@ocaml.doc "A description for the state machine alias.\n"]
+  name : character_restricted_name;
+      [@ocaml.doc
+        "The name of the state machine alias.\n\n\
+        \ To avoid conflict with version ARNs, don't use an integer in the name of the alias.\n\
+        \ "]
+  routing_configuration : routing_configuration_list;
+      [@ocaml.doc
+        "The routing configuration of a state machine alias. The routing configuration shifts \
+         execution traffic between two state machine versions. [routingConfiguration] contains an \
+         array of [RoutingConfig] objects that specify up to two state machine versions. Step \
+         Functions then randomly choses which version to run an execution with based on the weight \
+         assigned to each [RoutingConfig].\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec state_machine_limit_exceeded = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The maximum number of state machines has been reached. Existing state machines must be deleted \
+   before a new state machine can be created.\n"]
+
+type nonrec state_machine_already_exists = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "A state machine with the same name but a different definition or role ARN already exists.\n"]
+
 type nonrec create_state_machine_output = {
+  state_machine_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the created state machine.\n"]
+  creation_date : timestamp; [@ocaml.doc "The date the state machine is created.\n"]
   state_machine_version_arn : arn option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) that identifies the created state machine version. If you \
          do not set the [publish] parameter to [true], this field returns null value.\n"]
-  creation_date : timestamp; [@ocaml.doc "The date the state machine is created.\n"]
-  state_machine_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the created state machine.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec create_state_machine_input = {
-  encryption_configuration : encryption_configuration option;
-      [@ocaml.doc "Settings to configure server-side encryption.\n"]
-  version_description : version_description option;
-      [@ocaml.doc
-        "Sets description about the state machine version. You can only set the description if the \
-         [publish] parameter is set to [true]. Otherwise, if you set [versionDescription], but \
-         [publish] to [false], this API action throws [ValidationException].\n"]
-  publish : publish option;
-      [@ocaml.doc
-        "Set to [true] to publish the first version of the state machine during creation. The \
-         default is [false].\n"]
-  tracing_configuration : tracing_configuration option;
-      [@ocaml.doc "Selects whether X-Ray tracing is enabled.\n"]
-  tags : tag_list option;
-      [@ocaml.doc
-        "Tags to be added when creating a state machine.\n\n\
-        \ An array of key-value pairs. For more information, see \
-         {{:https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html}Using \
-         Cost Allocation Tags} in the {i Amazon Web Services Billing and Cost Management User \
-         Guide}, and \
-         {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/access_iam-tags.html}Controlling \
-         Access Using IAM Tags}.\n\
-        \ \n\
-        \  Tags may only contain Unicode letters, digits, white space, or these symbols: [_ . : / \
-         = + - @].\n\
-        \  "]
-  logging_configuration : logging_configuration option;
-      [@ocaml.doc
-        "Defines what execution history events are logged and where they are logged.\n\n\
-        \  By default, the [level] is set to [OFF]. For more information see \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/cloudwatch-log-level.html}Log \
-         Levels} in the Step Functions User Guide.\n\
-        \  \n\
-        \   "]
-  type_ : state_machine_type option;
-      [@ocaml.doc
-        "Determines whether a Standard or Express state machine is created. The default is \
-         [STANDARD]. You cannot update the [type] of a state machine once it has been created.\n"]
-  role_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) of the IAM role to use for this state machine.\n"]
-  definition : definition;
-      [@ocaml.doc
-        "The Amazon States Language definition of the state machine. See \
-         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
-         States Language}.\n"]
   name : name;
       [@ocaml.doc
         "The name of the state machine. \n\n\
@@ -3015,49 +3002,28 @@ type nonrec create_state_machine_input = {
         \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
          and _.\n\
         \   "]
-}
-[@@ocaml.doc ""]
-
-type nonrec create_state_machine_alias_output = {
-  creation_date : timestamp; [@ocaml.doc "The date the state machine alias was created.\n"]
-  state_machine_alias_arn : arn;
+  definition : definition;
       [@ocaml.doc
-        "The Amazon Resource Name (ARN) that identifies the created state machine alias.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec character_restricted_name = string [@@ocaml.doc ""]
-
-type nonrec create_state_machine_alias_input = {
-  routing_configuration : routing_configuration_list;
+        "The Amazon States Language definition of the state machine. See \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
+         States Language}.\n"]
+  role_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the IAM role to use for this state machine.\n"]
+  type_ : state_machine_type option;
       [@ocaml.doc
-        "The routing configuration of a state machine alias. The routing configuration shifts \
-         execution traffic between two state machine versions. [routingConfiguration] contains an \
-         array of [RoutingConfig] objects that specify up to two state machine versions. Step \
-         Functions then randomly choses which version to run an execution with based on the weight \
-         assigned to each [RoutingConfig].\n"]
-  name : character_restricted_name;
+        "Determines whether a Standard or Express state machine is created. The default is \
+         [STANDARD]. You cannot update the [type] of a state machine once it has been created.\n"]
+  logging_configuration : logging_configuration option;
       [@ocaml.doc
-        "The name of the state machine alias.\n\n\
-        \ To avoid conflict with version ARNs, don't use an integer in the name of the alias.\n\
-        \ "]
-  description : alias_description option; [@ocaml.doc "A description for the state machine alias.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec create_activity_output = {
-  creation_date : timestamp; [@ocaml.doc "The date the activity is created.\n"]
-  activity_arn : arn;
-      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the created activity.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec create_activity_input = {
-  encryption_configuration : encryption_configuration option;
-      [@ocaml.doc "Settings to configure server-side encryption.\n"]
+        "Defines what execution history events are logged and where they are logged.\n\n\
+        \  By default, the [level] is set to [OFF]. For more information see \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/cloudwatch-log-level.html}Log \
+         Levels} in the Step Functions User Guide.\n\
+        \  \n\
+        \   "]
   tags : tag_list option;
       [@ocaml.doc
-        "The list of tags to add to a resource.\n\n\
+        "Tags to be added when creating a state machine.\n\n\
         \ An array of key-value pairs. For more information, see \
          {{:https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html}Using \
          Cost Allocation Tags} in the {i Amazon Web Services Billing and Cost Management User \
@@ -3068,6 +3034,38 @@ type nonrec create_activity_input = {
         \  Tags may only contain Unicode letters, digits, white space, or these symbols: [_ . : / \
          = + - @].\n\
         \  "]
+  tracing_configuration : tracing_configuration option;
+      [@ocaml.doc "Selects whether X-Ray tracing is enabled.\n"]
+  publish : publish option;
+      [@ocaml.doc
+        "Set to [true] to publish the first version of the state machine during creation. The \
+         default is [false].\n"]
+  version_description : version_description option;
+      [@ocaml.doc
+        "Sets description about the state machine version. You can only set the description if the \
+         [publish] parameter is set to [true]. Otherwise, if you set [versionDescription], but \
+         [publish] to [false], this API action throws [ValidationException].\n"]
+  encryption_configuration : encryption_configuration option;
+      [@ocaml.doc "Settings to configure server-side encryption.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec activity_limit_exceeded = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The maximum number of activities has been reached. Existing activities must be deleted before a \
+   new activity can be created.\n"]
+
+type nonrec activity_already_exists = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "Activity already exists. [EncryptionConfiguration] may not be updated.\n"]
+
+type nonrec create_activity_output = {
+  activity_arn : arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the created activity.\n"]
+  creation_date : timestamp; [@ocaml.doc "The date the activity is created.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_activity_input = {
   name : name;
       [@ocaml.doc
         "The name of the activity to create. This name must be unique for your Amazon Web Services \
@@ -3102,13 +3100,20 @@ type nonrec create_activity_input = {
         \   To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - \
          and _.\n\
         \   "]
+  tags : tag_list option;
+      [@ocaml.doc
+        "The list of tags to add to a resource.\n\n\
+        \ An array of key-value pairs. For more information, see \
+         {{:https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html}Using \
+         Cost Allocation Tags} in the {i Amazon Web Services Billing and Cost Management User \
+         Guide}, and \
+         {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/access_iam-tags.html}Controlling \
+         Access Using IAM Tags}.\n\
+        \ \n\
+        \  Tags may only contain Unicode letters, digits, white space, or these symbols: [_ . : / \
+         = + - @].\n\
+        \  "]
+  encryption_configuration : encryption_configuration option;
+      [@ocaml.doc "Settings to configure server-side encryption.\n"]
 }
 [@@ocaml.doc ""]
-
-type nonrec activity_limit_exceeded = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The maximum number of activities has been reached. Existing activities must be deleted before a \
-   new activity can be created.\n"]
-
-type nonrec activity_already_exists = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "Activity already exists. [EncryptionConfiguration] may not be updated.\n"]

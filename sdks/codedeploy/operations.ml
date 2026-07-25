@@ -1,415 +1,6 @@
 open Types
 open Service_metadata
 
-module AddTagsToOnPremisesInstances = struct
-  let error_to_string = function
-    | `InstanceLimitExceededException _ -> "com.amazonaws.codedeploy#InstanceLimitExceededException"
-    | `InstanceNameRequiredException _ -> "com.amazonaws.codedeploy#InstanceNameRequiredException"
-    | `InstanceNotRegisteredException _ -> "com.amazonaws.codedeploy#InstanceNotRegisteredException"
-    | `InvalidInstanceNameException _ -> "com.amazonaws.codedeploy#InvalidInstanceNameException"
-    | `InvalidTagException _ -> "com.amazonaws.codedeploy#InvalidTagException"
-    | `TagLimitExceededException _ -> "com.amazonaws.codedeploy#TagLimitExceededException"
-    | `TagRequiredException _ -> "com.amazonaws.codedeploy#TagRequiredException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InstanceLimitExceededException" ->
-          `InstanceLimitExceededException
-            (Json_deserializers.instance_limit_exceeded_exception_of_yojson tree path)
-      | _, "InstanceNameRequiredException" ->
-          `InstanceNameRequiredException
-            (Json_deserializers.instance_name_required_exception_of_yojson tree path)
-      | _, "InstanceNotRegisteredException" ->
-          `InstanceNotRegisteredException
-            (Json_deserializers.instance_not_registered_exception_of_yojson tree path)
-      | _, "InvalidInstanceNameException" ->
-          `InvalidInstanceNameException
-            (Json_deserializers.invalid_instance_name_exception_of_yojson tree path)
-      | _, "InvalidTagException" ->
-          `InvalidTagException (Json_deserializers.invalid_tag_exception_of_yojson tree path)
-      | _, "TagLimitExceededException" ->
-          `TagLimitExceededException
-            (Json_deserializers.tag_limit_exceeded_exception_of_yojson tree path)
-      | _, "TagRequiredException" ->
-          `TagRequiredException (Json_deserializers.tag_required_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_tags_to_on_premises_instances_input) =
-    let input = Json_serializers.add_tags_to_on_premises_instances_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"CodeDeploy_20141006.AddTagsToOnPremisesInstances" ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_to_on_premises_instances_input) =
-    let input = Json_serializers.add_tags_to_on_premises_instances_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeDeploy_20141006.AddTagsToOnPremisesInstances" ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
-module BatchGetApplicationRevisions = struct
-  let error_to_string = function
-    | `ApplicationDoesNotExistException _ ->
-        "com.amazonaws.codedeploy#ApplicationDoesNotExistException"
-    | `ApplicationNameRequiredException _ ->
-        "com.amazonaws.codedeploy#ApplicationNameRequiredException"
-    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
-    | `InvalidApplicationNameException _ ->
-        "com.amazonaws.codedeploy#InvalidApplicationNameException"
-    | `InvalidRevisionException _ -> "com.amazonaws.codedeploy#InvalidRevisionException"
-    | `RevisionRequiredException _ -> "com.amazonaws.codedeploy#RevisionRequiredException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ApplicationDoesNotExistException" ->
-          `ApplicationDoesNotExistException
-            (Json_deserializers.application_does_not_exist_exception_of_yojson tree path)
-      | _, "ApplicationNameRequiredException" ->
-          `ApplicationNameRequiredException
-            (Json_deserializers.application_name_required_exception_of_yojson tree path)
-      | _, "BatchLimitExceededException" ->
-          `BatchLimitExceededException
-            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
-      | _, "InvalidApplicationNameException" ->
-          `InvalidApplicationNameException
-            (Json_deserializers.invalid_application_name_exception_of_yojson tree path)
-      | _, "InvalidRevisionException" ->
-          `InvalidRevisionException
-            (Json_deserializers.invalid_revision_exception_of_yojson tree path)
-      | _, "RevisionRequiredException" ->
-          `RevisionRequiredException
-            (Json_deserializers.revision_required_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_application_revisions_input) =
-    let input = Json_serializers.batch_get_application_revisions_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"CodeDeploy_20141006.BatchGetApplicationRevisions" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_application_revisions_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_application_revisions_input) =
-    let input = Json_serializers.batch_get_application_revisions_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeDeploy_20141006.BatchGetApplicationRevisions" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_application_revisions_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetApplications = struct
-  let error_to_string = function
-    | `ApplicationDoesNotExistException _ ->
-        "com.amazonaws.codedeploy#ApplicationDoesNotExistException"
-    | `ApplicationNameRequiredException _ ->
-        "com.amazonaws.codedeploy#ApplicationNameRequiredException"
-    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
-    | `InvalidApplicationNameException _ ->
-        "com.amazonaws.codedeploy#InvalidApplicationNameException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ApplicationDoesNotExistException" ->
-          `ApplicationDoesNotExistException
-            (Json_deserializers.application_does_not_exist_exception_of_yojson tree path)
-      | _, "ApplicationNameRequiredException" ->
-          `ApplicationNameRequiredException
-            (Json_deserializers.application_name_required_exception_of_yojson tree path)
-      | _, "BatchLimitExceededException" ->
-          `BatchLimitExceededException
-            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
-      | _, "InvalidApplicationNameException" ->
-          `InvalidApplicationNameException
-            (Json_deserializers.invalid_application_name_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_applications_input) =
-    let input = Json_serializers.batch_get_applications_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeDeploy_20141006.BatchGetApplications"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_applications_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_applications_input) =
-    let input = Json_serializers.batch_get_applications_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeDeploy_20141006.BatchGetApplications" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_applications_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetDeploymentGroups = struct
-  let error_to_string = function
-    | `ApplicationDoesNotExistException _ ->
-        "com.amazonaws.codedeploy#ApplicationDoesNotExistException"
-    | `ApplicationNameRequiredException _ ->
-        "com.amazonaws.codedeploy#ApplicationNameRequiredException"
-    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
-    | `DeploymentConfigDoesNotExistException _ ->
-        "com.amazonaws.codedeploy#DeploymentConfigDoesNotExistException"
-    | `DeploymentGroupNameRequiredException _ ->
-        "com.amazonaws.codedeploy#DeploymentGroupNameRequiredException"
-    | `InvalidApplicationNameException _ ->
-        "com.amazonaws.codedeploy#InvalidApplicationNameException"
-    | `InvalidDeploymentGroupNameException _ ->
-        "com.amazonaws.codedeploy#InvalidDeploymentGroupNameException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ApplicationDoesNotExistException" ->
-          `ApplicationDoesNotExistException
-            (Json_deserializers.application_does_not_exist_exception_of_yojson tree path)
-      | _, "ApplicationNameRequiredException" ->
-          `ApplicationNameRequiredException
-            (Json_deserializers.application_name_required_exception_of_yojson tree path)
-      | _, "BatchLimitExceededException" ->
-          `BatchLimitExceededException
-            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
-      | _, "DeploymentConfigDoesNotExistException" ->
-          `DeploymentConfigDoesNotExistException
-            (Json_deserializers.deployment_config_does_not_exist_exception_of_yojson tree path)
-      | _, "DeploymentGroupNameRequiredException" ->
-          `DeploymentGroupNameRequiredException
-            (Json_deserializers.deployment_group_name_required_exception_of_yojson tree path)
-      | _, "InvalidApplicationNameException" ->
-          `InvalidApplicationNameException
-            (Json_deserializers.invalid_application_name_exception_of_yojson tree path)
-      | _, "InvalidDeploymentGroupNameException" ->
-          `InvalidDeploymentGroupNameException
-            (Json_deserializers.invalid_deployment_group_name_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_deployment_groups_input) =
-    let input = Json_serializers.batch_get_deployment_groups_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentGroups"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_deployment_groups_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_deployment_groups_input) =
-    let input = Json_serializers.batch_get_deployment_groups_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentGroups" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_deployment_groups_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetDeploymentInstances = struct
-  let error_to_string = function
-    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
-    | `DeploymentDoesNotExistException _ ->
-        "com.amazonaws.codedeploy#DeploymentDoesNotExistException"
-    | `DeploymentIdRequiredException _ -> "com.amazonaws.codedeploy#DeploymentIdRequiredException"
-    | `InstanceIdRequiredException _ -> "com.amazonaws.codedeploy#InstanceIdRequiredException"
-    | `InvalidComputePlatformException _ ->
-        "com.amazonaws.codedeploy#InvalidComputePlatformException"
-    | `InvalidDeploymentIdException _ -> "com.amazonaws.codedeploy#InvalidDeploymentIdException"
-    | `InvalidInstanceNameException _ -> "com.amazonaws.codedeploy#InvalidInstanceNameException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "BatchLimitExceededException" ->
-          `BatchLimitExceededException
-            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
-      | _, "DeploymentDoesNotExistException" ->
-          `DeploymentDoesNotExistException
-            (Json_deserializers.deployment_does_not_exist_exception_of_yojson tree path)
-      | _, "DeploymentIdRequiredException" ->
-          `DeploymentIdRequiredException
-            (Json_deserializers.deployment_id_required_exception_of_yojson tree path)
-      | _, "InstanceIdRequiredException" ->
-          `InstanceIdRequiredException
-            (Json_deserializers.instance_id_required_exception_of_yojson tree path)
-      | _, "InvalidComputePlatformException" ->
-          `InvalidComputePlatformException
-            (Json_deserializers.invalid_compute_platform_exception_of_yojson tree path)
-      | _, "InvalidDeploymentIdException" ->
-          `InvalidDeploymentIdException
-            (Json_deserializers.invalid_deployment_id_exception_of_yojson tree path)
-      | _, "InvalidInstanceNameException" ->
-          `InvalidInstanceNameException
-            (Json_deserializers.invalid_instance_name_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_deployment_instances_input) =
-    let input = Json_serializers.batch_get_deployment_instances_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentInstances" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_deployment_instances_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_deployment_instances_input) =
-    let input = Json_serializers.batch_get_deployment_instances_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentInstances" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_deployment_instances_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetDeployments = struct
-  let error_to_string = function
-    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
-    | `DeploymentIdRequiredException _ -> "com.amazonaws.codedeploy#DeploymentIdRequiredException"
-    | `InvalidDeploymentIdException _ -> "com.amazonaws.codedeploy#InvalidDeploymentIdException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "BatchLimitExceededException" ->
-          `BatchLimitExceededException
-            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
-      | _, "DeploymentIdRequiredException" ->
-          `DeploymentIdRequiredException
-            (Json_deserializers.deployment_id_required_exception_of_yojson tree path)
-      | _, "InvalidDeploymentIdException" ->
-          `InvalidDeploymentIdException
-            (Json_deserializers.invalid_deployment_id_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_deployments_input) =
-    let input = Json_serializers.batch_get_deployments_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeDeploy_20141006.BatchGetDeployments"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_deployments_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_deployments_input) =
-    let input = Json_serializers.batch_get_deployments_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeDeploy_20141006.BatchGetDeployments" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_deployments_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetDeploymentTargets = struct
-  let error_to_string = function
-    | `DeploymentDoesNotExistException _ ->
-        "com.amazonaws.codedeploy#DeploymentDoesNotExistException"
-    | `DeploymentIdRequiredException _ -> "com.amazonaws.codedeploy#DeploymentIdRequiredException"
-    | `DeploymentNotStartedException _ -> "com.amazonaws.codedeploy#DeploymentNotStartedException"
-    | `DeploymentTargetDoesNotExistException _ ->
-        "com.amazonaws.codedeploy#DeploymentTargetDoesNotExistException"
-    | `DeploymentTargetIdRequiredException _ ->
-        "com.amazonaws.codedeploy#DeploymentTargetIdRequiredException"
-    | `DeploymentTargetListSizeExceededException _ ->
-        "com.amazonaws.codedeploy#DeploymentTargetListSizeExceededException"
-    | `InstanceDoesNotExistException _ -> "com.amazonaws.codedeploy#InstanceDoesNotExistException"
-    | `InvalidDeploymentIdException _ -> "com.amazonaws.codedeploy#InvalidDeploymentIdException"
-    | `InvalidDeploymentTargetIdException _ ->
-        "com.amazonaws.codedeploy#InvalidDeploymentTargetIdException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "DeploymentDoesNotExistException" ->
-          `DeploymentDoesNotExistException
-            (Json_deserializers.deployment_does_not_exist_exception_of_yojson tree path)
-      | _, "DeploymentIdRequiredException" ->
-          `DeploymentIdRequiredException
-            (Json_deserializers.deployment_id_required_exception_of_yojson tree path)
-      | _, "DeploymentNotStartedException" ->
-          `DeploymentNotStartedException
-            (Json_deserializers.deployment_not_started_exception_of_yojson tree path)
-      | _, "DeploymentTargetDoesNotExistException" ->
-          `DeploymentTargetDoesNotExistException
-            (Json_deserializers.deployment_target_does_not_exist_exception_of_yojson tree path)
-      | _, "DeploymentTargetIdRequiredException" ->
-          `DeploymentTargetIdRequiredException
-            (Json_deserializers.deployment_target_id_required_exception_of_yojson tree path)
-      | _, "DeploymentTargetListSizeExceededException" ->
-          `DeploymentTargetListSizeExceededException
-            (Json_deserializers.deployment_target_list_size_exceeded_exception_of_yojson tree path)
-      | _, "InstanceDoesNotExistException" ->
-          `InstanceDoesNotExistException
-            (Json_deserializers.instance_does_not_exist_exception_of_yojson tree path)
-      | _, "InvalidDeploymentIdException" ->
-          `InvalidDeploymentIdException
-            (Json_deserializers.invalid_deployment_id_exception_of_yojson tree path)
-      | _, "InvalidDeploymentTargetIdException" ->
-          `InvalidDeploymentTargetIdException
-            (Json_deserializers.invalid_deployment_target_id_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_deployment_targets_input) =
-    let input = Json_serializers.batch_get_deployment_targets_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentTargets"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_deployment_targets_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_deployment_targets_input) =
-    let input = Json_serializers.batch_get_deployment_targets_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentTargets" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_deployment_targets_output_of_yojson
-      ~error_deserializer
-end
-
-module BatchGetOnPremisesInstances = struct
-  let error_to_string = function
-    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
-    | `InstanceNameRequiredException _ -> "com.amazonaws.codedeploy#InstanceNameRequiredException"
-    | `InvalidInstanceNameException _ -> "com.amazonaws.codedeploy#InvalidInstanceNameException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "BatchLimitExceededException" ->
-          `BatchLimitExceededException
-            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
-      | _, "InstanceNameRequiredException" ->
-          `InstanceNameRequiredException
-            (Json_deserializers.instance_name_required_exception_of_yojson tree path)
-      | _, "InvalidInstanceNameException" ->
-          `InvalidInstanceNameException
-            (Json_deserializers.invalid_instance_name_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : batch_get_on_premises_instances_input) =
-    let input = Json_serializers.batch_get_on_premises_instances_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"CodeDeploy_20141006.BatchGetOnPremisesInstances" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_on_premises_instances_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : batch_get_on_premises_instances_input) =
-    let input = Json_serializers.batch_get_on_premises_instances_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeDeploy_20141006.BatchGetOnPremisesInstances" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.batch_get_on_premises_instances_output_of_yojson
-      ~error_deserializer
-end
-
 module ContinueDeployment = struct
   let error_to_string = function
     | `DeploymentAlreadyCompletedException _ ->
@@ -1789,71 +1380,6 @@ module ListDeploymentInstances = struct
       ~error_deserializer
 end
 
-module ListDeploymentTargets = struct
-  let error_to_string = function
-    | `DeploymentDoesNotExistException _ ->
-        "com.amazonaws.codedeploy#DeploymentDoesNotExistException"
-    | `DeploymentIdRequiredException _ -> "com.amazonaws.codedeploy#DeploymentIdRequiredException"
-    | `DeploymentNotStartedException _ -> "com.amazonaws.codedeploy#DeploymentNotStartedException"
-    | `InvalidDeploymentIdException _ -> "com.amazonaws.codedeploy#InvalidDeploymentIdException"
-    | `InvalidDeploymentInstanceTypeException _ ->
-        "com.amazonaws.codedeploy#InvalidDeploymentInstanceTypeException"
-    | `InvalidInstanceStatusException _ -> "com.amazonaws.codedeploy#InvalidInstanceStatusException"
-    | `InvalidInstanceTypeException _ -> "com.amazonaws.codedeploy#InvalidInstanceTypeException"
-    | `InvalidNextTokenException _ -> "com.amazonaws.codedeploy#InvalidNextTokenException"
-    | `InvalidTargetFilterNameException _ ->
-        "com.amazonaws.codedeploy#InvalidTargetFilterNameException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "DeploymentDoesNotExistException" ->
-          `DeploymentDoesNotExistException
-            (Json_deserializers.deployment_does_not_exist_exception_of_yojson tree path)
-      | _, "DeploymentIdRequiredException" ->
-          `DeploymentIdRequiredException
-            (Json_deserializers.deployment_id_required_exception_of_yojson tree path)
-      | _, "DeploymentNotStartedException" ->
-          `DeploymentNotStartedException
-            (Json_deserializers.deployment_not_started_exception_of_yojson tree path)
-      | _, "InvalidDeploymentIdException" ->
-          `InvalidDeploymentIdException
-            (Json_deserializers.invalid_deployment_id_exception_of_yojson tree path)
-      | _, "InvalidDeploymentInstanceTypeException" ->
-          `InvalidDeploymentInstanceTypeException
-            (Json_deserializers.invalid_deployment_instance_type_exception_of_yojson tree path)
-      | _, "InvalidInstanceStatusException" ->
-          `InvalidInstanceStatusException
-            (Json_deserializers.invalid_instance_status_exception_of_yojson tree path)
-      | _, "InvalidInstanceTypeException" ->
-          `InvalidInstanceTypeException
-            (Json_deserializers.invalid_instance_type_exception_of_yojson tree path)
-      | _, "InvalidNextTokenException" ->
-          `InvalidNextTokenException
-            (Json_deserializers.invalid_next_token_exception_of_yojson tree path)
-      | _, "InvalidTargetFilterNameException" ->
-          `InvalidTargetFilterNameException
-            (Json_deserializers.invalid_target_filter_name_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_deployment_targets_input) =
-    let input = Json_serializers.list_deployment_targets_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeDeploy_20141006.ListDeploymentTargets"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_deployment_targets_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_deployment_targets_input) =
-    let input = Json_serializers.list_deployment_targets_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"CodeDeploy_20141006.ListDeploymentTargets" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_deployment_targets_output_of_yojson
-      ~error_deserializer
-end
-
 module ListDeployments = struct
   let error_to_string = function
     | `ApplicationDoesNotExistException _ ->
@@ -1926,6 +1452,71 @@ module ListDeployments = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CodeDeploy_20141006.ListDeployments" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_deployments_output_of_yojson ~error_deserializer
+end
+
+module ListDeploymentTargets = struct
+  let error_to_string = function
+    | `DeploymentDoesNotExistException _ ->
+        "com.amazonaws.codedeploy#DeploymentDoesNotExistException"
+    | `DeploymentIdRequiredException _ -> "com.amazonaws.codedeploy#DeploymentIdRequiredException"
+    | `DeploymentNotStartedException _ -> "com.amazonaws.codedeploy#DeploymentNotStartedException"
+    | `InvalidDeploymentIdException _ -> "com.amazonaws.codedeploy#InvalidDeploymentIdException"
+    | `InvalidDeploymentInstanceTypeException _ ->
+        "com.amazonaws.codedeploy#InvalidDeploymentInstanceTypeException"
+    | `InvalidInstanceStatusException _ -> "com.amazonaws.codedeploy#InvalidInstanceStatusException"
+    | `InvalidInstanceTypeException _ -> "com.amazonaws.codedeploy#InvalidInstanceTypeException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.codedeploy#InvalidNextTokenException"
+    | `InvalidTargetFilterNameException _ ->
+        "com.amazonaws.codedeploy#InvalidTargetFilterNameException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "DeploymentDoesNotExistException" ->
+          `DeploymentDoesNotExistException
+            (Json_deserializers.deployment_does_not_exist_exception_of_yojson tree path)
+      | _, "DeploymentIdRequiredException" ->
+          `DeploymentIdRequiredException
+            (Json_deserializers.deployment_id_required_exception_of_yojson tree path)
+      | _, "DeploymentNotStartedException" ->
+          `DeploymentNotStartedException
+            (Json_deserializers.deployment_not_started_exception_of_yojson tree path)
+      | _, "InvalidDeploymentIdException" ->
+          `InvalidDeploymentIdException
+            (Json_deserializers.invalid_deployment_id_exception_of_yojson tree path)
+      | _, "InvalidDeploymentInstanceTypeException" ->
+          `InvalidDeploymentInstanceTypeException
+            (Json_deserializers.invalid_deployment_instance_type_exception_of_yojson tree path)
+      | _, "InvalidInstanceStatusException" ->
+          `InvalidInstanceStatusException
+            (Json_deserializers.invalid_instance_status_exception_of_yojson tree path)
+      | _, "InvalidInstanceTypeException" ->
+          `InvalidInstanceTypeException
+            (Json_deserializers.invalid_instance_type_exception_of_yojson tree path)
+      | _, "InvalidNextTokenException" ->
+          `InvalidNextTokenException
+            (Json_deserializers.invalid_next_token_exception_of_yojson tree path)
+      | _, "InvalidTargetFilterNameException" ->
+          `InvalidTargetFilterNameException
+            (Json_deserializers.invalid_target_filter_name_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_deployment_targets_input) =
+    let input = Json_serializers.list_deployment_targets_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeDeploy_20141006.ListDeploymentTargets"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_deployment_targets_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_deployment_targets_input) =
+    let input = Json_serializers.list_deployment_targets_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeDeploy_20141006.ListDeploymentTargets" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_deployment_targets_output_of_yojson
+      ~error_deserializer
 end
 
 module ListGitHubAccountTokenNames = struct
@@ -2715,5 +2306,414 @@ module UpdateDeploymentGroup = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CodeDeploy_20141006.UpdateDeploymentGroup" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_deployment_group_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetOnPremisesInstances = struct
+  let error_to_string = function
+    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
+    | `InstanceNameRequiredException _ -> "com.amazonaws.codedeploy#InstanceNameRequiredException"
+    | `InvalidInstanceNameException _ -> "com.amazonaws.codedeploy#InvalidInstanceNameException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "BatchLimitExceededException" ->
+          `BatchLimitExceededException
+            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
+      | _, "InstanceNameRequiredException" ->
+          `InstanceNameRequiredException
+            (Json_deserializers.instance_name_required_exception_of_yojson tree path)
+      | _, "InvalidInstanceNameException" ->
+          `InvalidInstanceNameException
+            (Json_deserializers.invalid_instance_name_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_on_premises_instances_input) =
+    let input = Json_serializers.batch_get_on_premises_instances_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CodeDeploy_20141006.BatchGetOnPremisesInstances" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_on_premises_instances_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_on_premises_instances_input) =
+    let input = Json_serializers.batch_get_on_premises_instances_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeDeploy_20141006.BatchGetOnPremisesInstances" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_on_premises_instances_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetDeployments = struct
+  let error_to_string = function
+    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
+    | `DeploymentIdRequiredException _ -> "com.amazonaws.codedeploy#DeploymentIdRequiredException"
+    | `InvalidDeploymentIdException _ -> "com.amazonaws.codedeploy#InvalidDeploymentIdException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "BatchLimitExceededException" ->
+          `BatchLimitExceededException
+            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
+      | _, "DeploymentIdRequiredException" ->
+          `DeploymentIdRequiredException
+            (Json_deserializers.deployment_id_required_exception_of_yojson tree path)
+      | _, "InvalidDeploymentIdException" ->
+          `InvalidDeploymentIdException
+            (Json_deserializers.invalid_deployment_id_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_deployments_input) =
+    let input = Json_serializers.batch_get_deployments_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeDeploy_20141006.BatchGetDeployments"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_deployments_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_deployments_input) =
+    let input = Json_serializers.batch_get_deployments_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeDeploy_20141006.BatchGetDeployments" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_deployments_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetDeploymentTargets = struct
+  let error_to_string = function
+    | `DeploymentDoesNotExistException _ ->
+        "com.amazonaws.codedeploy#DeploymentDoesNotExistException"
+    | `DeploymentIdRequiredException _ -> "com.amazonaws.codedeploy#DeploymentIdRequiredException"
+    | `DeploymentNotStartedException _ -> "com.amazonaws.codedeploy#DeploymentNotStartedException"
+    | `DeploymentTargetDoesNotExistException _ ->
+        "com.amazonaws.codedeploy#DeploymentTargetDoesNotExistException"
+    | `DeploymentTargetIdRequiredException _ ->
+        "com.amazonaws.codedeploy#DeploymentTargetIdRequiredException"
+    | `DeploymentTargetListSizeExceededException _ ->
+        "com.amazonaws.codedeploy#DeploymentTargetListSizeExceededException"
+    | `InstanceDoesNotExistException _ -> "com.amazonaws.codedeploy#InstanceDoesNotExistException"
+    | `InvalidDeploymentIdException _ -> "com.amazonaws.codedeploy#InvalidDeploymentIdException"
+    | `InvalidDeploymentTargetIdException _ ->
+        "com.amazonaws.codedeploy#InvalidDeploymentTargetIdException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "DeploymentDoesNotExistException" ->
+          `DeploymentDoesNotExistException
+            (Json_deserializers.deployment_does_not_exist_exception_of_yojson tree path)
+      | _, "DeploymentIdRequiredException" ->
+          `DeploymentIdRequiredException
+            (Json_deserializers.deployment_id_required_exception_of_yojson tree path)
+      | _, "DeploymentNotStartedException" ->
+          `DeploymentNotStartedException
+            (Json_deserializers.deployment_not_started_exception_of_yojson tree path)
+      | _, "DeploymentTargetDoesNotExistException" ->
+          `DeploymentTargetDoesNotExistException
+            (Json_deserializers.deployment_target_does_not_exist_exception_of_yojson tree path)
+      | _, "DeploymentTargetIdRequiredException" ->
+          `DeploymentTargetIdRequiredException
+            (Json_deserializers.deployment_target_id_required_exception_of_yojson tree path)
+      | _, "DeploymentTargetListSizeExceededException" ->
+          `DeploymentTargetListSizeExceededException
+            (Json_deserializers.deployment_target_list_size_exceeded_exception_of_yojson tree path)
+      | _, "InstanceDoesNotExistException" ->
+          `InstanceDoesNotExistException
+            (Json_deserializers.instance_does_not_exist_exception_of_yojson tree path)
+      | _, "InvalidDeploymentIdException" ->
+          `InvalidDeploymentIdException
+            (Json_deserializers.invalid_deployment_id_exception_of_yojson tree path)
+      | _, "InvalidDeploymentTargetIdException" ->
+          `InvalidDeploymentTargetIdException
+            (Json_deserializers.invalid_deployment_target_id_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_deployment_targets_input) =
+    let input = Json_serializers.batch_get_deployment_targets_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentTargets"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_deployment_targets_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_deployment_targets_input) =
+    let input = Json_serializers.batch_get_deployment_targets_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentTargets" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_deployment_targets_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetDeploymentInstances = struct
+  let error_to_string = function
+    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
+    | `DeploymentDoesNotExistException _ ->
+        "com.amazonaws.codedeploy#DeploymentDoesNotExistException"
+    | `DeploymentIdRequiredException _ -> "com.amazonaws.codedeploy#DeploymentIdRequiredException"
+    | `InstanceIdRequiredException _ -> "com.amazonaws.codedeploy#InstanceIdRequiredException"
+    | `InvalidComputePlatformException _ ->
+        "com.amazonaws.codedeploy#InvalidComputePlatformException"
+    | `InvalidDeploymentIdException _ -> "com.amazonaws.codedeploy#InvalidDeploymentIdException"
+    | `InvalidInstanceNameException _ -> "com.amazonaws.codedeploy#InvalidInstanceNameException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "BatchLimitExceededException" ->
+          `BatchLimitExceededException
+            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
+      | _, "DeploymentDoesNotExistException" ->
+          `DeploymentDoesNotExistException
+            (Json_deserializers.deployment_does_not_exist_exception_of_yojson tree path)
+      | _, "DeploymentIdRequiredException" ->
+          `DeploymentIdRequiredException
+            (Json_deserializers.deployment_id_required_exception_of_yojson tree path)
+      | _, "InstanceIdRequiredException" ->
+          `InstanceIdRequiredException
+            (Json_deserializers.instance_id_required_exception_of_yojson tree path)
+      | _, "InvalidComputePlatformException" ->
+          `InvalidComputePlatformException
+            (Json_deserializers.invalid_compute_platform_exception_of_yojson tree path)
+      | _, "InvalidDeploymentIdException" ->
+          `InvalidDeploymentIdException
+            (Json_deserializers.invalid_deployment_id_exception_of_yojson tree path)
+      | _, "InvalidInstanceNameException" ->
+          `InvalidInstanceNameException
+            (Json_deserializers.invalid_instance_name_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_deployment_instances_input) =
+    let input = Json_serializers.batch_get_deployment_instances_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentInstances" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_deployment_instances_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_deployment_instances_input) =
+    let input = Json_serializers.batch_get_deployment_instances_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentInstances" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_deployment_instances_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetDeploymentGroups = struct
+  let error_to_string = function
+    | `ApplicationDoesNotExistException _ ->
+        "com.amazonaws.codedeploy#ApplicationDoesNotExistException"
+    | `ApplicationNameRequiredException _ ->
+        "com.amazonaws.codedeploy#ApplicationNameRequiredException"
+    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
+    | `DeploymentConfigDoesNotExistException _ ->
+        "com.amazonaws.codedeploy#DeploymentConfigDoesNotExistException"
+    | `DeploymentGroupNameRequiredException _ ->
+        "com.amazonaws.codedeploy#DeploymentGroupNameRequiredException"
+    | `InvalidApplicationNameException _ ->
+        "com.amazonaws.codedeploy#InvalidApplicationNameException"
+    | `InvalidDeploymentGroupNameException _ ->
+        "com.amazonaws.codedeploy#InvalidDeploymentGroupNameException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ApplicationDoesNotExistException" ->
+          `ApplicationDoesNotExistException
+            (Json_deserializers.application_does_not_exist_exception_of_yojson tree path)
+      | _, "ApplicationNameRequiredException" ->
+          `ApplicationNameRequiredException
+            (Json_deserializers.application_name_required_exception_of_yojson tree path)
+      | _, "BatchLimitExceededException" ->
+          `BatchLimitExceededException
+            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
+      | _, "DeploymentConfigDoesNotExistException" ->
+          `DeploymentConfigDoesNotExistException
+            (Json_deserializers.deployment_config_does_not_exist_exception_of_yojson tree path)
+      | _, "DeploymentGroupNameRequiredException" ->
+          `DeploymentGroupNameRequiredException
+            (Json_deserializers.deployment_group_name_required_exception_of_yojson tree path)
+      | _, "InvalidApplicationNameException" ->
+          `InvalidApplicationNameException
+            (Json_deserializers.invalid_application_name_exception_of_yojson tree path)
+      | _, "InvalidDeploymentGroupNameException" ->
+          `InvalidDeploymentGroupNameException
+            (Json_deserializers.invalid_deployment_group_name_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_deployment_groups_input) =
+    let input = Json_serializers.batch_get_deployment_groups_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentGroups"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_deployment_groups_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_deployment_groups_input) =
+    let input = Json_serializers.batch_get_deployment_groups_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeDeploy_20141006.BatchGetDeploymentGroups" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_deployment_groups_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetApplications = struct
+  let error_to_string = function
+    | `ApplicationDoesNotExistException _ ->
+        "com.amazonaws.codedeploy#ApplicationDoesNotExistException"
+    | `ApplicationNameRequiredException _ ->
+        "com.amazonaws.codedeploy#ApplicationNameRequiredException"
+    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
+    | `InvalidApplicationNameException _ ->
+        "com.amazonaws.codedeploy#InvalidApplicationNameException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ApplicationDoesNotExistException" ->
+          `ApplicationDoesNotExistException
+            (Json_deserializers.application_does_not_exist_exception_of_yojson tree path)
+      | _, "ApplicationNameRequiredException" ->
+          `ApplicationNameRequiredException
+            (Json_deserializers.application_name_required_exception_of_yojson tree path)
+      | _, "BatchLimitExceededException" ->
+          `BatchLimitExceededException
+            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
+      | _, "InvalidApplicationNameException" ->
+          `InvalidApplicationNameException
+            (Json_deserializers.invalid_application_name_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_applications_input) =
+    let input = Json_serializers.batch_get_applications_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CodeDeploy_20141006.BatchGetApplications"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_applications_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_applications_input) =
+    let input = Json_serializers.batch_get_applications_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeDeploy_20141006.BatchGetApplications" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_applications_output_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetApplicationRevisions = struct
+  let error_to_string = function
+    | `ApplicationDoesNotExistException _ ->
+        "com.amazonaws.codedeploy#ApplicationDoesNotExistException"
+    | `ApplicationNameRequiredException _ ->
+        "com.amazonaws.codedeploy#ApplicationNameRequiredException"
+    | `BatchLimitExceededException _ -> "com.amazonaws.codedeploy#BatchLimitExceededException"
+    | `InvalidApplicationNameException _ ->
+        "com.amazonaws.codedeploy#InvalidApplicationNameException"
+    | `InvalidRevisionException _ -> "com.amazonaws.codedeploy#InvalidRevisionException"
+    | `RevisionRequiredException _ -> "com.amazonaws.codedeploy#RevisionRequiredException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ApplicationDoesNotExistException" ->
+          `ApplicationDoesNotExistException
+            (Json_deserializers.application_does_not_exist_exception_of_yojson tree path)
+      | _, "ApplicationNameRequiredException" ->
+          `ApplicationNameRequiredException
+            (Json_deserializers.application_name_required_exception_of_yojson tree path)
+      | _, "BatchLimitExceededException" ->
+          `BatchLimitExceededException
+            (Json_deserializers.batch_limit_exceeded_exception_of_yojson tree path)
+      | _, "InvalidApplicationNameException" ->
+          `InvalidApplicationNameException
+            (Json_deserializers.invalid_application_name_exception_of_yojson tree path)
+      | _, "InvalidRevisionException" ->
+          `InvalidRevisionException
+            (Json_deserializers.invalid_revision_exception_of_yojson tree path)
+      | _, "RevisionRequiredException" ->
+          `RevisionRequiredException
+            (Json_deserializers.revision_required_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_application_revisions_input) =
+    let input = Json_serializers.batch_get_application_revisions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CodeDeploy_20141006.BatchGetApplicationRevisions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_application_revisions_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_application_revisions_input) =
+    let input = Json_serializers.batch_get_application_revisions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeDeploy_20141006.BatchGetApplicationRevisions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_application_revisions_output_of_yojson
+      ~error_deserializer
+end
+
+module AddTagsToOnPremisesInstances = struct
+  let error_to_string = function
+    | `InstanceLimitExceededException _ -> "com.amazonaws.codedeploy#InstanceLimitExceededException"
+    | `InstanceNameRequiredException _ -> "com.amazonaws.codedeploy#InstanceNameRequiredException"
+    | `InstanceNotRegisteredException _ -> "com.amazonaws.codedeploy#InstanceNotRegisteredException"
+    | `InvalidInstanceNameException _ -> "com.amazonaws.codedeploy#InvalidInstanceNameException"
+    | `InvalidTagException _ -> "com.amazonaws.codedeploy#InvalidTagException"
+    | `TagLimitExceededException _ -> "com.amazonaws.codedeploy#TagLimitExceededException"
+    | `TagRequiredException _ -> "com.amazonaws.codedeploy#TagRequiredException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InstanceLimitExceededException" ->
+          `InstanceLimitExceededException
+            (Json_deserializers.instance_limit_exceeded_exception_of_yojson tree path)
+      | _, "InstanceNameRequiredException" ->
+          `InstanceNameRequiredException
+            (Json_deserializers.instance_name_required_exception_of_yojson tree path)
+      | _, "InstanceNotRegisteredException" ->
+          `InstanceNotRegisteredException
+            (Json_deserializers.instance_not_registered_exception_of_yojson tree path)
+      | _, "InvalidInstanceNameException" ->
+          `InvalidInstanceNameException
+            (Json_deserializers.invalid_instance_name_exception_of_yojson tree path)
+      | _, "InvalidTagException" ->
+          `InvalidTagException (Json_deserializers.invalid_tag_exception_of_yojson tree path)
+      | _, "TagLimitExceededException" ->
+          `TagLimitExceededException
+            (Json_deserializers.tag_limit_exceeded_exception_of_yojson tree path)
+      | _, "TagRequiredException" ->
+          `TagRequiredException (Json_deserializers.tag_required_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_tags_to_on_premises_instances_input) =
+    let input = Json_serializers.add_tags_to_on_premises_instances_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CodeDeploy_20141006.AddTagsToOnPremisesInstances" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_on_premises_instances_input) =
+    let input = Json_serializers.add_tags_to_on_premises_instances_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CodeDeploy_20141006.AddTagsToOnPremisesInstances" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
