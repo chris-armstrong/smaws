@@ -16,14 +16,14 @@ module SimpleScalarProperties = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/SimpleScalarProperties" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
         [ (match request.foo with Some v -> [ ("X-Foo", (fun v -> v) v) ] | None -> []) ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -115,8 +115,8 @@ module TimestampFormatHeaders = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/TimestampFormatHeaders" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -175,7 +175,7 @@ module TimestampFormatHeaders = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"TimestampFormatHeaders" ~service ~context
@@ -225,11 +225,11 @@ module XmlAttributes = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlAttributes" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -278,11 +278,11 @@ module XmlAttributesInMiddle = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlAttributesInMiddle" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.payload with
@@ -348,11 +348,11 @@ module XmlAttributesOnPayload = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlAttributesOnPayload" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.payload with
@@ -413,11 +413,11 @@ module XmlBlobs = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlBlobs" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -449,11 +449,11 @@ module XmlEmptyBlobs = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlEmptyBlobs" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -486,11 +486,11 @@ module XmlEmptyLists = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlEmptyLists" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -661,11 +661,11 @@ module XmlEmptyMaps = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlEmptyMaps" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -714,11 +714,11 @@ module XmlEmptyStrings = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlEmptyStrings" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -752,11 +752,11 @@ module XmlEnums = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlEnums" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -855,11 +855,11 @@ module XmlIntEnums = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlIntEnums" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -959,11 +959,11 @@ module XmlLists = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlLists" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1133,11 +1133,11 @@ module XmlMaps = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlMaps" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1185,11 +1185,11 @@ module XmlMapsXmlName = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlMapsXmlName" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1240,11 +1240,11 @@ module XmlMapWithXmlNamespace = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlMapWithXmlNamespace" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1288,11 +1288,11 @@ module XmlNamespaces = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlNamespaces" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1330,11 +1330,11 @@ module XmlTimestamps = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlTimestamps" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1422,11 +1422,11 @@ module XmlUnions = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlUnions" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1464,11 +1464,11 @@ module RecursiveShapes = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/RecursiveShapes" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1519,8 +1519,8 @@ module QueryPrecedence = struct
         ]
     in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"QueryPrecedence" ~service ~context
@@ -1552,8 +1552,8 @@ module QueryParamsAsStringListMap = struct
         ]
     in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"QueryParamsAsStringListMap" ~service ~context
@@ -1585,10 +1585,10 @@ module QueryIdempotencyTokenAutoFill = struct
       List.concat
         [ (match request.token with Some v -> [ ("token", [ (fun v -> v) v ]) ] | None -> []) ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"QueryIdempotencyTokenAutoFill" ~service
@@ -1610,8 +1610,8 @@ module PutWithContentEncoding = struct
         ~template:"/requestcompression/putcontentwithencoding" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1621,7 +1621,7 @@ module PutWithContentEncoding = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1657,10 +1657,10 @@ module OmitsNullSerializesEmptyString = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"OmitsNullSerializesEmptyString" ~service
@@ -1681,8 +1681,8 @@ module NullAndEmptyHeadersServer = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/NullAndEmptyHeadersServer" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1694,7 +1694,7 @@ module NullAndEmptyHeadersServer = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NullAndEmptyHeadersServer" ~service ~context
@@ -1725,8 +1725,8 @@ module NullAndEmptyHeadersClient = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/NullAndEmptyHeadersClient" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1738,7 +1738,7 @@ module NullAndEmptyHeadersClient = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NullAndEmptyHeadersClient" ~service ~context
@@ -1769,11 +1769,11 @@ module NoInputAndOutput = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/NoInputAndOutputOutput" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NoInputAndOutput" ~service ~context
@@ -1794,11 +1794,11 @@ module NoInputAndNoOutput = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/NoInputAndNoOutput" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NoInputAndNoOutput" ~service ~context
@@ -1817,11 +1817,11 @@ module NestedXmlMaps = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/NestedXmlMaps" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1888,11 +1888,11 @@ module NestedXmlMapWithXmlName = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/NestedXmlMapWithXmlName" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -1944,8 +1944,8 @@ module InputAndOutputWithHeaders = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/InputAndOutputWithHeaders" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2042,7 +2042,7 @@ module InputAndOutputWithHeaders = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"InputAndOutputWithHeaders" ~service ~context
@@ -2154,11 +2154,11 @@ module IgnoreQueryParamsInResponse = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/IgnoreQueryParamsInResponse" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"IgnoreQueryParamsInResponse" ~service ~context
@@ -2186,11 +2186,11 @@ module HttpStringPayload = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/StringPayload" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = match request.payload with Some v -> Some ("text/plain", v) | None -> None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpStringPayload" ~service ~context
@@ -2210,11 +2210,11 @@ module HttpResponseCode = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpResponseCode" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpResponseCode" ~service ~context
@@ -2269,11 +2269,11 @@ module HttpRequestWithLabelsAndTimestampFormat = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpRequestWithLabelsAndTimestampFormat"
@@ -2316,11 +2316,11 @@ module HttpRequestWithLabels = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpRequestWithLabels" ~service ~context
@@ -2344,11 +2344,11 @@ module HttpRequestWithGreedyLabelInPath = struct
           [ ("foo", (fun v -> v) request.foo, false); ("baz", (fun v -> v) request.baz, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpRequestWithGreedyLabelInPath" ~service
@@ -2380,11 +2380,11 @@ module HttpRequestWithFloatLabels = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpRequestWithFloatLabels" ~service ~context
@@ -2405,8 +2405,8 @@ module HttpPrefixHeaders = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPrefixHeaders" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2449,11 +2449,11 @@ module HttpPayloadWithXmlNamespaceAndPrefix = struct
         ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.nested with
@@ -2501,11 +2501,11 @@ module HttpPayloadWithXmlNamespace = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadWithXmlNamespace" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.nested with
@@ -2552,11 +2552,11 @@ module HttpPayloadWithXmlName = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadWithXmlName" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.nested with
@@ -2602,11 +2602,11 @@ module HttpPayloadWithUnion = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadWithUnion" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.nested with
@@ -2646,11 +2646,11 @@ module HttpPayloadWithStructure = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadWithStructure" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.nested with
@@ -2699,11 +2699,11 @@ module HttpPayloadWithMemberXmlName = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadWithMemberXmlName" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.nested with
@@ -2750,14 +2750,14 @@ module HttpPayloadTraitsWithMediaType = struct
         ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
         [ (match request.foo with Some v -> [ ("X-Foo", (fun v -> v) v) ] | None -> []) ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.blob with Some v -> Some ("text/plain", Bytes.to_string v) | None -> None
@@ -2786,14 +2786,14 @@ module HttpPayloadTraits = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadTraits" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
         [ (match request.foo with Some v -> [ ("X-Foo", (fun v -> v) v) ] | None -> []) ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.blob with
@@ -2822,11 +2822,11 @@ module HttpEnumPayload = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/EnumPayload" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.payload with
@@ -2862,8 +2862,8 @@ module HttpEmptyPrefixHeaders = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpEmptyPrefixHeaders" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2949,11 +2949,11 @@ module GreetingWithErrors = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/GreetingWithErrors" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GreetingWithErrors" ~service ~context
@@ -2979,11 +2979,11 @@ module FractionalSeconds = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/FractionalSeconds" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"FractionalSeconds" ~service ~context
@@ -3019,11 +3019,11 @@ module FlattenedXmlMapWithXmlNamespace = struct
         ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"FlattenedXmlMapWithXmlNamespace" ~service
@@ -3061,11 +3061,11 @@ module FlattenedXmlMapWithXmlName = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/FlattenedXmlMapWithXmlName" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -3106,11 +3106,11 @@ module FlattenedXmlMap = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/FlattenedXmlMap" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -3163,11 +3163,11 @@ module EndpointWithHostLabelOperation = struct
         ~labels:[ ("label", (fun v -> v) request.label) ]
         uri
     in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -3199,8 +3199,8 @@ module EndpointWithHostLabelHeaderOperation = struct
         ~labels:[ ("accountId", (fun v -> v) request.account_id) ]
         uri
     in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3209,7 +3209,7 @@ module EndpointWithHostLabelHeaderOperation = struct
            [ ("X-Amz-Account-Id", (fun v -> v) v) ]);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"EndpointWithHostLabelHeaderOperation" ~service
@@ -3231,11 +3231,11 @@ module EndpointOperation = struct
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let uri = Smaws_Lib.Http_bindings.substitute_host_prefix ~host_prefix:"foo." ~labels:[] uri in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"EndpointOperation" ~service ~context
@@ -3256,11 +3256,11 @@ module EmptyInputAndEmptyOutput = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/EmptyInputAndEmptyOutput" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"EmptyInputAndEmptyOutput" ~service ~context
@@ -3279,11 +3279,11 @@ module DatetimeOffsets = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/DatetimeOffsets" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DatetimeOffsets" ~service ~context
@@ -3318,11 +3318,11 @@ module ContentTypeParameters = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/ContentTypeParameters" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -3350,11 +3350,11 @@ module ConstantQueryString = struct
         ~labels:[ ("hello", (fun v -> v) request.hello, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ConstantQueryString" ~service ~context
@@ -3385,10 +3385,10 @@ module ConstantAndVariableQueryString = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ConstantAndVariableQueryString" ~service
@@ -3407,11 +3407,11 @@ module BodyWithXmlName = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/BodyWithXmlName" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -3596,8 +3596,8 @@ module AllQueryStringTypes = struct
         ]
     in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"AllQueryStringTypes" ~service ~context

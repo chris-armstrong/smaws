@@ -2100,6 +2100,12 @@ module Operations = struct
         | None ->
             if String.equal service_ns "" then None else Some (service_ns, (None : string option)))
 
+  (* Emit [] directly when there are no contributions, otherwise [List.concat [contribs]].
+     Avoids the noisy [List.concat []] for the common empty case. *)
+  let concat_contribs contribs =
+    if List.is_empty contribs then B.elist []
+    else B.pexp_apply (exp_ident "List.concat") [ (Nolabel, B.elist contribs) ]
+
   (* A [(name, [value])] entry for a scalar @httpQuery member, or [] when the
      optional member is [None]. *)
   let query_scalar_contrib ~namespace_resolver ~shape_resolver (mem : Shape.member) name =
@@ -2330,12 +2336,8 @@ module Operations = struct
     let map_params_contribs =
       List.map query_params_members ~f:(query_params_contrib ~namespace_resolver ~shape_resolver)
     in
-    let named_params_expr =
-      B.pexp_apply (exp_ident "List.concat") [ (Nolabel, B.elist named_params_contribs) ]
-    in
-    let map_params_expr =
-      B.pexp_apply (exp_ident "List.concat") [ (Nolabel, B.elist map_params_contribs) ]
-    in
+    let named_params_expr = concat_contribs named_params_contribs in
+    let map_params_expr = concat_contribs map_params_contribs in
     let named_headers_contribs =
       List.map header_members ~f:(fun (mem, name) ->
           if target_is_list ~shape_resolver mem.target then
@@ -2346,12 +2348,8 @@ module Operations = struct
       List.map prefix_header_members ~f:(fun (mem, prefix) ->
           prefix_headers_contrib ~namespace_resolver ~shape_resolver mem prefix)
     in
-    let named_headers_expr =
-      B.pexp_apply (exp_ident "List.concat") [ (Nolabel, B.elist named_headers_contribs) ]
-    in
-    let prefix_headers_expr =
-      B.pexp_apply (exp_ident "List.concat") [ (Nolabel, B.elist prefix_headers_contribs) ]
-    in
+    let named_headers_expr = concat_contribs named_headers_contribs in
+    let prefix_headers_expr = concat_contribs prefix_headers_contribs in
     let host_prefix_expr =
       match endpoint with
       | Some e ->

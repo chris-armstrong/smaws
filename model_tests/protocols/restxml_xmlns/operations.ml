@@ -16,14 +16,14 @@ module SimpleScalarProperties = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/SimpleScalarProperties" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
         [ (match request.foo with Some v -> [ ("X-Foo", (fun v -> v) v) ] | None -> []) ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in

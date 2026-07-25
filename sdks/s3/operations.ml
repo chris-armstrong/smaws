@@ -27,7 +27,7 @@ module CompleteMultipartUpload = struct
            [ ("uploadId", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -100,7 +100,7 @@ module CompleteMultipartUpload = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.multipart_upload with
@@ -314,8 +314,8 @@ module CopyObject = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -786,8 +786,8 @@ module CreateBucket = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -846,7 +846,7 @@ module CreateBucket = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.create_bucket_configuration with
@@ -887,8 +887,8 @@ module CreateBucketMetadataConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -920,7 +920,7 @@ module CreateBucketMetadataConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.metadata_configuration in
@@ -950,8 +950,8 @@ module CreateBucketMetadataTableConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -983,7 +983,7 @@ module CreateBucketMetadataTableConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.metadata_table_configuration in
@@ -1016,8 +1016,8 @@ module CreateMultipartUpload = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1333,8 +1333,8 @@ module CreateSession = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1373,7 +1373,7 @@ module CreateSession = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"CreateSession" ~service ~context ~method_:`GET
@@ -1438,8 +1438,8 @@ module DeleteBucket = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1449,7 +1449,7 @@ module DeleteBucket = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucket" ~service ~context
@@ -1478,7 +1478,7 @@ module DeleteBucketAnalyticsConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1488,7 +1488,7 @@ module DeleteBucketAnalyticsConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketAnalyticsConfiguration" ~service
@@ -1510,8 +1510,8 @@ module DeleteBucketCors = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1521,7 +1521,7 @@ module DeleteBucketCors = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketCors" ~service ~context
@@ -1543,8 +1543,8 @@ module DeleteBucketEncryption = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1554,7 +1554,7 @@ module DeleteBucketEncryption = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketEncryption" ~service ~context
@@ -1583,7 +1583,7 @@ module DeleteBucketIntelligentTieringConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1593,7 +1593,7 @@ module DeleteBucketIntelligentTieringConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketIntelligentTieringConfiguration"
@@ -1622,7 +1622,7 @@ module DeleteBucketInventoryConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1632,7 +1632,7 @@ module DeleteBucketInventoryConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketInventoryConfiguration" ~service
@@ -1654,8 +1654,8 @@ module DeleteBucketLifecycle = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1665,7 +1665,7 @@ module DeleteBucketLifecycle = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketLifecycle" ~service ~context
@@ -1687,8 +1687,8 @@ module DeleteBucketMetadataConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1698,7 +1698,7 @@ module DeleteBucketMetadataConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketMetadataConfiguration" ~service
@@ -1720,8 +1720,8 @@ module DeleteBucketMetadataTableConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1731,7 +1731,7 @@ module DeleteBucketMetadataTableConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketMetadataTableConfiguration"
@@ -1760,7 +1760,7 @@ module DeleteBucketMetricsConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1770,7 +1770,7 @@ module DeleteBucketMetricsConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketMetricsConfiguration" ~service
@@ -1792,8 +1792,8 @@ module DeleteBucketOwnershipControls = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1803,7 +1803,7 @@ module DeleteBucketOwnershipControls = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketOwnershipControls" ~service
@@ -1825,8 +1825,8 @@ module DeleteBucketPolicy = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1836,7 +1836,7 @@ module DeleteBucketPolicy = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketPolicy" ~service ~context
@@ -1858,8 +1858,8 @@ module DeleteBucketReplication = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1869,7 +1869,7 @@ module DeleteBucketReplication = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketReplication" ~service ~context
@@ -1891,8 +1891,8 @@ module DeleteBucketTagging = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1902,7 +1902,7 @@ module DeleteBucketTagging = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketTagging" ~service ~context
@@ -1924,8 +1924,8 @@ module DeleteBucketWebsite = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -1935,7 +1935,7 @@ module DeleteBucketWebsite = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteBucketWebsite" ~service ~context
@@ -1968,7 +1968,7 @@ module DeleteObject = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2002,7 +2002,7 @@ module DeleteObject = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteObject" ~service ~context
@@ -2072,7 +2072,7 @@ module DeleteObjectAnnotation = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2092,7 +2092,7 @@ module DeleteObjectAnnotation = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteObjectAnnotation" ~service ~context
@@ -2127,8 +2127,8 @@ module DeleteObjects = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2168,7 +2168,7 @@ module DeleteObjects = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.delete in
@@ -2236,7 +2236,7 @@ module DeleteObjectTagging = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2246,7 +2246,7 @@ module DeleteObjectTagging = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteObjectTagging" ~service ~context
@@ -2275,8 +2275,8 @@ module DeletePublicAccessBlock = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2286,7 +2286,7 @@ module DeletePublicAccessBlock = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeletePublicAccessBlock" ~service ~context
@@ -2308,8 +2308,8 @@ module GetBucketAbac = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2319,7 +2319,7 @@ module GetBucketAbac = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketAbac" ~service ~context ~method_:`GET
@@ -2363,8 +2363,8 @@ module GetBucketAccelerateConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2381,7 +2381,7 @@ module GetBucketAccelerateConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketAccelerateConfiguration" ~service
@@ -2426,8 +2426,8 @@ module GetBucketAcl = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2437,7 +2437,7 @@ module GetBucketAcl = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketAcl" ~service ~context ~method_:`GET
@@ -2486,7 +2486,7 @@ module GetBucketAnalyticsConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2496,7 +2496,7 @@ module GetBucketAnalyticsConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketAnalyticsConfiguration" ~service
@@ -2560,8 +2560,8 @@ module GetBucketCors = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2571,7 +2571,7 @@ module GetBucketCors = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketCors" ~service ~context ~method_:`GET
@@ -2605,8 +2605,8 @@ module GetBucketEncryption = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2616,7 +2616,7 @@ module GetBucketEncryption = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketEncryption" ~service ~context
@@ -2669,7 +2669,7 @@ module GetBucketIntelligentTieringConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2679,7 +2679,7 @@ module GetBucketIntelligentTieringConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketIntelligentTieringConfiguration"
@@ -2759,7 +2759,7 @@ module GetBucketInventoryConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2769,7 +2769,7 @@ module GetBucketInventoryConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketInventoryConfiguration" ~service
@@ -2877,8 +2877,8 @@ module GetBucketLifecycleConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2888,7 +2888,7 @@ module GetBucketLifecycleConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketLifecycleConfiguration" ~service
@@ -2935,8 +2935,8 @@ module GetBucketLocation = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2946,7 +2946,7 @@ module GetBucketLocation = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketLocation" ~service ~context
@@ -2982,8 +2982,8 @@ module GetBucketLogging = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -2993,7 +2993,7 @@ module GetBucketLogging = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketLogging" ~service ~context
@@ -3029,8 +3029,8 @@ module GetBucketMetadataConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3040,7 +3040,7 @@ module GetBucketMetadataConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketMetadataConfiguration" ~service
@@ -3091,8 +3091,8 @@ module GetBucketMetadataTableConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3102,7 +3102,7 @@ module GetBucketMetadataTableConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketMetadataTableConfiguration" ~service
@@ -3179,7 +3179,7 @@ module GetBucketMetricsConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3189,7 +3189,7 @@ module GetBucketMetricsConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketMetricsConfiguration" ~service
@@ -3239,8 +3239,8 @@ module GetBucketNotificationConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3250,7 +3250,7 @@ module GetBucketNotificationConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketNotificationConfiguration" ~service
@@ -3319,8 +3319,8 @@ module GetBucketOwnershipControls = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3330,7 +3330,7 @@ module GetBucketOwnershipControls = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketOwnershipControls" ~service ~context
@@ -3374,8 +3374,8 @@ module GetBucketPolicy = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3385,7 +3385,7 @@ module GetBucketPolicy = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketPolicy" ~service ~context
@@ -3408,8 +3408,8 @@ module GetBucketPolicyStatus = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3419,7 +3419,7 @@ module GetBucketPolicyStatus = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketPolicyStatus" ~service ~context
@@ -3463,8 +3463,8 @@ module GetBucketReplication = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3474,7 +3474,7 @@ module GetBucketReplication = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketReplication" ~service ~context
@@ -3526,8 +3526,8 @@ module GetBucketRequestPayment = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3537,7 +3537,7 @@ module GetBucketRequestPayment = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketRequestPayment" ~service ~context
@@ -3570,8 +3570,8 @@ module GetBucketTagging = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3581,7 +3581,7 @@ module GetBucketTagging = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketTagging" ~service ~context
@@ -3618,8 +3618,8 @@ module GetBucketVersioning = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3629,7 +3629,7 @@ module GetBucketVersioning = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketVersioning" ~service ~context
@@ -3673,8 +3673,8 @@ module GetBucketWebsite = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3684,7 +3684,7 @@ module GetBucketWebsite = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketWebsite" ~service ~context
@@ -3809,7 +3809,7 @@ module GetObject = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -3863,7 +3863,7 @@ module GetObject = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObject" ~service ~context ~method_:`GET ~uri
@@ -4124,7 +4124,7 @@ module GetObjectAcl = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -4141,7 +4141,7 @@ module GetObjectAcl = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectAcl" ~service ~context ~method_:`GET
@@ -4232,7 +4232,7 @@ module GetObjectAnnotation = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -4256,7 +4256,7 @@ module GetObjectAnnotation = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectAnnotation" ~service ~context
@@ -4395,7 +4395,7 @@ module GetObjectAttributes = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -4441,7 +4441,7 @@ module GetObjectAttributes = struct
            ]);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectAttributes" ~service ~context
@@ -4536,7 +4536,7 @@ module GetObjectLegalHold = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -4553,7 +4553,7 @@ module GetObjectLegalHold = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectLegalHold" ~service ~context
@@ -4597,8 +4597,8 @@ module GetObjectLockConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -4608,7 +4608,7 @@ module GetObjectLockConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectLockConfiguration" ~service ~context
@@ -4671,7 +4671,7 @@ module GetObjectRetention = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -4688,7 +4688,7 @@ module GetObjectRetention = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectRetention" ~service ~context
@@ -4751,7 +4751,7 @@ module GetObjectTagging = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -4768,7 +4768,7 @@ module GetObjectTagging = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectTagging" ~service ~context
@@ -4815,8 +4815,8 @@ module GetObjectTorrent = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -4833,7 +4833,7 @@ module GetObjectTorrent = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectTorrent" ~service ~context
@@ -4866,8 +4866,8 @@ module GetPublicAccessBlock = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -4877,7 +4877,7 @@ module GetPublicAccessBlock = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetPublicAccessBlock" ~service ~context
@@ -4964,8 +4964,8 @@ module HeadBucket = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -4975,7 +4975,7 @@ module HeadBucket = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HeadBucket" ~service ~context ~method_:`HEAD
@@ -5074,7 +5074,7 @@ module HeadObject = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -5128,7 +5128,7 @@ module HeadObject = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HeadObject" ~service ~context ~method_:`HEAD
@@ -5384,7 +5384,7 @@ module ListBucketAnalyticsConfigurations = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -5394,7 +5394,7 @@ module ListBucketAnalyticsConfigurations = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListBucketAnalyticsConfigurations" ~service
@@ -5472,7 +5472,7 @@ module ListBucketIntelligentTieringConfigurations = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -5482,7 +5482,7 @@ module ListBucketIntelligentTieringConfigurations = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListBucketIntelligentTieringConfigurations"
@@ -5561,7 +5561,7 @@ module ListBucketInventoryConfigurations = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -5571,7 +5571,7 @@ module ListBucketInventoryConfigurations = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListBucketInventoryConfigurations" ~service
@@ -5649,7 +5649,7 @@ module ListBucketMetricsConfigurations = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -5659,7 +5659,7 @@ module ListBucketMetricsConfigurations = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListBucketMetricsConfigurations" ~service
@@ -5739,10 +5739,10 @@ module ListBuckets = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListBuckets" ~service ~context ~method_:`GET
@@ -5811,10 +5811,10 @@ module ListDirectoryBuckets = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
-    let named_headers = List.concat [] in
-    let prefix_headers = List.concat [] in
+    let named_headers = [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListDirectoryBuckets" ~service ~context
@@ -5881,7 +5881,7 @@ module ListMultipartUploads = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -5898,7 +5898,7 @@ module ListMultipartUploads = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListMultipartUploads" ~service ~context
@@ -6082,7 +6082,7 @@ module ListObjectAnnotations = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -6099,7 +6099,7 @@ module ListObjectAnnotations = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListObjectAnnotations" ~service ~context
@@ -6238,7 +6238,7 @@ module ListObjects = struct
           (match request.prefix with Some v -> [ ("prefix", [ (fun v -> v) v ]) ] | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -6266,7 +6266,7 @@ module ListObjects = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListObjects" ~service ~context ~method_:`GET
@@ -6413,7 +6413,7 @@ module ListObjectsV2 = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -6441,7 +6441,7 @@ module ListObjectsV2 = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListObjectsV2" ~service ~context ~method_:`GET
@@ -6593,7 +6593,7 @@ module ListObjectVersions = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -6621,7 +6621,7 @@ module ListObjectVersions = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListObjectVersions" ~service ~context
@@ -6780,7 +6780,7 @@ module ListParts = struct
            [ ("uploadId", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -6806,7 +6806,7 @@ module ListParts = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListParts" ~service ~context ~method_:`GET ~uri
@@ -6953,8 +6953,8 @@ module PutBucketAbac = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -6986,7 +6986,7 @@ module PutBucketAbac = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.abac_status in
@@ -7015,8 +7015,8 @@ module PutBucketAccelerateConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7045,7 +7045,7 @@ module PutBucketAccelerateConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.accelerate_configuration in
@@ -7075,8 +7075,8 @@ module PutBucketAcl = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7136,7 +7136,7 @@ module PutBucketAcl = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.access_control_policy with
@@ -7175,7 +7175,7 @@ module PutBucketAnalyticsConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7185,7 +7185,7 @@ module PutBucketAnalyticsConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.analytics_configuration in
@@ -7215,8 +7215,8 @@ module PutBucketCors = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7248,7 +7248,7 @@ module PutBucketCors = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.cors_configuration in
@@ -7277,8 +7277,8 @@ module PutBucketEncryption = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7310,7 +7310,7 @@ module PutBucketEncryption = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.server_side_encryption_configuration in
@@ -7347,7 +7347,7 @@ module PutBucketIntelligentTieringConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7357,7 +7357,7 @@ module PutBucketIntelligentTieringConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.intelligent_tiering_configuration in
@@ -7394,7 +7394,7 @@ module PutBucketInventoryConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7404,7 +7404,7 @@ module PutBucketInventoryConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.inventory_configuration in
@@ -7434,8 +7434,8 @@ module PutBucketLifecycleConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7475,7 +7475,7 @@ module PutBucketLifecycleConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.lifecycle_configuration with
@@ -7520,8 +7520,8 @@ module PutBucketLogging = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7553,7 +7553,7 @@ module PutBucketLogging = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.bucket_logging_status in
@@ -7589,7 +7589,7 @@ module PutBucketMetricsConfiguration = struct
            [ ("id", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7599,7 +7599,7 @@ module PutBucketMetricsConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.metrics_configuration in
@@ -7628,8 +7628,8 @@ module PutBucketNotificationConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7642,7 +7642,7 @@ module PutBucketNotificationConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.notification_configuration in
@@ -7672,8 +7672,8 @@ module PutBucketOwnershipControls = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7705,7 +7705,7 @@ module PutBucketOwnershipControls = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.ownership_controls in
@@ -7734,8 +7734,8 @@ module PutBucketPolicy = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7770,7 +7770,7 @@ module PutBucketPolicy = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.policy in
@@ -7795,8 +7795,8 @@ module PutBucketReplication = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7831,7 +7831,7 @@ module PutBucketReplication = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.replication_configuration in
@@ -7861,8 +7861,8 @@ module PutBucketRequestPayment = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7894,7 +7894,7 @@ module PutBucketRequestPayment = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.request_payment_configuration in
@@ -7924,8 +7924,8 @@ module PutBucketTagging = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -7957,7 +7957,7 @@ module PutBucketTagging = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.tagging in
@@ -7986,8 +7986,8 @@ module PutBucketVersioning = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -8020,7 +8020,7 @@ module PutBucketVersioning = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.versioning_configuration in
@@ -8050,8 +8050,8 @@ module PutBucketWebsite = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -8083,7 +8083,7 @@ module PutBucketWebsite = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.website_configuration in
@@ -8149,8 +8149,8 @@ module PutObject = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -8520,7 +8520,7 @@ module PutObjectAcl = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -8590,7 +8590,7 @@ module PutObjectAcl = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.access_control_policy with
@@ -8702,7 +8702,7 @@ module PutObjectAnnotation = struct
            [ ("annotationName", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -8774,7 +8774,7 @@ module PutObjectAnnotation = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.annotation_payload in
@@ -8904,7 +8904,7 @@ module PutObjectLegalHold = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -8943,7 +8943,7 @@ module PutObjectLegalHold = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.legal_hold with
@@ -8983,8 +8983,8 @@ module PutObjectLockConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9026,7 +9026,7 @@ module PutObjectLockConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.object_lock_configuration with
@@ -9078,7 +9078,7 @@ module PutObjectRetention = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9120,7 +9120,7 @@ module PutObjectRetention = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.retention with
@@ -9171,7 +9171,7 @@ module PutObjectTagging = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9210,7 +9210,7 @@ module PutObjectTagging = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.tagging in
@@ -9246,8 +9246,8 @@ module PutPublicAccessBlock = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9279,7 +9279,7 @@ module PutPublicAccessBlock = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.public_access_block_configuration in
@@ -9341,8 +9341,8 @@ module RenameObject = struct
           | None -> Some (Smaws_Lib.Uuid.generate ()));
       }
     in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9398,7 +9398,7 @@ module RenameObject = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"RenameObject" ~service ~context ~method_:`PUT
@@ -9441,7 +9441,7 @@ module RestoreObject = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9477,7 +9477,7 @@ module RestoreObject = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.restore_request with
@@ -9524,8 +9524,8 @@ module SelectObjectContent = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9544,7 +9544,7 @@ module SelectObjectContent = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let w = Smaws_Lib.Xml.Write.make () in
@@ -9584,8 +9584,8 @@ module UpdateBucketMetadataAnnotationTableConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9617,7 +9617,7 @@ module UpdateBucketMetadataAnnotationTableConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.annotation_table_configuration in
@@ -9648,8 +9648,8 @@ module UpdateBucketMetadataInventoryTableConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9681,7 +9681,7 @@ module UpdateBucketMetadataInventoryTableConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.inventory_table_configuration in
@@ -9712,8 +9712,8 @@ module UpdateBucketMetadataJournalTableConfiguration = struct
         ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9745,7 +9745,7 @@ module UpdateBucketMetadataJournalTableConfiguration = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.journal_table_configuration in
@@ -9812,7 +9812,7 @@ module UpdateObjectEncryption = struct
           | None -> []);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9851,7 +9851,7 @@ module UpdateObjectEncryption = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       let v = request.object_encryption in
@@ -9901,7 +9901,7 @@ module UploadPart = struct
            [ ("uploadId", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -9982,7 +9982,7 @@ module UploadPart = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.body with
@@ -10101,7 +10101,7 @@ module UploadPartCopy = struct
            [ ("uploadId", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -10168,7 +10168,7 @@ module UploadPartCopy = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"UploadPartCopy" ~service ~context ~method_:`PUT
@@ -10362,8 +10362,8 @@ module WriteGetObjectResponse = struct
         ~labels:[ ("RequestRoute", (fun v -> v) request.request_route) ]
         uri
     in
-    let named_params = List.concat [] in
-    let map_params = List.concat [] in
+    let named_params = [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -10628,7 +10628,7 @@ module AbortMultipartUpload = struct
            [ ("uploadId", [ (fun v -> v) v ]) ]);
         ]
     in
-    let map_params = List.concat [] in
+    let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
@@ -10653,7 +10653,7 @@ module AbortMultipartUpload = struct
           | None -> []);
         ]
     in
-    let prefix_headers = List.concat [] in
+    let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"AbortMultipartUpload" ~service ~context
