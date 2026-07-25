@@ -2733,38 +2733,32 @@ module GreetingWithErrors = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "ComplexError" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:false
-            ~structParser:(fun i attrs ->
-              let r_top_level = ref None in
-              let r_nested = ref None in
-              Structure.scanSequence i [ "TopLevel"; "Nested" ] (fun tag _ ->
-                  match tag with
-                  | "TopLevel" -> r_top_level := Some (Read.element_value i "TopLevel" Fun.id ())
-                  | "Nested" ->
-                      r_nested :=
-                        Some
-                          (Read.sequence i "Nested"
-                             (fun i attrs -> complex_nested_error_data_of_xml i attrs)
-                             ())
-                  | _ -> Read.skip_element i);
-              ({
-                 header = Smaws_Lib.Protocols.RestXml.header_value headers "X-Header";
-                 top_level = ( ! ) r_top_level;
-                 nested = ( ! ) r_nested;
-               }
-                : complex_error))
-        with
-        | Ok s -> `ComplexError s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidGreeting" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:false
-            ~structParser:(fun i attrs -> invalid_greeting_of_xml i attrs)
-        with
-        | Ok s -> `InvalidGreeting s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "ComplexError" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:false
+          ~ctor:(fun s -> `ComplexError s)
+          ~structParser:(fun i attrs ->
+            let r_top_level = ref None in
+            let r_nested = ref None in
+            Structure.scanSequence i [ "TopLevel"; "Nested" ] (fun tag _ ->
+                match tag with
+                | "TopLevel" -> r_top_level := Some (Read.element_value i "TopLevel" Fun.id ())
+                | "Nested" ->
+                    r_nested :=
+                      Some
+                        (Read.sequence i "Nested"
+                           (fun i attrs -> complex_nested_error_data_of_xml i attrs)
+                           ())
+                | _ -> Read.skip_element i);
+            ({
+               header = Smaws_Lib.Protocols.RestXml.header_value headers "X-Header";
+               top_level = ( ! ) r_top_level;
+               nested = ( ! ) r_nested;
+             }
+              : complex_error))
+    | "InvalidGreeting" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:false
+          ~ctor:(fun s -> `InvalidGreeting s)
+          ~structParser:(fun i attrs -> invalid_greeting_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =

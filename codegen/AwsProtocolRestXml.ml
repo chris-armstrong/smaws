@@ -2012,7 +2012,6 @@ module Operations = struct
       ~(shape_resolver : Shape_resolver.t) () =
     let errors = operation_shape.errors |> Option.value ~default:[] in
     let default_handler = qualified_ident ~names:(restxml_mod @ [ "Errors"; "default_handler" ]) in
-    let parse_error_struct = qualified_ident ~names:(restxml_mod @ [ "parse_error_struct" ]) in
     let error_has_http_bound_members error =
       match Shape_resolver.find_shape_by_name ~name:error shape_resolver with
       | Some (Shape.StructureShape s) ->
@@ -2045,39 +2044,23 @@ module Operations = struct
       if List.is_empty errors then
         qualified_ident ~names:(restxml_mod @ [ "Errors"; "default_error_deserializer" ])
       else begin
+        let parse_error_case = qualified_ident ~names:(restxml_mod @ [ "parse_error_case" ]) in
         let cases =
           errors
           |> List.map ~f:(fun error ->
               let wire_code = Util.symbolName error in
               let variant = SafeNames.safeConstructorName error in
-              let parse_call =
-                B.pexp_apply parse_error_struct
+              let ctor = exp_fun_untyped "s" (B.pexp_variant variant (Some (exp_ident "s"))) in
+              let rhs =
+                B.pexp_apply parse_error_case
                   [
                     (Labelled "body", exp_ident "body");
                     ( Labelled "noErrorWrapping",
                       B.pexp_construct
                         (lident_noloc (if no_error_wrapping then "true" else "false"))
                         None );
+                    (Labelled "ctor", ctor);
                     (Labelled "structParser", struct_parser_for error);
-                  ]
-              in
-              let rhs =
-                B.pexp_match parse_call
-                  [
-                    B.case
-                      ~lhs:
-                        (B.ppat_construct (lident_noloc "Ok")
-                           (Some (B.ppat_var (Location.mknoloc "s"))))
-                      ~guard:None
-                      ~rhs:(B.pexp_variant variant (Some (exp_ident "s")));
-                    B.case
-                      ~lhs:
-                        (B.ppat_construct (lident_noloc "Error")
-                           (Some
-                              (B.ppat_construct (lident_noloc "XmlParseError")
-                                 (Some (B.ppat_var (Location.mknoloc "msg"))))))
-                      ~guard:None
-                      ~rhs:(B.pexp_variant "XmlParseError" (Some (exp_ident "msg")));
                   ]
               in
               B.case ~lhs:(pat_const_str wire_code) ~guard:None ~rhs)

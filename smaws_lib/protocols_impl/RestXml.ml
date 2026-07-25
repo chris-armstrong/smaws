@@ -202,6 +202,17 @@ let parse_error_struct ~body ~noErrorWrapping ~structParser =
             result)
           ())
 
+(** [parse_error_case] is the per-error-shape dispatch used by generated [error_deserializer]s: it
+    re-parses the Error envelope with [structParser] (positioned inside Error by
+    [parse_error_struct]) and maps the result into the operation's error polymorphic variant --
+    [ctor s] on success, the XmlParseError variant on a parse failure. [ctor] is
+    [fun s -> variant s] for the error shape's constructor. Codegen emits one call per error shape
+    instead of re-emitting the match-parse_error_struct-with-Ok/Error block. *)
+let parse_error_case ~body ~noErrorWrapping ~ctor ~structParser =
+  match parse_error_struct ~body ~noErrorWrapping ~structParser with
+  | Ok s -> ctor s
+  | Error (Xml.Parse.XmlParseError msg) -> `XmlParseError msg
+
 (** Parse a restXml success (2xx) response body. The [output_deserializer] is a generated
     per-operation lambda that receives the raw [body] string, the response [headers] (for
     [@httpHeader]/[@httpPrefixHeaders]/[@httpResponseCode] members) and the HTTP [status] (for

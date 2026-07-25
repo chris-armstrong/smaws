@@ -278,13 +278,10 @@ module CopyObject = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "ObjectNotInActiveTierError" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> object_not_in_active_tier_error_of_xml i attrs)
-        with
-        | Ok s -> `ObjectNotInActiveTierError s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "ObjectNotInActiveTierError" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `ObjectNotInActiveTierError s)
+          ~structParser:(fun i attrs -> object_not_in_active_tier_error_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : copy_object_request) =
@@ -705,20 +702,14 @@ module CreateBucket = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "BucketAlreadyExists" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> bucket_already_exists_of_xml i attrs)
-        with
-        | Ok s -> `BucketAlreadyExists s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "BucketAlreadyOwnedByYou" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> bucket_already_owned_by_you_of_xml i attrs)
-        with
-        | Ok s -> `BucketAlreadyOwnedByYou s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "BucketAlreadyExists" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `BucketAlreadyExists s)
+          ~structParser:(fun i attrs -> bucket_already_exists_of_xml i attrs)
+    | "BucketAlreadyOwnedByYou" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `BucketAlreadyOwnedByYou s)
+          ~structParser:(fun i attrs -> bucket_already_owned_by_you_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : create_bucket_request) =
@@ -1211,13 +1202,10 @@ module CreateSession = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NoSuchBucket" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchBucket s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchBucket" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchBucket s)
+          ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : create_session_request) =
@@ -1884,20 +1872,14 @@ module DeleteObjectAnnotation = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NoSuchBucket" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchBucket s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchKey" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchKey s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchBucket" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchBucket s)
+          ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
+    | "NoSuchKey" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchKey s)
+          ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : delete_object_annotation_request) =
@@ -3524,20 +3506,14 @@ module GetObject = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "InvalidObjectState" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> invalid_object_state_of_xml i attrs)
-        with
-        | Ok s -> `InvalidObjectState s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchKey" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchKey s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidObjectState" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `InvalidObjectState s)
+          ~structParser:(fun i attrs -> invalid_object_state_of_xml i attrs)
+    | "NoSuchKey" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchKey s)
+          ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : get_object_request) =
@@ -3804,13 +3780,10 @@ module GetObjectAcl = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NoSuchKey" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchKey s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchKey" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchKey s)
+          ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : get_object_acl_request) =
@@ -3888,27 +3861,18 @@ module GetObjectAnnotation = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NoSuchAnnotation" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_annotation_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchAnnotation s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchBucket" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchBucket s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchKey" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchKey s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchAnnotation" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchAnnotation s)
+          ~structParser:(fun i attrs -> no_such_annotation_of_xml i attrs)
+    | "NoSuchBucket" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchBucket s)
+          ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
+    | "NoSuchKey" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchKey s)
+          ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : get_object_annotation_request) =
@@ -4038,13 +4002,10 @@ module GetObjectAttributes = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NoSuchKey" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchKey s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchKey" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchKey s)
+          ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : get_object_attributes_request) =
@@ -4569,13 +4530,10 @@ module HeadBucket = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NotFound" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> not_found_of_xml i attrs)
-        with
-        | Ok s -> `NotFound s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NotFound" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NotFound s)
+          ~structParser:(fun i attrs -> not_found_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : head_bucket_request) =
@@ -4632,13 +4590,10 @@ module HeadObject = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NotFound" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> not_found_of_xml i attrs)
-        with
-        | Ok s -> `NotFound s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NotFound" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NotFound s)
+          ~structParser:(fun i attrs -> not_found_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : head_object_request) =
@@ -5554,27 +5509,18 @@ module ListObjectAnnotations = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "InvalidPrefix" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> invalid_prefix_of_xml i attrs)
-        with
-        | Ok s -> `InvalidPrefix s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchBucket" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchBucket s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchKey" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchKey s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidPrefix" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `InvalidPrefix s)
+          ~structParser:(fun i attrs -> invalid_prefix_of_xml i attrs)
+    | "NoSuchBucket" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchBucket s)
+          ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
+    | "NoSuchKey" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchKey s)
+          ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : list_object_annotations_request) =
@@ -5721,13 +5667,10 @@ module ListObjects = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NoSuchBucket" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchBucket s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchBucket" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchBucket s)
+          ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : list_objects_request) =
@@ -5886,13 +5829,10 @@ module ListObjectsV2 = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NoSuchBucket" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchBucket s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchBucket" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchBucket s)
+          ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : list_objects_v2_request) =
@@ -7540,34 +7480,22 @@ module PutObject = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "EncryptionTypeMismatch" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> encryption_type_mismatch_of_xml i attrs)
-        with
-        | Ok s -> `EncryptionTypeMismatch s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidRequest" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> invalid_request_of_xml i attrs)
-        with
-        | Ok s -> `InvalidRequest s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidWriteOffset" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> invalid_write_offset_of_xml i attrs)
-        with
-        | Ok s -> `InvalidWriteOffset s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "TooManyParts" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> too_many_parts_of_xml i attrs)
-        with
-        | Ok s -> `TooManyParts s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "EncryptionTypeMismatch" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `EncryptionTypeMismatch s)
+          ~structParser:(fun i attrs -> encryption_type_mismatch_of_xml i attrs)
+    | "InvalidRequest" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `InvalidRequest s)
+          ~structParser:(fun i attrs -> invalid_request_of_xml i attrs)
+    | "InvalidWriteOffset" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `InvalidWriteOffset s)
+          ~structParser:(fun i attrs -> invalid_write_offset_of_xml i attrs)
+    | "TooManyParts" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `TooManyParts s)
+          ~structParser:(fun i attrs -> too_many_parts_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : put_object_request) =
@@ -7860,13 +7788,10 @@ module PutObjectAcl = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NoSuchKey" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchKey s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchKey" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchKey s)
+          ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : put_object_acl_request) =
@@ -7985,55 +7910,34 @@ module PutObjectAnnotation = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "AnnotationLimitExceeded" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> annotation_limit_exceeded_of_xml i attrs)
-        with
-        | Ok s -> `AnnotationLimitExceeded s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "AnnotationNameTooLong" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> annotation_name_too_long_of_xml i attrs)
-        with
-        | Ok s -> `AnnotationNameTooLong s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidAnnotationName" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> invalid_annotation_name_of_xml i attrs)
-        with
-        | Ok s -> `InvalidAnnotationName s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidRequest" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> invalid_request_of_xml i attrs)
-        with
-        | Ok s -> `InvalidRequest s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchBucket" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchBucket s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchKey" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchKey s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "UnsupportedMediaType" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> unsupported_media_type_of_xml i attrs)
-        with
-        | Ok s -> `UnsupportedMediaType s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "AnnotationLimitExceeded" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `AnnotationLimitExceeded s)
+          ~structParser:(fun i attrs -> annotation_limit_exceeded_of_xml i attrs)
+    | "AnnotationNameTooLong" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `AnnotationNameTooLong s)
+          ~structParser:(fun i attrs -> annotation_name_too_long_of_xml i attrs)
+    | "InvalidAnnotationName" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `InvalidAnnotationName s)
+          ~structParser:(fun i attrs -> invalid_annotation_name_of_xml i attrs)
+    | "InvalidRequest" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `InvalidRequest s)
+          ~structParser:(fun i attrs -> invalid_request_of_xml i attrs)
+    | "NoSuchBucket" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchBucket s)
+          ~structParser:(fun i attrs -> no_such_bucket_of_xml i attrs)
+    | "NoSuchKey" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchKey s)
+          ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
+    | "UnsupportedMediaType" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `UnsupportedMediaType s)
+          ~structParser:(fun i attrs -> unsupported_media_type_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : put_object_annotation_request) =
@@ -8578,13 +8482,10 @@ module RenameObject = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "IdempotencyParameterMismatch" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> idempotency_parameter_mismatch_of_xml i attrs)
-        with
-        | Ok s -> `IdempotencyParameterMismatch s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "IdempotencyParameterMismatch" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `IdempotencyParameterMismatch s)
+          ~structParser:(fun i attrs -> idempotency_parameter_mismatch_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : rename_object_request) =
@@ -8682,13 +8583,10 @@ module RestoreObject = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "ObjectAlreadyInActiveTierError" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> object_already_in_active_tier_error_of_xml i attrs)
-        with
-        | Ok s -> `ObjectAlreadyInActiveTierError s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "ObjectAlreadyInActiveTierError" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `ObjectAlreadyInActiveTierError s)
+          ~structParser:(fun i attrs -> object_already_in_active_tier_error_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : restore_object_request) =
@@ -9013,27 +8911,18 @@ module UpdateObjectEncryption = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "AccessDenied" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> access_denied_of_xml i attrs)
-        with
-        | Ok s -> `AccessDenied s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidRequest" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> invalid_request_of_xml i attrs)
-        with
-        | Ok s -> `InvalidRequest s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
-    | "NoSuchKey" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchKey s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "AccessDenied" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `AccessDenied s)
+          ~structParser:(fun i attrs -> access_denied_of_xml i attrs)
+    | "InvalidRequest" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `InvalidRequest s)
+          ~structParser:(fun i attrs -> invalid_request_of_xml i attrs)
+    | "NoSuchKey" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchKey s)
+          ~structParser:(fun i attrs -> no_such_key_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : update_object_encryption_request) =
@@ -9763,13 +9652,10 @@ module AbortMultipartUpload = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers =
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
-    | "NoSuchUpload" -> (
-        match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:true
-            ~structParser:(fun i attrs -> no_such_upload_of_xml i attrs)
-        with
-        | Ok s -> `NoSuchUpload s
-        | Error (XmlParseError msg) -> `XmlParseError msg)
+    | "NoSuchUpload" ->
+        Smaws_Lib.Protocols.RestXml.parse_error_case ~body ~noErrorWrapping:true
+          ~ctor:(fun s -> `NoSuchUpload s)
+          ~structParser:(fun i attrs -> no_such_upload_of_xml i attrs)
     | _ -> Smaws_Lib.Protocols.RestXml.Errors.default_handler error
 
   let request context (request : abort_multipart_upload_request) =
