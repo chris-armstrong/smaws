@@ -133,6 +133,7 @@ module ResourceGroupsTaggingAPI = Smaws_Client_ResourceGroupsTaggingAPI
 module Route53Domains = Smaws_Client_Route53Domains
 module Route53RecoveryCluster = Smaws_Client_Route53RecoveryCluster
 module Route53Resolver = Smaws_Client_Route53Resolver
+module S3 = Smaws_Client_S3
 module SageMaker = Smaws_Client_SageMaker
 module SecretsManager = Smaws_Client_SecretsManager
 module ServiceCatalog = Smaws_Client_ServiceCatalog

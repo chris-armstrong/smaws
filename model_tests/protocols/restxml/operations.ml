@@ -16,7 +16,6 @@ module SimpleScalarProperties = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/SimpleScalarProperties" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -33,7 +32,7 @@ module SimpleScalarProperties = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"SimpleScalarProperties" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -116,7 +115,6 @@ module TimestampFormatHeaders = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/TimestampFormatHeaders" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -181,7 +179,7 @@ module TimestampFormatHeaders = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"TimestampFormatHeaders" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            member_epoch_seconds =
@@ -227,7 +225,6 @@ module XmlAttributes = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlAttributes" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -238,12 +235,15 @@ module XmlAttributes = struct
       let w = Smaws_Lib.Xml.Write.make () in
       Smaws_Lib.Xml.Write.element w "XmlAttributesRequest"
         ~attrs:
-          (List.concat [ (match request.attr with Some s -> [ ("test", s, None) ] | None -> []) ])
+          (List.concat
+             [
+               (match request.attr with Some s -> [ ("test", (fun v -> v) s, None) ] | None -> []);
+             ])
         (fun w -> xml_attributes_request_to_xml w request);
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlAttributes" ~service ~context ~method_:`PUT
-      ~uri ~query ~headers ~body
+      ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -278,7 +278,6 @@ module XmlAttributesInMiddle = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlAttributesInMiddle" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -288,16 +287,22 @@ module XmlAttributesInMiddle = struct
     let body =
       match request.payload with
       | Some v ->
-          let w = Smaws_Lib.Xml.Write.make () in
-          Smaws_Lib.Xml.Write.element w "XmlAttributesInMiddlePayloadRequest"
-            ~attrs:
-              (List.concat [ (match v.attr with Some s -> [ ("test", s, None) ] | None -> []) ])
-            (fun w -> xml_attributes_in_middle_payload_request_to_xml w v);
-          Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
+          Some
+            (let w = Smaws_Lib.Xml.Write.make () in
+             Smaws_Lib.Xml.Write.element w "XmlAttributesInMiddlePayloadRequest"
+               ~attrs:
+                 (List.concat
+                    [
+                      (match v.attr with
+                      | Some s -> [ ("test", (fun v -> v) s, None) ]
+                      | None -> []);
+                    ])
+               (fun w -> xml_attributes_in_middle_payload_request_to_xml w v);
+             ("application/xml", Smaws_Lib.Xml.Write.to_string w))
       | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlAttributesInMiddle" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
@@ -343,7 +348,6 @@ module XmlAttributesOnPayload = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlAttributesOnPayload" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -353,16 +357,22 @@ module XmlAttributesOnPayload = struct
     let body =
       match request.payload with
       | Some v ->
-          let w = Smaws_Lib.Xml.Write.make () in
-          Smaws_Lib.Xml.Write.element w "XmlAttributesPayloadRequest"
-            ~attrs:
-              (List.concat [ (match v.attr with Some s -> [ ("test", s, None) ] | None -> []) ])
-            (fun w -> xml_attributes_payload_request_to_xml w v);
-          Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
+          Some
+            (let w = Smaws_Lib.Xml.Write.make () in
+             Smaws_Lib.Xml.Write.element w "XmlAttributesPayloadRequest"
+               ~attrs:
+                 (List.concat
+                    [
+                      (match v.attr with
+                      | Some s -> [ ("test", (fun v -> v) s, None) ]
+                      | None -> []);
+                    ])
+               (fun w -> xml_attributes_payload_request_to_xml w v);
+             ("application/xml", Smaws_Lib.Xml.Write.to_string w))
       | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlAttributesOnPayload" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
@@ -403,7 +413,6 @@ module XmlBlobs = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlBlobs" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -416,7 +425,7 @@ module XmlBlobs = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlBlobs" ~service ~context ~method_:`POST ~uri
-      ~query ~headers ~body
+      ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -440,7 +449,6 @@ module XmlEmptyBlobs = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlEmptyBlobs" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -454,7 +462,7 @@ module XmlEmptyBlobs = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlEmptyBlobs" ~service ~context ~method_:`POST
-      ~uri ~query ~headers ~body
+      ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -478,7 +486,6 @@ module XmlEmptyLists = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlEmptyLists" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -492,7 +499,7 @@ module XmlEmptyLists = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlEmptyLists" ~service ~context ~method_:`PUT
-      ~uri ~query ~headers ~body
+      ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -535,65 +542,67 @@ module XmlEmptyLists = struct
                     r_string_list :=
                       Some
                         (Read.sequence i "stringList"
-                           (fun i _ -> Read.elements_value i "member" Fun.id ())
+                           (fun i attrs -> Read.elements_value i "member" Fun.id ())
                            ())
                 | "stringSet" ->
                     r_string_set :=
                       Some
                         (Read.sequence i "stringSet"
-                           (fun i _ -> Read.elements_value i "member" Fun.id ())
+                           (fun i attrs -> Read.elements_value i "member" Fun.id ())
                            ())
                 | "integerList" ->
                     r_integer_list :=
                       Some
                         (Read.sequence i "integerList"
-                           (fun i _ -> Read.elements_value i "member" Primitive.int_of_string ())
+                           (fun i attrs ->
+                             Read.elements_value i "member" Primitive.int_of_string ())
                            ())
                 | "booleanList" ->
                     r_boolean_list :=
                       Some
                         (Read.sequence i "booleanList"
-                           (fun i _ -> Read.elements_value i "member" Primitive.bool_of_string ())
+                           (fun i attrs ->
+                             Read.elements_value i "member" Primitive.bool_of_string ())
                            ())
                 | "timestampList" ->
                     r_timestamp_list :=
                       Some
                         (Read.sequence i "timestampList"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.elements_value i "member" Primitive.timestamp_iso_of_string ())
                            ())
                 | "enumList" ->
                     r_enum_list :=
                       Some
                         (Read.sequence i "enumList"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "member"
-                               (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                               (fun i attrs -> Shared.Xml_deserializers.foo_enum_of_xml i attrs)
                                ())
                            ())
                 | "intEnumList" ->
                     r_int_enum_list :=
                       Some
                         (Read.sequence i "intEnumList"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "member"
-                               (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                               (fun i attrs -> Shared.Xml_deserializers.integer_enum_of_xml i attrs)
                                ())
                            ())
                 | "nestedStringList" ->
                     r_nested_string_list :=
                       Some
                         (Read.sequence i "nestedStringList"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "member"
-                               (fun i _ -> Shared.Xml_deserializers.string_list_of_xml i)
+                               (fun i attrs -> Shared.Xml_deserializers.string_list_of_xml i attrs)
                                ())
                            ())
                 | "renamed" ->
                     r_renamed_list_members :=
                       Some
                         (Read.sequence i "renamed"
-                           (fun i _ -> Read.elements_value i "item" Fun.id ())
+                           (fun i attrs -> Read.elements_value i "item" Fun.id ())
                            ())
                 | "flattenedList" ->
                     r_flattened_list := Some (Read.elements_value i "flattenedList" Fun.id ())
@@ -609,14 +618,16 @@ module XmlEmptyLists = struct
                     r_structure_list :=
                       Some
                         (Read.sequence i "myStructureList"
-                           (fun i _ ->
-                             Read.sequences i "item" (fun i _ -> structure_list_member_of_xml i) ())
+                           (fun i attrs ->
+                             Read.sequences i "item"
+                               (fun i attrs -> structure_list_member_of_xml i attrs)
+                               ())
                            ())
                 | "flattenedStructureList" ->
                     r_flattened_structure_list :=
                       Some
                         (Read.sequences i "flattenedStructureList"
-                           (fun i _ -> structure_list_member_of_xml i)
+                           (fun i attrs -> structure_list_member_of_xml i attrs)
                            ())
                 | _ -> Read.skip_element i);
             ({
@@ -650,7 +661,6 @@ module XmlEmptyMaps = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlEmptyMaps" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -664,7 +674,7 @@ module XmlEmptyMaps = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlEmptyMaps" ~service ~context ~method_:`POST
-      ~uri ~query ~headers ~body
+      ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -676,13 +686,14 @@ module XmlEmptyMaps = struct
                     r_my_map :=
                       Some
                         (Read.sequence i "myMap"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "entry"
-                               (fun i _ ->
+                               (fun i attrs ->
                                  let k = Read.element_value i "key" Fun.id () in
                                  let v =
                                    Read.sequence i "value"
-                                     (fun i _ -> Shared.Xml_deserializers.greeting_struct_of_xml i)
+                                     (fun i attrs ->
+                                       Shared.Xml_deserializers.greeting_struct_of_xml i attrs)
                                      ()
                                  in
                                  (k, v))
@@ -703,7 +714,6 @@ module XmlEmptyStrings = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlEmptyStrings" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -717,7 +727,7 @@ module XmlEmptyStrings = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlEmptyStrings" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -742,7 +752,6 @@ module XmlEnums = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlEnums" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -755,7 +764,7 @@ module XmlEnums = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlEnums" ~service ~context ~method_:`PUT ~uri
-      ~query ~headers ~body
+      ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -774,49 +783,50 @@ module XmlEnums = struct
                     r_foo_enum1 :=
                       Some
                         (Read.sequence i "fooEnum1"
-                           (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.foo_enum_of_xml i attrs)
                            ())
                 | "fooEnum2" ->
                     r_foo_enum2 :=
                       Some
                         (Read.sequence i "fooEnum2"
-                           (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.foo_enum_of_xml i attrs)
                            ())
                 | "fooEnum3" ->
                     r_foo_enum3 :=
                       Some
                         (Read.sequence i "fooEnum3"
-                           (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.foo_enum_of_xml i attrs)
                            ())
                 | "fooEnumList" ->
                     r_foo_enum_list :=
                       Some
                         (Read.sequence i "fooEnumList"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "member"
-                               (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                               (fun i attrs -> Shared.Xml_deserializers.foo_enum_of_xml i attrs)
                                ())
                            ())
                 | "fooEnumSet" ->
                     r_foo_enum_set :=
                       Some
                         (Read.sequence i "fooEnumSet"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "member"
-                               (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                               (fun i attrs -> Shared.Xml_deserializers.foo_enum_of_xml i attrs)
                                ())
                            ())
                 | "fooEnumMap" ->
                     r_foo_enum_map :=
                       Some
                         (Read.sequence i "fooEnumMap"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "entry"
-                               (fun i _ ->
+                               (fun i attrs ->
                                  let k = Read.element_value i "key" Fun.id () in
                                  let v =
                                    Read.sequence i "value"
-                                     (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                                     (fun i attrs ->
+                                       Shared.Xml_deserializers.foo_enum_of_xml i attrs)
                                      ()
                                  in
                                  (k, v))
@@ -845,7 +855,6 @@ module XmlIntEnums = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlIntEnums" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -859,7 +868,7 @@ module XmlIntEnums = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlIntEnums" ~service ~context ~method_:`PUT
-      ~uri ~query ~headers ~body
+      ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -878,49 +887,50 @@ module XmlIntEnums = struct
                     r_int_enum1 :=
                       Some
                         (Read.sequence i "intEnum1"
-                           (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.integer_enum_of_xml i attrs)
                            ())
                 | "intEnum2" ->
                     r_int_enum2 :=
                       Some
                         (Read.sequence i "intEnum2"
-                           (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.integer_enum_of_xml i attrs)
                            ())
                 | "intEnum3" ->
                     r_int_enum3 :=
                       Some
                         (Read.sequence i "intEnum3"
-                           (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.integer_enum_of_xml i attrs)
                            ())
                 | "intEnumList" ->
                     r_int_enum_list :=
                       Some
                         (Read.sequence i "intEnumList"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "member"
-                               (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                               (fun i attrs -> Shared.Xml_deserializers.integer_enum_of_xml i attrs)
                                ())
                            ())
                 | "intEnumSet" ->
                     r_int_enum_set :=
                       Some
                         (Read.sequence i "intEnumSet"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "member"
-                               (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                               (fun i attrs -> Shared.Xml_deserializers.integer_enum_of_xml i attrs)
                                ())
                            ())
                 | "intEnumMap" ->
                     r_int_enum_map :=
                       Some
                         (Read.sequence i "intEnumMap"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "entry"
-                               (fun i _ ->
+                               (fun i attrs ->
                                  let k = Read.element_value i "key" Fun.id () in
                                  let v =
                                    Read.sequence i "value"
-                                     (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                                     (fun i attrs ->
+                                       Shared.Xml_deserializers.integer_enum_of_xml i attrs)
                                      ()
                                  in
                                  (k, v))
@@ -949,7 +959,6 @@ module XmlLists = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlLists" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -962,7 +971,7 @@ module XmlLists = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlLists" ~service ~context ~method_:`PUT ~uri
-      ~query ~headers ~body
+      ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -1005,65 +1014,67 @@ module XmlLists = struct
                     r_string_list :=
                       Some
                         (Read.sequence i "stringList"
-                           (fun i _ -> Read.elements_value i "member" Fun.id ())
+                           (fun i attrs -> Read.elements_value i "member" Fun.id ())
                            ())
                 | "stringSet" ->
                     r_string_set :=
                       Some
                         (Read.sequence i "stringSet"
-                           (fun i _ -> Read.elements_value i "member" Fun.id ())
+                           (fun i attrs -> Read.elements_value i "member" Fun.id ())
                            ())
                 | "integerList" ->
                     r_integer_list :=
                       Some
                         (Read.sequence i "integerList"
-                           (fun i _ -> Read.elements_value i "member" Primitive.int_of_string ())
+                           (fun i attrs ->
+                             Read.elements_value i "member" Primitive.int_of_string ())
                            ())
                 | "booleanList" ->
                     r_boolean_list :=
                       Some
                         (Read.sequence i "booleanList"
-                           (fun i _ -> Read.elements_value i "member" Primitive.bool_of_string ())
+                           (fun i attrs ->
+                             Read.elements_value i "member" Primitive.bool_of_string ())
                            ())
                 | "timestampList" ->
                     r_timestamp_list :=
                       Some
                         (Read.sequence i "timestampList"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.elements_value i "member" Primitive.timestamp_iso_of_string ())
                            ())
                 | "enumList" ->
                     r_enum_list :=
                       Some
                         (Read.sequence i "enumList"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "member"
-                               (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                               (fun i attrs -> Shared.Xml_deserializers.foo_enum_of_xml i attrs)
                                ())
                            ())
                 | "intEnumList" ->
                     r_int_enum_list :=
                       Some
                         (Read.sequence i "intEnumList"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "member"
-                               (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                               (fun i attrs -> Shared.Xml_deserializers.integer_enum_of_xml i attrs)
                                ())
                            ())
                 | "nestedStringList" ->
                     r_nested_string_list :=
                       Some
                         (Read.sequence i "nestedStringList"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "member"
-                               (fun i _ -> Shared.Xml_deserializers.string_list_of_xml i)
+                               (fun i attrs -> Shared.Xml_deserializers.string_list_of_xml i attrs)
                                ())
                            ())
                 | "renamed" ->
                     r_renamed_list_members :=
                       Some
                         (Read.sequence i "renamed"
-                           (fun i _ -> Read.elements_value i "item" Fun.id ())
+                           (fun i attrs -> Read.elements_value i "item" Fun.id ())
                            ())
                 | "flattenedList" ->
                     r_flattened_list := Some (Read.elements_value i "flattenedList" Fun.id ())
@@ -1079,14 +1090,16 @@ module XmlLists = struct
                     r_structure_list :=
                       Some
                         (Read.sequence i "myStructureList"
-                           (fun i _ ->
-                             Read.sequences i "item" (fun i _ -> structure_list_member_of_xml i) ())
+                           (fun i attrs ->
+                             Read.sequences i "item"
+                               (fun i attrs -> structure_list_member_of_xml i attrs)
+                               ())
                            ())
                 | "flattenedStructureList" ->
                     r_flattened_structure_list :=
                       Some
                         (Read.sequences i "flattenedStructureList"
-                           (fun i _ -> structure_list_member_of_xml i)
+                           (fun i attrs -> structure_list_member_of_xml i attrs)
                            ())
                 | _ -> Read.skip_element i);
             ({
@@ -1120,7 +1133,6 @@ module XmlMaps = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlMaps" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1133,7 +1145,7 @@ module XmlMaps = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlMaps" ~service ~context ~method_:`POST ~uri
-      ~query ~headers ~body
+      ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -1145,13 +1157,14 @@ module XmlMaps = struct
                     r_my_map :=
                       Some
                         (Read.sequence i "myMap"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "entry"
-                               (fun i _ ->
+                               (fun i attrs ->
                                  let k = Read.element_value i "key" Fun.id () in
                                  let v =
                                    Read.sequence i "value"
-                                     (fun i _ -> Shared.Xml_deserializers.greeting_struct_of_xml i)
+                                     (fun i attrs ->
+                                       Shared.Xml_deserializers.greeting_struct_of_xml i attrs)
                                      ()
                                  in
                                  (k, v))
@@ -1172,7 +1185,6 @@ module XmlMapsXmlName = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlMapsXmlName" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1186,7 +1198,7 @@ module XmlMapsXmlName = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlMapsXmlName" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -1198,13 +1210,14 @@ module XmlMapsXmlName = struct
                     r_my_map :=
                       Some
                         (Read.sequence i "myMap"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "entry"
-                               (fun i _ ->
+                               (fun i attrs ->
                                  let k = Read.element_value i "Attribute" Fun.id () in
                                  let v =
                                    Read.sequence i "Setting"
-                                     (fun i _ -> Shared.Xml_deserializers.greeting_struct_of_xml i)
+                                     (fun i attrs ->
+                                       Shared.Xml_deserializers.greeting_struct_of_xml i attrs)
                                      ()
                                  in
                                  (k, v))
@@ -1227,7 +1240,6 @@ module XmlMapWithXmlNamespace = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlMapWithXmlNamespace" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1241,7 +1253,7 @@ module XmlMapWithXmlNamespace = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlMapWithXmlNamespace" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -1253,9 +1265,9 @@ module XmlMapWithXmlNamespace = struct
                     r_my_map :=
                       Some
                         (Read.sequence i "KVP"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "entry"
-                               (fun i _ ->
+                               (fun i attrs ->
                                  let k = Read.element_value i "K" Fun.id () in
                                  let v = Read.element_value i "V" Fun.id () in
                                  (k, v))
@@ -1276,7 +1288,6 @@ module XmlNamespaces = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlNamespaces" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1290,7 +1301,7 @@ module XmlNamespaces = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlNamespaces" ~service ~context ~method_:`POST
-      ~uri ~query ~headers ~body
+      ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -1300,7 +1311,10 @@ module XmlNamespaces = struct
                 match tag with
                 | "nested" ->
                     r_nested :=
-                      Some (Read.sequence i "nested" (fun i _ -> xml_namespace_nested_of_xml i) ())
+                      Some
+                        (Read.sequence i "nested"
+                           (fun i attrs -> xml_namespace_nested_of_xml i attrs)
+                           ())
                 | _ -> Read.skip_element i);
             ({ nested = ( ! ) r_nested } : xml_namespaces_response)))
       ~error_deserializer
@@ -1316,7 +1330,6 @@ module XmlTimestamps = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlTimestamps" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1330,7 +1343,7 @@ module XmlTimestamps = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlTimestamps" ~service ~context ~method_:`POST
-      ~uri ~query ~headers ~body
+      ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -1363,7 +1376,7 @@ module XmlTimestamps = struct
                     r_date_time_on_target :=
                       Some
                         (Read.sequence i "dateTimeOnTarget"
-                           (fun i _ -> Shared.Xml_deserializers.date_time_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.date_time_of_xml i attrs)
                            ())
                 | "epochSeconds" ->
                     r_epoch_seconds :=
@@ -1373,7 +1386,7 @@ module XmlTimestamps = struct
                     r_epoch_seconds_on_target :=
                       Some
                         (Read.sequence i "epochSecondsOnTarget"
-                           (fun i _ -> Shared.Xml_deserializers.epoch_seconds_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.epoch_seconds_of_xml i attrs)
                            ())
                 | "httpDate" ->
                     r_http_date :=
@@ -1383,7 +1396,7 @@ module XmlTimestamps = struct
                     r_http_date_on_target :=
                       Some
                         (Read.sequence i "httpDateOnTarget"
-                           (fun i _ -> Shared.Xml_deserializers.http_date_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.http_date_of_xml i attrs)
                            ())
                 | _ -> Read.skip_element i);
             ({
@@ -1409,7 +1422,6 @@ module XmlUnions = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/XmlUnions" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1423,7 +1435,7 @@ module XmlUnions = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlUnions" ~service ~context ~method_:`PUT ~uri
-      ~query ~headers ~body
+      ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -1433,7 +1445,10 @@ module XmlUnions = struct
                 match tag with
                 | "unionValue" ->
                     r_union_value :=
-                      Some (Read.sequence i "unionValue" (fun i _ -> xml_union_shape_of_xml i) ())
+                      Some
+                        (Read.sequence i "unionValue"
+                           (fun i attrs -> xml_union_shape_of_xml i attrs)
+                           ())
                 | _ -> Read.skip_element i);
             ({ union_value = ( ! ) r_union_value } : xml_unions_response)))
       ~error_deserializer
@@ -1449,7 +1464,6 @@ module RecursiveShapes = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/RecursiveShapes" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1463,7 +1477,7 @@ module RecursiveShapes = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"RecursiveShapes" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -1475,7 +1489,7 @@ module RecursiveShapes = struct
                     r_nested :=
                       Some
                         (Read.sequence i "nested"
-                           (fun i _ -> recursive_shapes_input_output_nested1_of_xml i)
+                           (fun i attrs -> recursive_shapes_input_output_nested1_of_xml i attrs)
                            ())
                 | _ -> Read.skip_element i);
             ({ nested = ( ! ) r_nested } : recursive_shapes_response)))
@@ -1492,7 +1506,6 @@ module QueryPrecedence = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/Precedence" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params =
       List.concat
         [ (match request.foo with Some v -> [ ("bar", [ (fun v -> v) v ]) ] | None -> []) ]
@@ -1511,7 +1524,7 @@ module QueryPrecedence = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"QueryPrecedence" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -1526,7 +1539,6 @@ module QueryParamsAsStringListMap = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/StringListMap" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params =
       List.concat
         [ (match request.qux with Some v -> [ ("corge", [ (fun v -> v) v ]) ] | None -> []) ]
@@ -1545,7 +1557,7 @@ module QueryParamsAsStringListMap = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"QueryParamsAsStringListMap" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -1563,7 +1575,6 @@ module QueryIdempotencyTokenAutoFill = struct
         ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let request =
       {
         token =
@@ -1581,7 +1592,7 @@ module QueryIdempotencyTokenAutoFill = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"QueryIdempotencyTokenAutoFill" ~service
-      ~context ~method_:`POST ~uri ~query ~headers ~body
+      ~context ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -1599,7 +1610,6 @@ module PutWithContentEncoding = struct
         ~template:"/requestcompression/putcontentwithencoding" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1620,7 +1630,7 @@ module PutWithContentEncoding = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"PutWithContentEncoding" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -1638,7 +1648,6 @@ module OmitsNullSerializesEmptyString = struct
         ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params =
       List.concat
         [
@@ -1655,7 +1664,7 @@ module OmitsNullSerializesEmptyString = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"OmitsNullSerializesEmptyString" ~service
-      ~context ~method_:`GET ~uri ~query ~headers ~body
+      ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -1672,7 +1681,6 @@ module NullAndEmptyHeadersServer = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/NullAndEmptyHeadersServer" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1690,7 +1698,7 @@ module NullAndEmptyHeadersServer = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NullAndEmptyHeadersServer" ~service ~context
-      ~method_:`GET ~uri ~query ~headers ~body
+      ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            a = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-A");
@@ -1717,7 +1725,6 @@ module NullAndEmptyHeadersClient = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/NullAndEmptyHeadersClient" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1735,7 +1742,7 @@ module NullAndEmptyHeadersClient = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NullAndEmptyHeadersClient" ~service ~context
-      ~method_:`GET ~uri ~query ~headers ~body
+      ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            a = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-A");
@@ -1762,7 +1769,6 @@ module NoInputAndOutput = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/NoInputAndOutputOutput" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1771,7 +1777,7 @@ module NoInputAndOutput = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NoInputAndOutput" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -1788,7 +1794,6 @@ module NoInputAndNoOutput = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/NoInputAndNoOutput" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1797,7 +1802,7 @@ module NoInputAndNoOutput = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NoInputAndNoOutput" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -1812,7 +1817,6 @@ module NestedXmlMaps = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/NestedXmlMaps" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1826,7 +1830,7 @@ module NestedXmlMaps = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NestedXmlMaps" ~service ~context ~method_:`POST
-      ~uri ~query ~headers ~body
+      ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -1839,13 +1843,14 @@ module NestedXmlMaps = struct
                     r_nested_map :=
                       Some
                         (Read.sequence i "nestedMap"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "entry"
-                               (fun i _ ->
+                               (fun i attrs ->
                                  let k = Read.element_value i "key" Fun.id () in
                                  let v =
                                    Read.sequence i "value"
-                                     (fun i _ -> Shared.Xml_deserializers.foo_enum_map_of_xml i)
+                                     (fun i attrs ->
+                                       Shared.Xml_deserializers.foo_enum_map_of_xml i attrs)
                                      ()
                                  in
                                  (k, v))
@@ -1855,11 +1860,12 @@ module NestedXmlMaps = struct
                     r_flat_nested_map :=
                       Some
                         (Read.sequences i "flatNestedMap"
-                           (fun i _ ->
+                           (fun i attrs ->
                              let k = Read.element_value i "key" Fun.id () in
                              let v =
                                Read.sequence i "value"
-                                 (fun i _ -> Shared.Xml_deserializers.foo_enum_map_of_xml i)
+                                 (fun i attrs ->
+                                   Shared.Xml_deserializers.foo_enum_map_of_xml i attrs)
                                  ()
                              in
                              (k, v))
@@ -1882,7 +1888,6 @@ module NestedXmlMapWithXmlName = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/NestedXmlMapWithXmlName" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1896,7 +1901,7 @@ module NestedXmlMapWithXmlName = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NestedXmlMapWithXmlName" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -1908,13 +1913,14 @@ module NestedXmlMapWithXmlName = struct
                     r_nested_xml_map_with_xml_name_map :=
                       Some
                         (Read.sequence i "nestedXmlMapWithXmlNameMap"
-                           (fun i _ ->
+                           (fun i attrs ->
                              Read.sequences i "entry"
-                               (fun i _ ->
+                               (fun i attrs ->
                                  let k = Read.element_value i "OuterKey" Fun.id () in
                                  let v =
                                    Read.sequence i "value"
-                                     (fun i _ -> nested_xml_map_with_xml_name_inner_map_of_xml i)
+                                     (fun i attrs ->
+                                       nested_xml_map_with_xml_name_inner_map_of_xml i attrs)
                                      ()
                                  in
                                  (k, v))
@@ -1938,7 +1944,6 @@ module InputAndOutputWithHeaders = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/InputAndOutputWithHeaders" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2009,7 +2014,7 @@ module InputAndOutputWithHeaders = struct
           | Some v ->
               [
                 ( "X-Enum",
-                  (fun v ->
+                  (fun (v : Shared.Types.foo_enum) ->
                     match v with
                     | Shared.Types.FOO -> "Foo"
                     | Shared.Types.BAZ -> "Baz"
@@ -2025,7 +2030,7 @@ module InputAndOutputWithHeaders = struct
                 ( "X-EnumList",
                   String.concat ", "
                     (List.map
-                       (fun v ->
+                       (fun (v : Shared.Types.foo_enum) ->
                          match v with
                          | Shared.Types.FOO -> "Foo"
                          | Shared.Types.BAZ -> "Baz"
@@ -2041,7 +2046,7 @@ module InputAndOutputWithHeaders = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"InputAndOutputWithHeaders" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            header_string =
@@ -2109,26 +2114,28 @@ module InputAndOutputWithHeaders = struct
            header_enum =
              Option.map
                (fun s ->
-                 match s with
-                 | "Foo" -> Shared.Types.FOO
-                 | "Baz" -> Shared.Types.BAZ
-                 | "Bar" -> Shared.Types.BAR
-                 | "1" -> Shared.Types.ONE
-                 | "0" -> Shared.Types.ZERO
-                 | _ -> failwith "unknown enum value")
+                 (match s with
+                  | "Foo" -> Shared.Types.FOO
+                  | "Baz" -> Shared.Types.BAZ
+                  | "Bar" -> Shared.Types.BAR
+                  | "1" -> Shared.Types.ONE
+                  | "0" -> Shared.Types.ZERO
+                  | _ -> failwith "unknown enum value"
+                   : Shared.Types.foo_enum))
                (Smaws_Lib.Protocols.RestXml.header_value headers "X-Enum");
            header_enum_list =
              Option.map
                (fun s ->
                  String.split_on_char ',' s |> List.map String.trim
                  |> List.map (fun s ->
-                     match s with
-                     | "Foo" -> Shared.Types.FOO
-                     | "Baz" -> Shared.Types.BAZ
-                     | "Bar" -> Shared.Types.BAR
-                     | "1" -> Shared.Types.ONE
-                     | "0" -> Shared.Types.ZERO
-                     | _ -> failwith "unknown enum value"))
+                     (match s with
+                      | "Foo" -> Shared.Types.FOO
+                      | "Baz" -> Shared.Types.BAZ
+                      | "Bar" -> Shared.Types.BAR
+                      | "1" -> Shared.Types.ONE
+                      | "0" -> Shared.Types.ZERO
+                      | _ -> failwith "unknown enum value"
+                       : Shared.Types.foo_enum)))
                (Smaws_Lib.Protocols.RestXml.header_value headers "X-EnumList");
          }
           : input_and_output_with_headers_i_o))
@@ -2147,7 +2154,6 @@ module IgnoreQueryParamsInResponse = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/IgnoreQueryParamsInResponse" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2156,7 +2162,7 @@ module IgnoreQueryParamsInResponse = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"IgnoreQueryParamsInResponse" ~service ~context
-      ~method_:`GET ~uri ~query ~headers ~body
+      ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -2180,7 +2186,6 @@ module HttpStringPayload = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/StringPayload" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2189,7 +2194,7 @@ module HttpStringPayload = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = match request.payload with Some v -> Some ("text/plain", v) | None -> None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpStringPayload" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({ payload = (if String.equal body "" then None else Some body) } : string_payload_input))
       ~error_deserializer
@@ -2205,7 +2210,6 @@ module HttpResponseCode = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpResponseCode" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2214,7 +2218,7 @@ module HttpResponseCode = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpResponseCode" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({ status = Some status } : http_response_code_output))
       ~error_deserializer
@@ -2265,7 +2269,6 @@ module HttpRequestWithLabelsAndTimestampFormat = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2274,7 +2277,7 @@ module HttpRequestWithLabelsAndTimestampFormat = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpRequestWithLabelsAndTimestampFormat"
-      ~service ~context ~method_:`GET ~uri ~query ~headers ~body
+      ~service ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -2313,7 +2316,6 @@ module HttpRequestWithLabels = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2322,7 +2324,7 @@ module HttpRequestWithLabels = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpRequestWithLabels" ~service ~context
-      ~method_:`GET ~uri ~query ~headers ~body
+      ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -2342,7 +2344,6 @@ module HttpRequestWithGreedyLabelInPath = struct
           [ ("foo", (fun v -> v) request.foo, false); ("baz", (fun v -> v) request.baz, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2351,7 +2352,7 @@ module HttpRequestWithGreedyLabelInPath = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpRequestWithGreedyLabelInPath" ~service
-      ~context ~method_:`GET ~uri ~query ~headers ~body
+      ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -2379,7 +2380,6 @@ module HttpRequestWithFloatLabels = struct
           ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2388,7 +2388,7 @@ module HttpRequestWithFloatLabels = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpRequestWithFloatLabels" ~service ~context
-      ~method_:`GET ~uri ~query ~headers ~body
+      ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -2405,7 +2405,6 @@ module HttpPrefixHeaders = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPrefixHeaders" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2424,7 +2423,7 @@ module HttpPrefixHeaders = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpPrefixHeaders" ~service ~context
-      ~method_:`GET ~uri ~query ~headers ~body
+      ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            foo = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "x-foo");
@@ -2450,7 +2449,6 @@ module HttpPayloadWithXmlNamespaceAndPrefix = struct
         ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2460,15 +2458,16 @@ module HttpPayloadWithXmlNamespaceAndPrefix = struct
     let body =
       match request.nested with
       | Some v ->
-          let w = Smaws_Lib.Xml.Write.make () in
-          Smaws_Lib.Xml.Write.element w "PayloadWithXmlNamespaceAndPrefix"
-            ~attrs:[ ("xmlns:baz", "http://foo.com", None) ]
-            (fun w -> payload_with_xml_namespace_and_prefix_to_xml w v);
-          Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
+          Some
+            (let w = Smaws_Lib.Xml.Write.make () in
+             Smaws_Lib.Xml.Write.element w "PayloadWithXmlNamespaceAndPrefix"
+               ~attrs:[ ("xmlns:baz", "http://foo.com", None) ]
+               (fun w -> payload_with_xml_namespace_and_prefix_to_xml w v);
+             ("application/xml", Smaws_Lib.Xml.Write.to_string w))
       | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpPayloadWithXmlNamespaceAndPrefix" ~service
-      ~context ~method_:`PUT ~uri ~query ~headers ~body
+      ~context ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
@@ -2502,7 +2501,6 @@ module HttpPayloadWithXmlNamespace = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadWithXmlNamespace" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2512,14 +2510,15 @@ module HttpPayloadWithXmlNamespace = struct
     let body =
       match request.nested with
       | Some v ->
-          let w = Smaws_Lib.Xml.Write.make () in
-          Smaws_Lib.Xml.Write.element w "PayloadWithXmlNamespace" ~ns:"http://foo.com" (fun w ->
-              payload_with_xml_namespace_to_xml w v);
-          Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
+          Some
+            (let w = Smaws_Lib.Xml.Write.make () in
+             Smaws_Lib.Xml.Write.element w "PayloadWithXmlNamespace" ~ns:"http://foo.com" (fun w ->
+                 payload_with_xml_namespace_to_xml w v);
+             ("application/xml", Smaws_Lib.Xml.Write.to_string w))
       | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpPayloadWithXmlNamespace" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
@@ -2553,7 +2552,6 @@ module HttpPayloadWithXmlName = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadWithXmlName" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2563,13 +2561,14 @@ module HttpPayloadWithXmlName = struct
     let body =
       match request.nested with
       | Some v ->
-          let w = Smaws_Lib.Xml.Write.make () in
-          Smaws_Lib.Xml.Write.element w "Hello" (fun w -> payload_with_xml_name_to_xml w v);
-          Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
+          Some
+            (let w = Smaws_Lib.Xml.Write.make () in
+             Smaws_Lib.Xml.Write.element w "Hello" (fun w -> payload_with_xml_name_to_xml w v);
+             ("application/xml", Smaws_Lib.Xml.Write.to_string w))
       | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpPayloadWithXmlName" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
@@ -2603,7 +2602,6 @@ module HttpPayloadWithUnion = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadWithUnion" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2613,13 +2611,14 @@ module HttpPayloadWithUnion = struct
     let body =
       match request.nested with
       | Some v ->
-          let w = Smaws_Lib.Xml.Write.make () in
-          Smaws_Lib.Xml.Write.element w "UnionPayload" (fun w -> union_payload_to_xml w v);
-          Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
+          Some
+            (let w = Smaws_Lib.Xml.Write.make () in
+             Smaws_Lib.Xml.Write.element w "UnionPayload" (fun w -> union_payload_to_xml w v);
+             ("application/xml", Smaws_Lib.Xml.Write.to_string w))
       | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpPayloadWithUnion" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
@@ -2628,7 +2627,8 @@ module HttpPayloadWithUnion = struct
               Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
             in
             Smaws_Lib.Xml.Parse.Read.dtd i;
-            Some (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i _ -> union_payload_of_xml i)))
+            Some
+              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs -> union_payload_of_xml i attrs)))
         in
         ({ nested = payload_val } : http_payload_with_union_input_output))
       ~error_deserializer
@@ -2646,7 +2646,6 @@ module HttpPayloadWithStructure = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadWithStructure" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2656,13 +2655,14 @@ module HttpPayloadWithStructure = struct
     let body =
       match request.nested with
       | Some v ->
-          let w = Smaws_Lib.Xml.Write.make () in
-          Smaws_Lib.Xml.Write.element w "NestedPayload" (fun w -> nested_payload_to_xml w v);
-          Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
+          Some
+            (let w = Smaws_Lib.Xml.Write.make () in
+             Smaws_Lib.Xml.Write.element w "NestedPayload" (fun w -> nested_payload_to_xml w v);
+             ("application/xml", Smaws_Lib.Xml.Write.to_string w))
       | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpPayloadWithStructure" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
@@ -2699,7 +2699,6 @@ module HttpPayloadWithMemberXmlName = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadWithMemberXmlName" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2709,13 +2708,14 @@ module HttpPayloadWithMemberXmlName = struct
     let body =
       match request.nested with
       | Some v ->
-          let w = Smaws_Lib.Xml.Write.make () in
-          Smaws_Lib.Xml.Write.element w "Hola" (fun w -> payload_with_xml_name_to_xml w v);
-          Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
+          Some
+            (let w = Smaws_Lib.Xml.Write.make () in
+             Smaws_Lib.Xml.Write.element w "Hola" (fun w -> payload_with_xml_name_to_xml w v);
+             ("application/xml", Smaws_Lib.Xml.Write.to_string w))
       | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpPayloadWithMemberXmlName" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
@@ -2750,7 +2750,6 @@ module HttpPayloadTraitsWithMediaType = struct
         ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2764,7 +2763,7 @@ module HttpPayloadTraitsWithMediaType = struct
       match request.blob with Some v -> Some ("text/plain", Bytes.to_string v) | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpPayloadTraitsWithMediaType" ~service
-      ~context ~method_:`POST ~uri ~query ~headers ~body
+      ~context ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            blob =
@@ -2787,7 +2786,6 @@ module HttpPayloadTraits = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpPayloadTraits" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2803,7 +2801,7 @@ module HttpPayloadTraits = struct
       | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpPayloadTraits" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            blob =
@@ -2824,7 +2822,6 @@ module HttpEnumPayload = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/EnumPayload" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2833,18 +2830,20 @@ module HttpEnumPayload = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
       match request.payload with
-      | Some v -> Some ("text/plain", (fun v -> match v with V -> "enumvalue") v)
+      | Some v -> Some ("text/plain", (fun (v : string_enum) -> match v with V -> "enumvalue") v)
       | None -> None
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpEnumPayload" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            payload =
              (if String.equal body "" then None
               else
                 Some
-                  ((fun s -> match s with "enumvalue" -> V | _ -> failwith "unknown enum value")
+                  ((fun s ->
+                     (match s with "enumvalue" -> V | _ -> failwith "unknown enum value"
+                       : string_enum))
                      body));
          }
           : enum_payload_input))
@@ -2863,7 +2862,6 @@ module HttpEmptyPrefixHeaders = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/HttpEmptyPrefixHeaders" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2886,7 +2884,7 @@ module HttpEmptyPrefixHeaders = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"HttpEmptyPrefixHeaders" ~service ~context
-      ~method_:`GET ~uri ~query ~headers ~body
+      ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            prefix_headers =
@@ -2910,7 +2908,8 @@ module GreetingWithErrors = struct
     match error.Smaws_Lib.Protocols.RestXml.Error.code with
     | "ComplexError" -> (
         match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~structParser:(fun i ->
+          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:false
+            ~structParser:(fun i attrs ->
               let r_top_level = ref None in
               let r_nested = ref None in
               Structure.scanSequence i [ "TopLevel"; "Nested" ] (fun tag _ ->
@@ -2920,7 +2919,7 @@ module GreetingWithErrors = struct
                       r_nested :=
                         Some
                           (Read.sequence i "Nested"
-                             (fun i _ -> complex_nested_error_data_of_xml i)
+                             (fun i attrs -> complex_nested_error_data_of_xml i attrs)
                              ())
                   | _ -> Read.skip_element i);
               ({
@@ -2937,8 +2936,8 @@ module GreetingWithErrors = struct
         | Error (XmlParseError msg) -> `XmlParseError msg)
     | "InvalidGreeting" -> (
         match
-          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~structParser:(fun i ->
-              invalid_greeting_of_xml i)
+          Smaws_Lib.Protocols.RestXml.parse_error_struct ~body ~noErrorWrapping:false
+            ~structParser:(fun i attrs -> invalid_greeting_of_xml i attrs)
         with
         | Ok s -> `InvalidGreeting s
         | Error (XmlParseError msg) -> `XmlParseError msg)
@@ -2950,7 +2949,6 @@ module GreetingWithErrors = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/GreetingWithErrors" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2959,7 +2957,7 @@ module GreetingWithErrors = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GreetingWithErrors" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            greeting =
@@ -2981,7 +2979,6 @@ module FractionalSeconds = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/FractionalSeconds" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2990,7 +2987,7 @@ module FractionalSeconds = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"FractionalSeconds" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -3002,7 +2999,7 @@ module FractionalSeconds = struct
                     r_datetime :=
                       Some
                         (Read.sequence i "datetime"
-                           (fun i _ -> Shared.Xml_deserializers.date_time_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.date_time_of_xml i attrs)
                            ())
                 | _ -> Read.skip_element i);
             ({ datetime = ( ! ) r_datetime } : fractional_seconds_output)))
@@ -3022,7 +3019,6 @@ module FlattenedXmlMapWithXmlNamespace = struct
         ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -3031,7 +3027,7 @@ module FlattenedXmlMapWithXmlNamespace = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"FlattenedXmlMapWithXmlNamespace" ~service
-      ~context ~method_:`POST ~uri ~query ~headers ~body
+      ~context ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -3043,7 +3039,7 @@ module FlattenedXmlMapWithXmlNamespace = struct
                     r_my_map :=
                       Some
                         (Read.sequences i "KVP"
-                           (fun i _ ->
+                           (fun i attrs ->
                              let k = Read.element_value i "K" Fun.id () in
                              let v = Read.element_value i "V" Fun.id () in
                              (k, v))
@@ -3065,7 +3061,6 @@ module FlattenedXmlMapWithXmlName = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/FlattenedXmlMapWithXmlName" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -3079,7 +3074,7 @@ module FlattenedXmlMapWithXmlName = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"FlattenedXmlMapWithXmlName" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -3091,7 +3086,7 @@ module FlattenedXmlMapWithXmlName = struct
                     r_my_map :=
                       Some
                         (Read.sequences i "KVP"
-                           (fun i _ ->
+                           (fun i attrs ->
                              let k = Read.element_value i "K" Fun.id () in
                              let v = Read.element_value i "V" Fun.id () in
                              (k, v))
@@ -3111,7 +3106,6 @@ module FlattenedXmlMap = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/FlattenedXmlMap" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -3125,7 +3119,7 @@ module FlattenedXmlMap = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"FlattenedXmlMap" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -3137,11 +3131,11 @@ module FlattenedXmlMap = struct
                     r_my_map :=
                       Some
                         (Read.sequences i "myMap"
-                           (fun i _ ->
+                           (fun i attrs ->
                              let k = Read.element_value i "key" Fun.id () in
                              let v =
                                Read.sequence i "value"
-                                 (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                                 (fun i attrs -> Shared.Xml_deserializers.foo_enum_of_xml i attrs)
                                  ()
                              in
                              (k, v))
@@ -3182,7 +3176,7 @@ module EndpointWithHostLabelOperation = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"EndpointWithHostLabelOperation" ~service
-      ~context ~method_:`POST ~uri ~query ~headers ~body
+      ~context ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -3219,7 +3213,7 @@ module EndpointWithHostLabelHeaderOperation = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"EndpointWithHostLabelHeaderOperation" ~service
-      ~context ~method_:`POST ~uri ~query ~headers ~body
+      ~context ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -3245,7 +3239,7 @@ module EndpointOperation = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"EndpointOperation" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -3262,7 +3256,6 @@ module EmptyInputAndEmptyOutput = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/EmptyInputAndEmptyOutput" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -3271,7 +3264,7 @@ module EmptyInputAndEmptyOutput = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"EmptyInputAndEmptyOutput" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -3286,7 +3279,6 @@ module DatetimeOffsets = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/DatetimeOffsets" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -3295,7 +3287,7 @@ module DatetimeOffsets = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DatetimeOffsets" ~service ~context
-      ~method_:`POST ~uri ~query ~headers ~body
+      ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -3307,7 +3299,7 @@ module DatetimeOffsets = struct
                     r_datetime :=
                       Some
                         (Read.sequence i "datetime"
-                           (fun i _ -> Shared.Xml_deserializers.date_time_of_xml i)
+                           (fun i attrs -> Shared.Xml_deserializers.date_time_of_xml i attrs)
                            ())
                 | _ -> Read.skip_element i);
             ({ datetime = ( ! ) r_datetime } : datetime_offsets_output)))
@@ -3326,7 +3318,6 @@ module ContentTypeParameters = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/ContentTypeParameters" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -3340,7 +3331,7 @@ module ContentTypeParameters = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ContentTypeParameters" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -3359,7 +3350,6 @@ module ConstantQueryString = struct
         ~labels:[ ("hello", (fun v -> v) request.hello, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -3368,7 +3358,7 @@ module ConstantQueryString = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ConstantQueryString" ~service ~context
-      ~method_:`GET ~uri ~query ~headers ~body
+      ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -3386,7 +3376,6 @@ module ConstantAndVariableQueryString = struct
         ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params =
       List.concat
         [
@@ -3403,7 +3392,7 @@ module ConstantAndVariableQueryString = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ConstantAndVariableQueryString" ~service
-      ~context ~method_:`GET ~uri ~query ~headers ~body
+      ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end
@@ -3418,7 +3407,6 @@ module BodyWithXmlName = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/BodyWithXmlName" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params = List.concat [] in
     let map_params = List.concat [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -3432,7 +3420,7 @@ module BodyWithXmlName = struct
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"BodyWithXmlName" ~service ~context
-      ~method_:`PUT ~uri ~query ~headers ~body
+      ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
         Smaws_Lib.Xml.Parse.Read.dtd i;
@@ -3442,7 +3430,10 @@ module BodyWithXmlName = struct
                 match tag with
                 | "nested" ->
                     r_nested :=
-                      Some (Read.sequence i "nested" (fun i _ -> payload_with_xml_name_of_xml i) ())
+                      Some
+                        (Read.sequence i "nested"
+                           (fun i attrs -> payload_with_xml_name_of_xml i attrs)
+                           ())
                 | _ -> Read.skip_element i);
             ({ nested = ( ! ) r_nested } : body_with_xml_name_input_output)))
       ~error_deserializer
@@ -3460,7 +3451,6 @@ module AllQueryStringTypes = struct
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/AllQueryStringTypesInput" ~labels:[]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
-    let uri = uri in
     let named_params =
       List.concat
         [
@@ -3542,7 +3532,7 @@ module AllQueryStringTypes = struct
               [
                 ( "Enum",
                   [
-                    (fun v ->
+                    (fun (v : Shared.Types.foo_enum) ->
                       match v with
                       | Shared.Types.FOO -> "Foo"
                       | Shared.Types.BAZ -> "Baz"
@@ -3558,7 +3548,7 @@ module AllQueryStringTypes = struct
               [
                 ( "EnumList",
                   List.map
-                    (fun v ->
+                    (fun (v : Shared.Types.foo_enum) ->
                       match v with
                       | Shared.Types.FOO -> "Foo"
                       | Shared.Types.BAZ -> "Baz"
@@ -3573,7 +3563,7 @@ module AllQueryStringTypes = struct
               [
                 ( "IntegerEnum",
                   [
-                    (fun v ->
+                    (fun (v : Shared.Types.integer_enum) ->
                       match v with
                       | Shared.Types.A -> string_of_int 1
                       | Shared.Types.B -> string_of_int 2
@@ -3587,7 +3577,7 @@ module AllQueryStringTypes = struct
               [
                 ( "IntegerEnumList",
                   List.map
-                    (fun v ->
+                    (fun (v : Shared.Types.integer_enum) ->
                       match v with
                       | Shared.Types.A -> string_of_int 1
                       | Shared.Types.B -> string_of_int 2
@@ -3611,7 +3601,7 @@ module AllQueryStringTypes = struct
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"AllQueryStringTypes" ~service ~context
-      ~method_:`GET ~uri ~query ~headers ~body
+      ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status -> ())
       ~error_deserializer
 end

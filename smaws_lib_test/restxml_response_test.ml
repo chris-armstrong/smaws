@@ -130,7 +130,7 @@ let parse_error_struct_recovers_members_and_skips_request_id () =
   let open Xml.Parse in
   let r_top = ref None in
   let r_foo = ref None in
-  let struct_parser i =
+  let struct_parser i attrs =
     Structure.scanSequence i [ "TopLevel"; "Nested" ] (fun tag _ ->
         match tag with
         | "TopLevel" -> r_top := Some (Read.element i "TopLevel" ())
@@ -140,7 +140,45 @@ let parse_error_struct_recovers_members_and_skips_request_id () =
     (!r_top, !r_foo)
   in
   let top, foo =
-    Result.get_ok (RestXml.parse_error_struct ~body:complex_error_body ~structParser:struct_parser)
+    Result.get_ok
+      (RestXml.parse_error_struct ~body:complex_error_body ~noErrorWrapping:false
+         ~structParser:struct_parser)
+  in
+  Alcotest.(check (option string)) "TopLevel recovered" (Some "Top level") top;
+  Alcotest.(check (option string)) "Nested/Foo recovered" (Some "bar") foo
+
+let parse_error_struct_nowrapping_recovers_members () =
+  (* With [noErrorWrapping] the envelope root is [<Error>] directly: the
+     structParser runs inside it and reads the error-shape members while
+     skipping the protocol metadata tags (Type/Code/Message/RequestId), which
+     are siblings of the members under the same root. *)
+  let open Xml.Parse in
+  let r_top = ref None in
+  let r_foo = ref None in
+  let struct_parser i attrs =
+    Structure.scanSequence i [ "TopLevel"; "Nested" ] (fun tag _ ->
+        match tag with
+        | "TopLevel" -> r_top := Some (Read.element i "TopLevel" ())
+        | "Nested" ->
+            r_foo := Some (Read.sequence i "Nested" (fun i _ -> Read.element i "Foo" ()) ())
+        | _ -> Read.skip_element i);
+    (!r_top, !r_foo)
+  in
+  let body =
+    {|<Error>
+    <Type>Sender</Type>
+    <Code>ComplexError</Code>
+    <Message>boom</Message>
+    <TopLevel>Top level</TopLevel>
+    <Nested>
+        <Foo>bar</Foo>
+    </Nested>
+    <RequestId>foo-id</RequestId>
+</Error>|}
+  in
+  let top, foo =
+    Result.get_ok
+      (RestXml.parse_error_struct ~body ~noErrorWrapping:true ~structParser:struct_parser)
   in
   Alcotest.(check (option string)) "TopLevel recovered" (Some "Top level") top;
   Alcotest.(check (option string)) "Nested/Foo recovered" (Some "bar") foo
@@ -205,6 +243,9 @@ let () =
           ( "parse_error_struct recovers members and skips metadata",
             `Quick,
             parse_error_struct_recovers_members_and_skips_request_id );
+          ( "parse_error_struct (noErrorWrapping) recovers members",
+            `Quick,
+            parse_error_struct_nowrapping_recovers_members );
         ] );
       ( "request_id",
         [

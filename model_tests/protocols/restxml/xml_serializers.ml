@@ -1454,7 +1454,8 @@ let xml_attributes_on_payload_response_to_xml w (x : xml_attributes_on_payload_r
       | Some v ->
           element w "payload"
             ~attrs:
-              (List.concat [ (match v.attr with Some s -> [ ("test", s, None) ] | None -> []) ])
+              (List.concat
+                 [ (match v.attr with Some s -> [ ("test", (fun v -> v) s, None) ] | None -> []) ])
             (fun w -> xml_attributes_payload_response_to_xml w v));
     ]
 
@@ -1470,7 +1471,8 @@ let xml_attributes_on_payload_request_to_xml w (x : xml_attributes_on_payload_re
       | Some v ->
           element w "payload"
             ~attrs:
-              (List.concat [ (match v.attr with Some s -> [ ("test", s, None) ] | None -> []) ])
+              (List.concat
+                 [ (match v.attr with Some s -> [ ("test", (fun v -> v) s, None) ] | None -> []) ])
             (fun w -> xml_attributes_payload_request_to_xml w v));
     ]
 
@@ -1491,7 +1493,8 @@ let xml_attributes_in_middle_response_to_xml w (x : xml_attributes_in_middle_res
       | Some v ->
           element w "payload"
             ~attrs:
-              (List.concat [ (match v.attr with Some s -> [ ("test", s, None) ] | None -> []) ])
+              (List.concat
+                 [ (match v.attr with Some s -> [ ("test", (fun v -> v) s, None) ] | None -> []) ])
             (fun w -> xml_attributes_in_middle_payload_response_to_xml w v));
     ]
 
@@ -1512,7 +1515,8 @@ let xml_attributes_in_middle_request_to_xml w (x : xml_attributes_in_middle_requ
       | Some v ->
           element w "payload"
             ~attrs:
-              (List.concat [ (match v.attr with Some s -> [ ("test", s, None) ] | None -> []) ])
+              (List.concat
+                 [ (match v.attr with Some s -> [ ("test", (fun v -> v) s, None) ] | None -> []) ])
             (fun w -> xml_attributes_in_middle_payload_request_to_xml w v));
     ]
 

@@ -179,18 +179,22 @@ let parse_error_envelope_nowrapping ~body =
 
 (** Re-parse a restXml error response body and run [structParser] positioned inside <Error>, so
     generated error deserialisers can recover the error-shape members that <Error> carries alongside
-    <Type>/<Code>/<Message>. *)
-let parse_error_struct ~body ~structParser =
+    <Type>/<Code>/<Message>. [noErrorWrapping] selects the S3-style envelope (root <Error> directly)
+    instead of the default <ErrorResponse><Error> wrapping. *)
+let parse_error_struct ~body ~noErrorWrapping ~structParser =
   let open Xml.Parse in
   run (fun () ->
       let xmlSource = source_with_encoding ~strip:false ~src:body ~encoding:None in
       Read.dtd xmlSource;
-      Read.sequence xmlSource "ErrorResponse"
-        (fun _ _ ->
-          let result = Read.sequence xmlSource "Error" (fun i _ -> structParser i) () in
-          Read.skip_to_end xmlSource;
-          result)
-        ())
+      if noErrorWrapping then
+        Read.sequence xmlSource "Error" (fun i attrs -> structParser i attrs) ()
+      else
+        Read.sequence xmlSource "ErrorResponse"
+          (fun _ _ ->
+            let result = Read.sequence xmlSource "Error" (fun i attrs -> structParser i attrs) () in
+            Read.skip_to_end xmlSource;
+            result)
+          ())
 
 (** Parse a restXml success (2xx) response body. The [output_deserializer] is a generated
     per-operation lambda that receives the raw [body] string, the response [headers] (for
@@ -273,7 +277,7 @@ let prefix_headers ~(prefix : string) (headers : Http.headers) : (string * strin
 let request_with_metadata (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
     ~(context : http_t Context.t) ~(method_ : Http.method_) ~(uri : Uri.t)
     ~(query : (string * string list) list) ~(headers : (string * string) list)
-    ~(body : (string * string) option)
+    ~(body : (string * string) option) ~(noErrorWrapping : bool)
     ~(output_deserializer : body:string -> headers:Http.headers -> status:int -> 'out)
     ~(error_deserializer : Error.t -> body:string -> headers:Http.headers -> 'err) :
     ('out Response.t, 'err * Response.metadata) result =
@@ -322,7 +326,10 @@ let request_with_metadata (type http_t) ~(shape_name : string) ~(service : Servi
           | Error (Xml.Parse.XmlParseError msg) ->
               Error (`XmlParseError msg, Response.{ request_id = header_request_id }))
       | _ ->
-          begin match parse_error_envelope ~body:body_str with
+          begin match
+            if noErrorWrapping then parse_error_envelope_nowrapping ~body:body_str
+            else parse_error_envelope ~body:body_str
+          with
           | Ok (error, body_request_id) ->
               let request_id =
                 request_id_prefer_header ~header:header_request_id ~body:body_request_id
@@ -342,11 +349,11 @@ let request_with_metadata (type http_t) ~(shape_name : string) ~(service : Servi
 let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
     ~(context : http_t Context.t) ~(method_ : Http.method_) ~(uri : Uri.t)
     ~(query : (string * string list) list) ~(headers : (string * string) list)
-    ~(body : (string * string) option)
+    ~(body : (string * string) option) ~(noErrorWrapping : bool)
     ~(output_deserializer : body:string -> headers:Http.headers -> status:int -> 'out)
     ~(error_deserializer : Error.t -> body:string -> headers:Http.headers -> 'err) :
     ('out, 'err) result =
   request_with_metadata ~shape_name ~service ~context ~method_ ~uri ~query ~headers ~body
-    ~output_deserializer ~error_deserializer
+    ~noErrorWrapping ~output_deserializer ~error_deserializer
   |> Result.map (fun { Response.response; _ } -> response)
   |> Result.map_error (fun (error, _) -> error)

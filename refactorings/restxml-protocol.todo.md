@@ -218,13 +218,79 @@ noted. Stop and wait for developer review between phases (per AGENTS.md).
       members/enum-values/headers — which restXml conformance exposed; all
       generated SDKs regenerated to declaration order).
 - [x] `dune runtest` green: restxml 170/170, query 75/75, json 110/110,
-      smaws_lib_test green. (The `restxml.xmlns` namespace is still not wired
-      into the build — that is Phase 9.)
+      smaws_lib_test green. (The `restxml.xmlns` namespace was not wired into
+      the build at Phase 8 — wired + green in Phase 9.)
 
-## Phase 9 — Polish
-- [ ] `dune fmt`.
-- [ ] Generate + compile an S3 / CloudFront SDK (exercises `noErrorWrapping`).
-- [ ] Remove temporary stubs.
+## Phase 9 — Polish — LANDED
+- [x] `dune fmt`.
+- [x] Generate + compile an S3 SDK (exercises `noErrorWrapping`). Generated
+      `sdks/s3/` via the updated `service-dune-generate.sh` (which gained a
+      `RestXml` branch selecting `xml_serializers`/`xml_deserializers`, and
+      omits `operations.mli` for restXml since `write_operations` doesn't emit
+      one for it); registered `Smaws_Client_S3` in `sdks/dune` and
+      `sdks/Smaws_Clients.ml`; added `com.amazonaws.cloudfront` (mapped to
+      `CloudFront`) to `bin/AwsGenerator.ml` (`com.amazonaws.s3` was already
+      mapped). The S3 SDK (819 shapes, `noErrorWrapping: true`) compiles
+      end-to-end.
+- [x] **Wire `noErrorWrapping` through to the runtime (surfaced by S3).** The
+      AST parsed `restXmlConfig.noErrorWrapping` but nothing passed it on:
+      `RestXml.request_with_metadata` always called the wrapped
+      `parse_error_envelope`, so S3 (`<Error>...` root) errors would have been
+      mis-parsed. Added a `~noErrorWrapping:bool` parameter to
+      `RestXml.request`/`request_with_metadata` (and `parse_error_struct`);
+      codegen derives it from the service's `@restXml` trait
+      (`no_error_wrapping_of_service`) and emits it on every generated
+      `RestXml.request`/`parse_error_struct` call (S3 -> `true`, conformance ->
+      `false`). Unit-tested the unwrapped `parse_error_struct` path.
+- [x] **Wire the `aws.protocoltests.restxml.xmlns` conformance namespace**
+      (deferred from Phase 8). Added `model_tests/protocols/restxml_xmlns/dune`
+      (mirroring `restxml/`, but omitting the aggregator `.mli` so `include
+      Operations` stays visible -- the same trick `restxml/dune` uses). This
+      surfaced a real Deserialiser gap: nested `@xmlAttribute` members were read
+      as child elements (via `Structure.scanSequence`) instead of from the
+      enclosing element's attribute list, so e.g. `<Nested xmlns:xsi=...
+      xsi:someName="...">` deserialised `attr_field = None`. The plain
+      `restxml` namespace has no `@xmlAttribute` members at all, so this was
+      never exercised.
+- [x] **Fix nested `@xmlAttribute` deserialisation.** Threaded the element's
+      attribute list through every `<shape>_of_xml`: `read_sequence`/
+      `read_sequences` readers now bind `attrs` (was `fun i _ ->`); all
+      `<shape>_of_xml` (structure/union/list/set/map/enum/primitive) take
+      `i attrs`; `structure_func_body`/`union_func_body` read `@xmlAttribute`
+      members from `attrs` (via a Deserialiser-local `attr_of_string_lambda`)
+      and scan only body members; the output-overlay `enter_root` readers and
+      the error `parse_error_struct` structParser pass `attrs` down. The
+      `restxml.xmlns` namespace is now green (2/2).
+- [x] **`@xmlAttribute` serialise fix (surfaced by S3 `Grantee.Type`).** The
+      Serialiser placed an enum/xmlAttribute member's raw value into the
+      `attrs` list (type error: `type_` not `string`). Added
+      `Serialiser.attribute_value_lambda` (value->string, mirroring the
+      Operations `scalar_to_string_lambda`) so enum/int/bool/timestamp/blob
+      attribute members serialise to their XML text form.
+- [x] **Enum constructor-name collisions (surfaced by S3).** Two enums sharing
+      a constructor name (S3 `RequestPayer`/`Payer` both declare `Requester`;
+      `ServerSideEncryption`/`TableSSEAlgorithm` both declare `Aws_kms`) made
+      the generated header/attribute enum matches resolve to the wrong type.
+      Annotated the scrutinee/result with the enum's type in
+      `Operations.enum_to_string_lambda` (serialise),
+      `Operations.enum_of_string_lambda` (deserialise), and the Serialiser
+      `attribute_value_lambda` enum branch.
+- [x] **Required `@httpPayload` member (surfaced by S3 `MetadataConfiguration`).**
+      The payload body codegen always wrapped the field in `Some/None`, but a
+      `@required` payload member is a bare value. Added a `wrap_payload` helper
+      that binds `let v = field in Some ...` for required members and
+      `match field with Some v -> ... | None -> None` for optional.
+- [x] **Remove temporary stubs.** Reviewed the restXml codegen/runtime for
+      stubs/TODOs/`failwith`-placeholders; the only `failwith`s are legitimate
+      unhappy-path markers (`unknown enum value`, `no union member present`,
+      `missing required field`) per Phase 6's note. The
+      `write_xml_serialisers`/`write_xml_deserialisers`/`write_query_*` test
+      helpers in `sdkgen.ml` are NOT stubs -- the `shared` conformance namespace
+      (no service shape) relies on them to produce cross-protocol serializers
+      for shared shapes, so they are retained.
+- [x] `dune build @all` green; `dune runtest` green: restxml 170/170,
+      restxml.xmlns 2/2, query 75/75, json 110/110, smaws_lib_test green;
+      S3 SDK compiles.
 
 ## Open decisions (resolved 2026-07-15 — see plan §10)
 - [x] Q1 path-template substitution location — **codegen**

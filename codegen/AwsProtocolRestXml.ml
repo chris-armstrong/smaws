@@ -44,6 +44,15 @@ let is_required (traits : Trait.t list option) =
   | None -> false
   | Some ts -> List.exists ts ~f:(function Trait.RequiredTrait -> true | _ -> false)
 
+(* Strip a namespace prefix from an [@xmlName] for matching against [Xmlm]'s
+   resolved attribute local name (e.g. [xsi:someName] -> [someName]). Used by
+   both the Deserialiser (nested [@xmlAttribute] members) and the Operations
+   overlay (root attrs). *)
+let attr_local_name name =
+  match String.index name ':' with
+  | Some i -> String.sub ~pos:(i + 1) ~len:(String.length name - i - 1) name
+  | None -> name
+
 (* AwsQuery default timestamp format is date-time *)
 let resolve_timestamp_format ?(member_traits : Trait.t list option = None)
     ?(shape_traits : Trait.t list option = None) () =
@@ -57,6 +66,218 @@ let resolve_timestamp_format ?(member_traits : Trait.t list option = None)
       match find_fmt shape_traits with Some f -> f | None -> Trait.TimestampFormatDateTime)
 
 let unit_expr = B.pexp_construct (lident_noloc "()") None
+
+(* ============================================================ *)
+(* Scalar value<->string converters, shared by the Serialiser       *)
+(* (@xmlAttribute), the Deserialiser (nested @xmlAttribute), and the *)
+(* Operations (@httpLabel/@httpQuery/@httpHeader). Previously these  *)
+(* were duplicated across the three modules; the single [Scalar]     *)
+(* module here is the one source of truth.                           *)
+(* ============================================================ *)
+module Scalar = struct
+  let serialize_mod = [ "Smaws_Lib"; "Protocols"; "RestXml"; "Serialize" ]
+  let parse_primitive_mod = [ "Smaws_Lib"; "Xml"; "Parse"; "Primitive" ]
+
+  (* The [@timestampFormat] default for a binding location: [date-time] for
+     XML-body attribute/label/query members, [http-date] for headers. *)
+  type binding = [ `Label | `Query | `Header | `Attribute ]
+
+  let timestamp_default_of_binding : binding -> Trait.timestampFormat = function
+    | `Label | `Query | `Attribute -> Trait.TimestampFormatDateTime
+    | `Header -> Trait.TimestampFormatHttpDate
+
+  let timestamp_to_string_helper = function
+    | Trait.TimestampFormatDateTime -> "timestamp_iso_to_string"
+    | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_to_string"
+    | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_to_string"
+
+  let timestamp_of_string_helper = function
+    | Trait.TimestampFormatDateTime -> "timestamp_iso_of_string"
+    | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_of_string"
+    | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_of_string"
+
+  let timestamp_format ?(member_traits : Trait.t list option = None)
+      ?(shape_traits : Trait.t list option = None) ~default () =
+    let find =
+      Option.bind ~f:(fun ts ->
+          List.find_map ts ~f:(function Trait.TimestampFormatTrait x -> Some x | _ -> None))
+    in
+    match find member_traits with
+    | Some f -> f
+    | None -> ( match find shape_traits with Some f -> f | None -> default)
+
+  (* enum constructors -> enum-value text: [fun v -> string]. The scrutinee
+     is annotated with the enum's type so a constructor name shared between
+     two enums (e.g. S3 [RequestPayer]/[Payer] both declare [Requester])
+     resolves to THIS enum. [None] if the target is not an enum. *)
+  let enum_to_string_lambda ~namespace_resolver ~shape_resolver target_name =
+    match Shape_resolver.find_shape_by_name ~name:target_name shape_resolver with
+    | Some (Shape.EnumShape s) ->
+        let resolved =
+          Namespace_resolver.Namespace_resolver.resolve_reference
+            ~symbol_transformer:(fun ~local x ->
+              if local then [ SafeNames.safeTypeName x ] else [ "Types"; SafeNames.safeTypeName x ])
+            namespace_resolver target_name
+        in
+        let module_path = match List.rev resolved with _ :: rest -> List.rev rest | [] -> [] in
+        let cases =
+          List.map s.members ~f:(fun (m : Shape.member) ->
+              let value =
+                List.find_map_exn (Option.value ~default:[] m.traits) ~f:(function
+                  | Trait.EnumValueTrait e -> Some e
+                  | _ -> None)
+              in
+              let ctor = SafeNames.safeConstructorName m.name in
+              let ctor_ident = make_lident ~names:(module_path @ [ ctor ]) |> Location.mknoloc in
+              let rhs =
+                match value with
+                | `String sv -> const_str sv
+                | `Int iv -> B.pexp_apply (exp_ident "string_of_int") [ (Nolabel, exp_int iv) ]
+              in
+              B.case ~lhs:(B.ppat_construct ctor_ident None) ~guard:None ~rhs)
+        in
+        let type_lid = Location.mknoloc (make_lident ~names:resolved) in
+        let v_pat =
+          B.ppat_constraint (B.ppat_var (Location.mknoloc "v")) (B.ptyp_constr type_lid [])
+        in
+        Some (B.pexp_fun Nolabel None v_pat (B.pexp_match (exp_ident "v") cases))
+    | _ -> None
+
+  (* enum-value text -> constructor: [fun s -> Ctor], with the result
+     annotated with the enum's type (same disambiguation as above). [None] if
+     the target is not an enum. *)
+  let enum_of_string_lambda ~namespace_resolver ~shape_resolver target_name =
+    match Shape_resolver.find_shape_by_name ~name:target_name shape_resolver with
+    | Some (Shape.EnumShape s) ->
+        let resolved =
+          Namespace_resolver.Namespace_resolver.resolve_reference
+            ~symbol_transformer:(fun ~local x ->
+              if local then [ SafeNames.safeTypeName x ] else [ "Types"; SafeNames.safeTypeName x ])
+            namespace_resolver target_name
+        in
+        let module_path = match List.rev resolved with _ :: rest -> List.rev rest | [] -> [] in
+        let cases =
+          List.map s.members ~f:(fun (m : Shape.member) ->
+              let value =
+                List.find_map_exn (Option.value ~default:[] m.traits) ~f:(function
+                  | Trait.EnumValueTrait e -> Some e
+                  | _ -> None)
+              in
+              let ctor = SafeNames.safeConstructorName m.name in
+              let ctor_ident = make_lident ~names:(module_path @ [ ctor ]) |> Location.mknoloc in
+              let pat =
+                match value with
+                | `String sv -> pat_const_str sv
+                | `Int iv -> pat_const_str (Int.to_string iv)
+              in
+              B.case ~lhs:pat ~guard:None ~rhs:(B.pexp_construct ctor_ident None))
+        in
+        let failure =
+          B.case ~lhs:B.ppat_any ~guard:None ~rhs:[%expr failwith "unknown enum value"]
+        in
+        let type_lid = Location.mknoloc (make_lident ~names:resolved) in
+        let match_exp =
+          B.pexp_constraint
+            (B.pexp_match (exp_ident "s") (cases @ [ failure ]))
+            (B.ptyp_constr type_lid [])
+        in
+        Some (exp_fun_untyped "s" match_exp)
+    | _ -> None
+
+  (* [fun v -> string] for a scalar/enum value, or [None] for a complex
+     (structure/union/list/map) target. Resolves named shapes (e.g. a
+     [@timestampFormat] timestamp shape) as well as [smithy.api#*] primitives. *)
+  let to_string_lambda ~namespace_resolver ~shape_resolver ~(member_traits : Trait.t list option)
+      ~(shape_traits : Trait.t list option) ~binding target =
+    let to_str helper =
+      exp_fun_untyped "v"
+        (qualified_apply ~names:(serialize_mod @ [ helper ]) [ (Nolabel, exp_ident "v") ])
+    in
+    let timestamp_lambda ts =
+      let fmt =
+        timestamp_format ~member_traits ~shape_traits:ts
+          ~default:(timestamp_default_of_binding binding)
+          ()
+      in
+      to_str (timestamp_to_string_helper fmt)
+    in
+    match Shape_resolver.find_shape_by_name ~name:target shape_resolver with
+    | Some (Shape.StringShape _) -> Some (exp_fun_untyped "v" (exp_ident "v"))
+    | Some (Shape.IntegerShape _ | Shape.ByteShape _ | Shape.ShortShape _) ->
+        Some (exp_fun_untyped "v" [%expr string_of_int v])
+    | Some (Shape.LongShape _) ->
+        Some
+          (exp_fun_untyped "v"
+             (qualified_apply
+                ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ]
+                [ (Nolabel, exp_ident "v") ]))
+    | Some (Shape.BooleanShape _) -> Some (exp_fun_untyped "v" [%expr string_of_bool v])
+    | Some (Shape.FloatShape _ | Shape.DoubleShape _) -> Some (to_str "float_field_to_string")
+    | Some (Shape.TimestampShape { traits }) -> Some (timestamp_lambda traits)
+    | Some (Shape.BlobShape _) ->
+        Some (exp_fun_untyped "v" [%expr Base64.encode_exn (Bytes.to_string v)])
+    | Some (Shape.EnumShape _) -> enum_to_string_lambda ~namespace_resolver ~shape_resolver target
+    | _ -> (
+        match target with
+        | "smithy.api#String" -> Some (exp_fun_untyped "v" (exp_ident "v"))
+        | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" ->
+            Some (exp_fun_untyped "v" [%expr string_of_int v])
+        | "smithy.api#Long" ->
+            Some
+              (exp_fun_untyped "v"
+                 (qualified_apply
+                    ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ]
+                    [ (Nolabel, exp_ident "v") ]))
+        | "smithy.api#Boolean" -> Some (exp_fun_untyped "v" [%expr string_of_bool v])
+        | "smithy.api#Float" | "smithy.api#Double" -> Some (to_str "float_field_to_string")
+        | "smithy.api#Timestamp" -> Some (timestamp_lambda shape_traits)
+        | "smithy.api#Blob" ->
+            Some (exp_fun_untyped "v" [%expr Base64.encode_exn (Bytes.to_string v)])
+        | _ -> None)
+
+  (* [fun s -> value] for a scalar/enum value, or [None] for a complex target. *)
+  let of_string_lambda ~namespace_resolver ~shape_resolver ~(member_traits : Trait.t list option)
+      ~(shape_traits : Trait.t list option) ~binding target =
+    let of_str helper =
+      exp_fun_untyped "s"
+        (qualified_apply ~names:(parse_primitive_mod @ [ helper ]) [ (Nolabel, exp_ident "s") ])
+    in
+    let timestamp_lambda ts =
+      let fmt =
+        timestamp_format ~member_traits ~shape_traits:ts
+          ~default:(timestamp_default_of_binding binding)
+          ()
+      in
+      of_str (timestamp_of_string_helper fmt)
+    in
+    match Shape_resolver.find_shape_by_name ~name:target shape_resolver with
+    | Some (Shape.StringShape _) -> Some (exp_fun_untyped "s" (exp_ident "s"))
+    | Some (Shape.IntegerShape _ | Shape.ByteShape _ | Shape.ShortShape _) ->
+        Some (of_str "int_of_string")
+    | Some (Shape.LongShape _) -> Some (of_str "long_of_string")
+    | Some (Shape.BigIntegerShape _) -> Some (of_str "big_int_of_string")
+    | Some (Shape.BigDecimalShape _) -> Some (of_str "big_decimal_of_string")
+    | Some (Shape.BooleanShape _) -> Some (of_str "bool_of_string")
+    | Some (Shape.FloatShape _) -> Some (of_str "float_of_string")
+    | Some (Shape.DoubleShape _) -> Some (of_str "double_of_string")
+    | Some (Shape.BlobShape _) -> Some (of_str "blob_of_string")
+    | Some (Shape.TimestampShape { traits }) -> Some (timestamp_lambda traits)
+    | Some (Shape.EnumShape _) -> enum_of_string_lambda ~namespace_resolver ~shape_resolver target
+    | _ -> (
+        match target with
+        | "smithy.api#String" -> Some (exp_fun_untyped "s" (exp_ident "s"))
+        | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" ->
+            Some (of_str "int_of_string")
+        | "smithy.api#Long" -> Some (of_str "long_of_string")
+        | "smithy.api#BigInteger" -> Some (of_str "big_int_of_string")
+        | "smithy.api#BigDecimal" -> Some (of_str "big_decimal_of_string")
+        | "smithy.api#Boolean" -> Some (of_str "bool_of_string")
+        | "smithy.api#Float" -> Some (of_str "float_of_string")
+        | "smithy.api#Double" -> Some (of_str "double_of_string")
+        | "smithy.api#Blob" -> Some (of_str "blob_of_string")
+        | "smithy.api#Timestamp" -> Some (timestamp_lambda shape_traits)
+        | _ -> None)
+end
 
 (* ============================================================ *)
 (* Serialiser *)
@@ -184,12 +405,29 @@ module Serialiser = struct
      [(name, value, None)] when the member is required, or
      [match v.am with Some s -> [(name, s, None)] | None -> []] when optional.
      The attribute name embeds any prefix (e.g. "xsi:someName") via the
-     member's [@xmlName]. *)
-  let attribute_contribution (value_expr : Ppxlib.expression) (mem : Shape.member) =
+     member's [@xmlName]. The value is converted to its XML text form via
+     [Scalar.to_string_lambda]. *)
+  let attribute_contribution ~namespace_resolver ~shape_resolver (value_expr : Ppxlib.expression)
+      (mem : Shape.member) =
     let attr_name = xml_name mem.traits mem.name in
     let access = B.pexp_field value_expr (lident_noloc (SafeNames.safeMemberName mem.name)) in
+    let shape_traits =
+      match Shape_resolver.find_shape_by_name ~name:mem.target shape_resolver with
+      | Some shape -> Some (Shape.getShapeTraits shape)
+      | None -> None
+    in
+    let conv =
+      Scalar.to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+        ~shape_traits ~binding:`Attribute mem.target
+      |> Option.value ~default:(exp_fun_untyped "v" (exp_ident "v"))
+    in
     let triple v_expr =
-      B.pexp_tuple [ const_str attr_name; v_expr; B.pexp_construct (lident_noloc "None") None ]
+      B.pexp_tuple
+        [
+          const_str attr_name;
+          B.pexp_apply conv [ (Nolabel, v_expr) ];
+          B.pexp_construct (lident_noloc "None") None;
+        ]
     in
     if is_required mem.traits then B.elist [ triple access ]
     else
@@ -206,13 +444,16 @@ module Serialiser = struct
       structure/union target: the concatenation of each attribute member's
       contribution. [None] when the target has no attributes (so the wrapping
       element is emitted with no ~attrs). *)
-  let attrs_expr_of_target ~shape_resolver value_expr target_name =
+  let attrs_expr_of_target ~namespace_resolver ~shape_resolver value_expr target_name =
     match Shape_resolver.find_shape_by_name ~name:target_name shape_resolver with
     | Some (Shape.StructureShape s | Shape.UnionShape s) ->
         let attrs = attribute_members s in
         if List.is_empty attrs then None
         else (
-          let contribs = List.map attrs ~f:(attribute_contribution value_expr) in
+          let contribs =
+            List.map attrs
+              ~f:(attribute_contribution ~namespace_resolver ~shape_resolver value_expr)
+          in
           Some (B.pexp_apply (exp_ident "List.concat") [ (Nolabel, B.elist contribs) ]))
     | _ -> None
 
@@ -274,7 +515,9 @@ module Serialiser = struct
     in
     (* Attribute members on a structure/union target render as attributes on
        this wrapping element. *)
-    let attrs_opt = attrs_expr_of_target ~shape_resolver value_expr target_name in
+    let attrs_opt =
+      attrs_expr_of_target ~namespace_resolver ~shape_resolver value_expr target_name
+    in
     match
       primitive_serialize_helper ~member_traits:(Some member_traits)
         ~shape_traits:(Some shape_traits) target_name
@@ -758,7 +1001,7 @@ module Deserialiser = struct
       [
         (Nolabel, exp_ident "i");
         (Nolabel, const_str tag);
-        (Nolabel, exp_fun_ident_any "i" body);
+        (Nolabel, exp_fun_attrs "i" body);
         (Nolabel, unit_expr);
       ]
 
@@ -767,7 +1010,7 @@ module Deserialiser = struct
       [
         (Nolabel, exp_ident "i");
         (Nolabel, const_str tag);
-        (Nolabel, exp_fun_ident_any "i" body);
+        (Nolabel, exp_fun_attrs "i" body);
         (Nolabel, unit_expr);
       ]
 
@@ -832,7 +1075,8 @@ module Deserialiser = struct
           let kf =
             B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver ms.mapKey.target))
           in
-          read_sequence key_tag (B.pexp_apply kf [ (Nolabel, exp_ident "i") ])
+          read_sequence key_tag
+            (B.pexp_apply kf [ (Nolabel, exp_ident "i"); (Nolabel, exp_ident "attrs") ])
     in
     let val_expr =
       match primitive_conv ms.mapValue.target with
@@ -841,7 +1085,8 @@ module Deserialiser = struct
           let vf =
             B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver ms.mapValue.target))
           in
-          read_sequence val_tag (B.pexp_apply vf [ (Nolabel, exp_ident "i") ])
+          read_sequence val_tag
+            (B.pexp_apply vf [ (Nolabel, exp_ident "i"); (Nolabel, exp_ident "attrs") ])
     in
     B.pexp_let Nonrecursive
       [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "k")) ~expr:key_expr ]
@@ -856,7 +1101,8 @@ module Deserialiser = struct
         let item_func =
           B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver target))
         in
-        read_sequences item_tag (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ])
+        read_sequences item_tag
+          (B.pexp_apply item_func [ (Nolabel, exp_ident "i"); (Nolabel, exp_ident "attrs") ])
 
   let member_reader_expr ~namespace_resolver ~shape_resolver ~member_traits xml_tag target_name
       ref_name =
@@ -904,8 +1150,10 @@ module Deserialiser = struct
                 let item_func =
                   B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver target_name))
                 in
-                assign (read_sequence xml_tag (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ]))
-            ))
+                assign
+                  (read_sequence xml_tag
+                     (B.pexp_apply item_func
+                        [ (Nolabel, exp_ident "i"); (Nolabel, exp_ident "attrs") ]))))
 
   let member_ref_name (mem : Shape.member) = "r_" ^ SafeNames.safeMemberName mem.name
 
@@ -957,22 +1205,62 @@ module Deserialiser = struct
         in
         (field_key, field_val))
 
+  (* [r_mem := Option.map conv (List.find_map ... attrs)]: read an
+     [@xmlAttribute] member from the enclosing element's attribute list
+     (in-scope [attrs]), converting the attribute's string value to the
+     member's type. *)
+  let attr_member_assign ~namespace_resolver ~shape_resolver (mem : Shape.member) =
+    let field_name = xml_name mem.traits mem.name in
+    let shape_traits =
+      match Shape_resolver.find_shape_by_name ~name:mem.target shape_resolver with
+      | Some shape -> Some (Shape.getShapeTraits shape)
+      | None -> None
+    in
+    let conv =
+      Scalar.of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+        ~shape_traits ~binding:`Attribute mem.target
+      |> Option.value ~default:(exp_ident "Fun.id")
+    in
+    let find =
+      [%expr
+        List.find_map
+          (fun ((_, n), v) ->
+            if String.equal n [%e const_str (attr_local_name field_name)] then Some v else None)
+          attrs]
+    in
+    let rhs = [%expr Option.map [%e conv] [%e find]] in
+    B.pexp_apply
+      (B.pexp_ident (Location.mknoloc (Longident.Lident ":=")))
+      [
+        (Nolabel, B.pexp_ident (Location.mknoloc (Longident.Lident (member_ref_name mem))));
+        (Nolabel, rhs);
+      ]
+
   let structure_func_body name (descriptor : Shape.structureShapeDetails) ~namespace_resolver
       ~shape_resolver () =
     let type_name_str = SafeNames.safeTypeName name in
     let type_name = B.ptyp_constr (lident_noloc type_name_str) [] in
     let members = descriptor.members in
-    if List.is_empty members then exp_fun_untyped "i" [%expr ((() : unit) : [%t type_name])]
+    if List.is_empty members then exp_fun_attrs "i" [%expr ((() : unit) : [%t type_name])]
     else begin
+      let attr_members = List.filter members ~f:(fun m -> is_attribute m.traits) in
+      let body_members = List.filter members ~f:(fun m -> not (is_attribute m.traits)) in
       let ref_bindings = structure_ref_bindings members in
-      let scan_call = structure_scan_call ~namespace_resolver ~shape_resolver members in
+      let attr_reads =
+        List.map attr_members ~f:(attr_member_assign ~namespace_resolver ~shape_resolver)
+      in
+      let scan_call = structure_scan_call ~namespace_resolver ~shape_resolver body_members in
       let record_expr = B.pexp_record (structure_record_fields members) None in
       let typed_record = B.pexp_constraint record_expr type_name in
-      let body =
-        List.fold_right ref_bindings ~init:(B.pexp_sequence scan_call typed_record)
-          ~f:(fun binding acc -> B.pexp_let Nonrecursive [ binding ] acc)
+      let body0 =
+        List.fold_left attr_reads ~init:(B.pexp_sequence scan_call typed_record) ~f:(fun acc r ->
+            B.pexp_sequence r acc)
       in
-      exp_fun_untyped "i" body
+      let body =
+        List.fold_right ref_bindings ~init:body0 ~f:(fun binding acc ->
+            B.pexp_let Nonrecursive [ binding ] acc)
+      in
+      exp_fun_attrs "i" body
     end
 
   let union_func_body name (descriptor : Shape.structureShapeDetails) ~namespace_resolver
@@ -980,10 +1268,15 @@ module Deserialiser = struct
     let type_name_str = SafeNames.safeTypeName name in
     let type_name = B.ptyp_constr (lident_noloc type_name_str) [] in
     let members = descriptor.members in
+    let attr_members = List.filter members ~f:(fun m -> is_attribute m.traits) in
+    let body_members = List.filter members ~f:(fun m -> not (is_attribute m.traits)) in
     let ref_bindings = structure_ref_bindings members in
-    let scan_call = structure_scan_call ~namespace_resolver ~shape_resolver members in
+    let attr_reads =
+      List.map attr_members ~f:(attr_member_assign ~namespace_resolver ~shape_resolver)
+    in
+    let scan_call = structure_scan_call ~namespace_resolver ~shape_resolver body_members in
     let select_expr =
-      List.fold_right members ~init:[%expr failwith "no union member present in xml response"]
+      List.fold_right body_members ~init:[%expr failwith "no union member present in xml response"]
         ~f:(fun mem acc ->
           let constructor = SafeNames.safeConstructorName mem.name in
           let deref =
@@ -1001,22 +1294,26 @@ module Deserialiser = struct
             ])
     in
     let typed_select = B.pexp_constraint select_expr type_name in
-    let body =
-      List.fold_right ref_bindings ~init:(B.pexp_sequence scan_call typed_select)
-        ~f:(fun binding acc -> B.pexp_let Nonrecursive [ binding ] acc)
+    let body0 =
+      List.fold_left attr_reads ~init:(B.pexp_sequence scan_call typed_select) ~f:(fun acc r ->
+          B.pexp_sequence r acc)
     in
-    exp_fun_untyped "i" body
+    let body =
+      List.fold_right ref_bindings ~init:body0 ~f:(fun binding acc ->
+          B.pexp_let Nonrecursive [ binding ] acc)
+    in
+    exp_fun_attrs "i" body
 
   let list_func_body (x : Shape.listShapeDetails) ~namespace_resolver ~shape_resolver () =
     let member_tag = xml_name x.memberTraits "member" in
-    exp_fun_untyped "i" (list_items_body ~namespace_resolver x.target member_tag)
+    exp_fun_attrs "i" (list_items_body ~namespace_resolver x.target member_tag)
 
   let set_func_body (x : Shape.setShapeDetails) ~namespace_resolver ~shape_resolver () =
     let body = read_elements "member" in
-    exp_fun_untyped "i" body
+    exp_fun_attrs "i" body
 
   let map_func_body (x : Shape.mapShapeDetails) ~namespace_resolver () =
-    exp_fun_untyped "i" (read_sequences "entry" (map_entry_body ~namespace_resolver x))
+    exp_fun_attrs "i" (read_sequences "entry" (map_entry_body ~namespace_resolver x))
 
   let enum_func_body name (s : Shape.enumShapeDetails) ~namespace_resolver () =
     let type_name_str = SafeNames.safeTypeName name in
@@ -1041,7 +1338,7 @@ module Deserialiser = struct
       B.case ~lhs:B.ppat_any ~guard:None ~rhs:[%expr failwith "unknown enum value"]
     in
     let match_exp = B.pexp_match (exp_ident "s") (cases @ [ failure_case ]) in
-    exp_fun_untyped "i"
+    exp_fun_attrs "i"
       (B.pexp_let Nonrecursive
          [
            B.value_binding
@@ -1053,17 +1350,17 @@ module Deserialiser = struct
   let deser_mod = xml_primitive_mod
 
   let read_data_lambda () =
-    exp_fun_untyped "i" (xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ])
+    exp_fun_attrs "i" (xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ])
 
   let primitive_of_xml_lambda helper =
     let s_expr = xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ] in
-    exp_fun_untyped "i" (qualified_apply ~names:(deser_mod @ [ helper ]) [ (Nolabel, s_expr) ])
+    exp_fun_attrs "i" (qualified_apply ~names:(deser_mod @ [ helper ]) [ (Nolabel, s_expr) ])
 
   let generate_func_body (shapeWithTarget : Dependencies.shapeWithTarget)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
       ~(shape_resolver : Shape_resolver.t) () =
     match shapeWithTarget.descriptor with
-    | StructureShape { members = []; _ } -> Some (exp_fun_untyped "i" unit_expr)
+    | StructureShape { members = []; _ } -> Some (exp_fun_attrs "i" unit_expr)
     | StructureShape x ->
         Some (structure_func_body shapeWithTarget.name x ~namespace_resolver ~shape_resolver ())
     | ListShape x -> Some (list_func_body x ~namespace_resolver ~shape_resolver ())
@@ -1082,7 +1379,7 @@ module Deserialiser = struct
         in
         let s_expr = xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ] in
         Some
-          (exp_fun_untyped "i"
+          (exp_fun_attrs "i"
              (qualified_apply ~names:(deser_mod @ [ helper ]) [ (Nolabel, s_expr) ]))
     | StringShape { traits } ->
         let has_timestamp_fmt =
@@ -1101,7 +1398,7 @@ module Deserialiser = struct
           in
           let s_expr = xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ] in
           Some
-            (exp_fun_untyped "i"
+            (exp_fun_attrs "i"
                (qualified_apply ~names:(deser_mod @ [ helper ]) [ (Nolabel, s_expr) ])))
         else Some (read_data_lambda ())
     | LongShape _ -> Some (primitive_of_xml_lambda "long_of_string")
@@ -1111,7 +1408,7 @@ module Deserialiser = struct
     | BooleanShape _ -> Some (primitive_of_xml_lambda "bool_of_string")
     | FloatShape _ | DoubleShape _ -> Some (primitive_of_xml_lambda "float_of_string")
     | BlobShape _ -> Some (primitive_of_xml_lambda "blob_of_string")
-    | UnitShape -> Some (exp_fun_untyped "i" unit_expr)
+    | UnitShape -> Some (exp_fun_attrs "i" unit_expr)
     | UnionShape x ->
         Some (union_func_body shapeWithTarget.name x ~namespace_resolver ~shape_resolver ())
     | _ -> None
@@ -1164,6 +1461,15 @@ module Operations = struct
       (Option.bind service.traits ~f:(fun ts ->
            List.find_map ts ~f:(function Trait.ApiXmlNamespaceTrait ns -> Some ns.uri | _ -> None)))
 
+  (* Whether the service applies [restXml] with [noErrorWrapping] (S3 style:
+     the error envelope root is [<Error>] directly, not [<ErrorResponse>]). *)
+  let no_error_wrapping_of_service (service : Shape.serviceShapeDetails) =
+    Option.value ~default:false
+      (Option.bind service.traits ~f:(fun ts ->
+           List.find_map ts ~f:(function
+             | Trait.AwsProtocolRestXmlTrait { noErrorWrapping; _ } -> Some noErrorWrapping
+             | _ -> None)))
+
   let generate_error_to_string ~(operation_shape : Ast.Shape.operationShapeDetails)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
     let errors = operation_shape.errors |> Option.value ~default:[] in
@@ -1202,7 +1508,6 @@ module Operations = struct
   (* ------------------------------------------------------------------ *)
 
   let uuid_mod = [ "Smaws_Lib"; "Uuid" ]
-  let serialize_mod = restxml_mod @ [ "Serialize" ]
 
   (* Extract a trait value from a trait list. *)
   let find_trait (traits : Trait.t list option) (f : Trait.t -> 'a option) : 'a option =
@@ -1302,128 +1607,6 @@ module Operations = struct
           B.case ~lhs:(B.ppat_construct (lident_noloc "None") None) ~guard:None ~rhs:(B.elist []);
         ]
 
-  (* The [@timestampFormat] default for a binding location: [date-time] for
-     @httpLabel/@httpQuery, [http-date] for @httpHeader (plan §2.4). *)
-  let timestamp_default_of_binding = function
-    | `Label | `Query -> Trait.TimestampFormatDateTime
-    | `Header -> Trait.TimestampFormatHttpDate
-
-  let resolve_timestamp_format' ~member_traits ~shape_traits ~default =
-    let find_fmt ts =
-      find_trait ts (function Trait.TimestampFormatTrait x -> Some x | _ -> None)
-    in
-    match find_fmt member_traits with
-    | Some f -> f
-    | None -> ( match find_fmt shape_traits with Some f -> f | None -> default)
-
-  (* [fun v -> string] for a scalar / enum value in an @httpLabel / @httpQuery /
-     @httpHeader position. [None] if the target is a complex (structure / union /
-     list / map) shape - the call site handles lists by mapping. *)
-  let enum_to_string_lambda ~namespace_resolver ~shape_resolver target_name =
-    match Shape_resolver.find_shape_by_name ~name:target_name shape_resolver with
-    | Some (Shape.EnumShape s) ->
-        (* The enum constructors live in the enum's home [Types] module (e.g.
-           [Shared.Types.C] for [aws.protocoltests.shared#IntegerEnum]); qualify
-           them so the generated match resolves from any operation module. For a
-           local enum the path is empty and the constructor is unqualified. *)
-        let module_path =
-          let resolved =
-            Namespace_resolver.Namespace_resolver.resolve_reference
-              ~symbol_transformer:(fun ~local x ->
-                if local then [ SafeNames.safeTypeName x ]
-                else [ "Types"; SafeNames.safeTypeName x ])
-              namespace_resolver target_name
-          in
-          match List.rev resolved with _ :: rest -> List.rev rest | [] -> []
-        in
-        let cases =
-          List.map s.members ~f:(fun (m : Shape.member) ->
-              let value =
-                List.find_map_exn (Option.value ~default:[] m.traits) ~f:(function
-                  | Trait.EnumValueTrait e -> Some e
-                  | _ -> None)
-              in
-              let ctor = SafeNames.safeConstructorName m.name in
-              let ctor_ident = make_lident ~names:(module_path @ [ ctor ]) |> Location.mknoloc in
-              let rhs =
-                match value with
-                | `String sv -> const_str sv
-                | `Int iv -> B.pexp_apply (exp_ident "string_of_int") [ (Nolabel, exp_int iv) ]
-              in
-              B.case ~lhs:(B.ppat_construct ctor_ident None) ~guard:None ~rhs)
-        in
-        Some (exp_fun_untyped "v" (B.pexp_match (exp_ident "v") cases))
-    | _ -> None
-
-  let timestamp_lambda ~member_traits ~shape_traits ~binding =
-    let fmt =
-      resolve_timestamp_format' ~member_traits ~shape_traits
-        ~default:(timestamp_default_of_binding binding)
-    in
-    let helper_name =
-      match fmt with
-      | Trait.TimestampFormatDateTime -> "timestamp_iso_to_string"
-      | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_to_string"
-      | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_to_string"
-    in
-    exp_fun_untyped "v"
-      (qualified_apply ~names:(serialize_mod @ [ helper_name ]) [ (Nolabel, exp_ident "v") ])
-
-  (* [fun v -> string] for a scalar / enum value in an @httpLabel / @httpQuery /
-     @httpHeader position. Resolves named shapes (e.g. a [@timestampFormat]
-     timestamp shape like [EpochSeconds]) as well as [smithy.api#*] primitives.
-     [None] if the target is a complex (structure / union / list / map) shape -
-     the call site handles lists by mapping. *)
-  let scalar_to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits
-      ~binding target_name =
-    match Shape_resolver.find_shape_by_name ~name:target_name shape_resolver with
-    | Some (Shape.StringShape _) -> Some (exp_fun_untyped "v" (exp_ident "v"))
-    | Some (Shape.IntegerShape _ | Shape.ByteShape _ | Shape.ShortShape _) ->
-        Some (exp_fun_untyped "v" [%expr string_of_int v])
-    | Some (Shape.LongShape _) ->
-        Some
-          (exp_fun_untyped "v"
-             (qualified_apply
-                ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ]
-                [ (Nolabel, exp_ident "v") ]))
-    | Some (Shape.BooleanShape _) -> Some (exp_fun_untyped "v" [%expr string_of_bool v])
-    | Some (Shape.FloatShape _ | Shape.DoubleShape _) ->
-        Some
-          (exp_fun_untyped "v"
-             (qualified_apply
-                ~names:(serialize_mod @ [ "float_field_to_string" ])
-                [ (Nolabel, exp_ident "v") ]))
-    | Some (Shape.TimestampShape { traits }) ->
-        Some (timestamp_lambda ~member_traits ~shape_traits:traits ~binding)
-    | Some (Shape.BlobShape _) ->
-        Some (exp_fun_untyped "v" [%expr Base64.encode_exn (Bytes.to_string v)])
-    | Some (Shape.EnumShape _) ->
-        enum_to_string_lambda ~namespace_resolver ~shape_resolver target_name
-    | _ -> (
-        (* [smithy.api#*] primitive targets (no named shape in the model). *)
-        match target_name with
-        | "smithy.api#String" -> Some (exp_fun_untyped "v" (exp_ident "v"))
-        | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" ->
-            Some (exp_fun_untyped "v" [%expr string_of_int v])
-        | "smithy.api#Long" ->
-            Some
-              (exp_fun_untyped "v"
-                 (qualified_apply
-                    ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ]
-                    [ (Nolabel, exp_ident "v") ]))
-        | "smithy.api#Boolean" -> Some (exp_fun_untyped "v" [%expr string_of_bool v])
-        | "smithy.api#Float" | "smithy.api#Double" ->
-            Some
-              (exp_fun_untyped "v"
-                 (qualified_apply
-                    ~names:(serialize_mod @ [ "float_field_to_string" ])
-                    [ (Nolabel, exp_ident "v") ]))
-        | "smithy.api#Timestamp" -> Some (timestamp_lambda ~member_traits ~shape_traits ~binding)
-        | "smithy.api#Blob" ->
-            Some (exp_fun_untyped "v" [%expr Base64.encode_exn (Bytes.to_string v)])
-        | _ -> None)
-
-  (* Whether a target shape is a list/set. *)
   let target_is_list ~shape_resolver (target_name : string) =
     match Shape_resolver.find_shape_by_name ~name:target_name shape_resolver with
     | Some (Shape.ListShape _ | Shape.SetShape _) -> true
@@ -1473,7 +1656,6 @@ module Operations = struct
   (* ------------------------------------------------------------------ *)
   let parse_mod = [ "Smaws_Lib"; "Xml"; "Parse" ]
   let enter_root_fn = qualified_ident ~names:(parse_mod @ [ "Read"; "enter_root" ])
-  let parse_primitive_mod = parse_mod @ [ "Primitive" ]
   let header_value_fn = qualified_ident ~names:(restxml_mod @ [ "header_value" ])
   let prefix_headers_fn = qualified_ident ~names:(restxml_mod @ [ "prefix_headers" ])
 
@@ -1484,102 +1666,14 @@ module Operations = struct
       (B.ppat_var (Location.mknoloc arg_name))
       (B.pexp_fun Ppxlib.Nolabel None (B.ppat_var (Location.mknoloc "attrs")) exp)
 
-  (* string -> target leaf parser for an @httpHeader value (inverse of
-     [scalar_to_string_lambda]). [None] for non-leaf targets. Default timestamp
-     format for headers is [http-date] (plan §2.4). *)
-  let rec scalar_of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits
-      target =
-    let mk helper =
-      exp_fun_untyped "s"
-        (qualified_apply ~names:(parse_primitive_mod @ [ helper ]) [ (Nolabel, exp_ident "s") ])
-    in
-    let timestamp_helper fmt =
-      match fmt with
-      | Trait.TimestampFormatDateTime -> "timestamp_iso_of_string"
-      | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_of_string"
-      | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_of_string"
-    in
-    match Shape_resolver.find_shape_by_name ~name:target shape_resolver with
-    | Some (Shape.StringShape _) -> Some (exp_fun_untyped "s" (exp_ident "s"))
-    | Some (Shape.IntegerShape _ | Shape.ByteShape _ | Shape.ShortShape _) ->
-        Some (mk "int_of_string")
-    | Some (Shape.LongShape _) -> Some (mk "long_of_string")
-    | Some (Shape.BigIntegerShape _) -> Some (mk "big_int_of_string")
-    | Some (Shape.BigDecimalShape _) -> Some (mk "big_decimal_of_string")
-    | Some (Shape.BooleanShape _) -> Some (mk "bool_of_string")
-    | Some (Shape.FloatShape _) -> Some (mk "float_of_string")
-    | Some (Shape.DoubleShape _) -> Some (mk "double_of_string")
-    | Some (Shape.BlobShape _) -> Some (mk "blob_of_string")
-    | Some (Shape.TimestampShape { traits }) ->
-        let fmt =
-          resolve_timestamp_format' ~member_traits ~shape_traits:traits
-            ~default:Trait.TimestampFormatHttpDate
-        in
-        Some (mk (timestamp_helper fmt))
-    | Some (Shape.EnumShape _) -> enum_of_string_lambda ~namespace_resolver ~shape_resolver target
-    | _ -> (
-        match target with
-        | "smithy.api#String" -> Some (exp_fun_untyped "s" (exp_ident "s"))
-        | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" -> Some (mk "int_of_string")
-        | "smithy.api#Long" -> Some (mk "long_of_string")
-        | "smithy.api#BigInteger" -> Some (mk "big_int_of_string")
-        | "smithy.api#BigDecimal" -> Some (mk "big_decimal_of_string")
-        | "smithy.api#Boolean" -> Some (mk "bool_of_string")
-        | "smithy.api#Float" -> Some (mk "float_of_string")
-        | "smithy.api#Double" -> Some (mk "double_of_string")
-        | "smithy.api#Blob" -> Some (mk "blob_of_string")
-        | "smithy.api#Timestamp" ->
-            let fmt =
-              resolve_timestamp_format' ~member_traits ~shape_traits
-                ~default:Trait.TimestampFormatHttpDate
-            in
-            Some (mk (timestamp_helper fmt))
-        | _ -> None)
-
-  and enum_of_string_lambda ~namespace_resolver ~shape_resolver target =
-    match Shape_resolver.find_shape_by_name ~name:target shape_resolver with
-    | Some (Shape.EnumShape s) ->
-        let module_path =
-          let resolved =
-            Namespace_resolver.Namespace_resolver.resolve_reference
-              ~symbol_transformer:(fun ~local x ->
-                if local then [ SafeNames.safeTypeName x ]
-                else [ "Types"; SafeNames.safeTypeName x ])
-              namespace_resolver target
-          in
-          match List.rev resolved with _ :: rest -> List.rev rest | [] -> []
-        in
-        let cases =
-          List.map s.members ~f:(fun (m : Shape.member) ->
-              let value =
-                List.find_map_exn (Option.value ~default:[] m.traits) ~f:(function
-                  | Trait.EnumValueTrait e -> Some e
-                  | _ -> None)
-              in
-              let ctor = SafeNames.safeConstructorName m.name in
-              let ctor_ident = make_lident ~names:(module_path @ [ ctor ]) |> Location.mknoloc in
-              let pat =
-                match value with
-                | `String sv -> pat_const_str sv
-                | `Int iv -> pat_const_str (Int.to_string iv)
-              in
-              B.case ~lhs:pat ~guard:None ~rhs:(B.pexp_construct ctor_ident None))
-        in
-        let failure =
-          B.case ~lhs:B.ppat_any ~guard:None ~rhs:[%expr failwith "unknown enum value"]
-        in
-        Some (exp_fun_untyped "s" (B.pexp_match (exp_ident "s") (cases @ [ failure ])))
-    | _ -> None
-
   let is_http_response_code (mem : Shape.member) =
     trait_mem mem.traits (function Trait.HttpResponseCodeTrait -> true | _ -> false)
 
   (* Strip a namespace prefix from an [@xmlName] for matching against [Xmlm]'s
-     resolved attribute local name (e.g. [xsi:someName] -> [someName]). *)
-  let attr_local_name name =
-    match String.index name ':' with
-    | Some i -> String.sub ~pos:(i + 1) ~len:(String.length name - i - 1) name
-    | None -> name
+     resolved attribute local name (e.g. [xsi:someName] -> [someName]). The
+     module-level [attr_local_name] is reused; rebound here only to keep the
+     overlay helpers self-documenting. *)
+  let attr_local_name = attr_local_name
 
   (* The option-typed value expression for a non-body-scan (overlay) member,
      assuming the in-scope identifiers [attrs]/[headers]/[status]. Covers
@@ -1592,8 +1686,8 @@ module Operations = struct
     if is_attribute mem.traits then (
       let conv =
         Option.value
-          (scalar_of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
-             ~shape_traits:None mem.target)
+          (Scalar.of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+             ~shape_traits:None ~binding:`Attribute mem.target)
           ~default:(exp_ident "Fun.id")
       in
       let find =
@@ -1610,8 +1704,8 @@ module Operations = struct
       | Some (item_target, item_member_traits) ->
           let conv =
             Option.value
-              (scalar_of_string_lambda ~namespace_resolver ~shape_resolver
-                 ~member_traits:item_member_traits ~shape_traits:None item_target)
+              (Scalar.of_string_lambda ~namespace_resolver ~shape_resolver
+                 ~member_traits:item_member_traits ~shape_traits:None ~binding:`Header item_target)
               ~default:(exp_ident "Fun.id")
           in
           [%expr
@@ -1621,8 +1715,8 @@ module Operations = struct
       | None ->
           let conv =
             Option.value
-              (scalar_of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
-                 ~shape_traits:None mem.target)
+              (Scalar.of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+                 ~shape_traits:None ~binding:`Header mem.target)
               ~default:(exp_ident "Fun.id")
           in
           [%expr Option.map [%e conv] ([%e header_value_fn] [%e headers_var] [%e const_str name])])
@@ -1635,8 +1729,8 @@ module Operations = struct
       in
       let conv =
         Option.value
-          (scalar_of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:None
-             ~shape_traits:None map_value_target)
+          (Scalar.of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:None
+             ~shape_traits:None ~binding:`Header map_value_target)
           ~default:(exp_ident "Fun.id")
       in
       [%expr
@@ -1777,19 +1871,14 @@ module Operations = struct
                           (Location.mknoloc
                              (Deserialiser.func_longident ~namespace_resolver target))
                       in
-                      B.pexp_apply deser [ (Nolabel, exp_ident "i") ])
+                      B.pexp_apply deser [ (Nolabel, exp_ident "i"); (Nolabel, exp_ident "attrs") ])
                     else
                       scan_inner_expr ~out_name:target ~members:ps.members ~namespace_resolver
                         ~shape_resolver
                   in
                   let payload_enter =
                     B.pexp_apply enter_root_fn
-                      [
-                        (Nolabel, exp_ident "i");
-                        ( Nolabel,
-                          if is_union then exp_fun_ident_any "i" payload_inner
-                          else exp_fun_ident_attrs "i" payload_inner );
-                      ]
+                      [ (Nolabel, exp_ident "i"); (Nolabel, exp_fun_ident_attrs "i" payload_inner) ]
                   in
                   let record =
                     payload_record_expr ~out_name ~pmem ~members
@@ -1831,7 +1920,7 @@ module Operations = struct
               | Some (Shape.EnumShape _) ->
                   let conv =
                     Option.value_exn
-                      (enum_of_string_lambda ~namespace_resolver ~shape_resolver target)
+                      (Scalar.enum_of_string_lambda ~namespace_resolver ~shape_resolver target)
                   in
                   let applied = B.pexp_apply conv [ (Nolabel, exp_ident "body") ] in
                   let payload_opt =
@@ -1875,7 +1964,7 @@ module Operations = struct
      members from the [<Error>] envelope children and the header-bound members
      from the response [headers]; otherwise the per-shape [<error>_of_xml] is
      used (positioned inside [<Error>] by [parse_error_struct]). *)
-  let generate_error_handler ~(operation_shape : Ast.Shape.operationShapeDetails)
+  let generate_error_handler ~(operation_shape : Ast.Shape.operationShapeDetails) ~no_error_wrapping
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
       ~(shape_resolver : Shape_resolver.t) () =
     let errors = operation_shape.errors |> Option.value ~default:[] in
@@ -1895,17 +1984,19 @@ module Operations = struct
             let inner =
               scan_inner_expr ~out_name:error ~members:s.members ~namespace_resolver ~shape_resolver
             in
-            exp_fun_untyped "i" inner
+            exp_fun_attrs "i" inner
         | _ ->
             let deser_func = Deserialiser.func_longident ~namespace_resolver error in
-            exp_fun_untyped "i"
+            exp_fun_attrs "i"
               (B.pexp_apply
                  (B.pexp_ident (Location.mknoloc deser_func))
-                 [ (Nolabel, exp_ident "i") ]))
+                 [ (Nolabel, exp_ident "i"); (Nolabel, exp_ident "attrs") ]))
       else (
         let deser_func = Deserialiser.func_longident ~namespace_resolver error in
-        exp_fun_untyped "i"
-          (B.pexp_apply (B.pexp_ident (Location.mknoloc deser_func)) [ (Nolabel, exp_ident "i") ]))
+        exp_fun_attrs "i"
+          (B.pexp_apply
+             (B.pexp_ident (Location.mknoloc deser_func))
+             [ (Nolabel, exp_ident "i"); (Nolabel, exp_ident "attrs") ]))
     in
     let body =
       if List.is_empty errors then
@@ -1922,6 +2013,10 @@ module Operations = struct
                 B.pexp_apply parse_error_struct
                   [
                     (Labelled "body", exp_ident "body");
+                    ( Labelled "noErrorWrapping",
+                      B.pexp_construct
+                        (lident_noloc (if no_error_wrapping then "true" else "false"))
+                        None );
                     (Labelled "structParser", struct_parser_for error);
                   ]
               in
@@ -2009,7 +2104,7 @@ module Operations = struct
      optional member is [None]. *)
   let query_scalar_contrib ~namespace_resolver ~shape_resolver (mem : Shape.member) name =
     match
-      scalar_to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+      Scalar.to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
         ~shape_traits:None ~binding:`Query mem.target
     with
     | None -> B.elist []
@@ -2026,7 +2121,7 @@ module Operations = struct
     match list_item_info ~shape_resolver mem.target with
     | Some (item_target, item_member_traits) ->
         let conv =
-          scalar_to_string_lambda ~namespace_resolver ~shape_resolver
+          Scalar.to_string_lambda ~namespace_resolver ~shape_resolver
             ~member_traits:item_member_traits ~shape_traits:None ~binding:`Query item_target
           |> Option.value ~default:(exp_ident "Fun.id")
         in
@@ -2057,7 +2152,7 @@ module Operations = struct
           | _ -> (false, value_target)
         in
         let conv =
-          scalar_to_string_lambda ~namespace_resolver ~shape_resolver
+          Scalar.to_string_lambda ~namespace_resolver ~shape_resolver
             ~member_traits:ms.mapValue.traits ~shape_traits:None ~binding:`Query item_target
           |> Option.value ~default:(exp_ident "Fun.id")
         in
@@ -2086,7 +2181,7 @@ module Operations = struct
      [None]. *)
   let header_scalar_contrib ~namespace_resolver ~shape_resolver (mem : Shape.member) name =
     match
-      scalar_to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+      Scalar.to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
         ~shape_traits:None ~binding:`Header mem.target
     with
     | None -> B.elist []
@@ -2102,7 +2197,7 @@ module Operations = struct
     match list_item_info ~shape_resolver mem.target with
     | Some (item_target, item_member_traits) ->
         let conv =
-          scalar_to_string_lambda ~namespace_resolver ~shape_resolver
+          Scalar.to_string_lambda ~namespace_resolver ~shape_resolver
             ~member_traits:item_member_traits ~shape_traits:None ~binding:`Header item_target
           |> Option.value ~default:(exp_ident "Fun.id")
         in
@@ -2127,7 +2222,7 @@ module Operations = struct
     let conv =
       match Shape_resolver.find_shape_by_name ~name:mem.target shape_resolver with
       | Some (Shape.MapShape ms) ->
-          scalar_to_string_lambda ~namespace_resolver ~shape_resolver
+          Scalar.to_string_lambda ~namespace_resolver ~shape_resolver
             ~member_traits:ms.mapValue.traits ~shape_traits:None ~binding:`Header ms.mapValue.target
           |> Option.value ~default:(exp_ident "Fun.id")
       | _ -> exp_ident "Fun.id"
@@ -2150,7 +2245,7 @@ module Operations = struct
 
   let label_entry ~namespace_resolver ~shape_resolver ~template (mem : Shape.member) =
     let conv =
-      scalar_to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+      Scalar.to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
         ~shape_traits:None ~binding:`Label mem.target
       |> Option.value_exn
     in
@@ -2166,7 +2261,7 @@ module Operations = struct
   (* A [(name, value_string)] entry for a required @hostLabel member. *)
   let host_label_entry ~namespace_resolver ~shape_resolver (mem : Shape.member) =
     let conv =
-      scalar_to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+      Scalar.to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
         ~shape_traits:None ~binding:`Label mem.target
       |> Option.value ~default:(exp_ident "Fun.id")
     in
@@ -2183,8 +2278,9 @@ module Operations = struct
 
   let generate_request_handler ~name ~operation_name
       ~(operation_shape : Ast.Shape.operationShapeDetails) ~alias_context ~xml_namespace
-      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
+      ~no_error_wrapping ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
       ~(shape_resolver : Shape_resolver.t) () =
+    let bool_expr b = B.pexp_construct (lident_noloc (if b then "true" else "false")) None in
     let shape_name = Util.symbolName operation_name in
     let http =
       Option.value
@@ -2302,9 +2398,33 @@ module Operations = struct
     let body_expr =
       match payload_mem with
       | Some mem -> (
-          let field = request_field mem in
           let target = mem.target in
           let shape = Shape_resolver.find_shape_by_name ~name:target shape_resolver in
+          (* [body] is the (content_type, string) tuple for the payload, written
+             against the value bound to [v]. For a [@required] payload member the
+             field is a bare value (not an option), so bind [v] directly and wrap
+             in [Some]; for an optional member, match [Some v]/[None]. *)
+          let wrap_payload body =
+            let field = request_field mem in
+            if is_required mem.traits then
+              B.pexp_let Nonrecursive
+                [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "v")) ~expr:field ]
+                (B.pexp_construct (lident_noloc "Some") (Some body))
+            else
+              B.pexp_match field
+                [
+                  B.case
+                    ~lhs:
+                      (B.ppat_construct (lident_noloc "Some")
+                         (Some (B.ppat_var (Location.mknoloc "v"))))
+                    ~guard:None
+                    ~rhs:(B.pexp_construct (lident_noloc "Some") (Some body));
+                  B.case
+                    ~lhs:(B.ppat_construct (lident_noloc "None") None)
+                    ~guard:None
+                    ~rhs:(B.pexp_construct (lident_noloc "None") None);
+                ]
+          in
           match shape with
           | Some (Shape.StructureShape s | Shape.UnionShape s) ->
               let tag = xml_name mem.traits (xml_name s.traits (Util.symbolName target)) in
@@ -2312,7 +2432,8 @@ module Operations = struct
                 root_ns ~member_traits:mem.traits ~shape_traits:s.traits ~service_ns:xml_namespace
               in
               let attrs_opt =
-                Serialiser.attrs_expr_of_target ~shape_resolver (exp_ident "v") target
+                Serialiser.attrs_expr_of_target ~namespace_resolver ~shape_resolver (exp_ident "v")
+                  target
               in
               let ser_call =
                 B.pexp_apply
@@ -2320,31 +2441,33 @@ module Operations = struct
                   [ (Nolabel, exp_ident "w"); (Nolabel, exp_ident "v") ]
               in
               let element_call = write_root_element_call ~tag ~ns ~attrs_opt ser_call in
-              [%expr
-                match [%e field] with
-                | Some v ->
-                    let w = Smaws_Lib.Xml.Write.make () in
-                    [%e element_call];
-                    Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
-                | None -> None]
+              let body =
+                B.pexp_let Nonrecursive
+                  [
+                    B.value_binding
+                      ~pat:(B.ppat_var (Location.mknoloc "w"))
+                      ~expr:[%expr Smaws_Lib.Xml.Write.make ()];
+                  ]
+                  (B.pexp_sequence element_call
+                     (B.pexp_tuple
+                        [ const_str "application/xml"; [%expr Smaws_Lib.Xml.Write.to_string w] ]))
+              in
+              wrap_payload body
           | Some (Shape.StringShape _) ->
-              [%expr match [%e field] with Some v -> Some ("text/plain", v) | None -> None]
+              wrap_payload (B.pexp_tuple [ const_str "text/plain"; exp_ident "v" ])
           | Some (Shape.BlobShape blob) ->
               let media_type =
                 find_trait blob.traits (function Trait.MediaTypeTrait m -> Some m | _ -> None)
               in
               let ct = Option.value media_type ~default:"application/octet-stream" in
-              [%expr
-                match [%e field] with
-                | Some v -> Some ([%e const_str ct], Bytes.to_string v)
-                | None -> None]
+              wrap_payload (B.pexp_tuple [ const_str ct; [%expr Bytes.to_string v] ])
           | Some (Shape.EnumShape _) ->
               let conv =
-                enum_to_string_lambda ~namespace_resolver ~shape_resolver target |> Option.value_exn
+                Scalar.enum_to_string_lambda ~namespace_resolver ~shape_resolver target
+                |> Option.value_exn
               in
               let applied = B.pexp_apply conv [ (Nolabel, exp_ident "v") ] in
-              [%expr
-                match [%e field] with Some v -> Some ("text/plain", [%e applied]) | None -> None]
+              wrap_payload (B.pexp_tuple [ const_str "text/plain"; applied ])
           | _ -> [%expr None])
       | None -> (
           match operation_shape.input with
@@ -2356,7 +2479,8 @@ module Operations = struct
                     root_ns ~member_traits:None ~shape_traits:s.traits ~service_ns:xml_namespace
                   in
                   let attrs_opt =
-                    Serialiser.attrs_expr_of_target ~shape_resolver (exp_ident "request") input_name
+                    Serialiser.attrs_expr_of_target ~namespace_resolver ~shape_resolver
+                      (exp_ident "request") input_name
                   in
                   let ser_call =
                     B.pexp_apply
@@ -2382,6 +2506,7 @@ module Operations = struct
           (Ppxlib.Labelled "query", exp_ident "query");
           (Ppxlib.Labelled "headers", exp_ident "headers");
           (Ppxlib.Labelled "body", exp_ident "body");
+          (Ppxlib.Labelled "noErrorWrapping", bool_expr no_error_wrapping);
           (Ppxlib.Labelled "output_deserializer", output_deserializer);
           (Ppxlib.Labelled "error_deserializer", exp_ident "error_deserializer");
         ]
@@ -2395,8 +2520,8 @@ module Operations = struct
             Smaws_Lib.Http_bindings.substitute_labels ~template:[%e const_str http.uri]
               ~labels:[%e labels_list]] );
         ("uri", [%expr Smaws_Lib.Http_bindings.apply_path ~base ~path]);
-        ("uri", host_prefix_expr);
       ]
+      @ (match endpoint with Some _ -> [ ("uri", host_prefix_expr) ] | None -> [])
       @ idempotency_bindings
       @ [
           ("named_params", named_params_expr);
@@ -2425,16 +2550,18 @@ module Operations = struct
     [%stri let request = fun context -> [%e shape_func]]
 
   let generate_operation_module ~name ~operation_name ~operation_shape ~dependencies ~alias_context
-      ~xml_namespace ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
+      ~xml_namespace ~no_error_wrapping
+      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
       ~(shape_resolver : Shape_resolver.t) () =
     let module_name = SafeNames.safeConstructorName operation_name in
     let error_to_string = generate_error_to_string ~operation_shape ~namespace_resolver () in
     let error_handler =
-      generate_error_handler ~operation_shape ~namespace_resolver ~shape_resolver ()
+      generate_error_handler ~operation_shape ~no_error_wrapping ~namespace_resolver ~shape_resolver
+        ()
     in
     let request_handler =
       generate_request_handler ~name ~operation_name ~operation_shape ~alias_context ~xml_namespace
-        ~namespace_resolver ~shape_resolver ()
+        ~no_error_wrapping ~namespace_resolver ~shape_resolver ()
     in
     let module_items = [ error_to_string; error_handler; request_handler ] in
     let module_expr = B.pmod_structure module_items in
@@ -2444,10 +2571,11 @@ module Operations = struct
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
       ~(shape_resolver : Shape_resolver.t) () =
     let xml_namespace = extract_xml_namespace service in
+    let no_error_wrapping = no_error_wrapping_of_service service in
     operation_shapes
     |> List.map ~f:(fun (operation_name, operation_shape, dependencies) ->
         generate_operation_module ~name ~operation_name ~operation_shape ~dependencies
-          ~alias_context ~xml_namespace ~namespace_resolver ~shape_resolver ())
+          ~alias_context ~xml_namespace ~no_error_wrapping ~namespace_resolver ~shape_resolver ())
 
   let generate_operation_module_sig ~name ~operation_name ~operation_shape ~dependencies
       ~alias_context ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =

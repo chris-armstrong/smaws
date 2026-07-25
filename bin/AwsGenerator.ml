@@ -153,6 +153,7 @@ let main () =
         ("com.amazonaws.cloud9", "Cloud9");
         ("com.amazonaws.cloudcontrol", "CloudControl");
         ("com.amazonaws.cloudformation", "CloudFormation");
+        ("com.amazonaws.cloudfront", "CloudFront");
         ("com.amazonaws.cloudhsm", "CloudHSM");
         ("com.amazonaws.cloudhsmv2", "CloudHSMV2");
         ("com.amazonaws.cloudsearch", "CloudSearch");

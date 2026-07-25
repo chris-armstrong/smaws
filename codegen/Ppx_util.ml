@@ -53,6 +53,14 @@ let exp_fun_ident_any arg_name exp =
     (B.ppat_var (Location.mknoloc arg_name))
     (B.pexp_fun Nolabel None B.ppat_any exp)
 
+(** [fun arg attrs -> exp]: a two-parameter lambda binding the element's attribute list. Used by XML
+    [Read.sequence]/[Read.sequences]/[Read.enter_root] callbacks that need to read [@xmlAttribute]
+    members from the enclosing element's attributes. *)
+let exp_fun_attrs arg_name exp =
+  B.pexp_fun Nolabel None
+    (B.ppat_var (Location.mknoloc arg_name))
+    (B.pexp_fun Nolabel None (B.ppat_var (Location.mknoloc "attrs")) exp)
+
 (** A fully-qualified identifier expression, e.g. [Smaws_Lib.Xml.Write.text]. *)
 let qualified_ident ~names = B.pexp_ident (Location.mknoloc (make_lident ~names))
 
