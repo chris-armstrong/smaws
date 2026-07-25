@@ -225,6 +225,17 @@ let parse_response ~(body : string) ~(headers : Http.headers) ~(status : int)
     ('out, Xml.Parse.error) result =
   Xml.Parse.run (fun () -> output_deserializer ~body ~headers ~status)
 
+(** [read_body_root ~body f] sets up the XML input for a restXml success body
+    ([source_with_encoding] + [Read.dtd]) and runs [f] positioned inside the single root element via
+    [Read.enter_root] (name-agnostic -- the per-shape child scan validates). Codegen calls this
+    instead of re-emitting the three-line
+    [let i = source_with_encoding ...; Read.dtd i; Read.enter_root i ...] prologue per output body
+    root. *)
+let read_body_root ~body f =
+  let i = Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
+  Xml.Parse.Read.dtd i;
+  Xml.Parse.Read.enter_root i f
+
 (** AWS REST XML services put the request id in a response header. The header name varies: most
     services use [x-amzn-requestid], S3 uses [x-amz-request-id] (and historically
     [x-amz-requestid]). HTTP header names are case-insensitive, so compare lowercased; the first

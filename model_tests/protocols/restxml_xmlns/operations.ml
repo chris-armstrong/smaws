@@ -31,9 +31,7 @@ module SimpleScalarProperties = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"SimpleScalarProperties" ~service ~context
       ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_string_value = ref None in
             let r_true_boolean_value = ref None in
             let r_false_boolean_value = ref None in

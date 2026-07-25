@@ -107,9 +107,7 @@ module CompleteMultipartUpload = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"CompleteMultipartUpload" ~service ~context
       ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_location = ref None in
             let r_bucket = ref None in
             let r_key = ref None in
@@ -520,13 +518,9 @@ module CopyObject = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_e_tag = ref None in
                    let r_last_modified = ref None in
                    let r_checksum_type = ref None in
@@ -648,7 +642,7 @@ module CopyObject = struct
                       checksum_xxhas_h3 = ( ! ) r_checksum_xxhas_h3;
                       checksum_xxhas_h128 = ( ! ) r_checksum_xxhas_h128;
                     }
-                     : copy_object_result))))
+                     : copy_object_result)))
         in
         ({
            copy_object_result = payload_val;
@@ -1099,9 +1093,7 @@ module CreateMultipartUpload = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"CreateMultipartUpload" ~service ~context
       ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_bucket = ref None in
             let r_key = ref None in
             let r_upload_id = ref None in
@@ -1261,9 +1253,7 @@ module CreateSession = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"CreateSession" ~service ~context ~method_:`GET
       ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_credentials = ref None in
             Structure.scanSequence i [ "Credentials" ] (fun tag _ ->
                 match tag with
@@ -2002,9 +1992,7 @@ module DeleteObjects = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteObjects" ~service ~context ~method_:`POST
       ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_deleted = ref None in
             let r_errors = ref None in
             Structure.scanSequence i [ "Deleted"; "Error" ] (fun tag _ ->
@@ -2130,13 +2118,9 @@ module GetBucketAbac = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_status = ref None in
                    Structure.scanSequence i [ "Status" ] (fun tag _ ->
                        match tag with
@@ -2147,7 +2131,7 @@ module GetBucketAbac = struct
                                   (fun i attrs -> bucket_abac_status_of_xml i attrs)
                                   ())
                        | _ -> Read.skip_element i);
-                   ({ status = ( ! ) r_status } : abac_status))))
+                   ({ status = ( ! ) r_status } : abac_status)))
         in
         ({ abac_status = payload_val } : get_bucket_abac_output))
       ~error_deserializer
@@ -2188,9 +2172,7 @@ module GetBucketAccelerateConfiguration = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketAccelerateConfiguration" ~service
       ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_status = ref None in
             Structure.scanSequence i [ "Status" ] (fun tag _ ->
                 match tag with
@@ -2242,9 +2224,7 @@ module GetBucketAcl = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketAcl" ~service ~context ~method_:`GET
       ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_owner = ref None in
             let r_grants = ref None in
             Structure.scanSequence i [ "Owner"; "AccessControlList" ] (fun tag _ ->
@@ -2301,13 +2281,9 @@ module GetBucketAnalyticsConfiguration = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_id = ref None in
                    let r_filter = ref None in
                    let r_storage_class_analysis = ref None in
@@ -2338,7 +2314,7 @@ module GetBucketAnalyticsConfiguration = struct
                       storage_class_analysis =
                         required "StorageClassAnalysis" (( ! ) r_storage_class_analysis) i;
                     }
-                     : analytics_configuration))))
+                     : analytics_configuration)))
         in
         ({ analytics_configuration = payload_val } : get_bucket_analytics_configuration_output))
       ~error_deserializer
@@ -2372,9 +2348,7 @@ module GetBucketCors = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketCors" ~service ~context ~method_:`GET
       ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_cors_rules = ref None in
             Structure.scanSequence i [ "CORSRule" ] (fun tag _ ->
                 match tag with
@@ -2417,13 +2391,9 @@ module GetBucketEncryption = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_rules = ref None in
                    Structure.scanSequence i [ "Rule" ] (fun tag _ ->
                        match tag with
@@ -2435,7 +2405,7 @@ module GetBucketEncryption = struct
                                   ())
                        | _ -> Read.skip_element i);
                    ({ rules = required "Rule" (( ! ) r_rules) i }
-                     : server_side_encryption_configuration))))
+                     : server_side_encryption_configuration)))
         in
         ({ server_side_encryption_configuration = payload_val } : get_bucket_encryption_output))
       ~error_deserializer
@@ -2478,13 +2448,9 @@ module GetBucketIntelligentTieringConfiguration = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_id = ref None in
                    let r_filter = ref None in
                    let r_status = ref None in
@@ -2522,7 +2488,7 @@ module GetBucketIntelligentTieringConfiguration = struct
                       status = required "Status" (( ! ) r_status) i;
                       tierings = required "Tiering" (( ! ) r_tierings) i;
                     }
-                     : intelligent_tiering_configuration))))
+                     : intelligent_tiering_configuration)))
         in
         ({ intelligent_tiering_configuration = payload_val }
           : get_bucket_intelligent_tiering_configuration_output))
@@ -2566,13 +2532,9 @@ module GetBucketInventoryConfiguration = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_destination = ref None in
                    let r_is_enabled = ref None in
                    let r_filter = ref None in
@@ -2647,7 +2609,7 @@ module GetBucketInventoryConfiguration = struct
                       optional_fields = ( ! ) r_optional_fields;
                       schedule = required "Schedule" (( ! ) r_schedule) i;
                     }
-                     : inventory_configuration))))
+                     : inventory_configuration)))
         in
         ({ inventory_configuration = payload_val } : get_bucket_inventory_configuration_output))
       ~error_deserializer
@@ -2681,9 +2643,7 @@ module GetBucketLifecycleConfiguration = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketLifecycleConfiguration" ~service
       ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_rules = ref None in
             Structure.scanSequence i [ "Rule" ] (fun tag _ ->
                 match tag with
@@ -2737,9 +2697,7 @@ module GetBucketLocation = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketLocation" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_location_constraint = ref None in
             Structure.scanSequence i [ "LocationConstraint" ] (fun tag _ ->
                 match tag with
@@ -2782,9 +2740,7 @@ module GetBucketLogging = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketLogging" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_logging_enabled = ref None in
             Structure.scanSequence i [ "LoggingEnabled" ] (fun tag _ ->
                 match tag with
@@ -2829,13 +2785,9 @@ module GetBucketMetadataConfiguration = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_metadata_configuration_result = ref None in
                    Structure.scanSequence i [ "MetadataConfigurationResult" ] (fun tag _ ->
                        match tag with
@@ -2852,7 +2804,7 @@ module GetBucketMetadataConfiguration = struct
                           (( ! ) r_metadata_configuration_result)
                           i;
                     }
-                     : get_bucket_metadata_configuration_result))))
+                     : get_bucket_metadata_configuration_result)))
         in
         ({ get_bucket_metadata_configuration_result = payload_val }
           : get_bucket_metadata_configuration_output))
@@ -2889,13 +2841,9 @@ module GetBucketMetadataTableConfiguration = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_metadata_table_configuration_result = ref None in
                    let r_status = ref None in
                    let r_error = ref None in
@@ -2930,7 +2878,7 @@ module GetBucketMetadataTableConfiguration = struct
                       status = required "Status" (( ! ) r_status) i;
                       error = ( ! ) r_error;
                     }
-                     : get_bucket_metadata_table_configuration_result))))
+                     : get_bucket_metadata_table_configuration_result)))
         in
         ({ get_bucket_metadata_table_configuration_result = payload_val }
           : get_bucket_metadata_table_configuration_output))
@@ -2974,13 +2922,9 @@ module GetBucketMetricsConfiguration = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_id = ref None in
                    let r_filter = ref None in
                    Structure.scanSequence i [ "Id"; "Filter" ] (fun tag _ ->
@@ -2997,7 +2941,7 @@ module GetBucketMetricsConfiguration = struct
                                   ())
                        | _ -> Read.skip_element i);
                    ({ id = required "Id" (( ! ) r_id) i; filter = ( ! ) r_filter }
-                     : metrics_configuration))))
+                     : metrics_configuration)))
         in
         ({ metrics_configuration = payload_val } : get_bucket_metrics_configuration_output))
       ~error_deserializer
@@ -3031,9 +2975,7 @@ module GetBucketNotificationConfiguration = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketNotificationConfiguration" ~service
       ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_topic_configurations = ref None in
             let r_queue_configurations = ref None in
             let r_lambda_function_configurations = ref None in
@@ -3111,13 +3053,9 @@ module GetBucketOwnershipControls = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_rules = ref None in
                    Structure.scanSequence i [ "Rule" ] (fun tag _ ->
                        match tag with
@@ -3128,7 +3066,7 @@ module GetBucketOwnershipControls = struct
                                   (fun i attrs -> ownership_controls_rule_of_xml i attrs)
                                   ())
                        | _ -> Read.skip_element i);
-                   ({ rules = required "Rule" (( ! ) r_rules) i } : ownership_controls))))
+                   ({ rules = required "Rule" (( ! ) r_rules) i } : ownership_controls)))
         in
         ({ ownership_controls = payload_val } : get_bucket_ownership_controls_output))
       ~error_deserializer
@@ -3196,13 +3134,9 @@ module GetBucketPolicyStatus = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_is_public = ref None in
                    Structure.scanSequence i [ "IsPublic" ] (fun tag _ ->
                        match tag with
@@ -3213,7 +3147,7 @@ module GetBucketPolicyStatus = struct
                                   (fun i attrs -> is_public_of_xml i attrs)
                                   ())
                        | _ -> Read.skip_element i);
-                   ({ is_public = ( ! ) r_is_public } : policy_status))))
+                   ({ is_public = ( ! ) r_is_public } : policy_status)))
         in
         ({ policy_status = payload_val } : get_bucket_policy_status_output))
       ~error_deserializer
@@ -3249,13 +3183,9 @@ module GetBucketReplication = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_role = ref None in
                    let r_rules = ref None in
                    Structure.scanSequence i [ "Role"; "Rule" ] (fun tag _ ->
@@ -3274,7 +3204,7 @@ module GetBucketReplication = struct
                       role = required "Role" (( ! ) r_role) i;
                       rules = required "Rule" (( ! ) r_rules) i;
                     }
-                     : replication_configuration))))
+                     : replication_configuration)))
         in
         ({ replication_configuration = payload_val } : get_bucket_replication_output))
       ~error_deserializer
@@ -3308,9 +3238,7 @@ module GetBucketRequestPayment = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketRequestPayment" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_payer = ref None in
             Structure.scanSequence i [ "Payer" ] (fun tag _ ->
                 match tag with
@@ -3350,9 +3278,7 @@ module GetBucketTagging = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketTagging" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_tag_set = ref None in
             Structure.scanSequence i [ "TagSet" ] (fun tag _ ->
                 match tag with
@@ -3396,9 +3322,7 @@ module GetBucketVersioning = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketVersioning" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_status = ref None in
             let r_mfa_delete = ref None in
             Structure.scanSequence i [ "Status"; "MfaDelete" ] (fun tag _ ->
@@ -3449,9 +3373,7 @@ module GetBucketWebsite = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetBucketWebsite" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_redirect_all_requests_to = ref None in
             let r_index_document = ref None in
             let r_error_document = ref None in
@@ -3820,9 +3742,7 @@ module GetObjectAcl = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectAcl" ~service ~context ~method_:`GET
       ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_owner = ref None in
             let r_grants = ref None in
             Structure.scanSequence i [ "Owner"; "AccessControlList" ] (fun tag _ ->
@@ -4071,9 +3991,7 @@ module GetObjectAttributes = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectAttributes" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_e_tag = ref None in
             let r_checksum = ref None in
             let r_object_parts = ref None in
@@ -4173,13 +4091,9 @@ module GetObjectLegalHold = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_status = ref None in
                    Structure.scanSequence i [ "Status" ] (fun tag _ ->
                        match tag with
@@ -4190,7 +4104,7 @@ module GetObjectLegalHold = struct
                                   (fun i attrs -> object_lock_legal_hold_status_of_xml i attrs)
                                   ())
                        | _ -> Read.skip_element i);
-                   ({ status = ( ! ) r_status } : object_lock_legal_hold))))
+                   ({ status = ( ! ) r_status } : object_lock_legal_hold)))
         in
         ({ legal_hold = payload_val } : get_object_legal_hold_output))
       ~error_deserializer
@@ -4226,13 +4140,9 @@ module GetObjectLockConfiguration = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_object_lock_enabled = ref None in
                    let r_rule = ref None in
                    Structure.scanSequence i [ "ObjectLockEnabled"; "Rule" ] (fun tag _ ->
@@ -4251,7 +4161,7 @@ module GetObjectLockConfiguration = struct
                                   ())
                        | _ -> Read.skip_element i);
                    ({ object_lock_enabled = ( ! ) r_object_lock_enabled; rule = ( ! ) r_rule }
-                     : object_lock_configuration))))
+                     : object_lock_configuration)))
         in
         ({ object_lock_configuration = payload_val } : get_object_lock_configuration_output))
       ~error_deserializer
@@ -4297,13 +4207,9 @@ module GetObjectRetention = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_mode = ref None in
                    let r_retain_until_date = ref None in
                    Structure.scanSequence i [ "Mode"; "RetainUntilDate" ] (fun tag _ ->
@@ -4322,7 +4228,7 @@ module GetObjectRetention = struct
                                   ())
                        | _ -> Read.skip_element i);
                    ({ mode = ( ! ) r_mode; retain_until_date = ( ! ) r_retain_until_date }
-                     : object_lock_retention))))
+                     : object_lock_retention)))
         in
         ({ retention = payload_val } : get_object_retention_output))
       ~error_deserializer
@@ -4366,9 +4272,7 @@ module GetObjectTagging = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GetObjectTagging" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_tag_set = ref None in
             Structure.scanSequence i [ "TagSet" ] (fun tag _ ->
                 match tag with
@@ -4467,13 +4371,9 @@ module GetPublicAccessBlock = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_block_public_acls = ref None in
                    let r_ignore_public_acls = ref None in
                    let r_block_public_policy = ref None in
@@ -4517,7 +4417,7 @@ module GetPublicAccessBlock = struct
                       block_public_policy = ( ! ) r_block_public_policy;
                       restrict_public_buckets = ( ! ) r_restrict_public_buckets;
                     }
-                     : public_access_block_configuration))))
+                     : public_access_block_configuration)))
         in
         ({ public_access_block_configuration = payload_val } : get_public_access_block_output))
       ~error_deserializer
@@ -4896,9 +4796,7 @@ module ListBucketAnalyticsConfigurations = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListBucketAnalyticsConfigurations" ~service
       ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_is_truncated = ref None in
             let r_continuation_token = ref None in
             let r_next_continuation_token = ref None in
@@ -4982,9 +4880,7 @@ module ListBucketIntelligentTieringConfigurations = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListBucketIntelligentTieringConfigurations"
       ~service ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_is_truncated = ref None in
             let r_continuation_token = ref None in
             let r_next_continuation_token = ref None in
@@ -5069,9 +4965,7 @@ module ListBucketInventoryConfigurations = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListBucketInventoryConfigurations" ~service
       ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_continuation_token = ref None in
             let r_inventory_configuration_list = ref None in
             let r_is_truncated = ref None in
@@ -5155,9 +5049,7 @@ module ListBucketMetricsConfigurations = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListBucketMetricsConfigurations" ~service
       ~context ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_is_truncated = ref None in
             let r_continuation_token = ref None in
             let r_next_continuation_token = ref None in
@@ -5234,9 +5126,7 @@ module ListBuckets = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListBuckets" ~service ~context ~method_:`GET
       ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_buckets = ref None in
             let r_owner = ref None in
             let r_continuation_token = ref None in
@@ -5304,9 +5194,7 @@ module ListDirectoryBuckets = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListDirectoryBuckets" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_buckets = ref None in
             let r_continuation_token = ref None in
             Structure.scanSequence i [ "Buckets"; "ContinuationToken" ] (fun tag _ ->
@@ -5382,9 +5270,7 @@ module ListMultipartUploads = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListMultipartUploads" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_bucket = ref None in
             let r_key_marker = ref None in
             let r_upload_id_marker = ref None in
@@ -5569,9 +5455,7 @@ module ListObjectAnnotations = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListObjectAnnotations" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_annotations = ref None in
             let r_bucket = ref None in
             let r_key = ref None in
@@ -5729,9 +5613,7 @@ module ListObjects = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListObjects" ~service ~context ~method_:`GET
       ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_is_truncated = ref None in
             let r_marker = ref None in
             let r_next_marker = ref None in
@@ -5897,9 +5779,7 @@ module ListObjectsV2 = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListObjectsV2" ~service ~context ~method_:`GET
       ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_is_truncated = ref None in
             let r_contents = ref None in
             let r_name = ref None in
@@ -6071,9 +5951,7 @@ module ListObjectVersions = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListObjectVersions" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_is_truncated = ref None in
             let r_key_marker = ref None in
             let r_version_id_marker = ref None in
@@ -6251,9 +6129,7 @@ module ListParts = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"ListParts" ~service ~context ~method_:`GET ~uri
       ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_bucket = ref None in
             let r_key = ref None in
             let r_upload_id = ref None in
@@ -8032,9 +7908,7 @@ module PutObjectAnnotation = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"PutObjectAnnotation" ~service ~context
       ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_key = ref None in
             let r_annotation_name = ref None in
             Structure.scanSequence i [ "Key"; "AnnotationName" ] (fun tag _ ->
@@ -8710,14 +8584,10 @@ module SelectObjectContent = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
-                   select_object_content_event_stream_of_xml i attrs)))
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
+                   select_object_content_event_stream_of_xml i attrs))
         in
         ({ payload = payload_val } : select_object_content_output))
       ~error_deserializer
@@ -9253,13 +9123,9 @@ module UploadPartCopy = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_e_tag = ref None in
                    let r_last_modified = ref None in
                    let r_checksum_cr_c32 = ref None in
@@ -9372,7 +9238,7 @@ module UploadPartCopy = struct
                       checksum_xxhas_h3 = ( ! ) r_checksum_xxhas_h3;
                       checksum_xxhas_h128 = ( ! ) r_checksum_xxhas_h128;
                     }
-                     : copy_part_result))))
+                     : copy_part_result)))
         in
         ({
            copy_part_result = payload_val;

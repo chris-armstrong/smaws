@@ -31,9 +31,7 @@ module SimpleScalarProperties = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"SimpleScalarProperties" ~service ~context
       ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_string_value = ref None in
             let r_true_boolean_value = ref None in
             let r_false_boolean_value = ref None in
@@ -234,9 +232,7 @@ module XmlAttributes = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlAttributes" ~service ~context ~method_:`PUT
       ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_foo = ref None in
             Structure.scanSequence i [ "foo" ] (fun tag _ ->
                 match tag with
@@ -287,13 +283,9 @@ module XmlAttributesInMiddle = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_foo = ref None in
                    let r_baz = ref None in
                    Structure.scanSequence i [ "foo"; "baz" ] (fun tag _ ->
@@ -309,7 +301,7 @@ module XmlAttributesInMiddle = struct
                           attrs;
                       baz = ( ! ) r_baz;
                     }
-                     : xml_attributes_in_middle_payload_response))))
+                     : xml_attributes_in_middle_payload_response)))
         in
         ({ payload = payload_val } : xml_attributes_in_middle_response))
       ~error_deserializer
@@ -349,13 +341,9 @@ module XmlAttributesOnPayload = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_foo = ref None in
                    Structure.scanSequence i [ "foo" ] (fun tag _ ->
                        match tag with
@@ -368,7 +356,7 @@ module XmlAttributesOnPayload = struct
                           (fun ((_, n), v) -> if String.equal n "test" then Some v else None)
                           attrs;
                     }
-                     : xml_attributes_payload_response))))
+                     : xml_attributes_payload_response)))
         in
         ({ payload = payload_val } : xml_attributes_on_payload_response))
       ~error_deserializer
@@ -396,9 +384,7 @@ module XmlBlobs = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlBlobs" ~service ~context ~method_:`POST ~uri
       ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_data = ref None in
             Structure.scanSequence i [ "data" ] (fun tag _ ->
                 match tag with
@@ -431,9 +417,7 @@ module XmlEmptyBlobs = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlEmptyBlobs" ~service ~context ~method_:`POST
       ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_data = ref None in
             Structure.scanSequence i [ "data" ] (fun tag _ ->
                 match tag with
@@ -466,9 +450,7 @@ module XmlEmptyLists = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlEmptyLists" ~service ~context ~method_:`PUT
       ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_string_list = ref None in
             let r_string_set = ref None in
             let r_integer_list = ref None in
@@ -639,9 +621,7 @@ module XmlEmptyMaps = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlEmptyMaps" ~service ~context ~method_:`POST
       ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_my_map = ref None in
             Structure.scanSequence i [ "myMap" ] (fun tag _ ->
                 match tag with
@@ -690,9 +670,7 @@ module XmlEmptyStrings = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlEmptyStrings" ~service ~context
       ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_empty_string = ref None in
             Structure.scanSequence i [ "emptyString" ] (fun tag _ ->
                 match tag with
@@ -725,9 +703,7 @@ module XmlEnums = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlEnums" ~service ~context ~method_:`PUT ~uri
       ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_foo_enum1 = ref None in
             let r_foo_enum2 = ref None in
             let r_foo_enum3 = ref None in
@@ -827,9 +803,7 @@ module XmlIntEnums = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlIntEnums" ~service ~context ~method_:`PUT
       ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_int_enum1 = ref None in
             let r_int_enum2 = ref None in
             let r_int_enum3 = ref None in
@@ -928,9 +902,7 @@ module XmlLists = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlLists" ~service ~context ~method_:`PUT ~uri
       ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_string_list = ref None in
             let r_string_set = ref None in
             let r_integer_list = ref None in
@@ -1100,9 +1072,7 @@ module XmlMaps = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlMaps" ~service ~context ~method_:`POST ~uri
       ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_my_map = ref None in
             Structure.scanSequence i [ "myMap" ] (fun tag _ ->
                 match tag with
@@ -1151,9 +1121,7 @@ module XmlMapsXmlName = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlMapsXmlName" ~service ~context
       ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_my_map = ref None in
             Structure.scanSequence i [ "myMap" ] (fun tag _ ->
                 match tag with
@@ -1204,9 +1172,7 @@ module XmlMapWithXmlNamespace = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlMapWithXmlNamespace" ~service ~context
       ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_my_map = ref None in
             Structure.scanSequence i [ "KVP" ] (fun tag _ ->
                 match tag with
@@ -1250,9 +1216,7 @@ module XmlNamespaces = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlNamespaces" ~service ~context ~method_:`POST
       ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_nested = ref None in
             Structure.scanSequence i [ "nested" ] (fun tag _ ->
                 match tag with
@@ -1290,9 +1254,7 @@ module XmlTimestamps = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlTimestamps" ~service ~context ~method_:`POST
       ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_normal = ref None in
             let r_date_time = ref None in
             let r_date_time_on_target = ref None in
@@ -1380,9 +1342,7 @@ module XmlUnions = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"XmlUnions" ~service ~context ~method_:`PUT ~uri
       ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_union_value = ref None in
             Structure.scanSequence i [ "unionValue" ] (fun tag _ ->
                 match tag with
@@ -1420,9 +1380,7 @@ module RecursiveShapes = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"RecursiveShapes" ~service ~context
       ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_nested = ref None in
             Structure.scanSequence i [ "nested" ] (fun tag _ ->
                 match tag with
@@ -1730,9 +1688,7 @@ module NestedXmlMaps = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NestedXmlMaps" ~service ~context ~method_:`POST
       ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_nested_map = ref None in
             let r_flat_nested_map = ref None in
             Structure.scanSequence i [ "nestedMap"; "flatNestedMap" ] (fun tag _ ->
@@ -1799,9 +1755,7 @@ module NestedXmlMapWithXmlName = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"NestedXmlMapWithXmlName" ~service ~context
       ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_nested_xml_map_with_xml_name_map = ref None in
             Structure.scanSequence i [ "nestedXmlMapWithXmlNameMap" ] (fun tag _ ->
                 match tag with
@@ -2051,9 +2005,7 @@ module IgnoreQueryParamsInResponse = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"IgnoreQueryParamsInResponse" ~service ~context
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_baz = ref None in
             Structure.scanSequence i [ "baz" ] (fun tag _ ->
                 match tag with
@@ -2332,19 +2284,15 @@ module HttpPayloadWithXmlNamespaceAndPrefix = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_name = ref None in
                    Structure.scanSequence i [ "name" ] (fun tag _ ->
                        match tag with
                        | "name" -> r_name := Some (Read.element_value i "name" Fun.id ())
                        | _ -> Read.skip_element i);
-                   ({ name = ( ! ) r_name } : payload_with_xml_namespace_and_prefix))))
+                   ({ name = ( ! ) r_name } : payload_with_xml_namespace_and_prefix)))
         in
         ({ nested = payload_val } : http_payload_with_xml_namespace_and_prefix_input_output))
       ~error_deserializer
@@ -2381,19 +2329,15 @@ module HttpPayloadWithXmlNamespace = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_name = ref None in
                    Structure.scanSequence i [ "name" ] (fun tag _ ->
                        match tag with
                        | "name" -> r_name := Some (Read.element_value i "name" Fun.id ())
                        | _ -> Read.skip_element i);
-                   ({ name = ( ! ) r_name } : payload_with_xml_namespace))))
+                   ({ name = ( ! ) r_name } : payload_with_xml_namespace)))
         in
         ({ nested = payload_val } : http_payload_with_xml_namespace_input_output))
       ~error_deserializer
@@ -2429,19 +2373,15 @@ module HttpPayloadWithXmlName = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_name = ref None in
                    Structure.scanSequence i [ "name" ] (fun tag _ ->
                        match tag with
                        | "name" -> r_name := Some (Read.element_value i "name" Fun.id ())
                        | _ -> Read.skip_element i);
-                   ({ name = ( ! ) r_name } : payload_with_xml_name))))
+                   ({ name = ( ! ) r_name } : payload_with_xml_name)))
         in
         ({ nested = payload_val } : http_payload_with_xml_name_input_output))
       ~error_deserializer
@@ -2477,13 +2417,10 @@ module HttpPayloadWithUnion = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs -> union_payload_of_xml i attrs)))
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
+                   union_payload_of_xml i attrs))
         in
         ({ nested = payload_val } : http_payload_with_union_input_output))
       ~error_deserializer
@@ -2519,13 +2456,9 @@ module HttpPayloadWithStructure = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_greeting = ref None in
                    let r_name = ref None in
                    Structure.scanSequence i [ "greeting"; "name" ] (fun tag _ ->
@@ -2534,7 +2467,7 @@ module HttpPayloadWithStructure = struct
                            r_greeting := Some (Read.element_value i "greeting" Fun.id ())
                        | "name" -> r_name := Some (Read.element_value i "name" Fun.id ())
                        | _ -> Read.skip_element i);
-                   ({ greeting = ( ! ) r_greeting; name = ( ! ) r_name } : nested_payload))))
+                   ({ greeting = ( ! ) r_greeting; name = ( ! ) r_name } : nested_payload)))
         in
         ({ nested = payload_val } : http_payload_with_structure_input_output))
       ~error_deserializer
@@ -2570,19 +2503,15 @@ module HttpPayloadWithMemberXmlName = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         let payload_val =
           if String.equal body "" then None
-          else (
-            let i =
-              Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-            in
-            Smaws_Lib.Xml.Parse.Read.dtd i;
+          else
             Some
-              (Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+              (Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
                    let r_name = ref None in
                    Structure.scanSequence i [ "name" ] (fun tag _ ->
                        match tag with
                        | "name" -> r_name := Some (Read.element_value i "name" Fun.id ())
                        | _ -> Read.skip_element i);
-                   ({ name = ( ! ) r_name } : payload_with_xml_name))))
+                   ({ name = ( ! ) r_name } : payload_with_xml_name)))
         in
         ({ nested = payload_val } : http_payload_with_member_xml_name_input_output))
       ~error_deserializer
@@ -2802,9 +2731,7 @@ module FractionalSeconds = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"FractionalSeconds" ~service ~context
       ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_datetime = ref None in
             Structure.scanSequence i [ "datetime" ] (fun tag _ ->
                 match tag with
@@ -2840,9 +2767,7 @@ module FlattenedXmlMapWithXmlNamespace = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"FlattenedXmlMapWithXmlNamespace" ~service
       ~context ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_my_map = ref None in
             Structure.scanSequence i [ "KVP" ] (fun tag _ ->
                 match tag with
@@ -2885,9 +2810,7 @@ module FlattenedXmlMapWithXmlName = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"FlattenedXmlMapWithXmlName" ~service ~context
       ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_my_map = ref None in
             Structure.scanSequence i [ "KVP" ] (fun tag _ ->
                 match tag with
@@ -2928,9 +2851,7 @@ module FlattenedXmlMap = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"FlattenedXmlMap" ~service ~context
       ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_my_map = ref None in
             Structure.scanSequence i [ "myMap" ] (fun tag _ ->
                 match tag with
@@ -3086,9 +3007,7 @@ module DatetimeOffsets = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DatetimeOffsets" ~service ~context
       ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_datetime = ref None in
             Structure.scanSequence i [ "datetime" ] (fun tag _ ->
                 match tag with
@@ -3209,9 +3128,7 @@ module BodyWithXmlName = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"BodyWithXmlName" ~service ~context
       ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        let i = Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None in
-        Smaws_Lib.Xml.Parse.Read.dtd i;
-        Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs ->
+        Smaws_Lib.Protocols.RestXml.read_body_root ~body (fun i attrs ->
             let r_nested = ref None in
             Structure.scanSequence i [ "nested" ] (fun tag _ ->
                 match tag with

@@ -1689,8 +1689,6 @@ module Operations = struct
   (* ------------------------------------------------------------------ *)
   (* Output / error deserialiser generation (Phase 8: plan §7.2 wiring)    *)
   (* ------------------------------------------------------------------ *)
-  let parse_mod = [ "Smaws_Lib"; "Xml"; "Parse" ]
-  let enter_root_fn = qualified_ident ~names:(parse_mod @ [ "Read"; "enter_root" ])
   let header_value_fn = qualified_ident ~names:(restxml_mod @ [ "header_value" ])
   let prefix_headers_fn = qualified_ident ~names:(restxml_mod @ [ "prefix_headers" ])
 
@@ -1919,9 +1917,15 @@ module Operations = struct
                       scan_inner_expr ~out_name:target ~members:ps.members ~namespace_resolver
                         ~shape_resolver
                   in
+                  let read_body_root =
+                    qualified_ident ~names:(restxml_mod @ [ "read_body_root" ])
+                  in
                   let payload_enter =
-                    B.pexp_apply enter_root_fn
-                      [ (Nolabel, exp_ident "i"); (Nolabel, exp_fun_ident_attrs "i" payload_inner) ]
+                    B.pexp_apply read_body_root
+                      [
+                        (Labelled "body", exp_ident "body");
+                        (Nolabel, exp_fun_ident_attrs "i" payload_inner);
+                      ]
                   in
                   let record =
                     payload_record_expr ~out_name ~pmem ~members
@@ -1931,14 +1935,7 @@ module Operations = struct
                   [%expr
                     fun ~body ~headers ~status ->
                       let payload_val =
-                        if String.equal body "" then None
-                        else (
-                          let i =
-                            Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body
-                              ~encoding:None
-                          in
-                          Smaws_Lib.Xml.Parse.Read.dtd i;
-                          Some [%e payload_enter])
+                        if String.equal body "" then None else Some [%e payload_enter]
                       in
                       [%e record]]
               | Some (Shape.BlobShape _) ->
@@ -1986,13 +1983,12 @@ module Operations = struct
                 let inner =
                   scan_inner_expr ~out_name ~members ~namespace_resolver ~shape_resolver
                 in
+                let read_body_root = qualified_ident ~names:(restxml_mod @ [ "read_body_root" ]) in
                 [%expr
                   fun ~body ~headers ~status ->
-                    let i =
-                      Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
-                    in
-                    Smaws_Lib.Xml.Parse.Read.dtd i;
-                    Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs -> [%e inner])])
+                    [%e
+                      B.pexp_apply read_body_root
+                        [ (Labelled "body", exp_ident "body"); (Nolabel, exp_fun_attrs "i" inner) ]]])
               else (
                 let record =
                   overlay_record_expr ~out_name ~members ~i_in_scope:false ~namespace_resolver
