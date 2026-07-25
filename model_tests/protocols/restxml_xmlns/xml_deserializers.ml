@@ -6,9 +6,7 @@ let unit_of_xml _ = ()
 let nested_with_namespace_of_xml i attrs =
   let r_attr_field = ref None in
   r_attr_field :=
-    Option.map
-      (fun s -> s)
-      (List.find_map (fun ((_, n), v) -> if String.equal n "someName" then Some v else None) attrs);
+    List.find_map (fun ((_, n), v) -> if String.equal n "someName" then Some v else None) attrs;
   Structure.scanSequence i [] (fun tag _ -> match tag with _ -> Read.skip_element i);
   ({ attr_field = ( ! ) r_attr_field } : nested_with_namespace)
 

@@ -20,8 +20,7 @@ module SimpleScalarProperties = struct
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
-      List.concat
-        [ (match request.foo with Some v -> [ ("X-Foo", (fun v -> v) v) ] | None -> []) ]
+      List.concat [ (match request.foo with Some v -> [ ("X-Foo", v) ] | None -> []) ]
     in
     let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
@@ -87,8 +86,7 @@ module SimpleScalarProperties = struct
                       Some (Read.element_value i "DoubleDribble" Primitive.double_of_string ())
                 | _ -> Read.skip_element i);
             ({
-               foo =
-                 Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-Foo");
+               foo = Smaws_Lib.Protocols.RestXml.header_value headers "X-Foo";
                string_value = ( ! ) r_string_value;
                true_boolean_value = ( ! ) r_true_boolean_value;
                false_boolean_value = ( ! ) r_false_boolean_value;
@@ -235,10 +233,7 @@ module XmlAttributes = struct
       let w = Smaws_Lib.Xml.Write.make () in
       Smaws_Lib.Xml.Write.element w "XmlAttributesRequest"
         ~attrs:
-          (List.concat
-             [
-               (match request.attr with Some s -> [ ("test", (fun v -> v) s, None) ] | None -> []);
-             ])
+          (List.concat [ (match request.attr with Some s -> [ ("test", s, None) ] | None -> []) ])
         (fun w -> xml_attributes_request_to_xml w request);
       Some ("application/xml", Smaws_Lib.Xml.Write.to_string w)
     in
@@ -256,11 +251,9 @@ module XmlAttributes = struct
             ({
                foo = ( ! ) r_foo;
                attr =
-                 Option.map
-                   (fun s -> s)
-                   (List.find_map
-                      (fun ((_, n), v) -> if String.equal n "test" then Some v else None)
-                      attrs);
+                 List.find_map
+                   (fun ((_, n), v) -> if String.equal n "test" then Some v else None)
+                   attrs;
              }
               : xml_attributes_response)))
       ~error_deserializer
@@ -292,11 +285,7 @@ module XmlAttributesInMiddle = struct
              Smaws_Lib.Xml.Write.element w "XmlAttributesInMiddlePayloadRequest"
                ~attrs:
                  (List.concat
-                    [
-                      (match v.attr with
-                      | Some s -> [ ("test", (fun v -> v) s, None) ]
-                      | None -> []);
-                    ])
+                    [ (match v.attr with Some s -> [ ("test", s, None) ] | None -> []) ])
                (fun w -> xml_attributes_in_middle_payload_request_to_xml w v);
              ("application/xml", Smaws_Lib.Xml.Write.to_string w))
       | None -> None
@@ -323,11 +312,9 @@ module XmlAttributesInMiddle = struct
                    ({
                       foo = ( ! ) r_foo;
                       attr =
-                        Option.map
-                          (fun s -> s)
-                          (List.find_map
-                             (fun ((_, n), v) -> if String.equal n "test" then Some v else None)
-                             attrs);
+                        List.find_map
+                          (fun ((_, n), v) -> if String.equal n "test" then Some v else None)
+                          attrs;
                       baz = ( ! ) r_baz;
                     }
                      : xml_attributes_in_middle_payload_response))))
@@ -362,11 +349,7 @@ module XmlAttributesOnPayload = struct
              Smaws_Lib.Xml.Write.element w "XmlAttributesPayloadRequest"
                ~attrs:
                  (List.concat
-                    [
-                      (match v.attr with
-                      | Some s -> [ ("test", (fun v -> v) s, None) ]
-                      | None -> []);
-                    ])
+                    [ (match v.attr with Some s -> [ ("test", s, None) ] | None -> []) ])
                (fun w -> xml_attributes_payload_request_to_xml w v);
              ("application/xml", Smaws_Lib.Xml.Write.to_string w))
       | None -> None
@@ -391,11 +374,9 @@ module XmlAttributesOnPayload = struct
                    ({
                       foo = ( ! ) r_foo;
                       attr =
-                        Option.map
-                          (fun s -> s)
-                          (List.find_map
-                             (fun ((_, n), v) -> if String.equal n "test" then Some v else None)
-                             attrs);
+                        List.find_map
+                          (fun ((_, n), v) -> if String.equal n "test" then Some v else None)
+                          attrs;
                     }
                      : xml_attributes_payload_response))))
         in
@@ -1507,16 +1488,11 @@ module QueryPrecedence = struct
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/Precedence" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
-      List.concat
-        [ (match request.foo with Some v -> [ ("bar", [ (fun v -> v) v ]) ] | None -> []) ]
+      List.concat [ (match request.foo with Some v -> [ ("bar", [ v ]) ] | None -> []) ]
     in
     let map_params =
       List.concat
-        [
-          (match request.baz with
-          | Some v -> List.map (fun (k, v) -> (k, [ (fun v -> v) v ])) v
-          | None -> []);
-        ]
+        [ (match request.baz with Some v -> List.map (fun (k, v) -> (k, [ v ])) v | None -> []) ]
     in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers = [] in
@@ -1540,16 +1516,11 @@ module QueryParamsAsStringListMap = struct
     let path = Smaws_Lib.Http_bindings.substitute_labels ~template:"/StringListMap" ~labels:[] in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
-      List.concat
-        [ (match request.qux with Some v -> [ ("corge", [ (fun v -> v) v ]) ] | None -> []) ]
+      List.concat [ (match request.qux with Some v -> [ ("corge", [ v ]) ] | None -> []) ]
     in
     let map_params =
       List.concat
-        [
-          (match request.foo with
-          | Some v -> List.map (fun (k, vs) -> (k, List.map (fun v -> v) vs)) v
-          | None -> []);
-        ]
+        [ (match request.foo with Some v -> List.map (fun (k, vs) -> (k, vs)) v | None -> []) ]
     in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers = [] in
@@ -1582,8 +1553,7 @@ module QueryIdempotencyTokenAutoFill = struct
       }
     in
     let named_params =
-      List.concat
-        [ (match request.token with Some v -> [ ("token", [ (fun v -> v) v ]) ] | None -> []) ]
+      List.concat [ (match request.token with Some v -> [ ("token", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -1615,11 +1585,7 @@ module PutWithContentEncoding = struct
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
-        [
-          (match request.encoding with
-          | Some v -> [ ("Content-Encoding", (fun v -> v) v) ]
-          | None -> []);
-        ]
+        [ (match request.encoding with Some v -> [ ("Content-Encoding", v) ] | None -> []) ]
     in
     let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
@@ -1651,10 +1617,8 @@ module OmitsNullSerializesEmptyString = struct
     let named_params =
       List.concat
         [
-          (match request.null_value with Some v -> [ ("Null", [ (fun v -> v) v ]) ] | None -> []);
-          (match request.empty_string with
-          | Some v -> [ ("Empty", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.null_value with Some v -> [ ("Null", [ v ]) ] | None -> []);
+          (match request.empty_string with Some v -> [ ("Empty", [ v ]) ] | None -> []);
         ]
     in
     let map_params = [] in
@@ -1687,11 +1651,9 @@ module NullAndEmptyHeadersServer = struct
     let named_headers =
       List.concat
         [
-          (match request.a with Some v -> [ ("X-A", (fun v -> v) v) ] | None -> []);
-          (match request.b with Some v -> [ ("X-B", (fun v -> v) v) ] | None -> []);
-          (match request.c with
-          | Some v -> [ ("X-C", String.concat ", " (List.map (fun v -> v) v)) ]
-          | None -> []);
+          (match request.a with Some v -> [ ("X-A", v) ] | None -> []);
+          (match request.b with Some v -> [ ("X-B", v) ] | None -> []);
+          (match request.c with Some v -> [ ("X-C", String.concat ", " v) ] | None -> []);
         ]
     in
     let prefix_headers = [] in
@@ -1701,12 +1663,11 @@ module NullAndEmptyHeadersServer = struct
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
-           a = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-A");
-           b = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-B");
+           a = Smaws_Lib.Protocols.RestXml.header_value headers "X-A";
+           b = Smaws_Lib.Protocols.RestXml.header_value headers "X-B";
            c =
              Option.map
-               (fun s ->
-                 String.split_on_char ',' s |> List.map String.trim |> List.map (fun s -> s))
+               (fun s -> String.split_on_char ',' s |> List.map String.trim)
                (Smaws_Lib.Protocols.RestXml.header_value headers "X-C");
          }
           : null_and_empty_headers_i_o))
@@ -1731,11 +1692,9 @@ module NullAndEmptyHeadersClient = struct
     let named_headers =
       List.concat
         [
-          (match request.a with Some v -> [ ("X-A", (fun v -> v) v) ] | None -> []);
-          (match request.b with Some v -> [ ("X-B", (fun v -> v) v) ] | None -> []);
-          (match request.c with
-          | Some v -> [ ("X-C", String.concat ", " (List.map (fun v -> v) v)) ]
-          | None -> []);
+          (match request.a with Some v -> [ ("X-A", v) ] | None -> []);
+          (match request.b with Some v -> [ ("X-B", v) ] | None -> []);
+          (match request.c with Some v -> [ ("X-C", String.concat ", " v) ] | None -> []);
         ]
     in
     let prefix_headers = [] in
@@ -1745,12 +1704,11 @@ module NullAndEmptyHeadersClient = struct
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
-           a = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-A");
-           b = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-B");
+           a = Smaws_Lib.Protocols.RestXml.header_value headers "X-A";
+           b = Smaws_Lib.Protocols.RestXml.header_value headers "X-B";
            c =
              Option.map
-               (fun s ->
-                 String.split_on_char ',' s |> List.map String.trim |> List.map (fun s -> s))
+               (fun s -> String.split_on_char ',' s |> List.map String.trim)
                (Smaws_Lib.Protocols.RestXml.header_value headers "X-C");
          }
           : null_and_empty_headers_i_o))
@@ -1950,9 +1908,7 @@ module InputAndOutputWithHeaders = struct
     let named_headers =
       List.concat
         [
-          (match request.header_string with
-          | Some v -> [ ("X-String", (fun v -> v) v) ]
-          | None -> []);
+          (match request.header_string with Some v -> [ ("X-String", v) ] | None -> []);
           (match request.header_byte with
           | Some v -> [ ("X-Byte", (fun v -> string_of_int v) v) ]
           | None -> []);
@@ -1986,10 +1942,10 @@ module InputAndOutputWithHeaders = struct
           | Some v -> [ ("X-Boolean2", (fun v -> string_of_bool v) v) ]
           | None -> []);
           (match request.header_string_list with
-          | Some v -> [ ("X-StringList", String.concat ", " (List.map (fun v -> v) v)) ]
+          | Some v -> [ ("X-StringList", String.concat ", " v) ]
           | None -> []);
           (match request.header_string_set with
-          | Some v -> [ ("X-StringSet", String.concat ", " (List.map (fun v -> v) v)) ]
+          | Some v -> [ ("X-StringSet", String.concat ", " v) ]
           | None -> []);
           (match request.header_integer_list with
           | Some v ->
@@ -2049,8 +2005,7 @@ module InputAndOutputWithHeaders = struct
       ~method_:`POST ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
-           header_string =
-             Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-String");
+           header_string = Smaws_Lib.Protocols.RestXml.header_value headers "X-String";
            header_byte =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.int_of_string s)
@@ -2085,13 +2040,11 @@ module InputAndOutputWithHeaders = struct
                (Smaws_Lib.Protocols.RestXml.header_value headers "X-Boolean2");
            header_string_list =
              Option.map
-               (fun s ->
-                 String.split_on_char ',' s |> List.map String.trim |> List.map (fun s -> s))
+               (fun s -> String.split_on_char ',' s |> List.map String.trim)
                (Smaws_Lib.Protocols.RestXml.header_value headers "X-StringList");
            header_string_set =
              Option.map
-               (fun s ->
-                 String.split_on_char ',' s |> List.map String.trim |> List.map (fun s -> s))
+               (fun s -> String.split_on_char ',' s |> List.map String.trim)
                (Smaws_Lib.Protocols.RestXml.header_value headers "X-StringSet");
            header_integer_list =
              Option.map
@@ -2296,7 +2249,7 @@ module HttpRequestWithLabels = struct
           "/HttpRequestWithLabels/{string}/{short}/{integer}/{long}/{float}/{double}/{boolean}/{timestamp}"
         ~labels:
           [
-            ("string", (fun v -> v) request.string_, false);
+            ("string", request.string_, false);
             ("short", (fun v -> string_of_int v) request.short, false);
             ("integer", (fun v -> string_of_int v) request.integer, false);
             ("long", (fun v -> Smaws_Lib.CoreTypes.Int64.to_string v) request.long, false);
@@ -2340,8 +2293,7 @@ module HttpRequestWithGreedyLabelInPath = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/HttpRequestWithGreedyLabelInPath/foo/{foo}/baz/{baz+}"
-        ~labels:
-          [ ("foo", (fun v -> v) request.foo, false); ("baz", (fun v -> v) request.baz, true) ]
+        ~labels:[ ("foo", request.foo, false); ("baz", request.baz, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2409,16 +2361,10 @@ module HttpPrefixHeaders = struct
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
-      List.concat
-        [ (match request.foo with Some v -> [ ("x-foo", (fun v -> v) v) ] | None -> []) ]
+      List.concat [ (match request.foo with Some v -> [ ("x-foo", v) ] | None -> []) ]
     in
     let prefix_headers =
-      List.concat
-        [
-          (match request.foo_map with
-          | Some v -> [ ("x-foo-", List.map (fun (k, v) -> (k, (fun v -> v) v)) v) ]
-          | None -> []);
-        ]
+      List.concat [ (match request.foo_map with Some v -> [ ("x-foo-", v) ] | None -> []) ]
     in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
@@ -2426,11 +2372,8 @@ module HttpPrefixHeaders = struct
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
-           foo = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "x-foo");
-           foo_map =
-             Some
-               (Smaws_Lib.Protocols.RestXml.prefix_headers ~prefix:"x-foo-" headers
-               |> List.map (fun (k, v) -> (k, (fun s -> s) v)));
+           foo = Smaws_Lib.Protocols.RestXml.header_value headers "x-foo";
+           foo_map = Some (Smaws_Lib.Protocols.RestXml.prefix_headers ~prefix:"x-foo-" headers);
          }
           : http_prefix_headers_input_output))
       ~error_deserializer
@@ -2754,8 +2697,7 @@ module HttpPayloadTraitsWithMediaType = struct
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
-      List.concat
-        [ (match request.foo with Some v -> [ ("X-Foo", (fun v -> v) v) ] | None -> []) ]
+      List.concat [ (match request.foo with Some v -> [ ("X-Foo", v) ] | None -> []) ]
     in
     let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
@@ -2768,7 +2710,7 @@ module HttpPayloadTraitsWithMediaType = struct
         ({
            blob =
              (if String.equal body "" then None else Some (Smaws_Lib.CoreTypes.Blob.of_string body));
-           foo = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-Foo");
+           foo = Smaws_Lib.Protocols.RestXml.header_value headers "X-Foo";
          }
           : http_payload_traits_with_media_type_input_output))
       ~error_deserializer
@@ -2790,8 +2732,7 @@ module HttpPayloadTraits = struct
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
-      List.concat
-        [ (match request.foo with Some v -> [ ("X-Foo", (fun v -> v) v) ] | None -> []) ]
+      List.concat [ (match request.foo with Some v -> [ ("X-Foo", v) ] | None -> []) ]
     in
     let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
@@ -2806,7 +2747,7 @@ module HttpPayloadTraits = struct
         ({
            blob =
              (if String.equal body "" then None else Some (Smaws_Lib.CoreTypes.Blob.of_string body));
-           foo = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-Foo");
+           foo = Smaws_Lib.Protocols.RestXml.header_value headers "X-Foo";
          }
           : http_payload_traits_input_output))
       ~error_deserializer
@@ -2866,20 +2807,10 @@ module HttpEmptyPrefixHeaders = struct
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
-      List.concat
-        [
-          (match request.specific_header with
-          | Some v -> [ ("hello", (fun v -> v) v) ]
-          | None -> []);
-        ]
+      List.concat [ (match request.specific_header with Some v -> [ ("hello", v) ] | None -> []) ]
     in
     let prefix_headers =
-      List.concat
-        [
-          (match request.prefix_headers with
-          | Some v -> [ ("", List.map (fun (k, v) -> (k, (fun v -> v) v)) v) ]
-          | None -> []);
-        ]
+      List.concat [ (match request.prefix_headers with Some v -> [ ("", v) ] | None -> []) ]
     in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
@@ -2887,12 +2818,8 @@ module HttpEmptyPrefixHeaders = struct
       ~method_:`GET ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
-           prefix_headers =
-             Some
-               (Smaws_Lib.Protocols.RestXml.prefix_headers ~prefix:"" headers
-               |> List.map (fun (k, v) -> (k, (fun s -> s) v)));
-           specific_header =
-             Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "hello");
+           prefix_headers = Some (Smaws_Lib.Protocols.RestXml.prefix_headers ~prefix:"" headers);
+           specific_header = Smaws_Lib.Protocols.RestXml.header_value headers "hello";
          }
           : http_empty_prefix_headers_output))
       ~error_deserializer
@@ -2923,10 +2850,7 @@ module GreetingWithErrors = struct
                              ())
                   | _ -> Read.skip_element i);
               ({
-                 header =
-                   Option.map
-                     (fun s -> s)
-                     (Smaws_Lib.Protocols.RestXml.header_value headers "X-Header");
+                 header = Smaws_Lib.Protocols.RestXml.header_value headers "X-Header";
                  top_level = ( ! ) r_top_level;
                  nested = ( ! ) r_nested;
                }
@@ -2959,10 +2883,7 @@ module GreetingWithErrors = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"GreetingWithErrors" ~service ~context
       ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:false
       ~output_deserializer:(fun ~body ~headers ~status ->
-        ({
-           greeting =
-             Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-Greeting");
-         }
+        ({ greeting = Smaws_Lib.Protocols.RestXml.header_value headers "X-Greeting" }
           : greeting_with_errors_output))
       ~error_deserializer
 end
@@ -3160,7 +3081,7 @@ module EndpointWithHostLabelOperation = struct
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let uri =
       Smaws_Lib.Http_bindings.substitute_host_prefix ~host_prefix:"foo.{label}."
-        ~labels:[ ("label", (fun v -> v) request.label) ]
+        ~labels:[ ("label", request.label) ]
         uri
     in
     let named_params = [] in
@@ -3196,7 +3117,7 @@ module EndpointWithHostLabelHeaderOperation = struct
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let uri =
       Smaws_Lib.Http_bindings.substitute_host_prefix ~host_prefix:"{accountId}."
-        ~labels:[ ("accountId", (fun v -> v) request.account_id) ]
+        ~labels:[ ("accountId", request.account_id) ]
         uri
     in
     let named_params = [] in
@@ -3206,7 +3127,7 @@ module EndpointWithHostLabelHeaderOperation = struct
       List.concat
         [
           (let v = request.account_id in
-           [ ("X-Amz-Account-Id", (fun v -> v) v) ]);
+           [ ("X-Amz-Account-Id", v) ]);
         ]
     in
     let prefix_headers = [] in
@@ -3347,7 +3268,7 @@ module ConstantQueryString = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/ConstantQueryString/{hello}?foo=bar&hello"
-        ~labels:[ ("hello", (fun v -> v) request.hello, false) ]
+        ~labels:[ ("hello", request.hello, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3379,10 +3300,8 @@ module ConstantAndVariableQueryString = struct
     let named_params =
       List.concat
         [
-          (match request.baz with Some v -> [ ("baz", [ (fun v -> v) v ]) ] | None -> []);
-          (match request.maybe_set with
-          | Some v -> [ ("maybeSet", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.baz with Some v -> [ ("baz", [ v ]) ] | None -> []);
+          (match request.maybe_set with Some v -> [ ("maybeSet", [ v ]) ] | None -> []);
         ]
     in
     let map_params = [] in
@@ -3454,15 +3373,9 @@ module AllQueryStringTypes = struct
     let named_params =
       List.concat
         [
-          (match request.query_string with
-          | Some v -> [ ("String", [ (fun v -> v) v ]) ]
-          | None -> []);
-          (match request.query_string_list with
-          | Some v -> [ ("StringList", List.map (fun v -> v) v) ]
-          | None -> []);
-          (match request.query_string_set with
-          | Some v -> [ ("StringSet", List.map (fun v -> v) v) ]
-          | None -> []);
+          (match request.query_string with Some v -> [ ("String", [ v ]) ] | None -> []);
+          (match request.query_string_list with Some v -> [ ("StringList", v) ] | None -> []);
+          (match request.query_string_set with Some v -> [ ("StringSet", v) ] | None -> []);
           (match request.query_byte with
           | Some v -> [ ("Byte", [ (fun v -> string_of_int v) v ]) ]
           | None -> []);
@@ -3591,7 +3504,7 @@ module AllQueryStringTypes = struct
       List.concat
         [
           (match request.query_params_map_of_strings with
-          | Some v -> List.map (fun (k, v) -> (k, [ (fun v -> v) v ])) v
+          | Some v -> List.map (fun (k, v) -> (k, [ v ])) v
           | None -> []);
         ]
     in

@@ -2698,10 +2698,7 @@ let xml_blobs_request_of_xml i attrs =
 let xml_attributes_payload_response_of_xml i attrs =
   let r_foo = ref None in
   let r_attr = ref None in
-  r_attr :=
-    Option.map
-      (fun s -> s)
-      (List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs);
+  r_attr := List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs;
   Structure.scanSequence i [ "foo" ] (fun tag _ ->
       match tag with
       | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
@@ -2724,10 +2721,7 @@ let xml_attributes_on_payload_response_of_xml i attrs =
 let xml_attributes_payload_request_of_xml i attrs =
   let r_foo = ref None in
   let r_attr = ref None in
-  r_attr :=
-    Option.map
-      (fun s -> s)
-      (List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs);
+  r_attr := List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs;
   Structure.scanSequence i [ "foo" ] (fun tag _ ->
       match tag with
       | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
@@ -2751,10 +2745,7 @@ let xml_attributes_in_middle_payload_response_of_xml i attrs =
   let r_foo = ref None in
   let r_attr = ref None in
   let r_baz = ref None in
-  r_attr :=
-    Option.map
-      (fun s -> s)
-      (List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs);
+  r_attr := List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs;
   Structure.scanSequence i [ "foo"; "baz" ] (fun tag _ ->
       match tag with
       | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
@@ -2780,10 +2771,7 @@ let xml_attributes_in_middle_payload_request_of_xml i attrs =
   let r_foo = ref None in
   let r_attr = ref None in
   let r_baz = ref None in
-  r_attr :=
-    Option.map
-      (fun s -> s)
-      (List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs);
+  r_attr := List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs;
   Structure.scanSequence i [ "foo"; "baz" ] (fun tag _ ->
       match tag with
       | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
@@ -2808,10 +2796,7 @@ let xml_attributes_in_middle_request_of_xml i attrs =
 let xml_attributes_response_of_xml i attrs =
   let r_foo = ref None in
   let r_attr = ref None in
-  r_attr :=
-    Option.map
-      (fun s -> s)
-      (List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs);
+  r_attr := List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs;
   Structure.scanSequence i [ "foo" ] (fun tag _ ->
       match tag with
       | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
@@ -2821,10 +2806,7 @@ let xml_attributes_response_of_xml i attrs =
 let xml_attributes_request_of_xml i attrs =
   let r_foo = ref None in
   let r_attr = ref None in
-  r_attr :=
-    Option.map
-      (fun s -> s)
-      (List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs);
+  r_attr := List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs;
   Structure.scanSequence i [ "foo" ] (fun tag _ ->
       match tag with
       | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
@@ -3078,10 +3060,7 @@ let simple_scalar_properties_input_output_of_xml i attrs =
 let xml_attributes_input_output_of_xml i attrs =
   let r_foo = ref None in
   let r_attr = ref None in
-  r_attr :=
-    Option.map
-      (fun s -> s)
-      (List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs);
+  r_attr := List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs;
   Structure.scanSequence i [ "foo" ] (fun tag _ ->
       match tag with
       | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
@@ -3092,10 +3071,7 @@ let xml_attributes_middle_member_input_output_of_xml i attrs =
   let r_foo = ref None in
   let r_attr = ref None in
   let r_baz = ref None in
-  r_attr :=
-    Option.map
-      (fun s -> s)
-      (List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs);
+  r_attr := List.find_map (fun ((_, n), v) -> if String.equal n "test" then Some v else None) attrs;
   Structure.scanSequence i [ "foo"; "baz" ] (fun tag _ ->
       match tag with
       | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())

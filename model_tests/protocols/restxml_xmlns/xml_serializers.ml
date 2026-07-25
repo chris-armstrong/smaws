@@ -42,7 +42,7 @@ let simple_scalar_properties_response_to_xml w (x : simple_scalar_properties_res
               :: List.concat
                    [
                      (match v.attr_field with
-                     | Some s -> [ ("xsi:someName", (fun v -> v) s, None) ]
+                     | Some s -> [ ("xsi:someName", s, None) ]
                      | None -> []);
                    ])
             (fun w -> nested_with_namespace_to_xml w v));
@@ -92,7 +92,7 @@ let simple_scalar_properties_request_to_xml w (x : simple_scalar_properties_requ
               :: List.concat
                    [
                      (match v.attr_field with
-                     | Some s -> [ ("xsi:someName", (fun v -> v) s, None) ]
+                     | Some s -> [ ("xsi:someName", s, None) ]
                      | None -> []);
                    ])
             (fun w -> nested_with_namespace_to_xml w v));
@@ -142,7 +142,7 @@ let simple_scalar_properties_input_output_to_xml w (x : simple_scalar_properties
               :: List.concat
                    [
                      (match v.attr_field with
-                     | Some s -> [ ("xsi:someName", (fun v -> v) s, None) ]
+                     | Some s -> [ ("xsi:someName", s, None) ]
                      | None -> []);
                    ])
             (fun w -> nested_with_namespace_to_xml w v));

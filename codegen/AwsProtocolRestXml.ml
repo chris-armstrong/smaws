@@ -82,6 +82,33 @@ module Scalar = struct
      XML-body attribute/label/query members, [http-date] for headers. *)
   type binding = [ `Label | `Query | `Header | `Attribute ]
 
+  (* How a scalar value maps to/from its string form.
+     [Identity] -- the value is already a string ([smithy.api#String] / a
+     [String] shape): codegen emits the value directly with no conversion,
+     avoiding the throwaway [(fun v -> v) value] / [Option.map (fun s -> s) x]
+     wrappers. [Convert e] is a [fun x -> ...] lambda to apply at the call
+     site. [None] (outside this type, as the [_lambda] return value) means the
+     target is not a scalar and the caller should skip emission entirely. *)
+  type conv = Identity | Convert of Ppxlib.expression
+
+  (* [apply conv value]: bare [value] for [Identity], [conv value] for
+     [Convert]. Replaces [B.pexp_apply conv [value]] at scalar-serialise call
+     sites. *)
+  let apply conv value =
+    match conv with Identity -> value | Convert e -> B.pexp_apply e [ (Nolabel, value) ]
+
+  (* [list_map conv v]: [v] for [Identity] (no point mapping the identity),
+     [List.map conv v] for [Convert]. *)
+  let list_map conv v =
+    match conv with
+    | Identity -> v
+    | Convert e -> B.pexp_apply (exp_ident "List.map") [ (Nolabel, e); (Nolabel, v) ]
+
+  (* [option_map conv x]: [x] for [Identity] (Option.map identity is identity),
+     [Option.map conv x] for [Convert]. *)
+  let option_map conv x =
+    match conv with Identity -> x | Convert e -> [%expr Option.map [%e e] [%e x]]
+
   let timestamp_default_of_binding : binding -> Trait.timestampFormat = function
     | `Label | `Query | `Attribute -> Trait.TimestampFormatDateTime
     | `Header -> Trait.TimestampFormatHttpDate
@@ -186,12 +213,14 @@ module Scalar = struct
 
   (* [fun v -> string] for a scalar/enum value, or [None] for a complex
      (structure/union/list/map) target. Resolves named shapes (e.g. a
-     [@timestampFormat] timestamp shape) as well as [smithy.api#*] primitives. *)
+     [@timestampFormat] timestamp shape) as well as [smithy.api#*] primitives.
+     [String] returns [Some Identity] so call sites emit the bare value. *)
   let to_string_lambda ~namespace_resolver ~shape_resolver ~(member_traits : Trait.t list option)
       ~(shape_traits : Trait.t list option) ~binding target =
     let to_str helper =
-      exp_fun_untyped "v"
-        (qualified_apply ~names:(serialize_mod @ [ helper ]) [ (Nolabel, exp_ident "v") ])
+      Convert
+        (exp_fun_untyped "v"
+           (qualified_apply ~names:(serialize_mod @ [ helper ]) [ (Nolabel, exp_ident "v") ]))
     in
     let timestamp_lambda ts =
       let fmt =
@@ -202,45 +231,51 @@ module Scalar = struct
       to_str (timestamp_to_string_helper fmt)
     in
     match Shape_resolver.find_shape_by_name ~name:target shape_resolver with
-    | Some (Shape.StringShape _) -> Some (exp_fun_untyped "v" (exp_ident "v"))
+    | Some (Shape.StringShape _) -> Some Identity
     | Some (Shape.IntegerShape _ | Shape.ByteShape _ | Shape.ShortShape _) ->
-        Some (exp_fun_untyped "v" [%expr string_of_int v])
+        Some (Convert (exp_fun_untyped "v" [%expr string_of_int v]))
     | Some (Shape.LongShape _) ->
         Some
-          (exp_fun_untyped "v"
-             (qualified_apply
-                ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ]
-                [ (Nolabel, exp_ident "v") ]))
-    | Some (Shape.BooleanShape _) -> Some (exp_fun_untyped "v" [%expr string_of_bool v])
+          (Convert
+             (exp_fun_untyped "v"
+                (qualified_apply
+                   ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ]
+                   [ (Nolabel, exp_ident "v") ])))
+    | Some (Shape.BooleanShape _) -> Some (Convert (exp_fun_untyped "v" [%expr string_of_bool v]))
     | Some (Shape.FloatShape _ | Shape.DoubleShape _) -> Some (to_str "float_field_to_string")
     | Some (Shape.TimestampShape { traits }) -> Some (timestamp_lambda traits)
     | Some (Shape.BlobShape _) ->
-        Some (exp_fun_untyped "v" [%expr Base64.encode_exn (Bytes.to_string v)])
-    | Some (Shape.EnumShape _) -> enum_to_string_lambda ~namespace_resolver ~shape_resolver target
+        Some (Convert (exp_fun_untyped "v" [%expr Base64.encode_exn (Bytes.to_string v)]))
+    | Some (Shape.EnumShape _) ->
+        enum_to_string_lambda ~namespace_resolver ~shape_resolver target
+        |> Option.map ~f:(fun e -> Convert e)
     | _ -> (
         match target with
-        | "smithy.api#String" -> Some (exp_fun_untyped "v" (exp_ident "v"))
+        | "smithy.api#String" -> Some Identity
         | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" ->
-            Some (exp_fun_untyped "v" [%expr string_of_int v])
+            Some (Convert (exp_fun_untyped "v" [%expr string_of_int v]))
         | "smithy.api#Long" ->
             Some
-              (exp_fun_untyped "v"
-                 (qualified_apply
-                    ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ]
-                    [ (Nolabel, exp_ident "v") ]))
-        | "smithy.api#Boolean" -> Some (exp_fun_untyped "v" [%expr string_of_bool v])
+              (Convert
+                 (exp_fun_untyped "v"
+                    (qualified_apply
+                       ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ]
+                       [ (Nolabel, exp_ident "v") ])))
+        | "smithy.api#Boolean" -> Some (Convert (exp_fun_untyped "v" [%expr string_of_bool v]))
         | "smithy.api#Float" | "smithy.api#Double" -> Some (to_str "float_field_to_string")
         | "smithy.api#Timestamp" -> Some (timestamp_lambda shape_traits)
         | "smithy.api#Blob" ->
-            Some (exp_fun_untyped "v" [%expr Base64.encode_exn (Bytes.to_string v)])
+            Some (Convert (exp_fun_untyped "v" [%expr Base64.encode_exn (Bytes.to_string v)]))
         | _ -> None)
 
-  (* [fun s -> value] for a scalar/enum value, or [None] for a complex target. *)
+  (* [fun s -> value] for a scalar/enum value, or [None] for a complex target.
+     [String] returns [Some Identity] so call sites emit the bare value. *)
   let of_string_lambda ~namespace_resolver ~shape_resolver ~(member_traits : Trait.t list option)
       ~(shape_traits : Trait.t list option) ~binding target =
     let of_str helper =
-      exp_fun_untyped "s"
-        (qualified_apply ~names:(parse_primitive_mod @ [ helper ]) [ (Nolabel, exp_ident "s") ])
+      Convert
+        (exp_fun_untyped "s"
+           (qualified_apply ~names:(parse_primitive_mod @ [ helper ]) [ (Nolabel, exp_ident "s") ]))
     in
     let timestamp_lambda ts =
       let fmt =
@@ -251,7 +286,7 @@ module Scalar = struct
       of_str (timestamp_of_string_helper fmt)
     in
     match Shape_resolver.find_shape_by_name ~name:target shape_resolver with
-    | Some (Shape.StringShape _) -> Some (exp_fun_untyped "s" (exp_ident "s"))
+    | Some (Shape.StringShape _) -> Some Identity
     | Some (Shape.IntegerShape _ | Shape.ByteShape _ | Shape.ShortShape _) ->
         Some (of_str "int_of_string")
     | Some (Shape.LongShape _) -> Some (of_str "long_of_string")
@@ -262,10 +297,12 @@ module Scalar = struct
     | Some (Shape.DoubleShape _) -> Some (of_str "double_of_string")
     | Some (Shape.BlobShape _) -> Some (of_str "blob_of_string")
     | Some (Shape.TimestampShape { traits }) -> Some (timestamp_lambda traits)
-    | Some (Shape.EnumShape _) -> enum_of_string_lambda ~namespace_resolver ~shape_resolver target
+    | Some (Shape.EnumShape _) ->
+        enum_of_string_lambda ~namespace_resolver ~shape_resolver target
+        |> Option.map ~f:(fun e -> Convert e)
     | _ -> (
         match target with
-        | "smithy.api#String" -> Some (exp_fun_untyped "s" (exp_ident "s"))
+        | "smithy.api#String" -> Some Identity
         | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" ->
             Some (of_str "int_of_string")
         | "smithy.api#Long" -> Some (of_str "long_of_string")
@@ -419,14 +456,12 @@ module Serialiser = struct
     let conv =
       Scalar.to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
         ~shape_traits ~binding:`Attribute mem.target
-      |> Option.value ~default:(exp_fun_untyped "v" (exp_ident "v"))
+      |> Option.value ~default:Scalar.Identity
     in
     let triple v_expr =
       B.pexp_tuple
         [
-          const_str attr_name;
-          B.pexp_apply conv [ (Nolabel, v_expr) ];
-          B.pexp_construct (lident_noloc "None") None;
+          const_str attr_name; Scalar.apply conv v_expr; B.pexp_construct (lident_noloc "None") None;
         ]
     in
     if is_required mem.traits then B.elist [ triple access ]
@@ -1219,7 +1254,7 @@ module Deserialiser = struct
     let conv =
       Scalar.of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
         ~shape_traits ~binding:`Attribute mem.target
-      |> Option.value ~default:(exp_ident "Fun.id")
+      |> Option.value ~default:Scalar.Identity
     in
     let find =
       [%expr
@@ -1228,7 +1263,7 @@ module Deserialiser = struct
             if String.equal n [%e const_str (attr_local_name field_name)] then Some v else None)
           attrs]
     in
-    let rhs = [%expr Option.map [%e conv] [%e find]] in
+    let rhs = Scalar.option_map conv find in
     B.pexp_apply
       (B.pexp_ident (Location.mknoloc (Longident.Lident ":=")))
       [
@@ -1688,7 +1723,7 @@ module Operations = struct
         Option.value
           (Scalar.of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
              ~shape_traits:None ~binding:`Attribute mem.target)
-          ~default:(exp_ident "Fun.id")
+          ~default:Scalar.Identity
       in
       let find =
         [%expr
@@ -1697,7 +1732,7 @@ module Operations = struct
               if String.equal n [%e const_str (attr_local_name field_name)] then Some v else None)
             [%e attrs_var]]
       in
-      [%expr Option.map [%e conv] [%e find]])
+      Scalar.option_map conv find)
     else if Option.is_some (http_header_name mem) then (
       let name = Option.value_exn (http_header_name mem) in
       match list_item_info ~shape_resolver mem.target with
@@ -1706,20 +1741,24 @@ module Operations = struct
             Option.value
               (Scalar.of_string_lambda ~namespace_resolver ~shape_resolver
                  ~member_traits:item_member_traits ~shape_traits:None ~binding:`Header item_target)
-              ~default:(exp_ident "Fun.id")
+              ~default:Scalar.Identity
           in
-          [%expr
-            Option.map
-              (fun s -> String.split_on_char ',' s |> List.map String.trim |> List.map [%e conv])
-              ([%e header_value_fn] [%e headers_var] [%e const_str name])]
+          let mapper =
+            exp_fun_untyped "s"
+              (match conv with
+              | Scalar.Identity -> [%expr String.split_on_char ',' s |> List.map String.trim]
+              | Scalar.Convert e ->
+                  [%expr String.split_on_char ',' s |> List.map String.trim |> List.map [%e e]])
+          in
+          [%expr Option.map [%e mapper] ([%e header_value_fn] [%e headers_var] [%e const_str name])]
       | None ->
           let conv =
             Option.value
               (Scalar.of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
                  ~shape_traits:None ~binding:`Header mem.target)
-              ~default:(exp_ident "Fun.id")
+              ~default:Scalar.Identity
           in
-          [%expr Option.map [%e conv] ([%e header_value_fn] [%e headers_var] [%e const_str name])])
+          Scalar.option_map conv [%expr [%e header_value_fn] [%e headers_var] [%e const_str name]])
     else if Option.is_some (http_prefix_headers mem) then (
       let prefix = Option.value_exn (http_prefix_headers mem) in
       let map_value_target =
@@ -1731,12 +1770,16 @@ module Operations = struct
         Option.value
           (Scalar.of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:None
              ~shape_traits:None ~binding:`Header map_value_target)
-          ~default:(exp_ident "Fun.id")
+          ~default:Scalar.Identity
       in
-      [%expr
-        Some
-          ([%e prefix_headers_fn] ~prefix:[%e const_str prefix] [%e headers_var]
-          |> List.map (fun (k, v) -> (k, [%e conv] v)))])
+      match conv with
+      | Scalar.Identity ->
+          [%expr Some ([%e prefix_headers_fn] ~prefix:[%e const_str prefix] [%e headers_var])]
+      | Scalar.Convert e ->
+          [%expr
+            Some
+              ([%e prefix_headers_fn] ~prefix:[%e const_str prefix] [%e headers_var]
+              |> List.map (fun (k, v) -> (k, [%e e] v)))])
     else if is_http_response_code mem then [%expr Some [%e status_var]]
     else [%expr None]
 
@@ -2116,8 +2159,7 @@ module Operations = struct
     | None -> B.elist []
     | Some conv ->
         let entry_fn v =
-          B.elist
-            [ B.pexp_tuple [ const_str name; B.elist [ B.pexp_apply conv [ (Nolabel, v) ] ] ] ]
+          B.elist [ B.pexp_tuple [ const_str name; B.elist [ Scalar.apply conv v ] ] ]
         in
         field_binding_expr mem entry_fn
 
@@ -2129,18 +2171,9 @@ module Operations = struct
         let conv =
           Scalar.to_string_lambda ~namespace_resolver ~shape_resolver
             ~member_traits:item_member_traits ~shape_traits:None ~binding:`Query item_target
-          |> Option.value ~default:(exp_ident "Fun.id")
+          |> Option.value ~default:Scalar.Identity
         in
-        let entry_fn v =
-          B.elist
-            [
-              B.pexp_tuple
-                [
-                  const_str name;
-                  B.pexp_apply (exp_ident "List.map") [ (Nolabel, conv); (Nolabel, v) ];
-                ];
-            ]
-        in
+        let entry_fn v = B.elist [ B.pexp_tuple [ const_str name; Scalar.list_map conv v ] ] in
         field_binding_expr mem entry_fn
     | None -> B.elist []
 
@@ -2160,18 +2193,11 @@ module Operations = struct
         let conv =
           Scalar.to_string_lambda ~namespace_resolver ~shape_resolver
             ~member_traits:ms.mapValue.traits ~shape_traits:None ~binding:`Query item_target
-          |> Option.value ~default:(exp_ident "Fun.id")
+          |> Option.value ~default:Scalar.Identity
         in
         let entry_expr =
-          if is_list then
-            B.pexp_tuple
-              [
-                exp_ident "k";
-                B.pexp_apply (exp_ident "List.map") [ (Nolabel, conv); (Nolabel, exp_ident "vs") ];
-              ]
-          else
-            B.pexp_tuple
-              [ exp_ident "k"; B.elist [ B.pexp_apply conv [ (Nolabel, exp_ident "v") ] ] ]
+          if is_list then B.pexp_tuple [ exp_ident "k"; Scalar.list_map conv (exp_ident "vs") ]
+          else B.pexp_tuple [ exp_ident "k"; B.elist [ Scalar.apply conv (exp_ident "v") ] ]
         in
         let pat =
           if is_list then
@@ -2192,9 +2218,7 @@ module Operations = struct
     with
     | None -> B.elist []
     | Some conv ->
-        let entry_fn v =
-          B.elist [ B.pexp_tuple [ const_str name; B.pexp_apply conv [ (Nolabel, v) ] ] ]
-        in
+        let entry_fn v = B.elist [ B.pexp_tuple [ const_str name; Scalar.apply conv v ] ] in
         field_binding_expr mem entry_fn
 
   (* A [(name, "a, b, c")] entry for a list/set @httpHeader member (smithy
@@ -2205,19 +2229,11 @@ module Operations = struct
         let conv =
           Scalar.to_string_lambda ~namespace_resolver ~shape_resolver
             ~member_traits:item_member_traits ~shape_traits:None ~binding:`Header item_target
-          |> Option.value ~default:(exp_ident "Fun.id")
+          |> Option.value ~default:Scalar.Identity
         in
         let entry_fn v =
-          B.elist
-            [
-              B.pexp_tuple
-                [
-                  const_str name;
-                  [%expr
-                    String.concat ", "
-                      [%e B.pexp_apply (exp_ident "List.map") [ (Nolabel, conv); (Nolabel, v) ]]];
-                ];
-            ]
+          let mapped = Scalar.list_map conv v in
+          B.elist [ B.pexp_tuple [ const_str name; [%expr String.concat ", " [%e mapped]] ] ]
         in
         field_binding_expr mem entry_fn
     | None -> B.elist []
@@ -2230,20 +2246,25 @@ module Operations = struct
       | Some (Shape.MapShape ms) ->
           Scalar.to_string_lambda ~namespace_resolver ~shape_resolver
             ~member_traits:ms.mapValue.traits ~shape_traits:None ~binding:`Header ms.mapValue.target
-          |> Option.value ~default:(exp_ident "Fun.id")
-      | _ -> exp_ident "Fun.id"
-    in
-    let fn =
-      B.pexp_fun Ppxlib.Nolabel None
-        (B.ppat_tuple [ B.ppat_var (Location.mknoloc "k"); B.ppat_var (Location.mknoloc "v") ])
-        (B.pexp_tuple [ exp_ident "k"; B.pexp_apply conv [ (Nolabel, exp_ident "v") ] ])
+          |> Option.value ~default:Scalar.Identity
+      | _ -> Scalar.Identity
     in
     let entry_fn m =
       B.elist
         [
           B.pexp_tuple
             [
-              const_str prefix; B.pexp_apply (exp_ident "List.map") [ (Nolabel, fn); (Nolabel, m) ];
+              const_str prefix;
+              (match conv with
+              | Scalar.Identity -> m
+              | Scalar.Convert e ->
+                  let fn =
+                    B.pexp_fun Ppxlib.Nolabel None
+                      (B.ppat_tuple
+                         [ B.ppat_var (Location.mknoloc "k"); B.ppat_var (Location.mknoloc "v") ])
+                      (B.pexp_tuple [ exp_ident "k"; B.pexp_apply e [ (Nolabel, exp_ident "v") ] ])
+                  in
+                  B.pexp_apply (exp_ident "List.map") [ (Nolabel, fn); (Nolabel, m) ]);
             ];
         ]
     in
@@ -2255,7 +2276,7 @@ module Operations = struct
         ~shape_traits:None ~binding:`Label mem.target
       |> Option.value_exn
     in
-    let value = B.pexp_apply conv [ (Nolabel, request_field mem) ] in
+    let value = Scalar.apply conv (request_field mem) in
     let greedy = String.is_substring ~substring:("{" ^ mem.name ^ "+}") template in
     B.pexp_tuple
       [
@@ -2269,9 +2290,9 @@ module Operations = struct
     let conv =
       Scalar.to_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
         ~shape_traits:None ~binding:`Label mem.target
-      |> Option.value ~default:(exp_ident "Fun.id")
+      |> Option.value ~default:Scalar.Identity
     in
-    B.pexp_tuple [ const_str mem.name; B.pexp_apply conv [ (Nolabel, request_field mem) ] ]
+    B.pexp_tuple [ const_str mem.name; Scalar.apply conv (request_field mem) ]
 
   (* The input structure's members, or [] for [Unit] / missing input. *)
   let input_members ~shape_resolver (operation_shape : Shape.operationShapeDetails) =

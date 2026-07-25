@@ -20,8 +20,7 @@ module SimpleScalarProperties = struct
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
-      List.concat
-        [ (match request.foo with Some v -> [ ("X-Foo", (fun v -> v) v) ] | None -> []) ]
+      List.concat [ (match request.foo with Some v -> [ ("X-Foo", v) ] | None -> []) ]
     in
     let prefix_headers = [] in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
@@ -95,8 +94,7 @@ module SimpleScalarProperties = struct
                       Some (Read.element_value i "DoubleDribble" Primitive.double_of_string ())
                 | _ -> Read.skip_element i);
             ({
-               foo =
-                 Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "X-Foo");
+               foo = Smaws_Lib.Protocols.RestXml.header_value headers "X-Foo";
                string_value = ( ! ) r_string_value;
                true_boolean_value = ( ! ) r_true_boolean_value;
                false_boolean_value = ( ! ) r_false_boolean_value;

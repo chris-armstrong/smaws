@@ -14,17 +14,14 @@ module CompleteMultipartUpload = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.upload_id in
-           [ ("uploadId", [ (fun v -> v) v ]) ]);
+           [ ("uploadId", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -33,34 +30,32 @@ module CompleteMultipartUpload = struct
       List.concat
         [
           (match request.checksum_cr_c32 with
-          | Some v -> [ ("x-amz-checksum-crc32", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc32", v) ]
           | None -> []);
           (match request.checksum_crc32_c with
-          | Some v -> [ ("x-amz-checksum-crc32c", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc32c", v) ]
           | None -> []);
           (match request.checksum_crc64nvm_e with
-          | Some v -> [ ("x-amz-checksum-crc64nvme", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc64nvme", v) ]
           | None -> []);
           (match request.checksum_sh_a1 with
-          | Some v -> [ ("x-amz-checksum-sha1", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha1", v) ]
           | None -> []);
           (match request.checksum_sh_a256 with
-          | Some v -> [ ("x-amz-checksum-sha256", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha256", v) ]
           | None -> []);
           (match request.checksum_sh_a512 with
-          | Some v -> [ ("x-amz-checksum-sha512", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha512", v) ]
           | None -> []);
-          (match request.checksum_m_d5 with
-          | Some v -> [ ("x-amz-checksum-md5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.checksum_m_d5 with Some v -> [ ("x-amz-checksum-md5", v) ] | None -> []);
           (match request.checksum_xxhas_h64 with
-          | Some v -> [ ("x-amz-checksum-xxhash64", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash64", v) ]
           | None -> []);
           (match request.checksum_xxhas_h3 with
-          | Some v -> [ ("x-amz-checksum-xxhash3", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash3", v) ]
           | None -> []);
           (match request.checksum_xxhas_h128 with
-          | Some v -> [ ("x-amz-checksum-xxhash128", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash128", v) ]
           | None -> []);
           (match request.checksum_type with
           | Some v ->
@@ -83,20 +78,18 @@ module CompleteMultipartUpload = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
-          (match request.if_match with Some v -> [ ("If-Match", (fun v -> v) v) ] | None -> []);
-          (match request.if_none_match with
-          | Some v -> [ ("If-None-Match", (fun v -> v) v) ]
-          | None -> []);
+          (match request.if_match with Some v -> [ ("If-Match", v) ] | None -> []);
+          (match request.if_none_match with Some v -> [ ("If-None-Match", v) ] | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
         ]
     in
@@ -236,10 +229,7 @@ module CompleteMultipartUpload = struct
                location = ( ! ) r_location;
                bucket = ( ! ) r_bucket;
                key = ( ! ) r_key;
-               expiration =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-expiration");
+               expiration = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-expiration";
                e_tag = ( ! ) r_e_tag;
                checksum_cr_c32 = ( ! ) r_checksum_cr_c32;
                checksum_crc32_c = ( ! ) r_checksum_crc32_c;
@@ -263,15 +253,10 @@ module CompleteMultipartUpload = struct
                       | _ -> failwith "unknown enum value"
                        : server_side_encryption))
                    (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption");
-               version_id =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id");
+               version_id = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id";
                ssekms_key_id =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers
-                      "x-amz-server-side-encryption-aws-kms-key-id");
+                 Smaws_Lib.Protocols.RestXml.header_value headers
+                   "x-amz-server-side-encryption-aws-kms-key-id";
                bucket_key_enabled =
                  Option.map
                    (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
@@ -308,10 +293,7 @@ module CopyObject = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?x-id=CopyObject"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -336,9 +318,7 @@ module CopyObject = struct
                     v );
               ]
           | None -> []);
-          (match request.cache_control with
-          | Some v -> [ ("Cache-Control", (fun v -> v) v) ]
-          | None -> []);
+          (match request.cache_control with Some v -> [ ("Cache-Control", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -359,21 +339,15 @@ module CopyObject = struct
               ]
           | None -> []);
           (match request.content_disposition with
-          | Some v -> [ ("Content-Disposition", (fun v -> v) v) ]
+          | Some v -> [ ("Content-Disposition", v) ]
           | None -> []);
-          (match request.content_encoding with
-          | Some v -> [ ("Content-Encoding", (fun v -> v) v) ]
-          | None -> []);
-          (match request.content_language with
-          | Some v -> [ ("Content-Language", (fun v -> v) v) ]
-          | None -> []);
-          (match request.content_type with
-          | Some v -> [ ("Content-Type", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_encoding with Some v -> [ ("Content-Encoding", v) ] | None -> []);
+          (match request.content_language with Some v -> [ ("Content-Language", v) ] | None -> []);
+          (match request.content_type with Some v -> [ ("Content-Type", v) ] | None -> []);
           (let v = request.copy_source in
-           [ ("x-amz-copy-source", (fun v -> v) v) ]);
+           [ ("x-amz-copy-source", v) ]);
           (match request.copy_source_if_match with
-          | Some v -> [ ("x-amz-copy-source-if-match", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-if-match", v) ]
           | None -> []);
           (match request.copy_source_if_modified_since with
           | Some v ->
@@ -384,7 +358,7 @@ module CopyObject = struct
               ]
           | None -> []);
           (match request.copy_source_if_none_match with
-          | Some v -> [ ("x-amz-copy-source-if-none-match", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-if-none-match", v) ]
           | None -> []);
           (match request.copy_source_if_unmodified_since with
           | Some v ->
@@ -394,23 +368,19 @@ module CopyObject = struct
                 );
               ]
           | None -> []);
-          (match request.expires with Some v -> [ ("Expires", (fun v -> v) v) ] | None -> []);
+          (match request.expires with Some v -> [ ("Expires", v) ] | None -> []);
           (match request.grant_full_control with
-          | Some v -> [ ("x-amz-grant-full-control", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-full-control", v) ]
           | None -> []);
-          (match request.grant_read with
-          | Some v -> [ ("x-amz-grant-read", (fun v -> v) v) ]
-          | None -> []);
+          (match request.grant_read with Some v -> [ ("x-amz-grant-read", v) ] | None -> []);
           (match request.grant_read_ac_p with
-          | Some v -> [ ("x-amz-grant-read-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-read-acp", v) ]
           | None -> []);
           (match request.grant_write_ac_p with
-          | Some v -> [ ("x-amz-grant-write-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-write-acp", v) ]
           | None -> []);
-          (match request.if_match with Some v -> [ ("If-Match", (fun v -> v) v) ] | None -> []);
-          (match request.if_none_match with
-          | Some v -> [ ("If-None-Match", (fun v -> v) v) ]
-          | None -> []);
+          (match request.if_match with Some v -> [ ("If-Match", v) ] | None -> []);
+          (match request.if_none_match with Some v -> [ ("If-None-Match", v) ] | None -> []);
           (match request.metadata_directive with
           | Some v ->
               [
@@ -474,37 +444,35 @@ module CopyObject = struct
               ]
           | None -> []);
           (match request.website_redirect_location with
-          | Some v -> [ ("x-amz-website-redirect-location", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-website-redirect-location", v) ]
           | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.ssekms_key_id with
-          | Some v -> [ ("x-amz-server-side-encryption-aws-kms-key-id", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-aws-kms-key-id", v) ]
           | None -> []);
           (match request.ssekms_encryption_context with
-          | Some v -> [ ("x-amz-server-side-encryption-context", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-context", v) ]
           | None -> []);
           (match request.bucket_key_enabled with
           | Some v ->
               [ ("x-amz-server-side-encryption-bucket-key-enabled", (fun v -> string_of_bool v) v) ]
           | None -> []);
           (match request.copy_source_sse_customer_algorithm with
-          | Some v ->
-              [ ("x-amz-copy-source-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.copy_source_sse_customer_key with
-          | Some v -> [ ("x-amz-copy-source-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.copy_source_sse_customer_key_m_d5 with
-          | Some v ->
-              [ ("x-amz-copy-source-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -513,9 +481,7 @@ module CopyObject = struct
                   (fun (v : request_payer) -> match v with Requester -> "requester") v );
               ]
           | None -> []);
-          (match request.tagging with
-          | Some v -> [ ("x-amz-tagging", (fun v -> v) v) ]
-          | None -> []);
+          (match request.tagging with Some v -> [ ("x-amz-tagging", v) ] | None -> []);
           (match request.object_lock_mode with
           | Some v ->
               [
@@ -542,20 +508,15 @@ module CopyObject = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.expected_source_bucket_owner with
-          | Some v -> [ ("x-amz-source-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-source-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
     let prefix_headers =
-      List.concat
-        [
-          (match request.metadata with
-          | Some v -> [ ("x-amz-meta-", List.map (fun (k, v) -> (k, (fun v -> v) v)) v) ]
-          | None -> []);
-        ]
+      List.concat [ (match request.metadata with Some v -> [ ("x-amz-meta-", v) ] | None -> []) ]
     in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
@@ -696,18 +657,10 @@ module CopyObject = struct
         in
         ({
            copy_object_result = payload_val;
-           expiration =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-expiration");
+           expiration = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-expiration";
            copy_source_version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-copy-source-version-id");
-           version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-copy-source-version-id";
+           version_id = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id";
            server_side_encryption =
              Option.map
                (fun s ->
@@ -720,25 +673,16 @@ module CopyObject = struct
                    : server_side_encryption))
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption");
            sse_customer_algorithm =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-algorithm");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-algorithm";
            sse_customer_key_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-key-MD5");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-key-MD5";
            ssekms_key_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-aws-kms-key-id");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-aws-kms-key-id";
            ssekms_encryption_context =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-context");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption-context";
            bucket_key_enabled =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
@@ -783,7 +727,7 @@ module CreateBucket = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -806,19 +750,15 @@ module CreateBucket = struct
               ]
           | None -> []);
           (match request.grant_full_control with
-          | Some v -> [ ("x-amz-grant-full-control", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-full-control", v) ]
           | None -> []);
-          (match request.grant_read with
-          | Some v -> [ ("x-amz-grant-read", (fun v -> v) v) ]
-          | None -> []);
+          (match request.grant_read with Some v -> [ ("x-amz-grant-read", v) ] | None -> []);
           (match request.grant_read_ac_p with
-          | Some v -> [ ("x-amz-grant-read-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-read-acp", v) ]
           | None -> []);
-          (match request.grant_write with
-          | Some v -> [ ("x-amz-grant-write", (fun v -> v) v) ]
-          | None -> []);
+          (match request.grant_write with Some v -> [ ("x-amz-grant-write", v) ] | None -> []);
           (match request.grant_write_ac_p with
-          | Some v -> [ ("x-amz-grant-write-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-write-acp", v) ]
           | None -> []);
           (match request.object_lock_enabled_for_bucket with
           | Some v -> [ ("x-amz-bucket-object-lock-enabled", (fun v -> string_of_bool v) v) ]
@@ -863,12 +803,8 @@ module CreateBucket = struct
       ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
-           location =
-             Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "Location");
-           bucket_arn =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-bucket-arn");
+           location = Smaws_Lib.Protocols.RestXml.header_value headers "Location";
+           bucket_arn = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-bucket-arn";
          }
           : create_bucket_output))
       ~error_deserializer
@@ -884,7 +820,7 @@ module CreateBucketMetadataConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metadataConfiguration"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -893,9 +829,7 @@ module CreateBucketMetadataConfiguration = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -916,7 +850,7 @@ module CreateBucketMetadataConfiguration = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -947,7 +881,7 @@ module CreateBucketMetadataTableConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metadataTable"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -956,9 +890,7 @@ module CreateBucketMetadataTableConfiguration = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -979,7 +911,7 @@ module CreateBucketMetadataTableConfiguration = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1010,10 +942,7 @@ module CreateMultipartUpload = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?uploads"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1038,33 +967,23 @@ module CreateMultipartUpload = struct
                     v );
               ]
           | None -> []);
-          (match request.cache_control with
-          | Some v -> [ ("Cache-Control", (fun v -> v) v) ]
-          | None -> []);
+          (match request.cache_control with Some v -> [ ("Cache-Control", v) ] | None -> []);
           (match request.content_disposition with
-          | Some v -> [ ("Content-Disposition", (fun v -> v) v) ]
+          | Some v -> [ ("Content-Disposition", v) ]
           | None -> []);
-          (match request.content_encoding with
-          | Some v -> [ ("Content-Encoding", (fun v -> v) v) ]
-          | None -> []);
-          (match request.content_language with
-          | Some v -> [ ("Content-Language", (fun v -> v) v) ]
-          | None -> []);
-          (match request.content_type with
-          | Some v -> [ ("Content-Type", (fun v -> v) v) ]
-          | None -> []);
-          (match request.expires with Some v -> [ ("Expires", (fun v -> v) v) ] | None -> []);
+          (match request.content_encoding with Some v -> [ ("Content-Encoding", v) ] | None -> []);
+          (match request.content_language with Some v -> [ ("Content-Language", v) ] | None -> []);
+          (match request.content_type with Some v -> [ ("Content-Type", v) ] | None -> []);
+          (match request.expires with Some v -> [ ("Expires", v) ] | None -> []);
           (match request.grant_full_control with
-          | Some v -> [ ("x-amz-grant-full-control", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-full-control", v) ]
           | None -> []);
-          (match request.grant_read with
-          | Some v -> [ ("x-amz-grant-read", (fun v -> v) v) ]
-          | None -> []);
+          (match request.grant_read with Some v -> [ ("x-amz-grant-read", v) ] | None -> []);
           (match request.grant_read_ac_p with
-          | Some v -> [ ("x-amz-grant-read-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-read-acp", v) ]
           | None -> []);
           (match request.grant_write_ac_p with
-          | Some v -> [ ("x-amz-grant-write-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-write-acp", v) ]
           | None -> []);
           (match request.server_side_encryption with
           | Some v ->
@@ -1102,22 +1021,22 @@ module CreateMultipartUpload = struct
               ]
           | None -> []);
           (match request.website_redirect_location with
-          | Some v -> [ ("x-amz-website-redirect-location", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-website-redirect-location", v) ]
           | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.ssekms_key_id with
-          | Some v -> [ ("x-amz-server-side-encryption-aws-kms-key-id", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-aws-kms-key-id", v) ]
           | None -> []);
           (match request.ssekms_encryption_context with
-          | Some v -> [ ("x-amz-server-side-encryption-context", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-context", v) ]
           | None -> []);
           (match request.bucket_key_enabled with
           | Some v ->
@@ -1130,9 +1049,7 @@ module CreateMultipartUpload = struct
                   (fun (v : request_payer) -> match v with Requester -> "requester") v );
               ]
           | None -> []);
-          (match request.tagging with
-          | Some v -> [ ("x-amz-tagging", (fun v -> v) v) ]
-          | None -> []);
+          (match request.tagging with Some v -> [ ("x-amz-tagging", v) ] | None -> []);
           (match request.object_lock_mode with
           | Some v ->
               [
@@ -1159,7 +1076,7 @@ module CreateMultipartUpload = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
@@ -1192,12 +1109,7 @@ module CreateMultipartUpload = struct
         ]
     in
     let prefix_headers =
-      List.concat
-        [
-          (match request.metadata with
-          | Some v -> [ ("x-amz-meta-", List.map (fun (k, v) -> (k, (fun v -> v) v)) v) ]
-          | None -> []);
-        ]
+      List.concat [ (match request.metadata with Some v -> [ ("x-amz-meta-", v) ] | None -> []) ]
     in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body = None in
@@ -1231,9 +1143,7 @@ module CreateMultipartUpload = struct
                    (fun s -> Smaws_Lib.Xml.Parse.Primitive.timestamp_httpdate_of_string s)
                    (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-abort-date");
                abort_rule_id =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-abort-rule-id");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-abort-rule-id";
                bucket = ( ! ) r_bucket;
                key = ( ! ) r_key;
                upload_id = ( ! ) r_upload_id;
@@ -1249,25 +1159,17 @@ module CreateMultipartUpload = struct
                        : server_side_encryption))
                    (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption");
                sse_customer_algorithm =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers
-                      "x-amz-server-side-encryption-customer-algorithm");
+                 Smaws_Lib.Protocols.RestXml.header_value headers
+                   "x-amz-server-side-encryption-customer-algorithm";
                sse_customer_key_m_d5 =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers
-                      "x-amz-server-side-encryption-customer-key-MD5");
+                 Smaws_Lib.Protocols.RestXml.header_value headers
+                   "x-amz-server-side-encryption-customer-key-MD5";
                ssekms_key_id =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers
-                      "x-amz-server-side-encryption-aws-kms-key-id");
+                 Smaws_Lib.Protocols.RestXml.header_value headers
+                   "x-amz-server-side-encryption-aws-kms-key-id";
                ssekms_encryption_context =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers
-                      "x-amz-server-side-encryption-context");
+                 Smaws_Lib.Protocols.RestXml.header_value headers
+                   "x-amz-server-side-encryption-context";
                bucket_key_enabled =
                  Option.map
                    (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
@@ -1330,7 +1232,7 @@ module CreateSession = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?session"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1362,10 +1264,10 @@ module CreateSession = struct
               ]
           | None -> []);
           (match request.ssekms_key_id with
-          | Some v -> [ ("x-amz-server-side-encryption-aws-kms-key-id", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-aws-kms-key-id", v) ]
           | None -> []);
           (match request.ssekms_encryption_context with
-          | Some v -> [ ("x-amz-server-side-encryption-context", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-context", v) ]
           | None -> []);
           (match request.bucket_key_enabled with
           | Some v ->
@@ -1405,15 +1307,11 @@ module CreateSession = struct
                        : server_side_encryption))
                    (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption");
                ssekms_key_id =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers
-                      "x-amz-server-side-encryption-aws-kms-key-id");
+                 Smaws_Lib.Protocols.RestXml.header_value headers
+                   "x-amz-server-side-encryption-aws-kms-key-id";
                ssekms_encryption_context =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers
-                      "x-amz-server-side-encryption-context");
+                 Smaws_Lib.Protocols.RestXml.header_value headers
+                   "x-amz-server-side-encryption-context";
                bucket_key_enabled =
                  Option.map
                    (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
@@ -1435,7 +1333,7 @@ module DeleteBucket = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1445,7 +1343,7 @@ module DeleteBucket = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1468,14 +1366,14 @@ module DeleteBucketAnalyticsConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?analytics"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -1484,7 +1382,7 @@ module DeleteBucketAnalyticsConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1507,7 +1405,7 @@ module DeleteBucketCors = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?cors"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1517,7 +1415,7 @@ module DeleteBucketCors = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1540,7 +1438,7 @@ module DeleteBucketEncryption = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?encryption"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1550,7 +1448,7 @@ module DeleteBucketEncryption = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1573,14 +1471,14 @@ module DeleteBucketIntelligentTieringConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?intelligent-tiering"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -1589,7 +1487,7 @@ module DeleteBucketIntelligentTieringConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1612,14 +1510,14 @@ module DeleteBucketInventoryConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?inventory"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -1628,7 +1526,7 @@ module DeleteBucketInventoryConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1651,7 +1549,7 @@ module DeleteBucketLifecycle = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?lifecycle"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1661,7 +1559,7 @@ module DeleteBucketLifecycle = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1684,7 +1582,7 @@ module DeleteBucketMetadataConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metadataConfiguration"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1694,7 +1592,7 @@ module DeleteBucketMetadataConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1717,7 +1615,7 @@ module DeleteBucketMetadataTableConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metadataTable"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1727,7 +1625,7 @@ module DeleteBucketMetadataTableConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1750,14 +1648,14 @@ module DeleteBucketMetricsConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metrics"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -1766,7 +1664,7 @@ module DeleteBucketMetricsConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1789,7 +1687,7 @@ module DeleteBucketOwnershipControls = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?ownershipControls"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1799,7 +1697,7 @@ module DeleteBucketOwnershipControls = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1822,7 +1720,7 @@ module DeleteBucketPolicy = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?policy"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1832,7 +1730,7 @@ module DeleteBucketPolicy = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1855,7 +1753,7 @@ module DeleteBucketReplication = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?replication"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1865,7 +1763,7 @@ module DeleteBucketReplication = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1888,7 +1786,7 @@ module DeleteBucketTagging = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?tagging"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1898,7 +1796,7 @@ module DeleteBucketTagging = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1921,7 +1819,7 @@ module DeleteBucketWebsite = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?website"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -1931,7 +1829,7 @@ module DeleteBucketWebsite = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -1954,26 +1852,19 @@ module DeleteObject = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?x-id=DeleteObject"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
         [
-          (match request.mf_a with Some v -> [ ("x-amz-mfa", (fun v -> v) v) ] | None -> []);
+          (match request.mf_a with Some v -> [ ("x-amz-mfa", v) ] | None -> []);
           (match request.request_payer with
           | Some v ->
               [
@@ -1985,9 +1876,9 @@ module DeleteObject = struct
           | Some v -> [ ("x-amz-bypass-governance-retention", (fun v -> string_of_bool v) v) ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
-          (match request.if_match with Some v -> [ ("If-Match", (fun v -> v) v) ] | None -> []);
+          (match request.if_match with Some v -> [ ("If-Match", v) ] | None -> []);
           (match request.if_match_last_modified_time with
           | Some v ->
               [
@@ -2013,10 +1904,7 @@ module DeleteObject = struct
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-delete-marker");
-           version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id");
+           version_id = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id";
            request_charged =
              Option.map
                (fun s ->
@@ -2056,20 +1944,15 @@ module DeleteObjectAnnotation = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?annotation"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.annotation_name in
-           [ ("annotationName", [ (fun v -> v) v ]) ]);
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
+           [ ("annotationName", [ v ]) ]);
+          (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []);
         ]
     in
     let map_params = [] in
@@ -2085,10 +1968,10 @@ module DeleteObjectAnnotation = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.object_if_match with
-          | Some v -> [ ("x-amz-object-if-match", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-object-if-match", v) ]
           | None -> []);
         ]
     in
@@ -2100,9 +1983,7 @@ module DeleteObjectAnnotation = struct
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
            object_version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-object-version-id");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-object-version-id";
            request_charged =
              Option.map
                (fun s ->
@@ -2124,7 +2005,7 @@ module DeleteObjects = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?delete"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2133,7 +2014,7 @@ module DeleteObjects = struct
     let named_headers =
       List.concat
         [
-          (match request.mf_a with Some v -> [ ("x-amz-mfa", (fun v -> v) v) ] | None -> []);
+          (match request.mf_a with Some v -> [ ("x-amz-mfa", v) ] | None -> []);
           (match request.request_payer with
           | Some v ->
               [
@@ -2145,7 +2026,7 @@ module DeleteObjects = struct
           | Some v -> [ ("x-amz-bypass-governance-retention", (fun v -> string_of_bool v) v) ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
@@ -2222,19 +2103,12 @@ module DeleteObjectTagging = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?tagging"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -2242,7 +2116,7 @@ module DeleteObjectTagging = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2252,12 +2126,7 @@ module DeleteObjectTagging = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"DeleteObjectTagging" ~service ~context
       ~method_:`DELETE ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        ({
-           version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id");
-         }
+        ({ version_id = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id" }
           : delete_object_tagging_output))
       ~error_deserializer
 end
@@ -2272,7 +2141,7 @@ module DeletePublicAccessBlock = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?publicAccessBlock"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2282,7 +2151,7 @@ module DeletePublicAccessBlock = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2305,7 +2174,7 @@ module GetBucketAbac = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?abac"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2315,7 +2184,7 @@ module GetBucketAbac = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2360,7 +2229,7 @@ module GetBucketAccelerateConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?accelerate"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2370,7 +2239,7 @@ module GetBucketAccelerateConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -2423,7 +2292,7 @@ module GetBucketAcl = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?acl"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2433,7 +2302,7 @@ module GetBucketAcl = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2476,14 +2345,14 @@ module GetBucketAnalyticsConfiguration = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}?analytics&x-id=GetBucketAnalyticsConfiguration"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -2492,7 +2361,7 @@ module GetBucketAnalyticsConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2557,7 +2426,7 @@ module GetBucketCors = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?cors"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2567,7 +2436,7 @@ module GetBucketCors = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2602,7 +2471,7 @@ module GetBucketEncryption = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?encryption"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2612,7 +2481,7 @@ module GetBucketEncryption = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2659,14 +2528,14 @@ module GetBucketIntelligentTieringConfiguration = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}?intelligent-tiering&x-id=GetBucketIntelligentTieringConfiguration"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -2675,7 +2544,7 @@ module GetBucketIntelligentTieringConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2749,14 +2618,14 @@ module GetBucketInventoryConfiguration = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}?inventory&x-id=GetBucketInventoryConfiguration"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -2765,7 +2634,7 @@ module GetBucketInventoryConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2874,7 +2743,7 @@ module GetBucketLifecycleConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?lifecycle"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2884,7 +2753,7 @@ module GetBucketLifecycleConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2932,7 +2801,7 @@ module GetBucketLocation = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?location"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2942,7 +2811,7 @@ module GetBucketLocation = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -2979,7 +2848,7 @@ module GetBucketLogging = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?logging"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -2989,7 +2858,7 @@ module GetBucketLogging = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3026,7 +2895,7 @@ module GetBucketMetadataConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metadataConfiguration"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3036,7 +2905,7 @@ module GetBucketMetadataConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3088,7 +2957,7 @@ module GetBucketMetadataTableConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metadataTable"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3098,7 +2967,7 @@ module GetBucketMetadataTableConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3169,14 +3038,14 @@ module GetBucketMetricsConfiguration = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}?metrics&x-id=GetBucketMetricsConfiguration"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -3185,7 +3054,7 @@ module GetBucketMetricsConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3236,7 +3105,7 @@ module GetBucketNotificationConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?notification"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3246,7 +3115,7 @@ module GetBucketNotificationConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3316,7 +3185,7 @@ module GetBucketOwnershipControls = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?ownershipControls"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3326,7 +3195,7 @@ module GetBucketOwnershipControls = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3371,7 +3240,7 @@ module GetBucketPolicy = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?policy"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3381,7 +3250,7 @@ module GetBucketPolicy = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3405,7 +3274,7 @@ module GetBucketPolicyStatus = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?policyStatus"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3415,7 +3284,7 @@ module GetBucketPolicyStatus = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3460,7 +3329,7 @@ module GetBucketReplication = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?replication"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3470,7 +3339,7 @@ module GetBucketReplication = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3523,7 +3392,7 @@ module GetBucketRequestPayment = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?requestPayment"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3533,7 +3402,7 @@ module GetBucketRequestPayment = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3567,7 +3436,7 @@ module GetBucketTagging = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?tagging"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3577,7 +3446,7 @@ module GetBucketTagging = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3615,7 +3484,7 @@ module GetBucketVersioning = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?versioning"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3625,7 +3494,7 @@ module GetBucketVersioning = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3670,7 +3539,7 @@ module GetBucketWebsite = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?website"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -3680,7 +3549,7 @@ module GetBucketWebsite = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -3767,29 +3636,26 @@ module GetObject = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?x-id=GetObject"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (match request.response_cache_control with
-          | Some v -> [ ("response-cache-control", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("response-cache-control", [ v ]) ]
           | None -> []);
           (match request.response_content_disposition with
-          | Some v -> [ ("response-content-disposition", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("response-content-disposition", [ v ]) ]
           | None -> []);
           (match request.response_content_encoding with
-          | Some v -> [ ("response-content-encoding", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("response-content-encoding", [ v ]) ]
           | None -> []);
           (match request.response_content_language with
-          | Some v -> [ ("response-content-language", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("response-content-language", [ v ]) ]
           | None -> []);
           (match request.response_content_type with
-          | Some v -> [ ("response-content-type", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("response-content-type", [ v ]) ]
           | None -> []);
           (match request.response_expires with
           | Some v ->
@@ -3801,9 +3667,7 @@ module GetObject = struct
                   ] );
               ]
           | None -> []);
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []);
           (match request.part_number with
           | Some v -> [ ("partNumber", [ (fun v -> string_of_int v) v ]) ]
           | None -> []);
@@ -3814,7 +3678,7 @@ module GetObject = struct
     let named_headers =
       List.concat
         [
-          (match request.if_match with Some v -> [ ("If-Match", (fun v -> v) v) ] | None -> []);
+          (match request.if_match with Some v -> [ ("If-Match", v) ] | None -> []);
           (match request.if_modified_since with
           | Some v ->
               [
@@ -3823,9 +3687,7 @@ module GetObject = struct
                 );
               ]
           | None -> []);
-          (match request.if_none_match with
-          | Some v -> [ ("If-None-Match", (fun v -> v) v) ]
-          | None -> []);
+          (match request.if_none_match with Some v -> [ ("If-None-Match", v) ] | None -> []);
           (match request.if_unmodified_since with
           | Some v ->
               [
@@ -3834,15 +3696,15 @@ module GetObject = struct
                 );
               ]
           | None -> []);
-          (match request.range with Some v -> [ ("Range", (fun v -> v) v) ] | None -> []);
+          (match request.range with Some v -> [ ("Range", v) ] | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -3852,7 +3714,7 @@ module GetObject = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.checksum_mode with
           | Some v ->
@@ -3876,18 +3738,9 @@ module GetObject = struct
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-delete-marker");
-           accept_ranges =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "accept-ranges");
-           expiration =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-expiration");
-           restore =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-restore");
+           accept_ranges = Smaws_Lib.Protocols.RestXml.header_value headers "accept-ranges";
+           expiration = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-expiration";
+           restore = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-restore";
            last_modified =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.timestamp_httpdate_of_string s)
@@ -3896,47 +3749,24 @@ module GetObject = struct
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.long_of_string s)
                (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Length");
-           e_tag = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "ETag");
-           checksum_cr_c32 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32");
+           e_tag = Smaws_Lib.Protocols.RestXml.header_value headers "ETag";
+           checksum_cr_c32 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32";
            checksum_crc32_c =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c";
            checksum_crc64nvm_e =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme");
-           checksum_sh_a1 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme";
+           checksum_sh_a1 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1";
            checksum_sh_a256 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256";
            checksum_sh_a512 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512");
-           checksum_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512";
+           checksum_m_d5 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5";
            checksum_xxhas_h64 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64";
            checksum_xxhas_h3 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3";
            checksum_xxhas_h128 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128";
            checksum_type =
              Option.map
                (fun s ->
@@ -3950,40 +3780,17 @@ module GetObject = struct
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.int_of_string s)
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-missing-meta");
-           version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id");
-           cache_control =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Cache-Control");
+           version_id = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id";
+           cache_control = Smaws_Lib.Protocols.RestXml.header_value headers "Cache-Control";
            content_disposition =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Disposition");
-           content_encoding =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Encoding");
-           content_language =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Language");
-           content_range =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Range");
-           content_type =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Type");
-           expires =
-             Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "Expires");
+             Smaws_Lib.Protocols.RestXml.header_value headers "Content-Disposition";
+           content_encoding = Smaws_Lib.Protocols.RestXml.header_value headers "Content-Encoding";
+           content_language = Smaws_Lib.Protocols.RestXml.header_value headers "Content-Language";
+           content_range = Smaws_Lib.Protocols.RestXml.header_value headers "Content-Range";
+           content_type = Smaws_Lib.Protocols.RestXml.header_value headers "Content-Type";
+           expires = Smaws_Lib.Protocols.RestXml.header_value headers "Expires";
            website_redirect_location =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-website-redirect-location");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-website-redirect-location";
            server_side_encryption =
              Option.map
                (fun s ->
@@ -3996,24 +3803,16 @@ module GetObject = struct
                    : server_side_encryption))
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption");
            metadata =
-             Some
-               (Smaws_Lib.Protocols.RestXml.prefix_headers ~prefix:"x-amz-meta-" headers
-               |> List.map (fun (k, v) -> (k, (fun s -> s) v)));
+             Some (Smaws_Lib.Protocols.RestXml.prefix_headers ~prefix:"x-amz-meta-" headers);
            sse_customer_algorithm =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-algorithm");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-algorithm";
            sse_customer_key_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-key-MD5");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-key-MD5";
            ssekms_key_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-aws-kms-key-id");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-aws-kms-key-id";
            bucket_key_enabled =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
@@ -4110,19 +3909,12 @@ module GetObjectAcl = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?acl"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -4137,7 +3929,7 @@ module GetObjectAcl = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -4216,20 +4008,15 @@ module GetObjectAnnotation = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}/{Key+}?annotation&x-id=GetObjectAnnotation"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.annotation_name in
-           [ ("annotationName", [ (fun v -> v) v ]) ]);
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
+           [ ("annotationName", [ v ]) ]);
+          (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []);
         ]
     in
     let map_params = [] in
@@ -4245,7 +4032,7 @@ module GetObjectAnnotation = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.checksum_mode with
           | Some v ->
@@ -4266,9 +4053,7 @@ module GetObjectAnnotation = struct
            annotation_payload =
              (if String.equal body "" then None else Some (Smaws_Lib.CoreTypes.Blob.of_string body));
            object_version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-object-version-id");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-object-version-id";
            last_modified =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.timestamp_httpdate_of_string s)
@@ -4277,47 +4062,24 @@ module GetObjectAnnotation = struct
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.long_of_string s)
                (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Length");
-           e_tag = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "ETag");
-           checksum_cr_c32 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32");
+           e_tag = Smaws_Lib.Protocols.RestXml.header_value headers "ETag";
+           checksum_cr_c32 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32";
            checksum_crc32_c =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c";
            checksum_crc64nvm_e =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme");
-           checksum_sh_a1 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme";
+           checksum_sh_a1 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1";
            checksum_sh_a256 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256";
            checksum_sh_a512 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512");
-           checksum_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512";
+           checksum_m_d5 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5";
            checksum_xxhas_h64 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64";
            checksum_xxhas_h3 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3";
            checksum_xxhas_h128 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128";
            checksum_type =
              Option.map
                (fun s ->
@@ -4381,19 +4143,12 @@ module GetObjectAttributes = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?attributes"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -4404,16 +4159,16 @@ module GetObjectAttributes = struct
           | Some v -> [ ("x-amz-max-parts", (fun v -> string_of_int v) v) ]
           | None -> []);
           (match request.part_number_marker with
-          | Some v -> [ ("x-amz-part-number-marker", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-part-number-marker", v) ]
           | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -4423,7 +4178,7 @@ module GetObjectAttributes = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (let v = request.object_attributes in
            [
@@ -4492,10 +4247,7 @@ module GetObjectAttributes = struct
                  Option.map
                    (fun s -> Smaws_Lib.Xml.Parse.Primitive.timestamp_httpdate_of_string s)
                    (Smaws_Lib.Protocols.RestXml.header_value headers "Last-Modified");
-               version_id =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id");
+               version_id = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id";
                request_charged =
                  Option.map
                    (fun s ->
@@ -4522,19 +4274,12 @@ module GetObjectLegalHold = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?legal-hold"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -4549,7 +4294,7 @@ module GetObjectLegalHold = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -4594,7 +4339,7 @@ module GetObjectLockConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?object-lock"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -4604,7 +4349,7 @@ module GetObjectLockConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -4657,19 +4402,12 @@ module GetObjectRetention = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?retention"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -4684,7 +4422,7 @@ module GetObjectRetention = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -4737,19 +4475,12 @@ module GetObjectTagging = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?tagging"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -4757,7 +4488,7 @@ module GetObjectTagging = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -4789,10 +4520,7 @@ module GetObjectTagging = struct
                            ())
                 | _ -> Read.skip_element i);
             ({
-               version_id =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id");
+               version_id = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id";
                tag_set = required "TagSet" (( ! ) r_tag_set) i;
              }
               : get_object_tagging_output)))
@@ -4809,10 +4537,7 @@ module GetObjectTorrent = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?torrent"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -4829,7 +4554,7 @@ module GetObjectTorrent = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -4863,7 +4588,7 @@ module GetPublicAccessBlock = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?publicAccessBlock"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -4873,7 +4598,7 @@ module GetPublicAccessBlock = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -4961,7 +4686,7 @@ module HeadBucket = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -4971,7 +4696,7 @@ module HeadBucket = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -4982,10 +4707,7 @@ module HeadBucket = struct
       ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
-           bucket_arn =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-bucket-arn");
+           bucket_arn = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-bucket-arn";
            bucket_location_type =
              Option.map
                (fun s ->
@@ -4996,13 +4718,8 @@ module HeadBucket = struct
                    : location_type))
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-bucket-location-type");
            bucket_location_name =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-bucket-location-name");
-           bucket_region =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-bucket-region");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-bucket-location-name";
+           bucket_region = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-bucket-region";
            access_point_alias =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
@@ -5032,29 +4749,26 @@ module HeadObject = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (match request.response_cache_control with
-          | Some v -> [ ("response-cache-control", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("response-cache-control", [ v ]) ]
           | None -> []);
           (match request.response_content_disposition with
-          | Some v -> [ ("response-content-disposition", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("response-content-disposition", [ v ]) ]
           | None -> []);
           (match request.response_content_encoding with
-          | Some v -> [ ("response-content-encoding", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("response-content-encoding", [ v ]) ]
           | None -> []);
           (match request.response_content_language with
-          | Some v -> [ ("response-content-language", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("response-content-language", [ v ]) ]
           | None -> []);
           (match request.response_content_type with
-          | Some v -> [ ("response-content-type", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("response-content-type", [ v ]) ]
           | None -> []);
           (match request.response_expires with
           | Some v ->
@@ -5066,9 +4780,7 @@ module HeadObject = struct
                   ] );
               ]
           | None -> []);
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []);
           (match request.part_number with
           | Some v -> [ ("partNumber", [ (fun v -> string_of_int v) v ]) ]
           | None -> []);
@@ -5079,7 +4791,7 @@ module HeadObject = struct
     let named_headers =
       List.concat
         [
-          (match request.if_match with Some v -> [ ("If-Match", (fun v -> v) v) ] | None -> []);
+          (match request.if_match with Some v -> [ ("If-Match", v) ] | None -> []);
           (match request.if_modified_since with
           | Some v ->
               [
@@ -5088,9 +4800,7 @@ module HeadObject = struct
                 );
               ]
           | None -> []);
-          (match request.if_none_match with
-          | Some v -> [ ("If-None-Match", (fun v -> v) v) ]
-          | None -> []);
+          (match request.if_none_match with Some v -> [ ("If-None-Match", v) ] | None -> []);
           (match request.if_unmodified_since with
           | Some v ->
               [
@@ -5099,15 +4809,15 @@ module HeadObject = struct
                 );
               ]
           | None -> []);
-          (match request.range with Some v -> [ ("Range", (fun v -> v) v) ] | None -> []);
+          (match request.range with Some v -> [ ("Range", v) ] | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -5117,7 +4827,7 @@ module HeadObject = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.checksum_mode with
           | Some v ->
@@ -5139,18 +4849,9 @@ module HeadObject = struct
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-delete-marker");
-           accept_ranges =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "accept-ranges");
-           expiration =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-expiration");
-           restore =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-restore");
+           accept_ranges = Smaws_Lib.Protocols.RestXml.header_value headers "accept-ranges";
+           expiration = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-expiration";
+           restore = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-restore";
            archive_status =
              Option.map
                (fun s ->
@@ -5168,46 +4869,23 @@ module HeadObject = struct
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.long_of_string s)
                (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Length");
-           checksum_cr_c32 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32");
+           checksum_cr_c32 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32";
            checksum_crc32_c =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c";
            checksum_crc64nvm_e =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme");
-           checksum_sh_a1 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme";
+           checksum_sh_a1 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1";
            checksum_sh_a256 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256";
            checksum_sh_a512 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512");
-           checksum_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512";
+           checksum_m_d5 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5";
            checksum_xxhas_h64 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64";
            checksum_xxhas_h3 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3";
            checksum_xxhas_h128 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128";
            checksum_type =
              Option.map
                (fun s ->
@@ -5217,45 +4895,22 @@ module HeadObject = struct
                   | _ -> failwith "unknown enum value"
                    : checksum_type))
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-type");
-           e_tag = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "ETag");
+           e_tag = Smaws_Lib.Protocols.RestXml.header_value headers "ETag";
            missing_meta =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.int_of_string s)
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-missing-meta");
-           version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id");
-           cache_control =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Cache-Control");
+           version_id = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id";
+           cache_control = Smaws_Lib.Protocols.RestXml.header_value headers "Cache-Control";
            content_disposition =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Disposition");
-           content_encoding =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Encoding");
-           content_language =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Language");
-           content_type =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Type");
-           content_range =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "Content-Range");
-           expires =
-             Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "Expires");
+             Smaws_Lib.Protocols.RestXml.header_value headers "Content-Disposition";
+           content_encoding = Smaws_Lib.Protocols.RestXml.header_value headers "Content-Encoding";
+           content_language = Smaws_Lib.Protocols.RestXml.header_value headers "Content-Language";
+           content_type = Smaws_Lib.Protocols.RestXml.header_value headers "Content-Type";
+           content_range = Smaws_Lib.Protocols.RestXml.header_value headers "Content-Range";
+           expires = Smaws_Lib.Protocols.RestXml.header_value headers "Expires";
            website_redirect_location =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-website-redirect-location");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-website-redirect-location";
            server_side_encryption =
              Option.map
                (fun s ->
@@ -5268,24 +4923,16 @@ module HeadObject = struct
                    : server_side_encryption))
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption");
            metadata =
-             Some
-               (Smaws_Lib.Protocols.RestXml.prefix_headers ~prefix:"x-amz-meta-" headers
-               |> List.map (fun (k, v) -> (k, (fun s -> s) v)));
+             Some (Smaws_Lib.Protocols.RestXml.prefix_headers ~prefix:"x-amz-meta-" headers);
            sse_customer_algorithm =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-algorithm");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-algorithm";
            sse_customer_key_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-key-MD5");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-key-MD5";
            ssekms_key_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-aws-kms-key-id");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-aws-kms-key-id";
            bucket_key_enabled =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
@@ -5373,14 +5020,14 @@ module ListBucketAnalyticsConfigurations = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}?analytics&x-id=ListBucketAnalyticsConfigurations"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (match request.continuation_token with
-          | Some v -> [ ("continuation-token", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("continuation-token", [ v ]) ]
           | None -> []);
         ]
     in
@@ -5390,7 +5037,7 @@ module ListBucketAnalyticsConfigurations = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -5461,14 +5108,14 @@ module ListBucketIntelligentTieringConfigurations = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}?intelligent-tiering&x-id=ListBucketIntelligentTieringConfigurations"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (match request.continuation_token with
-          | Some v -> [ ("continuation-token", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("continuation-token", [ v ]) ]
           | None -> []);
         ]
     in
@@ -5478,7 +5125,7 @@ module ListBucketIntelligentTieringConfigurations = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -5550,14 +5197,14 @@ module ListBucketInventoryConfigurations = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}?inventory&x-id=ListBucketInventoryConfigurations"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (match request.continuation_token with
-          | Some v -> [ ("continuation-token", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("continuation-token", [ v ]) ]
           | None -> []);
         ]
     in
@@ -5567,7 +5214,7 @@ module ListBucketInventoryConfigurations = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -5638,14 +5285,14 @@ module ListBucketMetricsConfigurations = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}?metrics&x-id=ListBucketMetricsConfigurations"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (match request.continuation_token with
-          | Some v -> [ ("continuation-token", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("continuation-token", [ v ]) ]
           | None -> []);
         ]
     in
@@ -5655,7 +5302,7 @@ module ListBucketMetricsConfigurations = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -5731,12 +5378,10 @@ module ListBuckets = struct
           | Some v -> [ ("max-buckets", [ (fun v -> string_of_int v) v ]) ]
           | None -> []);
           (match request.continuation_token with
-          | Some v -> [ ("continuation-token", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("continuation-token", [ v ]) ]
           | None -> []);
-          (match request.prefix with Some v -> [ ("prefix", [ (fun v -> v) v ]) ] | None -> []);
-          (match request.bucket_region with
-          | Some v -> [ ("bucket-region", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.prefix with Some v -> [ ("prefix", [ v ]) ] | None -> []);
+          (match request.bucket_region with Some v -> [ ("bucket-region", [ v ]) ] | None -> []);
         ]
     in
     let map_params = [] in
@@ -5804,7 +5449,7 @@ module ListDirectoryBuckets = struct
       List.concat
         [
           (match request.continuation_token with
-          | Some v -> [ ("continuation-token", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("continuation-token", [ v ]) ]
           | None -> []);
           (match request.max_directory_buckets with
           | Some v -> [ ("max-directory-buckets", [ (fun v -> string_of_int v) v ]) ]
@@ -5856,28 +5501,24 @@ module ListMultipartUploads = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?uploads"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
-          (match request.delimiter with
-          | Some v -> [ ("delimiter", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.delimiter with Some v -> [ ("delimiter", [ v ]) ] | None -> []);
           (match request.encoding_type with
           | Some v ->
               [ ("encoding-type", [ (fun (v : encoding_type) -> match v with Url -> "url") v ]) ]
           | None -> []);
-          (match request.key_marker with
-          | Some v -> [ ("key-marker", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.key_marker with Some v -> [ ("key-marker", [ v ]) ] | None -> []);
           (match request.max_uploads with
           | Some v -> [ ("max-uploads", [ (fun v -> string_of_int v) v ]) ]
           | None -> []);
-          (match request.prefix with Some v -> [ ("prefix", [ (fun v -> v) v ]) ] | None -> []);
+          (match request.prefix with Some v -> [ ("prefix", [ v ]) ] | None -> []);
           (match request.upload_id_marker with
-          | Some v -> [ ("upload-id-marker", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("upload-id-marker", [ v ]) ]
           | None -> []);
         ]
     in
@@ -5887,7 +5528,7 @@ module ListMultipartUploads = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -6059,26 +5700,21 @@ module ListObjectAnnotations = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}/{Key+}?annotation&x-id=ListObjectAnnotations"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []);
           (match request.max_annotation_results with
           | Some v -> [ ("max-annotation-results", [ (fun v -> string_of_int v) v ]) ]
           | None -> []);
           (match request.annotation_prefix with
-          | Some v -> [ ("annotation-prefix", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("annotation-prefix", [ v ]) ]
           | None -> []);
           (match request.continuation_token with
-          | Some v -> [ ("continuation-token", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("continuation-token", [ v ]) ]
           | None -> []);
         ]
     in
@@ -6095,7 +5731,7 @@ module ListObjectAnnotations = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -6179,9 +5815,7 @@ module ListObjectAnnotations = struct
                bucket = ( ! ) r_bucket;
                key = ( ! ) r_key;
                object_version_id =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-object-version-id");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-object-version-id";
                annotation_prefix = ( ! ) r_annotation_prefix;
                max_annotation_results = ( ! ) r_max_annotation_results;
                annotation_count = ( ! ) r_annotation_count;
@@ -6218,24 +5852,22 @@ module ListObjects = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
-          (match request.delimiter with
-          | Some v -> [ ("delimiter", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.delimiter with Some v -> [ ("delimiter", [ v ]) ] | None -> []);
           (match request.encoding_type with
           | Some v ->
               [ ("encoding-type", [ (fun (v : encoding_type) -> match v with Url -> "url") v ]) ]
           | None -> []);
-          (match request.marker with Some v -> [ ("marker", [ (fun v -> v) v ]) ] | None -> []);
+          (match request.marker with Some v -> [ ("marker", [ v ]) ] | None -> []);
           (match request.max_keys with
           | Some v -> [ ("max-keys", [ (fun v -> string_of_int v) v ]) ]
           | None -> []);
-          (match request.prefix with Some v -> [ ("prefix", [ (fun v -> v) v ]) ] | None -> []);
+          (match request.prefix with Some v -> [ ("prefix", [ v ]) ] | None -> []);
         ]
     in
     let map_params = [] in
@@ -6251,7 +5883,7 @@ module ListObjects = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.optional_object_attributes with
           | Some v ->
@@ -6385,15 +6017,13 @@ module ListObjectsV2 = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?list-type=2"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
-          (match request.delimiter with
-          | Some v -> [ ("delimiter", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.delimiter with Some v -> [ ("delimiter", [ v ]) ] | None -> []);
           (match request.encoding_type with
           | Some v ->
               [ ("encoding-type", [ (fun (v : encoding_type) -> match v with Url -> "url") v ]) ]
@@ -6401,16 +6031,14 @@ module ListObjectsV2 = struct
           (match request.max_keys with
           | Some v -> [ ("max-keys", [ (fun v -> string_of_int v) v ]) ]
           | None -> []);
-          (match request.prefix with Some v -> [ ("prefix", [ (fun v -> v) v ]) ] | None -> []);
+          (match request.prefix with Some v -> [ ("prefix", [ v ]) ] | None -> []);
           (match request.continuation_token with
-          | Some v -> [ ("continuation-token", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("continuation-token", [ v ]) ]
           | None -> []);
           (match request.fetch_owner with
           | Some v -> [ ("fetch-owner", [ (fun v -> string_of_bool v) v ]) ]
           | None -> []);
-          (match request.start_after with
-          | Some v -> [ ("start-after", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.start_after with Some v -> [ ("start-after", [ v ]) ] | None -> []);
         ]
     in
     let map_params = [] in
@@ -6426,7 +6054,7 @@ module ListObjectsV2 = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.optional_object_attributes with
           | Some v ->
@@ -6568,28 +6196,24 @@ module ListObjectVersions = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?versions"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
-          (match request.delimiter with
-          | Some v -> [ ("delimiter", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.delimiter with Some v -> [ ("delimiter", [ v ]) ] | None -> []);
           (match request.encoding_type with
           | Some v ->
               [ ("encoding-type", [ (fun (v : encoding_type) -> match v with Url -> "url") v ]) ]
           | None -> []);
-          (match request.key_marker with
-          | Some v -> [ ("key-marker", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.key_marker with Some v -> [ ("key-marker", [ v ]) ] | None -> []);
           (match request.max_keys with
           | Some v -> [ ("max-keys", [ (fun v -> string_of_int v) v ]) ]
           | None -> []);
-          (match request.prefix with Some v -> [ ("prefix", [ (fun v -> v) v ]) ] | None -> []);
+          (match request.prefix with Some v -> [ ("prefix", [ v ]) ] | None -> []);
           (match request.version_id_marker with
-          | Some v -> [ ("version-id-marker", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("version-id-marker", [ v ]) ]
           | None -> []);
         ]
     in
@@ -6599,7 +6223,7 @@ module ListObjectVersions = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -6761,10 +6385,7 @@ module ListParts = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?x-id=ListParts"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
@@ -6774,10 +6395,10 @@ module ListParts = struct
           | Some v -> [ ("max-parts", [ (fun v -> string_of_int v) v ]) ]
           | None -> []);
           (match request.part_number_marker with
-          | Some v -> [ ("part-number-marker", [ (fun v -> v) v ]) ]
+          | Some v -> [ ("part-number-marker", [ v ]) ]
           | None -> []);
           (let v = request.upload_id in
-           [ ("uploadId", [ (fun v -> v) v ]) ]);
+           [ ("uploadId", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -6793,16 +6414,16 @@ module ListParts = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
         ]
     in
@@ -6913,9 +6534,7 @@ module ListParts = struct
                    (fun s -> Smaws_Lib.Xml.Parse.Primitive.timestamp_httpdate_of_string s)
                    (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-abort-date");
                abort_rule_id =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-abort-rule-id");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-abort-rule-id";
                bucket = ( ! ) r_bucket;
                key = ( ! ) r_key;
                upload_id = ( ! ) r_upload_id;
@@ -6950,7 +6569,7 @@ module PutBucketAbac = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?abac"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -6959,9 +6578,7 @@ module PutBucketAbac = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -6982,7 +6599,7 @@ module PutBucketAbac = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7012,7 +6629,7 @@ module PutBucketAccelerateConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?accelerate"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7022,7 +6639,7 @@ module PutBucketAccelerateConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
@@ -7072,7 +6689,7 @@ module PutBucketAcl = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?acl"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7094,9 +6711,7 @@ module PutBucketAcl = struct
                     v );
               ]
           | None -> []);
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -7117,22 +6732,18 @@ module PutBucketAcl = struct
               ]
           | None -> []);
           (match request.grant_full_control with
-          | Some v -> [ ("x-amz-grant-full-control", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-full-control", v) ]
           | None -> []);
-          (match request.grant_read with
-          | Some v -> [ ("x-amz-grant-read", (fun v -> v) v) ]
-          | None -> []);
+          (match request.grant_read with Some v -> [ ("x-amz-grant-read", v) ] | None -> []);
           (match request.grant_read_ac_p with
-          | Some v -> [ ("x-amz-grant-read-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-read-acp", v) ]
           | None -> []);
-          (match request.grant_write with
-          | Some v -> [ ("x-amz-grant-write", (fun v -> v) v) ]
-          | None -> []);
+          (match request.grant_write with Some v -> [ ("x-amz-grant-write", v) ] | None -> []);
           (match request.grant_write_ac_p with
-          | Some v -> [ ("x-amz-grant-write-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-write-acp", v) ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7165,14 +6776,14 @@ module PutBucketAnalyticsConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?analytics"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -7181,7 +6792,7 @@ module PutBucketAnalyticsConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7212,7 +6823,7 @@ module PutBucketCors = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?cors"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7221,9 +6832,7 @@ module PutBucketCors = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -7244,7 +6853,7 @@ module PutBucketCors = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7274,7 +6883,7 @@ module PutBucketEncryption = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?encryption"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7283,9 +6892,7 @@ module PutBucketEncryption = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -7306,7 +6913,7 @@ module PutBucketEncryption = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7337,14 +6944,14 @@ module PutBucketIntelligentTieringConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?intelligent-tiering"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -7353,7 +6960,7 @@ module PutBucketIntelligentTieringConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7384,14 +6991,14 @@ module PutBucketInventoryConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?inventory"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -7400,7 +7007,7 @@ module PutBucketInventoryConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7431,7 +7038,7 @@ module PutBucketLifecycleConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?lifecycle"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7460,7 +7067,7 @@ module PutBucketLifecycleConfiguration = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.transition_default_minimum_object_size with
           | Some v ->
@@ -7517,7 +7124,7 @@ module PutBucketLogging = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?logging"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7526,9 +7133,7 @@ module PutBucketLogging = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -7549,7 +7154,7 @@ module PutBucketLogging = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7579,14 +7184,14 @@ module PutBucketMetricsConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metrics"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.id in
-           [ ("id", [ (fun v -> v) v ]) ]);
+           [ ("id", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -7595,7 +7200,7 @@ module PutBucketMetricsConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7625,7 +7230,7 @@ module PutBucketNotificationConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?notification"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7635,7 +7240,7 @@ module PutBucketNotificationConfiguration = struct
       List.concat
         [
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.skip_destination_validation with
           | Some v -> [ ("x-amz-skip-destination-validation", (fun v -> string_of_bool v) v) ]
@@ -7669,7 +7274,7 @@ module PutBucketOwnershipControls = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?ownershipControls"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7678,11 +7283,9 @@ module PutBucketOwnershipControls = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
@@ -7731,7 +7334,7 @@ module PutBucketPolicy = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?policy"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7740,9 +7343,7 @@ module PutBucketPolicy = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -7766,7 +7367,7 @@ module PutBucketPolicy = struct
           | Some v -> [ ("x-amz-confirm-remove-self-bucket-access", (fun v -> string_of_bool v) v) ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7792,7 +7393,7 @@ module PutBucketReplication = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?replication"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7801,9 +7402,7 @@ module PutBucketReplication = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -7824,10 +7423,10 @@ module PutBucketReplication = struct
               ]
           | None -> []);
           (match request.token with
-          | Some v -> [ ("x-amz-bucket-object-lock-token", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-bucket-object-lock-token", v) ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7858,7 +7457,7 @@ module PutBucketRequestPayment = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?requestPayment"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7867,9 +7466,7 @@ module PutBucketRequestPayment = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -7890,7 +7487,7 @@ module PutBucketRequestPayment = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7921,7 +7518,7 @@ module PutBucketTagging = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?tagging"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7930,9 +7527,7 @@ module PutBucketTagging = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -7953,7 +7548,7 @@ module PutBucketTagging = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -7983,7 +7578,7 @@ module PutBucketVersioning = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?versioning"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -7992,9 +7587,7 @@ module PutBucketVersioning = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -8014,9 +7607,9 @@ module PutBucketVersioning = struct
                     v );
               ]
           | None -> []);
-          (match request.mf_a with Some v -> [ ("x-amz-mfa", (fun v -> v) v) ] | None -> []);
+          (match request.mf_a with Some v -> [ ("x-amz-mfa", v) ] | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -8047,7 +7640,7 @@ module PutBucketWebsite = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?website"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -8056,9 +7649,7 @@ module PutBucketWebsite = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -8079,7 +7670,7 @@ module PutBucketWebsite = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -8143,10 +7734,7 @@ module PutObject = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?x-id=PutObject"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -8171,27 +7759,17 @@ module PutObject = struct
                     v );
               ]
           | None -> []);
-          (match request.cache_control with
-          | Some v -> [ ("Cache-Control", (fun v -> v) v) ]
-          | None -> []);
+          (match request.cache_control with Some v -> [ ("Cache-Control", v) ] | None -> []);
           (match request.content_disposition with
-          | Some v -> [ ("Content-Disposition", (fun v -> v) v) ]
+          | Some v -> [ ("Content-Disposition", v) ]
           | None -> []);
-          (match request.content_encoding with
-          | Some v -> [ ("Content-Encoding", (fun v -> v) v) ]
-          | None -> []);
-          (match request.content_language with
-          | Some v -> [ ("Content-Language", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_encoding with Some v -> [ ("Content-Encoding", v) ] | None -> []);
+          (match request.content_language with Some v -> [ ("Content-Language", v) ] | None -> []);
           (match request.content_length with
           | Some v -> [ ("Content-Length", (fun v -> Smaws_Lib.CoreTypes.Int64.to_string v) v) ]
           | None -> []);
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
-          (match request.content_type with
-          | Some v -> [ ("Content-Type", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
+          (match request.content_type with Some v -> [ ("Content-Type", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -8212,51 +7790,45 @@ module PutObject = struct
               ]
           | None -> []);
           (match request.checksum_cr_c32 with
-          | Some v -> [ ("x-amz-checksum-crc32", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc32", v) ]
           | None -> []);
           (match request.checksum_crc32_c with
-          | Some v -> [ ("x-amz-checksum-crc32c", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc32c", v) ]
           | None -> []);
           (match request.checksum_crc64nvm_e with
-          | Some v -> [ ("x-amz-checksum-crc64nvme", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc64nvme", v) ]
           | None -> []);
           (match request.checksum_sh_a1 with
-          | Some v -> [ ("x-amz-checksum-sha1", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha1", v) ]
           | None -> []);
           (match request.checksum_sh_a256 with
-          | Some v -> [ ("x-amz-checksum-sha256", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha256", v) ]
           | None -> []);
           (match request.checksum_sh_a512 with
-          | Some v -> [ ("x-amz-checksum-sha512", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha512", v) ]
           | None -> []);
-          (match request.checksum_m_d5 with
-          | Some v -> [ ("x-amz-checksum-md5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.checksum_m_d5 with Some v -> [ ("x-amz-checksum-md5", v) ] | None -> []);
           (match request.checksum_xxhas_h64 with
-          | Some v -> [ ("x-amz-checksum-xxhash64", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash64", v) ]
           | None -> []);
           (match request.checksum_xxhas_h3 with
-          | Some v -> [ ("x-amz-checksum-xxhash3", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash3", v) ]
           | None -> []);
           (match request.checksum_xxhas_h128 with
-          | Some v -> [ ("x-amz-checksum-xxhash128", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash128", v) ]
           | None -> []);
-          (match request.expires with Some v -> [ ("Expires", (fun v -> v) v) ] | None -> []);
-          (match request.if_match with Some v -> [ ("If-Match", (fun v -> v) v) ] | None -> []);
-          (match request.if_none_match with
-          | Some v -> [ ("If-None-Match", (fun v -> v) v) ]
-          | None -> []);
+          (match request.expires with Some v -> [ ("Expires", v) ] | None -> []);
+          (match request.if_match with Some v -> [ ("If-Match", v) ] | None -> []);
+          (match request.if_none_match with Some v -> [ ("If-None-Match", v) ] | None -> []);
           (match request.grant_full_control with
-          | Some v -> [ ("x-amz-grant-full-control", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-full-control", v) ]
           | None -> []);
-          (match request.grant_read with
-          | Some v -> [ ("x-amz-grant-read", (fun v -> v) v) ]
-          | None -> []);
+          (match request.grant_read with Some v -> [ ("x-amz-grant-read", v) ] | None -> []);
           (match request.grant_read_ac_p with
-          | Some v -> [ ("x-amz-grant-read-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-read-acp", v) ]
           | None -> []);
           (match request.grant_write_ac_p with
-          | Some v -> [ ("x-amz-grant-write-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-write-acp", v) ]
           | None -> []);
           (match request.write_offset_bytes with
           | Some v ->
@@ -8298,22 +7870,22 @@ module PutObject = struct
               ]
           | None -> []);
           (match request.website_redirect_location with
-          | Some v -> [ ("x-amz-website-redirect-location", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-website-redirect-location", v) ]
           | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.ssekms_key_id with
-          | Some v -> [ ("x-amz-server-side-encryption-aws-kms-key-id", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-aws-kms-key-id", v) ]
           | None -> []);
           (match request.ssekms_encryption_context with
-          | Some v -> [ ("x-amz-server-side-encryption-context", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-context", v) ]
           | None -> []);
           (match request.bucket_key_enabled with
           | Some v ->
@@ -8326,9 +7898,7 @@ module PutObject = struct
                   (fun (v : request_payer) -> match v with Requester -> "requester") v );
               ]
           | None -> []);
-          (match request.tagging with
-          | Some v -> [ ("x-amz-tagging", (fun v -> v) v) ]
-          | None -> []);
+          (match request.tagging with Some v -> [ ("x-amz-tagging", v) ] | None -> []);
           (match request.object_lock_mode with
           | Some v ->
               [
@@ -8355,17 +7925,12 @@ module PutObject = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
     let prefix_headers =
-      List.concat
-        [
-          (match request.metadata with
-          | Some v -> [ ("x-amz-meta-", List.map (fun (k, v) -> (k, (fun v -> v) v)) v) ]
-          | None -> []);
-        ]
+      List.concat [ (match request.metadata with Some v -> [ ("x-amz-meta-", v) ] | None -> []) ]
     in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
@@ -8377,51 +7942,25 @@ module PutObject = struct
       ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
         ({
-           expiration =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-expiration");
-           e_tag = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "ETag");
-           checksum_cr_c32 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32");
+           expiration = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-expiration";
+           e_tag = Smaws_Lib.Protocols.RestXml.header_value headers "ETag";
+           checksum_cr_c32 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32";
            checksum_crc32_c =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c";
            checksum_crc64nvm_e =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme");
-           checksum_sh_a1 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme";
+           checksum_sh_a1 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1";
            checksum_sh_a256 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256";
            checksum_sh_a512 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512");
-           checksum_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512";
+           checksum_m_d5 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5";
            checksum_xxhas_h64 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64";
            checksum_xxhas_h3 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3";
            checksum_xxhas_h128 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128";
            checksum_type =
              Option.map
                (fun s ->
@@ -8442,30 +7981,18 @@ module PutObject = struct
                   | _ -> failwith "unknown enum value"
                    : server_side_encryption))
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption");
-           version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id");
+           version_id = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id";
            sse_customer_algorithm =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-algorithm");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-algorithm";
            sse_customer_key_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-key-MD5");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-key-MD5";
            ssekms_key_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-aws-kms-key-id");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-aws-kms-key-id";
            ssekms_encryption_context =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-context");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption-context";
            bucket_key_enabled =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
@@ -8506,19 +8033,12 @@ module PutObjectAcl = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?acl"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -8541,9 +8061,7 @@ module PutObjectAcl = struct
                     v );
               ]
           | None -> []);
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -8564,19 +8082,15 @@ module PutObjectAcl = struct
               ]
           | None -> []);
           (match request.grant_full_control with
-          | Some v -> [ ("x-amz-grant-full-control", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-full-control", v) ]
           | None -> []);
-          (match request.grant_read with
-          | Some v -> [ ("x-amz-grant-read", (fun v -> v) v) ]
-          | None -> []);
+          (match request.grant_read with Some v -> [ ("x-amz-grant-read", v) ] | None -> []);
           (match request.grant_read_ac_p with
-          | Some v -> [ ("x-amz-grant-read-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-read-acp", v) ]
           | None -> []);
-          (match request.grant_write with
-          | Some v -> [ ("x-amz-grant-write", (fun v -> v) v) ]
-          | None -> []);
+          (match request.grant_write with Some v -> [ ("x-amz-grant-write", v) ] | None -> []);
           (match request.grant_write_ac_p with
-          | Some v -> [ ("x-amz-grant-write-acp", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-grant-write-acp", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -8586,7 +8100,7 @@ module PutObjectAcl = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -8686,20 +8200,15 @@ module PutObjectAnnotation = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?annotation"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
+          (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []);
           (let v = request.annotation_name in
-           [ ("annotationName", [ (fun v -> v) v ]) ]);
+           [ ("annotationName", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -8708,7 +8217,7 @@ module PutObjectAnnotation = struct
       List.concat
         [
           (match request.object_if_match with
-          | Some v -> [ ("x-amz-object-if-match", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-object-if-match", v) ]
           | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
@@ -8730,38 +8239,34 @@ module PutObjectAnnotation = struct
               ]
           | None -> []);
           (match request.checksum_cr_c32 with
-          | Some v -> [ ("x-amz-checksum-crc32", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc32", v) ]
           | None -> []);
           (match request.checksum_crc32_c with
-          | Some v -> [ ("x-amz-checksum-crc32c", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc32c", v) ]
           | None -> []);
           (match request.checksum_crc64nvm_e with
-          | Some v -> [ ("x-amz-checksum-crc64nvme", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc64nvme", v) ]
           | None -> []);
           (match request.checksum_sh_a1 with
-          | Some v -> [ ("x-amz-checksum-sha1", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha1", v) ]
           | None -> []);
           (match request.checksum_sh_a256 with
-          | Some v -> [ ("x-amz-checksum-sha256", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha256", v) ]
           | None -> []);
           (match request.checksum_sh_a512 with
-          | Some v -> [ ("x-amz-checksum-sha512", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha512", v) ]
           | None -> []);
-          (match request.checksum_m_d5 with
-          | Some v -> [ ("x-amz-checksum-md5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.checksum_m_d5 with Some v -> [ ("x-amz-checksum-md5", v) ] | None -> []);
           (match request.checksum_xxhas_h64 with
-          | Some v -> [ ("x-amz-checksum-xxhash64", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash64", v) ]
           | None -> []);
           (match request.checksum_xxhas_h3 with
-          | Some v -> [ ("x-amz-checksum-xxhash3", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash3", v) ]
           | None -> []);
           (match request.checksum_xxhas_h128 with
-          | Some v -> [ ("x-amz-checksum-xxhash128", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash128", v) ]
           | None -> []);
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.request_payer with
           | Some v ->
               [
@@ -8770,7 +8275,7 @@ module PutObjectAnnotation = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -8804,51 +8309,27 @@ module PutObjectAnnotation = struct
                key = ( ! ) r_key;
                annotation_name = ( ! ) r_annotation_name;
                object_version_id =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-object-version-id");
-               e_tag =
-                 Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "ETag");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-object-version-id";
+               e_tag = Smaws_Lib.Protocols.RestXml.header_value headers "ETag";
                checksum_cr_c32 =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32";
                checksum_crc32_c =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c";
                checksum_crc64nvm_e =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme";
                checksum_sh_a1 =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1";
                checksum_sh_a256 =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256";
                checksum_sh_a512 =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512");
-               checksum_m_d5 =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512";
+               checksum_m_d5 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5";
                checksum_xxhas_h64 =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64";
                checksum_xxhas_h3 =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3";
                checksum_xxhas_h128 =
-                 Option.map
-                   (fun s -> s)
-                   (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128");
+                 Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128";
                checksum_type =
                  Option.map
                    (fun s ->
@@ -8890,19 +8371,12 @@ module PutObjectLegalHold = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?legal-hold"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -8916,9 +8390,7 @@ module PutObjectLegalHold = struct
                   (fun (v : request_payer) -> match v with Requester -> "requester") v );
               ]
           | None -> []);
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -8939,7 +8411,7 @@ module PutObjectLegalHold = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -8980,7 +8452,7 @@ module PutObjectLockConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?object-lock"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -8997,11 +8469,9 @@ module PutObjectLockConfiguration = struct
               ]
           | None -> []);
           (match request.token with
-          | Some v -> [ ("x-amz-bucket-object-lock-token", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-bucket-object-lock-token", v) ]
           | None -> []);
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -9022,7 +8492,7 @@ module PutObjectLockConfiguration = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -9064,19 +8534,12 @@ module PutObjectRetention = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?retention"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -9093,9 +8556,7 @@ module PutObjectRetention = struct
           (match request.bypass_governance_retention with
           | Some v -> [ ("x-amz-bypass-governance-retention", (fun v -> string_of_bool v) v) ]
           | None -> []);
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -9116,7 +8577,7 @@ module PutObjectRetention = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -9157,28 +8618,19 @@ module PutObjectTagging = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?tagging"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -9199,7 +8651,7 @@ module PutObjectTagging = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -9223,12 +8675,7 @@ module PutObjectTagging = struct
     Smaws_Lib.Protocols.RestXml.request ~shape_name:"PutObjectTagging" ~service ~context
       ~method_:`PUT ~uri ~query ~headers ~body ~noErrorWrapping:true
       ~output_deserializer:(fun ~body ~headers ~status ->
-        ({
-           version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id");
-         }
+        ({ version_id = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-version-id" }
           : put_object_tagging_output))
       ~error_deserializer
 end
@@ -9243,7 +8690,7 @@ module PutPublicAccessBlock = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?publicAccessBlock"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -9252,9 +8699,7 @@ module PutPublicAccessBlock = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -9275,7 +8720,7 @@ module PutPublicAccessBlock = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -9316,10 +8761,7 @@ module RenameObject = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?renameObject"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let request =
@@ -9348,12 +8790,10 @@ module RenameObject = struct
       List.concat
         [
           (let v = request.rename_source in
-           [ ("x-amz-rename-source", (fun v -> v) v) ]);
-          (match request.destination_if_match with
-          | Some v -> [ ("If-Match", (fun v -> v) v) ]
-          | None -> []);
+           [ ("x-amz-rename-source", v) ]);
+          (match request.destination_if_match with Some v -> [ ("If-Match", v) ] | None -> []);
           (match request.destination_if_none_match with
-          | Some v -> [ ("If-None-Match", (fun v -> v) v) ]
+          | Some v -> [ ("If-None-Match", v) ]
           | None -> []);
           (match request.destination_if_modified_since with
           | Some v ->
@@ -9372,10 +8812,10 @@ module RenameObject = struct
               ]
           | None -> []);
           (match request.source_if_match with
-          | Some v -> [ ("x-amz-rename-source-if-match", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-rename-source-if-match", v) ]
           | None -> []);
           (match request.source_if_none_match with
-          | Some v -> [ ("x-amz-rename-source-if-none-match", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-rename-source-if-none-match", v) ]
           | None -> []);
           (match request.source_if_modified_since with
           | Some v ->
@@ -9393,9 +8833,7 @@ module RenameObject = struct
                 );
               ]
           | None -> []);
-          (match request.client_token with
-          | Some v -> [ ("x-amz-client-token", (fun v -> v) v) ]
-          | None -> []);
+          (match request.client_token with Some v -> [ ("x-amz-client-token", v) ] | None -> []);
         ]
     in
     let prefix_headers = [] in
@@ -9427,19 +8865,12 @@ module RestoreObject = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?restore"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -9473,7 +8904,7 @@ module RestoreObject = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -9500,9 +8931,7 @@ module RestoreObject = struct
                    : request_charged))
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-request-charged");
            restore_output_path =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-restore-output-path");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-restore-output-path";
          }
           : restore_object_output))
       ~error_deserializer
@@ -9518,10 +8947,7 @@ module SelectObjectContent = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?select&select-type=2"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -9531,16 +8957,16 @@ module SelectObjectContent = struct
       List.concat
         [
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -9581,7 +9007,7 @@ module UpdateBucketMetadataAnnotationTableConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metadataAnnotationTable"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -9590,9 +9016,7 @@ module UpdateBucketMetadataAnnotationTableConfiguration = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -9613,7 +9037,7 @@ module UpdateBucketMetadataAnnotationTableConfiguration = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -9645,7 +9069,7 @@ module UpdateBucketMetadataInventoryTableConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metadataInventoryTable"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -9654,9 +9078,7 @@ module UpdateBucketMetadataInventoryTableConfiguration = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -9677,7 +9099,7 @@ module UpdateBucketMetadataInventoryTableConfiguration = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -9709,7 +9131,7 @@ module UpdateBucketMetadataJournalTableConfiguration = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}?metadataJournalTable"
-        ~labels:[ ("Bucket", (fun v -> v) request.bucket, false) ]
+        ~labels:[ ("Bucket", request.bucket, false) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params = [] in
@@ -9718,9 +9140,7 @@ module UpdateBucketMetadataJournalTableConfiguration = struct
     let named_headers =
       List.concat
         [
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -9741,7 +9161,7 @@ module UpdateBucketMetadataJournalTableConfiguration = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -9798,19 +9218,12 @@ module UpdateObjectEncryption = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?encryption"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
-        [
-          (match request.version_id with
-          | Some v -> [ ("versionId", [ (fun v -> v) v ]) ]
-          | None -> []);
-        ]
+        [ (match request.version_id with Some v -> [ ("versionId", [ v ]) ] | None -> []) ]
     in
     let map_params = [] in
     let query = Smaws_Lib.Http_bindings.merge_query_params ~named_params ~map_params in
@@ -9825,11 +9238,9 @@ module UpdateObjectEncryption = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -9886,10 +9297,7 @@ module UploadPart = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?x-id=UploadPart"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
@@ -9898,7 +9306,7 @@ module UploadPart = struct
           (let v = request.part_number in
            [ ("partNumber", [ (fun v -> string_of_int v) v ]) ]);
           (let v = request.upload_id in
-           [ ("uploadId", [ (fun v -> v) v ]) ]);
+           [ ("uploadId", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -9909,9 +9317,7 @@ module UploadPart = struct
           (match request.content_length with
           | Some v -> [ ("Content-Length", (fun v -> Smaws_Lib.CoreTypes.Int64.to_string v) v) ]
           | None -> []);
-          (match request.content_m_d5 with
-          | Some v -> [ ("Content-MD5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.content_m_d5 with Some v -> [ ("Content-MD5", v) ] | None -> []);
           (match request.checksum_algorithm with
           | Some v ->
               [
@@ -9932,43 +9338,41 @@ module UploadPart = struct
               ]
           | None -> []);
           (match request.checksum_cr_c32 with
-          | Some v -> [ ("x-amz-checksum-crc32", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc32", v) ]
           | None -> []);
           (match request.checksum_crc32_c with
-          | Some v -> [ ("x-amz-checksum-crc32c", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc32c", v) ]
           | None -> []);
           (match request.checksum_crc64nvm_e with
-          | Some v -> [ ("x-amz-checksum-crc64nvme", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-crc64nvme", v) ]
           | None -> []);
           (match request.checksum_sh_a1 with
-          | Some v -> [ ("x-amz-checksum-sha1", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha1", v) ]
           | None -> []);
           (match request.checksum_sh_a256 with
-          | Some v -> [ ("x-amz-checksum-sha256", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha256", v) ]
           | None -> []);
           (match request.checksum_sh_a512 with
-          | Some v -> [ ("x-amz-checksum-sha512", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-sha512", v) ]
           | None -> []);
-          (match request.checksum_m_d5 with
-          | Some v -> [ ("x-amz-checksum-md5", (fun v -> v) v) ]
-          | None -> []);
+          (match request.checksum_m_d5 with Some v -> [ ("x-amz-checksum-md5", v) ] | None -> []);
           (match request.checksum_xxhas_h64 with
-          | Some v -> [ ("x-amz-checksum-xxhash64", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash64", v) ]
           | None -> []);
           (match request.checksum_xxhas_h3 with
-          | Some v -> [ ("x-amz-checksum-xxhash3", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash3", v) ]
           | None -> []);
           (match request.checksum_xxhas_h128 with
-          | Some v -> [ ("x-amz-checksum-xxhash128", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-checksum-xxhash128", v) ]
           | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -9978,7 +9382,7 @@ module UploadPart = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -10004,62 +9408,33 @@ module UploadPart = struct
                   | _ -> failwith "unknown enum value"
                    : server_side_encryption))
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption");
-           e_tag = Option.map (fun s -> s) (Smaws_Lib.Protocols.RestXml.header_value headers "ETag");
-           checksum_cr_c32 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32");
+           e_tag = Smaws_Lib.Protocols.RestXml.header_value headers "ETag";
+           checksum_cr_c32 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32";
            checksum_crc32_c =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc32c";
            checksum_crc64nvm_e =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme");
-           checksum_sh_a1 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-crc64nvme";
+           checksum_sh_a1 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha1";
            checksum_sh_a256 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha256";
            checksum_sh_a512 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512");
-           checksum_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-sha512";
+           checksum_m_d5 = Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-md5";
            checksum_xxhas_h64 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash64";
            checksum_xxhas_h3 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash3";
            checksum_xxhas_h128 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-checksum-xxhash128";
            sse_customer_algorithm =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-algorithm");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-algorithm";
            sse_customer_key_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-key-MD5");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-key-MD5";
            ssekms_key_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-aws-kms-key-id");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-aws-kms-key-id";
            bucket_key_enabled =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
@@ -10086,10 +9461,7 @@ module UploadPartCopy = struct
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
     let path =
       Smaws_Lib.Http_bindings.substitute_labels ~template:"/{Bucket}/{Key+}?x-id=UploadPartCopy"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
@@ -10098,7 +9470,7 @@ module UploadPartCopy = struct
           (let v = request.part_number in
            [ ("partNumber", [ (fun v -> string_of_int v) v ]) ]);
           (let v = request.upload_id in
-           [ ("uploadId", [ (fun v -> v) v ]) ]);
+           [ ("uploadId", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -10107,9 +9479,9 @@ module UploadPartCopy = struct
       List.concat
         [
           (let v = request.copy_source in
-           [ ("x-amz-copy-source", (fun v -> v) v) ]);
+           [ ("x-amz-copy-source", v) ]);
           (match request.copy_source_if_match with
-          | Some v -> [ ("x-amz-copy-source-if-match", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-if-match", v) ]
           | None -> []);
           (match request.copy_source_if_modified_since with
           | Some v ->
@@ -10120,7 +9492,7 @@ module UploadPartCopy = struct
               ]
           | None -> []);
           (match request.copy_source_if_none_match with
-          | Some v -> [ ("x-amz-copy-source-if-none-match", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-if-none-match", v) ]
           | None -> []);
           (match request.copy_source_if_unmodified_since with
           | Some v ->
@@ -10131,27 +9503,25 @@ module UploadPartCopy = struct
               ]
           | None -> []);
           (match request.copy_source_range with
-          | Some v -> [ ("x-amz-copy-source-range", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-range", v) ]
           | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.sse_customer_key with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.copy_source_sse_customer_algorithm with
-          | Some v ->
-              [ ("x-amz-copy-source-server-side-encryption-customer-algorithm", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.copy_source_sse_customer_key with
-          | Some v -> [ ("x-amz-copy-source-server-side-encryption-customer-key", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-server-side-encryption-customer-key", v) ]
           | None -> []);
           (match request.copy_source_sse_customer_key_m_d5 with
-          | Some v ->
-              [ ("x-amz-copy-source-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-copy-source-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.request_payer with
           | Some v ->
@@ -10161,10 +9531,10 @@ module UploadPartCopy = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.expected_source_bucket_owner with
-          | Some v -> [ ("x-amz-source-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-source-expected-bucket-owner", v) ]
           | None -> []);
         ]
     in
@@ -10300,9 +9670,7 @@ module UploadPartCopy = struct
         ({
            copy_part_result = payload_val;
            copy_source_version_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-copy-source-version-id");
+             Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-copy-source-version-id";
            server_side_encryption =
              Option.map
                (fun s ->
@@ -10315,20 +9683,14 @@ module UploadPartCopy = struct
                    : server_side_encryption))
                (Smaws_Lib.Protocols.RestXml.header_value headers "x-amz-server-side-encryption");
            sse_customer_algorithm =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-algorithm");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-algorithm";
            sse_customer_key_m_d5 =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-customer-key-MD5");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-customer-key-MD5";
            ssekms_key_id =
-             Option.map
-               (fun s -> s)
-               (Smaws_Lib.Protocols.RestXml.header_value headers
-                  "x-amz-server-side-encryption-aws-kms-key-id");
+             Smaws_Lib.Protocols.RestXml.header_value headers
+               "x-amz-server-side-encryption-aws-kms-key-id";
            bucket_key_enabled =
              Option.map
                (fun s -> Smaws_Lib.Xml.Parse.Primitive.bool_of_string s)
@@ -10359,7 +9721,7 @@ module WriteGetObjectResponse = struct
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let uri =
       Smaws_Lib.Http_bindings.substitute_host_prefix ~host_prefix:"{RequestRoute}."
-        ~labels:[ ("RequestRoute", (fun v -> v) request.request_route) ]
+        ~labels:[ ("RequestRoute", request.request_route) ]
         uri
     in
     let named_params = [] in
@@ -10369,83 +9731,77 @@ module WriteGetObjectResponse = struct
       List.concat
         [
           (let v = request.request_route in
-           [ ("x-amz-request-route", (fun v -> v) v) ]);
+           [ ("x-amz-request-route", v) ]);
           (let v = request.request_token in
-           [ ("x-amz-request-token", (fun v -> v) v) ]);
+           [ ("x-amz-request-token", v) ]);
           (match request.status_code with
           | Some v -> [ ("x-amz-fwd-status", (fun v -> string_of_int v) v) ]
           | None -> []);
-          (match request.error_code with
-          | Some v -> [ ("x-amz-fwd-error-code", (fun v -> v) v) ]
-          | None -> []);
+          (match request.error_code with Some v -> [ ("x-amz-fwd-error-code", v) ] | None -> []);
           (match request.error_message with
-          | Some v -> [ ("x-amz-fwd-error-message", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-error-message", v) ]
           | None -> []);
           (match request.accept_ranges with
-          | Some v -> [ ("x-amz-fwd-header-accept-ranges", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-accept-ranges", v) ]
           | None -> []);
           (match request.cache_control with
-          | Some v -> [ ("x-amz-fwd-header-Cache-Control", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-Cache-Control", v) ]
           | None -> []);
           (match request.content_disposition with
-          | Some v -> [ ("x-amz-fwd-header-Content-Disposition", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-Content-Disposition", v) ]
           | None -> []);
           (match request.content_encoding with
-          | Some v -> [ ("x-amz-fwd-header-Content-Encoding", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-Content-Encoding", v) ]
           | None -> []);
           (match request.content_language with
-          | Some v -> [ ("x-amz-fwd-header-Content-Language", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-Content-Language", v) ]
           | None -> []);
           (match request.content_length with
           | Some v -> [ ("Content-Length", (fun v -> Smaws_Lib.CoreTypes.Int64.to_string v) v) ]
           | None -> []);
           (match request.content_range with
-          | Some v -> [ ("x-amz-fwd-header-Content-Range", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-Content-Range", v) ]
           | None -> []);
           (match request.content_type with
-          | Some v -> [ ("x-amz-fwd-header-Content-Type", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-Content-Type", v) ]
           | None -> []);
           (match request.checksum_cr_c32 with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-crc32", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-crc32", v) ]
           | None -> []);
           (match request.checksum_crc32_c with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-crc32c", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-crc32c", v) ]
           | None -> []);
           (match request.checksum_crc64nvm_e with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-crc64nvme", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-crc64nvme", v) ]
           | None -> []);
           (match request.checksum_sh_a1 with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-sha1", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-sha1", v) ]
           | None -> []);
           (match request.checksum_sh_a256 with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-sha256", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-sha256", v) ]
           | None -> []);
           (match request.checksum_sh_a512 with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-sha512", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-sha512", v) ]
           | None -> []);
           (match request.checksum_m_d5 with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-md5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-md5", v) ]
           | None -> []);
           (match request.checksum_xxhas_h64 with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-xxhash64", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-xxhash64", v) ]
           | None -> []);
           (match request.checksum_xxhas_h3 with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-xxhash3", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-xxhash3", v) ]
           | None -> []);
           (match request.checksum_xxhas_h128 with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-xxhash128", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-checksum-xxhash128", v) ]
           | None -> []);
           (match request.delete_marker with
           | Some v -> [ ("x-amz-fwd-header-x-amz-delete-marker", (fun v -> string_of_bool v) v) ]
           | None -> []);
-          (match request.e_tag with
-          | Some v -> [ ("x-amz-fwd-header-ETag", (fun v -> v) v) ]
-          | None -> []);
-          (match request.expires with
-          | Some v -> [ ("x-amz-fwd-header-Expires", (fun v -> v) v) ]
-          | None -> []);
+          (match request.e_tag with Some v -> [ ("x-amz-fwd-header-ETag", v) ] | None -> []);
+          (match request.expires with Some v -> [ ("x-amz-fwd-header-Expires", v) ] | None -> []);
           (match request.expiration with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-expiration", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-expiration", v) ]
           | None -> []);
           (match request.last_modified with
           | Some v ->
@@ -10508,7 +9864,7 @@ module WriteGetObjectResponse = struct
               ]
           | None -> []);
           (match request.restore with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-restore", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-restore", v) ]
           | None -> []);
           (match request.server_side_encryption with
           | Some v ->
@@ -10524,18 +9880,13 @@ module WriteGetObjectResponse = struct
               ]
           | None -> []);
           (match request.sse_customer_algorithm with
-          | Some v ->
-              [
-                ("x-amz-fwd-header-x-amz-server-side-encryption-customer-algorithm", (fun v -> v) v);
-              ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-server-side-encryption-customer-algorithm", v) ]
           | None -> []);
           (match request.ssekms_key_id with
-          | Some v ->
-              [ ("x-amz-fwd-header-x-amz-server-side-encryption-aws-kms-key-id", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-server-side-encryption-aws-kms-key-id", v) ]
           | None -> []);
           (match request.sse_customer_key_m_d5 with
-          | Some v ->
-              [ ("x-amz-fwd-header-x-amz-server-side-encryption-customer-key-MD5", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-server-side-encryption-customer-key-MD5", v) ]
           | None -> []);
           (match request.storage_class with
           | Some v ->
@@ -10563,7 +9914,7 @@ module WriteGetObjectResponse = struct
           | Some v -> [ ("x-amz-fwd-header-x-amz-tagging-count", (fun v -> string_of_int v) v) ]
           | None -> []);
           (match request.version_id with
-          | Some v -> [ ("x-amz-fwd-header-x-amz-version-id", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-fwd-header-x-amz-version-id", v) ]
           | None -> []);
           (match request.bucket_key_enabled with
           | Some v ->
@@ -10575,12 +9926,7 @@ module WriteGetObjectResponse = struct
         ]
     in
     let prefix_headers =
-      List.concat
-        [
-          (match request.metadata with
-          | Some v -> [ ("x-amz-meta-", List.map (fun (k, v) -> (k, (fun v -> v) v)) v) ]
-          | None -> []);
-        ]
+      List.concat [ (match request.metadata with Some v -> [ ("x-amz-meta-", v) ] | None -> []) ]
     in
     let headers = Smaws_Lib.Http_bindings.merge_headers ~named_headers ~prefix_headers in
     let body =
@@ -10615,17 +9961,14 @@ module AbortMultipartUpload = struct
     let path =
       Smaws_Lib.Http_bindings.substitute_labels
         ~template:"/{Bucket}/{Key+}?x-id=AbortMultipartUpload"
-        ~labels:
-          [
-            ("Bucket", (fun v -> v) request.bucket, false); ("Key", (fun v -> v) request.key, true);
-          ]
+        ~labels:[ ("Bucket", request.bucket, false); ("Key", request.key, true) ]
     in
     let uri = Smaws_Lib.Http_bindings.apply_path ~base ~path in
     let named_params =
       List.concat
         [
           (let v = request.upload_id in
-           [ ("uploadId", [ (fun v -> v) v ]) ]);
+           [ ("uploadId", [ v ]) ]);
         ]
     in
     let map_params = [] in
@@ -10641,7 +9984,7 @@ module AbortMultipartUpload = struct
               ]
           | None -> []);
           (match request.expected_bucket_owner with
-          | Some v -> [ ("x-amz-expected-bucket-owner", (fun v -> v) v) ]
+          | Some v -> [ ("x-amz-expected-bucket-owner", v) ]
           | None -> []);
           (match request.if_match_initiated_time with
           | Some v ->
