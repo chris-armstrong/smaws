@@ -6,9 +6,7 @@ open Smaws_Lib.Xml.Parse
 
 module SimpleScalarProperties = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : simple_scalar_properties_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -103,9 +101,7 @@ end
 
 module TimestampFormatHeaders = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : timestamp_format_headers_i_o) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -215,9 +211,7 @@ end
 
 module XmlAttributes = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_attributes_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -261,9 +255,7 @@ end
 
 module XmlAttributesInMiddle = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_attributes_in_middle_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -325,9 +317,7 @@ end
 
 module XmlAttributesOnPayload = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_attributes_on_payload_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -386,9 +376,7 @@ end
 
 module XmlBlobs = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_blobs_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -422,9 +410,7 @@ end
 
 module XmlEmptyBlobs = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_empty_blobs_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -459,9 +445,7 @@ end
 
 module XmlEmptyLists = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_empty_lists_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -634,9 +618,7 @@ end
 
 module XmlEmptyMaps = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_empty_maps_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -687,9 +669,7 @@ end
 
 module XmlEmptyStrings = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_empty_strings_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -725,9 +705,7 @@ end
 
 module XmlEnums = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_enums_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -828,9 +806,7 @@ end
 
 module XmlIntEnums = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_int_enums_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -932,9 +908,7 @@ end
 
 module XmlLists = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_lists_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1106,9 +1080,7 @@ end
 
 module XmlMaps = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_maps_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1158,9 +1130,7 @@ end
 
 module XmlMapsXmlName = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_maps_xml_name_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1211,9 +1181,7 @@ end
 
 module XmlMapWithXmlNamespace = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_map_with_xml_namespace_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1261,9 +1229,7 @@ end
 
 module XmlNamespaces = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_namespaces_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1303,9 +1269,7 @@ end
 
 module XmlTimestamps = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_timestamps_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1395,9 +1359,7 @@ end
 
 module XmlUnions = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : xml_unions_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1437,9 +1399,7 @@ end
 
 module RecursiveShapes = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : recursive_shapes_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1479,9 +1439,7 @@ end
 
 module QueryPrecedence = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : query_precedence_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1507,9 +1465,7 @@ end
 
 module QueryParamsAsStringListMap = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : query_params_as_string_list_map_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1535,9 +1491,7 @@ end
 
 module QueryIdempotencyTokenAutoFill = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : query_idempotency_token_auto_fill_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1569,9 +1523,7 @@ end
 
 module PutWithContentEncoding = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_with_content_encoding_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1603,9 +1555,7 @@ end
 
 module OmitsNullSerializesEmptyString = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : omits_null_serializes_empty_string_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1635,9 +1585,7 @@ end
 
 module NullAndEmptyHeadersServer = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : null_and_empty_headers_i_o) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1676,9 +1624,7 @@ end
 
 module NullAndEmptyHeadersClient = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : null_and_empty_headers_i_o) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1717,9 +1663,7 @@ end
 
 module NoInputAndOutput = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1742,9 +1686,7 @@ end
 
 module NoInputAndNoOutput = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1767,9 +1709,7 @@ end
 
 module NestedXmlMaps = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : nested_xml_maps_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1836,9 +1776,7 @@ end
 
 module NestedXmlMapWithXmlName = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : nested_xml_map_with_xml_name_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1892,9 +1830,7 @@ end
 
 module InputAndOutputWithHeaders = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : input_and_output_with_headers_i_o) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2097,9 +2033,7 @@ end
 
 module IgnoreQueryParamsInResponse = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2131,9 +2065,7 @@ end
 
 module HttpStringPayload = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : string_payload_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2155,9 +2087,7 @@ end
 
 module HttpResponseCode = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2179,9 +2109,7 @@ end
 
 module HttpRequestWithLabelsAndTimestampFormat = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_request_with_labels_and_timestamp_format_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2237,9 +2165,7 @@ end
 
 module HttpRequestWithLabels = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_request_with_labels_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2284,9 +2210,7 @@ end
 
 module HttpRequestWithGreedyLabelInPath = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_request_with_greedy_label_in_path_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2311,9 +2235,7 @@ end
 
 module HttpRequestWithFloatLabels = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_request_with_float_labels_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2347,9 +2269,7 @@ end
 
 module HttpPrefixHeaders = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_prefix_headers_input_output) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2381,9 +2301,7 @@ end
 
 module HttpPayloadWithXmlNamespaceAndPrefix = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_payload_with_xml_namespace_and_prefix_input_output) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2434,9 +2352,7 @@ end
 
 module HttpPayloadWithXmlNamespace = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_payload_with_xml_namespace_input_output) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2485,9 +2401,7 @@ end
 
 module HttpPayloadWithXmlName = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_payload_with_xml_name_input_output) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2535,9 +2449,7 @@ end
 
 module HttpPayloadWithUnion = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_payload_with_union_input_output) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2579,9 +2491,7 @@ end
 
 module HttpPayloadWithStructure = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_payload_with_structure_input_output) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2632,9 +2542,7 @@ end
 
 module HttpPayloadWithMemberXmlName = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_payload_with_member_xml_name_input_output) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2682,9 +2590,7 @@ end
 
 module HttpPayloadTraitsWithMediaType = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_payload_traits_with_media_type_input_output) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2718,9 +2624,7 @@ end
 
 module HttpPayloadTraits = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_payload_traits_input_output) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2755,9 +2659,7 @@ end
 
 module HttpEnumPayload = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : enum_payload_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2793,9 +2695,7 @@ end
 
 module HttpEmptyPrefixHeaders = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : http_empty_prefix_headers_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2890,9 +2790,7 @@ end
 
 module FractionalSeconds = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2929,9 +2827,7 @@ end
 
 module FlattenedXmlMapWithXmlNamespace = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2972,9 +2868,7 @@ end
 
 module FlattenedXmlMapWithXmlName = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : flattened_xml_map_with_xml_name_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3019,9 +2913,7 @@ end
 
 module FlattenedXmlMap = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : flattened_xml_map_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3068,9 +2960,7 @@ end
 
 module EndpointWithHostLabelOperation = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : endpoint_with_host_label_operation_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3104,9 +2994,7 @@ end
 
 module EndpointWithHostLabelHeaderOperation = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : host_label_header_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3141,9 +3029,7 @@ end
 
 module EndpointOperation = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3167,9 +3053,7 @@ end
 
 module EmptyInputAndEmptyOutput = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : empty_input_and_empty_output_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3192,9 +3076,7 @@ end
 
 module DatetimeOffsets = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3229,9 +3111,7 @@ end
 
 module ContentTypeParameters = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : content_type_parameters_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3259,9 +3139,7 @@ end
 
 module ConstantQueryString = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : constant_query_string_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3286,9 +3164,7 @@ end
 
 module ConstantAndVariableQueryString = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : constant_and_variable_query_string_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3318,9 +3194,7 @@ end
 
 module BodyWithXmlName = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : body_with_xml_name_input_output) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3360,9 +3234,7 @@ end
 
 module AllQueryStringTypes = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : all_query_string_types_input) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in

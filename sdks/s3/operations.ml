@@ -6,9 +6,7 @@ open Smaws_Lib.Xml.Parse
 
 module CompleteMultipartUpload = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : complete_multipart_upload_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -812,9 +810,7 @@ end
 
 module CreateBucketMetadataConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : create_bucket_metadata_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -873,9 +869,7 @@ end
 
 module CreateBucketMetadataTableConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : create_bucket_metadata_table_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -934,9 +928,7 @@ end
 
 module CreateMultipartUpload = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : create_multipart_upload_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1325,9 +1317,7 @@ end
 
 module DeleteBucket = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1358,9 +1348,7 @@ end
 
 module DeleteBucketAnalyticsConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_analytics_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1397,9 +1385,7 @@ end
 
 module DeleteBucketCors = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_cors_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1430,9 +1416,7 @@ end
 
 module DeleteBucketEncryption = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_encryption_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1463,9 +1447,7 @@ end
 
 module DeleteBucketIntelligentTieringConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_intelligent_tiering_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1502,9 +1484,7 @@ end
 
 module DeleteBucketInventoryConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_inventory_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1541,9 +1521,7 @@ end
 
 module DeleteBucketLifecycle = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_lifecycle_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1574,9 +1552,7 @@ end
 
 module DeleteBucketMetadataConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_metadata_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1607,9 +1583,7 @@ end
 
 module DeleteBucketMetadataTableConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_metadata_table_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1640,9 +1614,7 @@ end
 
 module DeleteBucketMetricsConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_metrics_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1679,9 +1651,7 @@ end
 
 module DeleteBucketOwnershipControls = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_ownership_controls_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1712,9 +1682,7 @@ end
 
 module DeleteBucketPolicy = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_policy_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1745,9 +1713,7 @@ end
 
 module DeleteBucketReplication = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_replication_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1778,9 +1744,7 @@ end
 
 module DeleteBucketTagging = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_tagging_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1811,9 +1775,7 @@ end
 
 module DeleteBucketWebsite = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_bucket_website_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1844,9 +1806,7 @@ end
 
 module DeleteObject = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_object_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -1997,9 +1957,7 @@ end
 
 module DeleteObjects = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_objects_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2095,9 +2053,7 @@ end
 
 module DeleteObjectTagging = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_object_tagging_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2133,9 +2089,7 @@ end
 
 module DeletePublicAccessBlock = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : delete_public_access_block_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2166,9 +2120,7 @@ end
 
 module GetBucketAbac = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_abac_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2221,9 +2173,7 @@ end
 
 module GetBucketAccelerateConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_accelerate_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2284,9 +2234,7 @@ end
 
 module GetBucketAcl = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_acl_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2336,9 +2284,7 @@ end
 
 module GetBucketAnalyticsConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_analytics_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2418,9 +2364,7 @@ end
 
 module GetBucketCors = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_cors_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2463,9 +2407,7 @@ end
 
 module GetBucketEncryption = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_encryption_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2519,9 +2461,7 @@ end
 
 module GetBucketIntelligentTieringConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_intelligent_tiering_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2609,9 +2549,7 @@ end
 
 module GetBucketInventoryConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_inventory_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2735,9 +2673,7 @@ end
 
 module GetBucketLifecycleConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_lifecycle_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2793,9 +2729,7 @@ end
 
 module GetBucketLocation = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_location_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2840,9 +2774,7 @@ end
 
 module GetBucketLogging = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_logging_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2887,9 +2819,7 @@ end
 
 module GetBucketMetadataConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_metadata_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -2949,9 +2879,7 @@ end
 
 module GetBucketMetadataTableConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_metadata_table_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3029,9 +2957,7 @@ end
 
 module GetBucketMetricsConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_metrics_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3097,9 +3023,7 @@ end
 
 module GetBucketNotificationConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_notification_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3177,9 +3101,7 @@ end
 
 module GetBucketOwnershipControls = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_ownership_controls_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3232,9 +3154,7 @@ end
 
 module GetBucketPolicy = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_policy_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3266,9 +3186,7 @@ end
 
 module GetBucketPolicyStatus = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_policy_status_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3321,9 +3239,7 @@ end
 
 module GetBucketReplication = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_replication_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3384,9 +3300,7 @@ end
 
 module GetBucketRequestPayment = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_request_payment_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3428,9 +3342,7 @@ end
 
 module GetBucketTagging = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_tagging_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3476,9 +3388,7 @@ end
 
 module GetBucketVersioning = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_versioning_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -3531,9 +3441,7 @@ end
 
 module GetBucketWebsite = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_bucket_website_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -4266,9 +4174,7 @@ end
 
 module GetObjectLegalHold = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_object_legal_hold_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -4331,9 +4237,7 @@ end
 
 module GetObjectLockConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_object_lock_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -4394,9 +4298,7 @@ end
 
 module GetObjectRetention = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_object_retention_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -4467,9 +4369,7 @@ end
 
 module GetObjectTagging = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_object_tagging_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -4529,9 +4429,7 @@ end
 
 module GetObjectTorrent = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_object_torrent_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -4580,9 +4478,7 @@ end
 
 module GetPublicAccessBlock = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : get_public_access_block_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -5011,9 +4907,7 @@ end
 
 module ListBucketAnalyticsConfigurations = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : list_bucket_analytics_configurations_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -5099,9 +4993,7 @@ end
 
 module ListBucketIntelligentTieringConfigurations = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : list_bucket_intelligent_tiering_configurations_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -5188,9 +5080,7 @@ end
 
 module ListBucketInventoryConfigurations = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : list_bucket_inventory_configurations_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -5276,9 +5166,7 @@ end
 
 module ListBucketMetricsConfigurations = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : list_bucket_metrics_configurations_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -5361,9 +5249,7 @@ end
 
 module ListBuckets = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : list_buckets_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -5435,9 +5321,7 @@ end
 
 module ListDirectoryBuckets = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : list_directory_buckets_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -5493,9 +5377,7 @@ end
 
 module ListMultipartUploads = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : list_multipart_uploads_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -6188,9 +6070,7 @@ end
 
 module ListObjectVersions = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : list_object_versions_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -6377,9 +6257,7 @@ end
 
 module ListParts = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : list_parts_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -6561,9 +6439,7 @@ end
 
 module PutBucketAbac = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_abac_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -6621,9 +6497,7 @@ end
 
 module PutBucketAccelerateConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_accelerate_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -6681,9 +6555,7 @@ end
 
 module PutBucketAcl = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_acl_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -6768,9 +6640,7 @@ end
 
 module PutBucketAnalyticsConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_analytics_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -6815,9 +6685,7 @@ end
 
 module PutBucketCors = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_cors_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -6875,9 +6743,7 @@ end
 
 module PutBucketEncryption = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_encryption_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -6936,9 +6802,7 @@ end
 
 module PutBucketIntelligentTieringConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_intelligent_tiering_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -6983,9 +6847,7 @@ end
 
 module PutBucketInventoryConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_inventory_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7030,9 +6892,7 @@ end
 
 module PutBucketLifecycleConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_lifecycle_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7116,9 +6976,7 @@ end
 
 module PutBucketLogging = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_logging_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7176,9 +7034,7 @@ end
 
 module PutBucketMetricsConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_metrics_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7222,9 +7078,7 @@ end
 
 module PutBucketNotificationConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_notification_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7266,9 +7120,7 @@ end
 
 module PutBucketOwnershipControls = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_ownership_controls_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7326,9 +7178,7 @@ end
 
 module PutBucketPolicy = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_policy_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7385,9 +7235,7 @@ end
 
 module PutBucketReplication = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_replication_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7449,9 +7297,7 @@ end
 
 module PutBucketRequestPayment = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_request_payment_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7510,9 +7356,7 @@ end
 
 module PutBucketTagging = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_tagging_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7570,9 +7414,7 @@ end
 
 module PutBucketVersioning = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_versioning_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -7632,9 +7474,7 @@ end
 
 module PutBucketWebsite = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_bucket_website_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -8363,9 +8203,7 @@ end
 
 module PutObjectLegalHold = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_object_legal_hold_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -8444,9 +8282,7 @@ end
 
 module PutObjectLockConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_object_lock_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -8526,9 +8362,7 @@ end
 
 module PutObjectRetention = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_object_retention_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -8610,9 +8444,7 @@ end
 
 module PutObjectTagging = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_object_tagging_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -8682,9 +8514,7 @@ end
 
 module PutPublicAccessBlock = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : put_public_access_block_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -8939,9 +8769,7 @@ end
 
 module SelectObjectContent = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : select_object_content_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -8999,9 +8827,7 @@ end
 
 module UpdateBucketMetadataAnnotationTableConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : update_bucket_metadata_annotation_table_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -9061,9 +8887,7 @@ end
 
 module UpdateBucketMetadataInventoryTableConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : update_bucket_metadata_inventory_table_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -9123,9 +8947,7 @@ end
 
 module UpdateBucketMetadataJournalTableConfiguration = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : update_bucket_metadata_journal_table_configuration_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -9289,9 +9111,7 @@ end
 
 module UploadPart = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : upload_part_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -9453,9 +9273,7 @@ end
 
 module UploadPartCopy = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : upload_part_copy_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in
@@ -9709,9 +9527,7 @@ end
 
 module WriteGetObjectResponse = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : write_get_object_response_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in

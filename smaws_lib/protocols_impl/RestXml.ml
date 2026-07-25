@@ -22,6 +22,12 @@ module Errors = struct
   let default_handler (error : Error.t) =
     `AWSServiceError
       AwsErrors.{ message = error.message; _type = { namespace = ""; name = error.code } }
+
+  (** [default_error_deserializer] is the [error_deserializer] for operations that declare no error
+      shapes: it ignores the response body/headers and yields the generic [`AWSServiceError] carried
+      by the parsed error envelope. Codegen references this directly instead of re-emitting the
+      wrapper [fun error ~body:_ ~headers:_ -> default_handler error] per operation. *)
+  let default_error_deserializer (error : Error.t) ~body:_ ~headers:_ = default_handler error
 end
 
 module Serialize = struct

@@ -6,9 +6,7 @@ open Smaws_Lib.Xml.Parse
 
 module SimpleScalarProperties = struct
   let error_to_string = Smaws_Lib.Protocols.RestXml.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ =
-    Smaws_Lib.Protocols.RestXml.Errors.default_handler error
+  let error_deserializer = Smaws_Lib.Protocols.RestXml.Errors.default_error_deserializer
 
   let request context (request : simple_scalar_properties_request) =
     let base = Smaws_Lib.Service.makeUri ~config:(Smaws_Lib.Context.config context) ~service in

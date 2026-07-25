@@ -2043,9 +2043,7 @@ module Operations = struct
     in
     let body =
       if List.is_empty errors then
-        [%expr
-          fun (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ ->
-            Smaws_Lib.Protocols.RestXml.Errors.default_handler error]
+        qualified_ident ~names:(restxml_mod @ [ "Errors"; "default_error_deserializer" ])
       else begin
         let cases =
           errors
