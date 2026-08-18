@@ -1,0 +1,4 @@
+(test
+ (name smoke_test_awsjson)
+ (modules smoke_test_awsjson)
+ (libraries Smaws_Client_SQS Smaws_Client_DynamoDB Smaws_Client_KMS))
